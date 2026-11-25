@@ -1243,15 +1243,21 @@ function renderStats() {
     .map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`)
     .join("");
   el.phaseText.textContent = phaseMessage();
-  el.tableauSummary.innerHTML = [
-    ...ICONS.map((icon) => [resourceIcon(icon, ICON_LABELS[icon]), icons[icon]]),
-    [resourceIcon("Good", "Good"), countAlignment("Good")],
-    [resourceIcon("Bad", "Bad"), countAlignment("Bad")],
-    [t("items"), state.items.length],
-    [t("upgrade"), state.tableau.filter((card) => card.upgraded).length],
-  ]
-    .map(([label, value]) => `<div class="summary-cell"><span class="label">${label}</span><strong>${value}</strong></div>`)
-    .join("");
+  const cell = ([label, value, cls = ""]) => `<div class="summary-cell ${cls}"><span class="label">${label}</span><strong>${value}</strong></div>`;
+  const neutral = countAlignment("Neutral");
+  el.tableauSummary.innerHTML = `
+    <div class="summary-group sg-tags" title="${escapeHtml(t("tags"))}">${ICONS.map((icon) => cell([squareTag(icon), icons[icon], "tag-cell"])).join("")}</div>
+    <div class="summary-group sg-align">${[
+      [resourceIcon("Good", t("good")), countAlignment("Good")],
+      [resourceIcon("Bad", t("bad")), countAlignment("Bad")],
+      ...(neutral ? [[`<span class="neutral-dot" title="${escapeHtml(t("neutral"))}">◐</span>`, neutral]] : []),
+    ].map(cell).join("")}</div>
+    <div class="summary-group">${[[t("items"), state.items.length], [t("upgrade"), state.tableau.filter((card) => card.upgraded).length]].map(cell).join("")}</div>`;
+}
+
+// The four skill tags are square, like on the cards.
+function squareTag(icon) {
+  return `<span class="skill-tag mini-tag sk-${icon.toLowerCase()}" title="${escapeHtml(ICON_LABELS[icon] || icon)}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, ICON_LABELS[icon] || icon)}</span>`;
 }
 
 function playerStatus(p) {
@@ -1275,7 +1281,8 @@ function renderPlayers() {
         <span class="pp-top"><b>${escapeHtml(p.name)}${p.kind === "bot" ? ` <small>${escapeHtml(t("computer"))}</small>` : ""}</b>${played}</span>
         <span class="pp-writer">${p.writer ? escapeHtml(tc(p.writer.name)) + ` · ${t("lvN", { n: p.writerLevel })}` : "…"} · <span class="pp-deck" title="${escapeHtml(t("deckLeft"))}">${p.actionDeck.length}</span></span>
         <span class="pp-res">${resourceIcon("coins", "coins")}${p.coins} ${resourceIcon("xp", "XP")}${p.xp} ${resourceIcon("vp", "VP")}${score}</span>
-        <span class="pp-icons">${ICONS.map((i) => `${resourceIcon(i, i)}${icons[i]}`).join(" ")}</span>
+        <span class="pp-icons">${ICONS.map((i) => `<span class="pp-tag">${squareTag(i)}${icons[i]}</span>`).join("")}</span>
+        <span class="pp-align">${withSeat(p.seat, () => `${resourceIcon("Good", t("good"))}${countAlignment("Good")} ${resourceIcon("Bad", t("bad"))}${countAlignment("Bad")}`)}</span>
         <span class="pp-status">${escapeHtml(playerStatus(p))}${canHandOver ? ` <span class="pp-bot" data-to-bot="${p.seat}">${escapeHtml(t("toBot"))}</span>` : ""}</span>
       </button>`;
     })

@@ -2996,3 +2996,19 @@ button.needs-click { outline: none; }
   .right-col { grid-template-columns: 1fr; }
 }
 .offer-row { margin: 14px 0 0; }
+
+/* Player recap: square skill tags, then Good / Bad (a separate criterion) */
+.summary-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.summary-group { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 3px 6px; border-radius: 12px; }
+.summary-group.sg-tags { background: rgba(255, 255, 255, .35); border: 1px dashed var(--line); }
+.summary-group.sg-align { background: rgba(255, 255, 255, .35); border: 1px dashed var(--line); }
+.summary-cell.tag-cell { border-radius: 8px; padding: 3px 8px 3px 4px; }
+.skill-tag.mini-tag { width: 22px; height: 22px; border-width: 1.5px; border-radius: 4px; }
+.skill-tag.mini-tag .game-icon { width: 100%; height: 100%; }
+.summary-cell .skill-tag .game-icon { width: 100%; height: 100%; }
+.pp-icons .pp-tag { display: inline-flex; align-items: center; gap: 3px; }
+.pp-icons .skill-tag.mini-tag { width: 17px; height: 17px; border-width: 1.5px; border-radius: 3px; }
+.pp-icons .skill-tag .game-icon { width: 100%; height: 100%; margin: 0; }
+.pp-align { display: flex; align-items: center; gap: 2px 6px; font-size: 13px; font-weight: 700; padding-top: 2px; border-top: 1px dashed var(--line); }
+.pp-align .game-icon { width: 16px; height: 16px; }
+.neutral-dot { font-size: 18px; color: #8a7a60; }
