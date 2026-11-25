@@ -16,7 +16,7 @@
 
   function skillTags(list) {
     if (!list.length) return "";
-    return `<div class="fc-skills">${list.map((icon) => `<span class="skill-tag sk-${icon.toLowerCase()}">${resourceIcon(icon, icon)}</span>`).join("")}</div>`;
+    return `<div class="fc-skills">${list.map((icon) => `<span class="skill-tag sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon)}</span>`).join("")}</div>`;
   }
 
   // Font size for a card name so it fits beside the tags on one or two lines.

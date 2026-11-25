@@ -72,21 +72,33 @@
     $("#deckBtns").innerHTML = DECKS.map((deck) => `<button type="button" data-open-deck="${deck.key}">${resourceIcon(deck.icon, t(`deck_${deck.key}`))}<b>${t(`deck_${deck.key}`)}</b><span>${(data[deck.key] || []).length}</span></button>`).join("");
   }
 
-  function show() {
-    $("#statsScreen").hidden = true;
-    $("#home").hidden = false;
-    document.querySelector(".app").hidden = true;
-    hideCoach();
-    renderHome();
+  // Only one screen at a time: home, lobby, game or stats.
+  function showScreen(name) {
+    $("#home").hidden = name !== "home";
+    $("#lobbyScreen").hidden = name !== "lobby";
+    $("#statsScreen").hidden = name !== "stats";
+    document.querySelector(".app").hidden = name !== "game";
+    if (name !== "game") {
+      hideCoach();
+      document.querySelector(".recap-overlay")?.remove();
+    }
+    I18N.apply();
     window.scrollTo(0, 0);
+  }
+
+  function show() {
+    if (window.Online?.active) {
+      window.Online.leave();
+      return;
+    }
+    showScreen("home");
+    renderHome();
   }
 
   function startGame(tutorial = false) {
     prefs.name = $("#pname").value.trim().slice(0, 16);
     savePrefs();
-    $("#home").hidden = true;
-    $("#statsScreen").hidden = true;
-    document.querySelector(".app").hidden = false;
+    showScreen("game");
     tutorialState.on = tutorial;
     tutorialState.seen = new Set();
     Game.newGame(
@@ -109,6 +121,8 @@
       else if (btn.id === "startBtn") return startGame(false);
       else if (btn.id === "tutoBtn") return startGame(true);
       else if (btn.id === "statsBtn") return showStats();
+      else if (btn.id === "createBtn") return createRoom();
+      else if (btn.id === "joinBtn") return joinRoom();
       else return;
       savePrefs();
       renderHome();
@@ -118,6 +132,9 @@
       savePrefs();
     });
     $("#statsBack").addEventListener("click", show);
+    $("#joinCode").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") joinRoom();
+    });
     $("#statsClear").addEventListener("click", () => {
       store.set("ouat-history", []);
       showStats();
@@ -133,10 +150,7 @@
   }
 
   function showStats() {
-    I18N.apply();
-    $("#home").hidden = true;
-    document.querySelector(".app").hidden = true;
-    $("#statsScreen").hidden = false;
+    showScreen("stats");
     const history = store.get("ouat-history", []);
     const body = $("#statsBody");
     if (!history.length) {
@@ -158,6 +172,7 @@
     body.innerHTML = `
       <div class="kpis">
         <div class="kpi"><b>${history.length}</b><span>${esc(t("gamesPlayed"))}</span></div>
+        <div class="kpi"><b>${history.filter((g) => g.rank === 1).length}</b><span>${esc(t("victories"))}</span></div>
         <div class="kpi"><b>${best}</b><span>${esc(t("bestScore"))}</span></div>
         <div class="kpi"><b>${avg.toFixed(1)}</b><span>${esc(t("avgScore"))}</span></div>
         <div class="kpi"><b>${esc(tc(writers[0][0]))}</b><span>${esc(t("bestWriter"))}</span></div>
@@ -238,7 +253,32 @@
     }
   });
 
-  window.Home = { show, afterRender, recordGame };
+  function playerName() {
+    prefs.name = $("#pname").value.trim().slice(0, 16);
+    savePrefs();
+    return prefs.name || t("namePh");
+  }
+
+  function createRoom() {
+    tutorialState.on = false;
+    window.Online.create(playerName(), { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode });
+  }
+
+  function joinRoom() {
+    tutorialState.on = false;
+    window.Online.join($("#joinCode").value, playerName());
+  }
+
+  window.Home = { show, showScreen, afterRender, recordGame };
   bindHome();
-  show();
+  const invited = window.Online?.roomFromUrl();
+  if (invited) {
+    prefs.mode = "online";
+    show();
+    $("#joinCode").value = invited;
+    $("#joinCode").closest(".joinrow").classList.add("invited");
+    $("#netmsg").textContent = t("invitedHint");
+  } else {
+    show();
+  }
 })();
