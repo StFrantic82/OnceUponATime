@@ -429,7 +429,7 @@ function beginTurns() {
     first.playerFirst = true;
     G.firstSeat = order[0];
     const queen = first.tableau.find((card) => card.name === "Queen of Hearts" && card.upgraded);
-    if (queen) withSeat(first.seat, () => gain("vp", 1));
+    if (queen) withSeat(first.seat, () => gain("vp", hasCard("Playing Card Soldier") ? 2 : 1));
   }
   for (const p of G.players) if (p.currentAction) withSeat(p.seat, () => onPlayChapter(p.currentAction.number));
   G.history.push({ round: G.round, plays: G.players.filter((p) => p.currentAction).map((p) => ({ seat: p.seat, number: p.currentAction.number, first: p.seat === order[0], pos: order.indexOf(p.seat) })) });
@@ -799,6 +799,14 @@ function choiceOptions(text) {
 
 function applyOption(option, source) {
   let m;
+  if ((m = option.match(/^discard (\S+) gain (\d+) VP/))) {
+    const card = state.tableau.find((c) => c.id === m[1]);
+    if (!card) return;
+    state.tableau = state.tableau.filter((c) => c !== card);
+    log("l_discards", { p: state.name, c: C(card.name) });
+    gain("vp", Number(m[2]));
+    return;
+  }
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
   else if (/take 1 Quest/i.test(option)) grantQuestChoice(source);
@@ -818,6 +826,14 @@ function offerChoice(source, options, cost = null) {
 }
 
 function botOption(options) {
+  const hunt = options.map((o) => Number((o.match(/^discard \S+ gain (\d+) VP/) || [])[1] || 0));
+  if (hunt.some(Boolean)) {
+    // Keep an upgraded villain; otherwise take the bigger reward.
+    const best = hunt.indexOf(Math.max(...hunt));
+    const card = state.tableau.find((c) => c.id === options[best].split(" ")[1]);
+    if (card && card.upgraded && hunt.length > 1) return hunt.indexOf(Math.min(...hunt));
+    return best;
+  }
   const quest = options.findIndex((o) => /take 1 Quest/i.test(o));
   if (quest >= 0 && G.questDisplay.length && state.quests.length < 4) return quest;
   const xp = options.findIndex((o) => /XP/i.test(o));
@@ -868,9 +884,11 @@ function applyMean(text, source) {
   }
   if ((m = text.match(/each opponent (?:with more coins than you )?loses (\d+) coins?/i))) {
     const onlyRicher = /with more coins than you/i.test(text);
+    const cindy = /2 coins if they have Cinderella/i.test(text);
     for (const o of opponents()) {
       if (onlyRicher && o.coins <= me.coins) continue;
-      const k = Math.min(Number(m[1]), o.coins);
+      const want = cindy && o.tableau.some((c) => c.name === "Cinderella") ? 2 : Number(m[1]);
+      const k = Math.min(want, o.coins);
       if (!k) continue;
       o.coins -= k;
       log("l_lose", { o: o.name, n: k, c: C(source) });
@@ -899,9 +917,15 @@ function applyMean(text, source) {
 }
 
 function applyInstant(card) {
-  const text = `${card.effect || ""} ${card.base || ""}`;
-  if (!/Instant/i.test(text)) return;
-  applyMean(text, card.name);
+  const full = `${card.effect || ""} ${card.base || ""}`;
+  if (!/Instant/i.test(full)) return;
+  applyMean(full, card.name);
+  instantLinks(card);
+  if (card.name === "The Hunter") {
+    hunterChoice();
+    return;
+  }
+  const text = stripLinks(full);
   const options = choiceOptions(text);
   if (options) {
     const both = card.name === "Little Red Riding Hood" && countByName("The Wolf") > 0;
@@ -929,6 +953,30 @@ function applyInstant(card) {
   if (/draw 1 Action card, then put/i.test(text)) drawAndTuck();
 }
 
+function instantLinks(card) {
+  const n = card.name;
+  if (["Scarecrow", "The Tin Woodman", "The Cowardly Lion"].includes(n) && hasCard("Dorothy Gale")) gain("xp", 1);
+  if (n === "Poisoned Apple" && hasCard("The Evil Queen")) gain("vp", 1);
+  if (n === "Basket of Treats" && hasCard("Little Red Riding Hood")) gain("vp", 1);
+  if (n === "Crocodile" && opponentHas("Captain Hook")) gain("vp", 2);
+  if (n === "Cheshire Cat" && hasCard("Alice")) gain("xp", 2);
+  if (n === "Princess Briar Rose" && hasCard("The Fairies")) gain("xp", 1);
+  if (n === "Fairy Godmother") gain("coins", Math.min(3, countByName("Mice")));
+  if (n === "Long Bow") gain("vp", Math.min(5, countAlignment("Bad")) + (hasCard("Robin Hood") ? 2 : 0));
+}
+
+// The Hunter: discard 1 Bad Character for 4 VP, or 6 VP for The Wolf or The Evil Queen.
+function hunterChoice() {
+  const bad = state.tableau.filter((card) => card.alignment === "Bad");
+  if (!bad.length) return;
+  const options = [];
+  const villain = bad.find((card) => card.name === "The Wolf" || card.name === "The Evil Queen");
+  if (villain) options.push(`discard ${villain.id} gain 6 VP`);
+  const common = bad.filter((card) => card.deck === "common")[0] || bad.find((card) => card !== villain);
+  if (common) options.push(`discard ${common.id} gain 4 VP`);
+  offerChoice("The Hunter", options, "optional");
+}
+
 function applyUpgradeGain(card) {
   const tagless = (card.upgrade || "").match(/Gain 1 VP for each of your cards without tags, max (\d+) VP/i);
   if (tagless) {
@@ -953,6 +1001,20 @@ function onTakeTagless(cards) {
   if (!wheels) return;
   const n = cards.filter(isTagless).length * wheels;
   if (n) gain("vp", n);
+}
+
+// Story links: "(… if you have X)" clauses are resolved by card name, then removed so the
+// generic text parser only reads the unconditional part of the effect.
+function stripLinks(text) {
+  return String(text)
+    .replace(/\s*\([^)]*\bif (?:you have|they have|it is)\b[^)]*\)/gi, "")
+    .replace(/\s*If (?:you have|an opponent has) [^.]*\./gi, "")
+    .replace(/\s*Gain 1 coin for each Mice[^.]*\./gi, "")
+    .replace(/, then gain 1 VP for each Scarecrow[^.]*\./gi, ".");
+}
+
+function opponentHas(name) {
+  return G.players.some((p) => p.seat !== G.cur && p.tableau.some((card) => card.name === name));
 }
 
 // Pinocchio set: chapter-based Ongoing effects, resolved once everybody has played.
@@ -1011,7 +1073,9 @@ async function activatePick(cardId) {
 
 async function activateCard(card) {
   const seat = G.cur;
-  const text = activeCardText(card);
+  const fullText = activeCardText(card);
+  const text = stripLinks(fullText);
+  activationLinks(card, fullText);
   const hasActivationCost = /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
   if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1) return;
@@ -1058,6 +1122,20 @@ async function activateCard(card) {
   if (state.writer?.name === "Lewis Carroll" && !state.writerRound.activationRewarded) {
     gain("coins", 1);
     state.writerRound.activationRewarded = true;
+  }
+}
+
+function activationLinks(card, text) {
+  const n = card.name;
+  if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
+  if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
+  if (n === "Trident" && (countIcon("Strength") >= 3 || hasCard("King Triton"))) gain("xp", 1);
+  if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 2);
+  if (n === "The Wizard of Oz") {
+    const k = Math.min(card.upgraded ? 2 : 1, state.coins);
+    state.coins -= k;
+    gain("xp", 2 * k);
+    if (card.upgraded) gain("vp", countByName("Scarecrow") + countByName("The Tin Woodman") + countByName("The Cowardly Lion"));
   }
 }
 
@@ -1189,7 +1267,7 @@ function scoreCards() {
     if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
     else if (n === "The Crown of England") total += sets * 3;
-    else if (n === "Glass Slipper") total += Math.min(10, quests * 2);
+    else if (n === "Glass Slipper") total += Math.min(10, quests * 2) + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += Math.min(8, upgradedLeg * 2);
     else if (n === "Undersea Throne") total += Math.min(8, state.items.length);
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
@@ -1198,13 +1276,13 @@ function scoreCards() {
     else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
     else if (n === "Evil Sorcerer") total += sets * 2;
     else if (n === "The Evil Queen") total += up ? Math.min(10, icons.Charm * 2) : Math.min(6, maxCharmAtTable());
-    else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.floor(icons.Charm / 2);
+    else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.min(8, Math.floor(icons.Charm / 2) + countByName("Dwarf"));
     else if (n === "Dorothy Gale") total += Math.min(12, sets * 3);
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
     else if (n === "Captain Hook") total += up ? Math.min(10, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);
     else if (n === "Little Red Riding Hood") total += Math.min(10, goodBadPairs * 2);
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
-    else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2);
+    else if (n === "Robin Hood") total += Math.min(8, Math.floor(icons.Intelligence / 2) + countByName("The Merry Men"));
     else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
     else if (n === "Cinderella") total += Math.min(14, state.items.length * 2);
     else if (n === "Rumpelstiltskin") total += up ? Math.min(14, countAlignment("Bad") * 2) : Math.min(8, countAlignment("Bad"));
@@ -1212,7 +1290,7 @@ function scoreCards() {
     else if (n === "Pinocchio") total += Math.min(12, countAlignment("Good") * 2);
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
     else if (n === "The Whale") total += Math.min(8, countTagless());
-    else if (n === "Beast") total += up ? Math.min(10, icons.Strength * 2) : Math.floor(icons.Strength / 2);
+    else if (n === "Beast") total += up ? Math.min(10, icons.Strength * 2) + (hasCard("Belle") ? 3 : 0) : Math.floor(icons.Strength / 2);
   }
   return total;
 }
@@ -1465,6 +1543,10 @@ function renderGuide() {
       if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
       if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
       if (/take 1 Quest/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
+      if ((m = o.match(/^discard (\S+) gain (\d+) VP/))) {
+        const card = state.tableau.find((c) => c.id === m[1]);
+        return `− ${escapeHtml(tc(card ? card.name : ""))} → +${m[2]} ${resourceIcon("vp", "VP")}`;
+      }
       return escapeHtml(o);
     };
     const html = `${t("g_choose", { c: escapeHtml(tc(choice.source)) })}${choice.cost === "discardCommon" ? ` <small>${t("g_chooseDiscard")}</small>` : ""}<span class="choice-btns">${choice.options.map((o, i) => `<button type="button" class="primary" data-choice="${i}">${label(o)}</button>`).join("")}${choice.cost ? `<button type="button" data-choice="-1">${t("g_nothing")}</button>` : ""}</span>`;

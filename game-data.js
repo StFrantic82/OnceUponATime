@@ -303,7 +303,7 @@ window.GAME_DATA = {
       "name": "Scarecrow",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Instant: gain 1 XP.",
+      "effect": "Instant: gain 1 XP (2 XP if you have Dorothy Gale).",
       "copy": 1
     },
     {
@@ -312,7 +312,7 @@ window.GAME_DATA = {
       "name": "The Tin Woodman",
       "alignment": "Good",
       "icons": "Charm 1",
-      "effect": "Instant: gain 1 XP.",
+      "effect": "Instant: gain 1 XP (2 XP if you have Dorothy Gale).",
       "copy": 1
     },
     {
@@ -321,7 +321,7 @@ window.GAME_DATA = {
       "name": "The Cowardly Lion",
       "alignment": "Good",
       "icons": "Strength 1",
-      "effect": "Instant: gain 1 XP.",
+      "effect": "Instant: gain 1 XP (2 XP if you have Dorothy Gale).",
       "copy": 1
     },
     {
@@ -402,7 +402,7 @@ window.GAME_DATA = {
       "name": "Stepsister",
       "alignment": "Bad",
       "icons": "none",
-      "effect": "Instant: each opponent loses 1 coin.",
+      "effect": "Instant: each opponent loses 1 coin (2 coins if they have Cinderella).",
       "copy": 1
     },
     {
@@ -411,7 +411,7 @@ window.GAME_DATA = {
       "name": "Stepsister",
       "alignment": "Bad",
       "icons": "none",
-      "effect": "Instant: each opponent loses 1 coin.",
+      "effect": "Instant: each opponent loses 1 coin (2 coins if they have Cinderella).",
       "copy": 2
     },
     {
@@ -575,7 +575,7 @@ window.GAME_DATA = {
       "name": "Puss’s Boots",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: gain 1 coin for each Dexterity you have.",
+      "effect": "Activation: gain 1 coin for each Dexterity you have (+2 coins if you have Puss in Boots).",
       "copy": 1
     },
     {
@@ -620,7 +620,7 @@ window.GAME_DATA = {
       "name": "Poisoned Apple",
       "cost": 2,
       "icons": "Bad 1",
-      "effect": "Instant: gain 2 VP. You may discard 1 Good Character to gain +3 VP.",
+      "effect": "Instant: gain 2 VP (3 VP if you have The Evil Queen). You may discard 1 Good Character to gain +3 VP.",
       "copy": 1
     },
     {
@@ -674,7 +674,7 @@ window.GAME_DATA = {
       "name": "Long Bow",
       "cost": 3,
       "icons": "Strength 1",
-      "effect": "Instant: gain 1 VP for each Bad Character you have, max 5 VP.",
+      "effect": "Instant: gain 1 VP for each Bad Character you have, max 5 VP. If you have Robin Hood, gain 2 VP more.",
       "copy": 1
     },
     {
@@ -746,7 +746,7 @@ window.GAME_DATA = {
       "name": "Basket of Treats",
       "cost": 2,
       "icons": "Charm 1",
-      "effect": "Instant: gain 2 coins and 1 XP.",
+      "effect": "Instant: gain 2 coins and 1 XP (+1 VP if you have Little Red Riding Hood).",
       "copy": 1
     },
     {
@@ -791,7 +791,7 @@ window.GAME_DATA = {
       "name": "Glass Slipper",
       "cost": 5,
       "icons": "Charm 1",
-      "effect": "Game End: 2 VP for each Quest you completed, max 10 VP.",
+      "effect": "Game End: 2 VP for each Quest you completed, max 10 VP. If you have Cinderella, gain 3 VP more.",
       "copy": 1
     },
     {
@@ -809,7 +809,7 @@ window.GAME_DATA = {
       "name": "Trident",
       "cost": 5,
       "icons": "Strength 1",
-      "effect": "Activation: gain 2 VP. If you have at least 3 Strength, gain 1 XP too.",
+      "effect": "Activation: gain 2 VP. If you have at least 3 Strength or King Triton, gain 1 XP too.",
       "copy": 1
     },
     {
@@ -922,7 +922,7 @@ window.GAME_DATA = {
       "name": "Mad Hatter",
       "rank": null,
       "alignment": "Good",
-      "base": "Activation: gain 1 XP.",
+      "base": "Activation: gain 1 XP (2 XP if you have Mad Hatter's Hat).",
       "upgrade": "Cost 2 XP. Activation: gain 1 VP for each of your cards without tags, max 3 VP.",
       "upgraded": false
     },
@@ -952,7 +952,7 @@ window.GAME_DATA = {
       "name": "Crocodile",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. You gain 1 coin.",
+      "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. You gain 1 coin. If an opponent has Captain Hook, gain 2 VP.",
       "upgrade": "Cost 3 XP. Activation: gain 1 coin for each used Action card with value 10 or higher in your discard. Max 4 coins.",
       "upgraded": false
     },
@@ -972,7 +972,7 @@ window.GAME_DATA = {
       "name": "The Hunter",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 4 VP.",
+      "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 4 VP (6 VP if it is The Wolf or The Evil Queen).",
       "upgrade": "Cost 3 XP. Activation: gain 2 VP if you have at least one Bad Character.",
       "upgraded": false
     },
@@ -983,7 +983,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 2 coins.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 VP and 1 coin.",
+      "upgrade": "Cost 3 XP. Activation: gain 1 VP and 1 coin (2 VP if you have Little Mermaid).",
       "upgraded": false
     },
     {
@@ -1062,7 +1062,7 @@ window.GAME_DATA = {
       "name": "Snow White",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Game End: 1 VP for each pair of Charm icons you have.",
+      "base": "Charm 1. Game End: 1 VP for each pair of Charm icons and 1 VP for each Dwarf you have, max 8 VP.",
       "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon you have, max 14 VP.",
       "upgraded": false
     },
@@ -1083,7 +1083,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: convert 1 coin into 2 XP.",
-      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: convert up to 2 coins into 2 XP each.",
+      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: convert up to 2 coins into 2 XP each, then gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion you have.",
       "upgraded": false
     },
     {
@@ -1093,7 +1093,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Ongoing: your Action cards count as +1 value when determining turn order.",
-      "upgrade": "Cost 5 XP. Ongoing: your Action cards count as +2 value. When you choose first, gain 1 VP.",
+      "upgrade": "Cost 5 XP. Ongoing: your Action cards count as +2 value. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
     {
@@ -1102,7 +1102,7 @@ window.GAME_DATA = {
       "name": "Cheshire Cat",
       "rank": null,
       "alignment": "Neutral",
-      "base": "Dexterity 1. Instant: draw 3 Normal cards, play 1 and discard the others.",
+      "base": "Dexterity 1. Instant: draw 3 Normal cards, play 1 and discard the others. If you have Alice, gain 2 XP.",
       "upgrade": "Cost 3 XP. Activation: draw 2 Normal cards, play 1 and discard the other.",
       "upgraded": false
     },
@@ -1172,7 +1172,7 @@ window.GAME_DATA = {
       "name": "Robin Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons you have.",
+      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons and 1 VP for each Merry Men you have, max 8 VP.",
       "upgrade": "Cost 3 XP. Activation: spend up to 3 coins to gain that many VP.",
       "upgraded": false
     },
@@ -1222,7 +1222,7 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: level up 1 Good Character for 2 less XP.",
+      "base": "Charm 1. Instant: level up 1 Good Character for 2 less XP. Gain 1 coin for each Mice you have, max 3 coins.",
       "upgrade": "Cost 2 XP. Activation: level up 1 Character for 3 less XP, minimum 1 XP.",
       "upgraded": false
     },
@@ -1263,7 +1263,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Game End: 1 VP for each pair of Strength icons you have.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon you have, max 10 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon you have, max 10 VP. If you have Belle, gain 3 VP more.",
       "upgraded": false
     },
     {
@@ -1272,7 +1272,7 @@ window.GAME_DATA = {
       "name": "Princess Briar Rose",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: recover one used Action card with value 7 or lower.",
+      "base": "Charm 1. Instant: recover one used Action card with value 7 or lower. If you have The Fairies, gain 1 XP.",
       "upgrade": "Cost 2 XP. Ongoing: the first time each round you play an Action card value 7 or lower, gain 1 XP.",
       "upgraded": false
     },
