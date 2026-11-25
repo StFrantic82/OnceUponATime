@@ -339,6 +339,7 @@ function startRound() {
     p.writerRound = { alignmentRewarded: false, activationRewarded: false };
     if (p.phase !== "chooseWriter") p.phase = p.hand.length ? "chooseAction" : "waitAction";
   }
+  G.players.forEach((p, seat) => withSeat(seat, baumRoundIncome));
   log("l_round", { n: G.round });
   if (G.round === G.settings.rounds) log("l_lastRound");
   // The computer picks its Chapter card once humans are done (they may react to what is played).
@@ -945,13 +946,11 @@ function applyWriterAfterGroup(cards) {
   }
 }
 
-function checkBaumSets() {
+// L. Frank Baum, level 1: at the start of each round, 1 coin per set of the 4 different icons.
+function checkBaumSets() {}
+function baumRoundIncome() {
   if (state.writer?.name !== "L. Frank Baum") return;
-  const sets = Math.min(...ICONS.map((icon) => iconCounts()[icon]));
-  if (sets > state.rewardedIconSets) {
-    gain("coins", sets - state.rewardedIconSets);
-    state.rewardedIconSets = sets;
-  }
+  gain("coins", Math.min(...ICONS.map((icon) => iconCounts()[icon])));
 }
 
 // ---------------------------------------------------------------------------
@@ -1762,7 +1761,7 @@ function scoreWriter() {
   }
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
-  if (name === "L. Frank Baum") return Math.min(15, Math.min(...ICONS.map(countIcon)) * 5);
+  if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 3;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
 }

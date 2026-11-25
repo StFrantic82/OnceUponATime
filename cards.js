@@ -178,7 +178,7 @@
     const filledFor = (n, cost) => (level >= n ? cost : level === n - 1 ? opts.xpPlaced || 0 : 0);
     return `<article class="writer-card wcard ${opts.cls || ""}" style="--wcol:${writerColor(card.name)}">
       ${opts.notch || ""}
-      <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(card.name))}</div>${card.coins ? `<div class="writer-coins" title="${esc(t("startCoins"))}">${card.coins}${resourceIcon("coins", "coins")}</div>` : ""}${level ? `<div class="writer-level">${esc(t("levelN", { n: level }))}</div>` : ""}</div>${writerPortrait(card.name)}</div>
+      <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(card.name))}</div>${card.coins != null ? `<div class="writer-coins" title="${esc(t("startCoins"))}">${card.coins}${resourceIcon("coins", "coins")}</div>` : ""}${level ? `<div class="writer-level">${esc(t("levelN", { n: level }))}</div>` : ""}</div>${writerPortrait(card.name)}</div>
       <div class="writer-levels">${levels
         .map((l, i) => `${i ? xpStep(l.cost, filledFor(l.n, l.cost)) : ""}<div class="writer-level-box ${level && l.n > level ? "locked" : ""}"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}</strong>${formatGameText(tc(l.text))}</div>`)
         .join("")}</div>

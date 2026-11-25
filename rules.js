@@ -61,17 +61,9 @@ function iconAmount(card, icon) {
 const find = (list, name) => list.find((c) => c.name === name) || list[0];
 const BOARDS = { 2: [[0, 1], [2, 1], [2, 0]], 3: [[0, 1], [2, 1], [2, 0], [1, 1]], 4: [[0, 1], [1, 1], [2, 0], [2, 1], [1, 1]] };
 
+// Writer tiles: same face as in the game and the Print & Play.
 function writerCard(writer) {
-  const levels = [
-    { n: 1, type: "ongoing", text: writer.level1 },
-    { n: 2, type: "instant", text: writer.level2, cost: writer.cost2 },
-    { n: 3, type: "endgame", text: writer.level3, cost: writer.cost3 },
-  ];
-  return `<article class="writer-card">
-    <div class="writer-art">${CardArt.art(writer.name)}</div>
-    <div class="writer-card-header"><div class="writer-name">${esc(tc(writer.name))}</div><div class="writer-level">${esc(t("writerWord"))}</div></div>
-    <div class="writer-levels">${levels.map((l) => `<div class="writer-level-box"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}${l.cost ? ` · ${l.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(tc(l.text))}</div>`).join("")}</div>
-  </article>`;
+  return CardFace.writer(writer, { cls: "rules-writer" });
 }
 
 function squareTag(icon) {

@@ -1581,12 +1581,12 @@ window.GAME_DATA = {
     {
       "id": "W7",
       "name": "L. Frank Baum",
-      "level1": "When you complete a set of all four icons, immediately gain 1 coin. Each set can trigger this only once.",
+      "level1": "At the start of each round, gain 1 coin per set of 4 different icons.",
       "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 6,
-      "level3": "5 VP for each complete set of all four icons. Max 15 VP.",
-      "coins": 2
+      "level3": "3 VP per set of 4 different icons.",
+      "coins": 0
     },
     {
       "id": "W8",
