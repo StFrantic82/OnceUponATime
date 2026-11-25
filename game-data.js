@@ -1551,7 +1551,7 @@ window.GAME_DATA = {
     {
       "id": "W4",
       "name": "Carlo Collodi",
-      "level1": "When you are the first to choose a group in a round, gain 2 coins.",
+      "level1": "When you are the first to choose a group in a round, gain 1 coin for each player.",
       "cost2": 2,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 5,
