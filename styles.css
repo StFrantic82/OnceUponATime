@@ -3088,3 +3088,8 @@ button.needs-click { outline: none; }
 @media (max-width: 1080px) { .deck-catalog-cards.catalog-actions { grid-template-columns: repeat(4, 150px); } }
 @media (max-width: 720px) { .deck-catalog-cards.catalog-actions { grid-template-columns: repeat(3, 1fr); } .catalog-actions .acard { width: 100%; } }
 @media (max-width: 460px) { .deck-catalog-cards.catalog-actions { grid-template-columns: repeat(2, 1fr); } }
+
+/* Quest tile icon */
+.quest-ico { display: inline-block; width: 1.75em; height: 1.17em; vertical-align: -0.25em; margin: 0 1px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .25)); }
+.ac-line .quest-ico { width: 30px; height: 20px; font-size: inherit; }
+.action-hand .ac-line .quest-ico { width: 20px; height: 13px; }
