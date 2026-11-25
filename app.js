@@ -1265,7 +1265,8 @@ function applyInstantInner(card) {
   else if (/gain 1 coin\b/i.test(text)) gain("coins", 1);
   if (/gain 3 VP/i.test(text)) gain("vp", 3);
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
-  if (/coins? and 1 XP|Tag token of your choice and 1 XP/i.test(text)) gain("xp", 1);
+  if (/coins? and 1 XP/i.test(text)) gain("xp", 1);
+  if (/place 1 XP on your Writer/i.test(text)) placeWriterXp(1);
   if (/Gain 2 Tag tokens/i.test(text)) gainTagToken(2, card.name);
   else if (/Tag token/i.test(text)) gainTagToken(1, card.name);
   if (/take 1 (?:Quest|Adventure)/i.test(text)) grantQuestChoice(card.name);

@@ -665,7 +665,7 @@ window.GAME_DATA = {
       "name": "Bottle \"Drink Me\"",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Instant: gain 1 Tag token of your choice and 1 XP.",
+      "effect": "Instant: gain 1 Tag token of your choice and place 1 XP on your Writer.",
       "copy": 1
     },
     {
