@@ -151,8 +151,8 @@ const RULES = {
       <p>Reveal Common and Legendary characters under the spaces of the board to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
       [[boards]]
       <h3>2. Play a Chapter card</h3>
-      <p>Starting with the first player and going clockwise, everyone plays one Chapter card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. Some effects add to your chapter (Queen of Hearts).</p>
-      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 5 gives her two free upgrades.
+      <p>Starting with the first player and going clockwise, everyone plays one Chapter card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. The Queen of Hearts adds to your chapter and always wins ties.</p>
+      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 5 gives her a free upgrade and 3 coins.
       <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Your turn</h3>
       <ol>
@@ -233,8 +233,8 @@ const RULES = {
       <p>Révélez des personnages Communs et Légendaires sous les emplacements du plateau pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
       [[boards]]
       <h3>2. Jouer une carte Chapitre</h3>
-      <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Chapitre face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. Certains effets augmentent votre chapitre (la Reine de cœur).</p>
-      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 5 lui donne deux améliorations gratuites.
+      <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Chapitre face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. La Reine de cœur augmente votre chapitre et gagne toujours les égalités.</p>
+      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 5 lui donne une amélioration gratuite et 3 pièces.
       <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Votre tour</h3>
       <ol>
@@ -315,8 +315,8 @@ const RULES = {
       <p>Rivela personaggi Comuni e Leggendari sotto gli spazi della plancia per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
       [[boards]]
       <h3>2. Giocare una carta Capitolo</h3>
-      <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Capitolo scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). Alcuni effetti aumentano il tuo capitolo (la Regina di cuori).</p>
-      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 5 le dà due potenziamenti gratis.
+      <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Capitolo scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). La Regina di cuori aumenta il tuo capitolo e vince sempre i pareggi.</p>
+      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 5 le dà un potenziamento gratis e 3 monete.
       <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:5:Sofia]]</div></div>
       <h3>3. Il tuo turno</h3>
       <ol>

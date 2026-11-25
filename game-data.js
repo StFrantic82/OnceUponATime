@@ -1092,8 +1092,8 @@ window.GAME_DATA = {
       "name": "Queen of Hearts",
       "rank": null,
       "alignment": "Bad",
-      "base": "Ongoing: your Chapter cards count as +1 value when determining turn order.",
-      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
+      "base": "Ongoing: your Chapter cards count as +1 value for turn order. You win ties.",
+      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value for turn order. You win ties. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
     {
@@ -1316,7 +1316,7 @@ window.GAME_DATA = {
     },
     {
       "number": 5,
-      "effect": "Free level up 2"
+      "effect": "Free level up + 3 Coins"
     },
     {
       "number": 6,

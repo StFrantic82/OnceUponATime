@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "vpBy", "groupPicks", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -433,9 +433,10 @@ function maybeBotsChoose() {
 function beginTurns() {
   const n = G.players.length;
   const seatRank = (seat) => (seat - G.firstSeat + n) % n; // ties go to the first player, then clockwise
+  const queenTie = (p) => (p.tableau.some((card) => card.name === "Queen of Hearts") ? 1 : 0); // the Queen of Hearts wins ties
   const order = G.players
     .filter((p) => p.currentAction)
-    .sort((a, b) => b.actionValue - a.actionValue || seatRank(a.seat) - seatRank(b.seat))
+    .sort((a, b) => b.actionValue - a.actionValue || queenTie(b) - queenTie(a) || seatRank(a.seat) - seatRank(b.seat))
     .map((p) => p.seat);
   G.order = order;
   if (order.length) {
@@ -619,6 +620,7 @@ function takeQuest(questId) {
   state.quests.push(quest);
   G.questDisplay = G.questDisplay.filter((entry) => entry.id !== questId);
   state.questChoices -= 1;
+  vpSource = "Little Mermaid";
   const questRewardCards = state.tableau.filter((card) => /whenever you take an? (?:Quest|Adventure), gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
   const mermaid = state.tableau.find((card) => card.name === "Little Mermaid" && card.upgraded);
@@ -638,6 +640,7 @@ function upgradeLegendary(cardId) {
   const card = state.tableau.find((entry) => entry.id === cardId && entry.deck === "legendary");
   if (!card || card.upgraded || G.gameOver || state.freeUpgrades <= 0) return;
   state.freeUpgrades -= 1;
+  noteXp(upgradeCost(card) - (card.xpOn || 0), "FREE-UP legendary");
   completeUpgrade(card);
 }
 
@@ -646,6 +649,7 @@ async function freeUpgradeWriter() {
   if (G.gameOver || state.freeUpgrades <= 0 || !state.writer || state.writerLevel >= 3) return;
   const seat = G.cur;
   state.freeUpgrades -= 1;
+  noteXp((state.writerLevel === 1 ? state.writer.cost2 : state.writer.cost3) - (state.writerXp || 0), "FREE-UP writer");
   state.writerXp = 0;
   await levelUpWriter();
   G.cur = seat;
@@ -708,6 +712,7 @@ function placeXpOnGood(n) {
     const room = upgradeCost(card) - (card.xpOn || 0);
     const k = Math.min(room, left);
     card.xpOn = (card.xpOn || 0) + k;
+    noteXp(k);
     left -= k;
     if (card.xpOn >= upgradeCost(card)) completeUpgrade(card);
   }
@@ -869,6 +874,7 @@ async function levelUpWriter() {
 
 async function resolveWriterInstant() {
   const seat = G.cur;
+  vpSource = "WRITER";
   const name = state.writer.name;
   if (name === "Charles Perrault") {
     state.writerItemDiscount = 2;
@@ -935,6 +941,7 @@ function finishWriterDiscard() {
 }
 
 function applyWriterAfterGroup(cards) {
+  vpSource = "WRITER";
   if (state.writer?.name === "Hans Christian Andersen" && !state.writerRound.gameEndRewarded && cards.some((card) => /Game End/i.test(`${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`))) {
     gain("xp", 1);
     state.writerRound.gameEndRewarded = true;
@@ -958,6 +965,7 @@ function baumRoundIncome() {
 // ---------------------------------------------------------------------------
 async function resolveAction(effect) {
   const seat = G.cur;
+  vpSource = "CHAPTER";
   const text = effect || "";
   let m;
   if ((m = text.match(/(\d+) Coins?/i))) gain("coins", Number(m[1]));
@@ -1351,6 +1359,7 @@ function hasCard(name) {
 }
 
 function onPlayChapter(number) {
+  vpSource = "ON-CHAPTER (Barrie/Briar Rose/Clock)";
   vpSource = "The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "Pinocchio");
   if (pino && !pino.upgraded && number >= 10) {
@@ -1518,6 +1527,7 @@ function placeFreeXp(n, goodOnly) {
     .filter((card) => card.deck === "legendary" && !card.upgraded && (!goodOnly || card.alignment === "Good"))
     .sort((a, b) => upgradeCost(a) - (a.xpOn || 0) - (upgradeCost(b) - (b.xpOn || 0)))[0];
   if (!target) return;
+  noteXp(n);
   target.xpOn = (target.xpOn || 0) + n;
   if (target.xpOn >= upgradeCost(target)) completeUpgrade(target);
 }
@@ -1578,11 +1588,18 @@ function gain(kind, amount) {
   if (kind === "xp") {
     state.xp += amount;
     state.xpGained = (state.xpGained || 0) + amount;
+    noteXp(amount);
   }
   if (kind === "vp") {
     state.vp += amount;
     if (simMode && vpSource) state.vpBy = { ...(state.vpBy || {}), [vpSource]: ((state.vpBy || {})[vpSource] || 0) + amount };
   }
+}
+
+function noteXp(amount, key) {
+  if (!simMode || !amount) return;
+  const k = key || vpSource || "other";
+  state.xpBy = { ...(state.xpBy || {}), [k]: ((state.xpBy || {})[k] || 0) + amount };
 }
 
 function upgradeCost(card) {
@@ -2581,6 +2598,7 @@ async function simulateGame(opts) {
             return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence };
           }),
           xpGained: p.xpGained || 0,
+          xpBy: p.xpBy || {},
           legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),
           writerLevel: p.writerLevel,
