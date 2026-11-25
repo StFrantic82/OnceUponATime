@@ -505,6 +505,7 @@ function takeGroup(choice) {
     applyInstant(card);
   }
   applyWriterAfterGroup(group.cards);
+  onTakeTagless(group.cards);
   checkBaumSets();
   log("l_takes", { p: state.name, cards: { cs: group.cards.map((card) => card.name) } });
   state.phase = "buyItem";
@@ -527,6 +528,7 @@ function buyItem(itemId) {
   state.writerItemDiscount = 0;
   state.writerRound.itemBought = true;
   state.items.push(item);
+  onTakeTagless([item]);
   G.itemDisplay = G.itemDisplay.filter((entry) => entry.id !== itemId);
   applyInstant(item);
   triggerOnTakeItem();
@@ -925,13 +927,34 @@ function applyInstant(card) {
 }
 
 function applyUpgradeGain(card) {
+  const tagless = (card.upgrade || "").match(/Gain 1 VP for each of your cards without tags, max (\d+) VP/i);
+  if (tagless) {
+    gain("vp", Math.min(Number(tagless[1]), countTagless()));
+    return;
+  }
   const vp = (card.upgrade || "").match(/Gain (\d+) VP/i);
   if (vp) gain("vp", Number(vp[1]));
 }
 
+// Cards without any skill tag (Characters and Items): a strategy of their own, linked to VP tokens.
+function isTagless(card) {
+  return !ICONS.some((icon) => iconAmount(card, icon) > 0);
+}
+
+function countTagless() {
+  return [...(state.tableau || []), ...(state.items || [])].filter(isTagless).length;
+}
+
+function onTakeTagless(cards) {
+  const wheels = (state.items || []).filter((item) => item.name === "Spinning Wheel").length;
+  if (!wheels) return;
+  const n = cards.filter(isTagless).length * wheels;
+  if (n) gain("vp", n);
+}
+
 function triggerOnTakeItem() {
   const munchkins = state.tableau.filter((card) => /The Munchkins/i.test(card.name)).length;
-  if (munchkins) gain("xp", munchkins);
+  if (munchkins) gain("vp", munchkins);
 }
 
 async function activateAll() {
@@ -980,7 +1003,10 @@ async function activateCard(card) {
     G.cur = seat;
     if (!ok) return;
   }
-  if (/Activation:[^.]*\bsteal\b/i.test(text)) {
+  const taglessAct = text.match(/Activation: gain 1 VP for each of your cards without tags, max (\d+) VP/i);
+  if (taglessAct) {
+    gain("vp", Math.min(Number(taglessAct[1]), countTagless()));
+  } else if (/Activation:[^.]*\bsteal\b/i.test(text)) {
     applyMean(text.slice(text.search(/Activation:/i)), card.name);
   } else if (/choose one of those effects/i.test(text)) {
     const options = choiceOptions(card.base || "");
@@ -1108,7 +1134,7 @@ function scoreQuest(quest) {
   if (/Neverland/.test(name)) return Math.min(...ICONS.map((i) => icons[i])) >= 3 ? 10 : Math.min(...ICONS.map((i) => icons[i])) >= 2 ? 6 : 0;
   if (/Apple's Bite/.test(name)) return Math.min(12, countAlignment("Bad") * 3);
   if (/Forest Awakening/.test(name)) return Math.min(10, countAlignment("Good"));
-  if (/Queen's Command/.test(name)) return Math.min(10, countCardsWith("Instant") * 2);
+  if (/Queen's Command/.test(name)) return Math.min(12, countTagless() * 3);
   if (/House of Seven/.test(name)) return Math.min(10, state.tableau.length);
   if (/King's Trident/.test(name)) return Math.min(10, state.items.length * 2);
   if (/Hatter's Tea Party/.test(name)) return Math.min(10, countCardsWith("Ongoing") * 2);

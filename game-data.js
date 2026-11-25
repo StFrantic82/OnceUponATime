@@ -501,7 +501,7 @@ window.GAME_DATA = {
       "name": "The Munchkins",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: gain 1 XP whenever you take an Item.",
+      "effect": "Ongoing: gain 1 VP whenever you take an Item.",
       "copy": 1
     },
     {
@@ -510,7 +510,7 @@ window.GAME_DATA = {
       "name": "The Munchkins",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: gain 1 XP whenever you take an Item.",
+      "effect": "Ongoing: gain 1 VP whenever you take an Item.",
       "copy": 2
     },
     {
@@ -519,7 +519,7 @@ window.GAME_DATA = {
       "name": "The Munchkins",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: gain 1 XP whenever you take an Item.",
+      "effect": "Ongoing: gain 1 VP whenever you take an Item.",
       "copy": 3
     }
   ],
@@ -701,7 +701,7 @@ window.GAME_DATA = {
       "name": "Spinning Wheel",
       "cost": 3,
       "icons": "Bad 1",
-      "effect": "Instant: discard 1 Character to level up another Character for 2 less XP this turn.",
+      "effect": "Ongoing: whenever you take a card without tags, gain 1 VP.",
       "copy": 1
     },
     {
@@ -848,7 +848,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Instant: activate 1 of your cards.",
-      "upgrade": "Cost 2 XP. Gains Charm and Strength. Gain 2 VP.",
+      "upgrade": "Cost 2 XP. Gain 1 VP for each of your cards without tags, max 5 VP.",
       "upgraded": false
     },
     {
@@ -878,7 +878,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Activation: gain 1 XP.",
-      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: gain 2 XP.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each of your cards without tags, max 3 VP.",
       "upgraded": false
     },
     {
@@ -1344,7 +1344,7 @@ window.GAME_DATA = {
       "number": 9,
       "name": "The Queen's Command",
       "theme": "Alice",
-      "scoring": "2 VP for each card with an Instant effect. Max 10 VP."
+      "scoring": "3 VP for each card without tags. Max 12 VP."
     },
     {
       "id": "Q10",

@@ -140,7 +140,7 @@ window.CARD_I18N = [
   ["Ongoing: gain 1 coin whenever you level up a Character.", "Ongoing : gagnez 1 coin chaque fois que vous améliorez un Personnage.", "Ongoing: ottieni 1 coin ogni volta che potenzi un Personaggio."],
   ["Ongoing: Good Characters cost 1 less XP to level up, minimum 1 XP.", "Ongoing : améliorer un Personnage Gentil coûte 1 XP de moins, minimum 1 XP.", "Ongoing: potenziare un Personaggio Buono costa 1 XP in meno, minimo 1 XP."],
   ["Activation: spend 3 coins to level up a Character for free.", "Activation : dépensez 3 coins pour améliorer un Personnage sans payer d’XP.", "Activation: spendi 3 coins per potenziare un Personaggio senza pagare XP."],
-  ["Ongoing: gain 1 XP whenever you take an Item.", "Ongoing : gagnez 1 XP chaque fois que vous prenez un Objet.", "Ongoing: ottieni 1 XP ogni volta che prendi un Oggetto."],
+  ["Ongoing: gain 1 VP whenever you take an Item.", "Ongoing : gagnez 1 VP chaque fois que vous prenez un Objet.", "Ongoing: ottieni 1 VP ogni volta che prendi un Oggetto."],
 
   // ---- Item effects ----
   ["Instant: gain 1 XP for each Strength you have.", "Instant : gagnez 1 XP par Strength que vous avez.", "Instant: ottieni 1 XP per ogni Strength che hai."],
@@ -162,7 +162,7 @@ window.CARD_I18N = [
   ["Instant: activate one of your Activation cards.", "Instant : déclenchez l’une de vos cartes Activation.", "Instant: attiva una delle tue carte Activation."],
   ["Ongoing: when choosing a group, you may discard a Common card from it to gain 2 coins.", "Ongoing : en choisissant un groupe, vous pouvez défausser une carte commune qui s’y trouve pour gagner 2 coins.", "Ongoing: quando scegli un gruppo, puoi scartare una carta comune che vi si trova per ottenere 2 coins."],
   ["Activation: discard 1 Character to gain 3 XP. If it was Good, gain +1 XP.", "Activation : défaussez 1 Personnage pour gagner 3 XP. S’il était Gentil, gagnez +1 XP.", "Activation: scarta 1 Personaggio per ottenere 3 XP. Se era Buono, ottieni +1 XP."],
-  ["Instant: discard 1 Character to level up another Character for 2 less XP this turn.", "Instant : défaussez 1 Personnage pour améliorer un autre Personnage pour 2 XP de moins ce tour-ci.", "Instant: scarta 1 Personaggio per potenziarne un altro con 2 XP in meno in questo turno."],
+  ["Ongoing: whenever you take a card without tags, gain 1 VP.", "Ongoing : chaque fois que vous prenez une carte sans tag, gagnez 1 VP.", "Ongoing: ogni volta che prendi una carta senza tag, ottieni 1 VP."],
   ["Instant: gain 2 coins and 1 XP.", "Instant : gagnez 2 coins et 1 XP.", "Instant: ottieni 2 coins e 1 XP."],
   ["Instant: level up 1 Good Character for 1 less XP.", "Instant : améliorez 1 Personnage Gentil pour 1 XP de moins.", "Instant: potenzia 1 Personaggio Buono con 1 XP in meno."],
   ["Activation: gain 1 XP for each Charm you have, max 5 XP.", "Activation : gagnez 1 XP par Charm que vous avez, max 5 XP.", "Activation: ottieni 1 XP per ogni Charm che hai, max 5 XP."],
@@ -181,13 +181,13 @@ window.CARD_I18N = [
 
   // ---- Legendary effects ----
   ["Instant: activate 1 of your cards.", "Instant : déclenchez 1 de vos cartes.", "Instant: attiva 1 delle tue carte."],
-  ["Gains Charm and Strength. Gain 2 VP.", "Gagne Charm et Strength. Gagnez 2 VP.", "Ottiene Charm e Strength. Ottieni 2 VP."],
+  ["Gain 1 VP for each of your cards without tags, max 5 VP.", "Gagnez 1 VP par carte sans tag que vous avez, max 5 VP.", "Ottieni 1 VP per ogni tua carta senza tag, max 5 VP."],
   ["Dexterity 1. Instant: look at the top 3 Normal cards, keep 1 and discard the rest.", "Dexterity 1. Instant : regardez les 3 premières cartes Normales, gardez-en 1 et défaussez le reste.", "Dexterity 1. Instant: guarda le prime 3 carte Normali, tienine 1 e scarta le altre."],
   ["Take 1 Quest and gain 1 XP.", "Prenez 1 Quête et gagnez 1 XP.", "Prendi 1 Missione e ottieni 1 XP."],
   ["Charm 1, Intelligence 1. Game End: 1 VP for each Quest you completed.", "Charm 1, Intelligence 1. Game End : 1 VP par Quête accomplie.", "Charm 1, Intelligence 1. Game End: 1 VP per ogni Missione completata."],
   ["Game End: 2 VP for each Quest you completed, max 12 VP.", "Game End : 2 VP par Quête accomplie, max 12 VP.", "Game End: 2 VP per ogni Missione completata, max 12 VP."],
   ["Activation: gain 1 XP.", "Activation : gagnez 1 XP.", "Activation: ottieni 1 XP."],
-  ["Gains Intelligence. Activation: gain 2 XP.", "Gagne Intelligence. Activation : gagnez 2 XP.", "Ottiene Intelligence. Activation: ottieni 2 XP."],
+  ["Activation: gain 1 VP for each of your cards without tags, max 3 VP.", "Activation : gagnez 1 VP par carte sans tag que vous avez, max 3 VP.", "Activation: ottieni 1 VP per ogni tua carta senza tag, max 3 VP."],
   ["Charm 1. Instant: gain 1 Tag token.", "Charm 1. Instant : gagnez 1 jeton d’icône.", "Charm 1. Instant: ottieni 1 segnalino icona."],
   ["Activation: gain 1 Tag token.", "Activation : gagnez 1 jeton d’icône.", "Activation: ottieni 1 segnalino icona."],
   ["Charm 1. Ongoing: when you take a Good Character, gain 1 coin.", "Charm 1. Ongoing : quand vous prenez un Personnage Gentil, gagnez 1 coin.", "Charm 1. Ongoing: quando prendi un Personaggio Buono, ottieni 1 coin."],
@@ -268,7 +268,7 @@ window.CARD_I18N = [
   ["10 VP if you have at least 3 icons of each type. Otherwise, 6 VP if you have at least 2 of each type.", "10 VP si vous avez au moins 3 icônes de chaque type. Sinon, 6 VP si vous en avez au moins 2 de chaque type.", "10 VP se hai almeno 3 icone per ciascun tipo. Altrimenti 6 VP se ne hai almeno 2 per ciascun tipo."],
   ["3 VP for each Bad card. Max 12 VP.", "3 VP par carte Méchante. Max 12 VP.", "3 VP per ogni carta Cattiva. Max 12 VP."],
   ["1 VP for each Good card. Max 10 VP.", "1 VP par carte Gentille. Max 10 VP.", "1 VP per ogni carta Buona. Max 10 VP."],
-  ["2 VP for each card with an Instant effect. Max 10 VP.", "2 VP par carte à effet Instant. Max 10 VP.", "2 VP per ogni carta con effetto Instant. Max 10 VP."],
+  ["3 VP for each card without tags. Max 12 VP.", "3 VP par carte sans tag. Max 12 VP.", "3 VP per ogni carta senza tag. Max 12 VP."],
   ["1 VP for each Character. Max 10 VP.", "1 VP par Personnage. Max 10 VP.", "1 VP per ogni Personaggio. Max 10 VP."],
   ["2 VP for each Item. Max 10 VP.", "2 VP par Objet. Max 10 VP.", "2 VP per ogni Oggetto. Max 10 VP."],
   ["2 VP for each card with an Ongoing effect. Max 10 VP.", "2 VP par carte à effet Ongoing. Max 10 VP.", "2 VP per ogni carta con effetto Ongoing. Max 10 VP."],

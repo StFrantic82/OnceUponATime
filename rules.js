@@ -140,7 +140,7 @@ const RULES = {
       [[anatomy:item]]
       <p><b>Quest cards</b> score at the end of the game. <b>Writer cards</b> give each player a personal power that grows over three levels. <b>Action cards</b> are pages of a book: their chapter number sets the turn order, their effect is resolved during your turn.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>The four skills are <b>Charm</b> [[tag:Charm]], <b>Strength</b> [[tag:Strength]], <b>Cunning</b> [[tag:Dexterity]] and <b>Intelligence</b> [[tag:Intelligence]]. Many Quests and effects count them. A square <b>Tag token</b> counts as one icon of its type.</p>
+      <p>The four skills are <b>Charm</b> [[tag:Charm]], <b>Strength</b> [[tag:Strength]], <b>Cunning</b> [[tag:Dexterity]] and <b>Intelligence</b> [[tag:Intelligence]]. Many Quests and effects count them. A square <b>Tag token</b> counts as one icon of its type. Some cards have <b>no tag</b> at all: they are rewarded in other ways, often with Victory Points during the game (Spinning Wheel, Mad Hatter, “The Queen’s Command”…).</p>
       <p>Effects have four types: [[icon:instant]] <b>Instant</b> (once, when you take the card), [[icon:activation]] <b>Activation</b> (each time an effect activates it), [[icon:ongoing]] <b>Ongoing</b> (always true) and [[icon:endgame]] <b>Game End</b> (scored at the end).</p>`],
       ["setup", "Setup", `<ol>
         <li>Shuffle the Normal characters and the Legendary characters into two separate decks.</li>
@@ -219,7 +219,7 @@ const RULES = {
       [[anatomy:item]]
       <p>Les <b>cartes Quête</b> rapportent des points en fin de partie. Les <b>cartes Écrivain</b> donnent à chaque joueur un pouvoir personnel qui grandit sur trois niveaux. Les <b>cartes Action</b> sont des pages de livre : leur numéro de chapitre fixe l’ordre du tour, leur effet se résout pendant votre tour.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup de Quêtes et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type.</p>
+      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup de Quêtes et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type. Certaines cartes n’ont <b>aucun tag</b> : elles sont récompensées autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…).</p>
       <p>Les effets sont de quatre types : [[icon:instant]] <b>Instantané</b> (une fois, quand vous prenez la carte), [[icon:activation]] <b>Activation</b> (chaque fois qu’un effet l’active), [[icon:ongoing]] <b>Permanent</b> (toujours valable) et [[icon:endgame]] <b>Fin de partie</b> (compté à la fin).</p>`],
       ["setup", "Mise en place", `<ol>
         <li>Mélangez les personnages Normaux et les personnages Légendaires en deux pioches séparées.</li>
@@ -298,7 +298,7 @@ const RULES = {
       [[anatomy:item]]
       <p>Le <b>carte Missione</b> danno punti a fine partita. Le <b>carte Scrittore</b> danno a ogni giocatore un potere personale che cresce su tre livelli. Le <b>carte Azione</b> sono pagine di un libro: il numero del capitolo decide l’ordine di turno, il loro effetto si risolve durante il tuo turno.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Le quattro abilità sono <b>Fascino</b> [[tag:Charm]], <b>Forza</b> [[tag:Strength]], <b>Astuzia</b> [[tag:Dexterity]] e <b>Intelligenza</b> [[tag:Intelligence]]. Molte Missioni ed effetti le contano. Un <b>segnalino Tag</b> quadrato conta come un’icona del suo tipo.</p>
+      <p>Le quattro abilità sono <b>Fascino</b> [[tag:Charm]], <b>Forza</b> [[tag:Strength]], <b>Astuzia</b> [[tag:Dexterity]] e <b>Intelligenza</b> [[tag:Intelligence]]. Molte Missioni ed effetti le contano. Un <b>segnalino Tag</b> quadrato conta come un’icona del suo tipo. Alcune carte non hanno <b>nessun tag</b>: sono premiate in altro modo, spesso con Punti Vittoria durante la partita (Arcolaio, Cappellaio Matto, «La Regina Ordina»…).</p>
       <p>Gli effetti sono di quattro tipi: [[icon:instant]] <b>Istantaneo</b> (una volta, quando prendi la carta), [[icon:activation]] <b>Attivazione</b> (ogni volta che un effetto la attiva), [[icon:ongoing]] <b>Permanente</b> (sempre valido) e [[icon:endgame]] <b>Fine partita</b> (contato alla fine).</p>`],
       ["setup", "Preparazione", `<ol>
         <li>Mescola i personaggi Normali e i personaggi Leggendari in due mazzi separati.</li>
