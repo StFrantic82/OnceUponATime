@@ -225,6 +225,31 @@
       else close();
     });
     window.addEventListener("scroll", close, { passive: true });
+
+    // In the game: Quest and Item offers are shown small; hovering shows them full size.
+    const offer = (target) => target.closest?.(".slot-quest .fcard, .slot-item .fcard");
+    document.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      const card = offer(e.target);
+      if (card) {
+        if (card !== current) {
+          current = card;
+          tip.innerHTML = card.outerHTML;
+          tip.hidden = false;
+        }
+        place(e.clientX, e.clientY);
+      } else if (current && !current.closest?.("#statsScreen") && !e.target.closest?.("#statsScreen")) close();
+    });
+    document.addEventListener("click", (e) => {
+      if (e.target.closest("button")) return;
+      const card = offer(e.target);
+      if (card && card !== current) {
+        current = card;
+        tip.innerHTML = card.outerHTML;
+        tip.hidden = false;
+        place(e.clientX, e.clientY);
+      } else if (current && !e.target.closest("#statsScreen")) close();
+    });
   }
 
   function showRules() {

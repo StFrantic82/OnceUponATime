@@ -2871,7 +2871,7 @@ html {
 
 /* Card preview when hovering a card name in the statistics */
 .card-preview {
-  position: fixed; z-index: 200; pointer-events: none; zoom: 1.35;
+  position: fixed; z-index: 200; pointer-events: none; transform: scale(1.35); transform-origin: 0 0;
   filter: drop-shadow(0 10px 24px rgba(40, 20, 8, .45));
 }
 .card-preview > * { margin: 0 !important; }
@@ -2951,3 +2951,10 @@ html {
 .action-hand .ac-and { line-height: 1; }
 .action-hand .ac-effect { justify-content: flex-start; }
 .action-hand .acard { aspect-ratio: 5 / 7.8; }
+
+/* Quest and Item offers: smaller cards, two per row; hover to zoom */
+#questDisplay, #itemDisplay { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; align-items: start; }
+#questDisplay .fcard { zoom: 0.46; }
+#itemDisplay .fcard { zoom: 0.66; }
+#questDisplay .slot button, #itemDisplay .slot button { font-size: 12px; padding: 5px 8px; min-height: 0; width: 100%; }
+.slot-quest .fcard, .slot-item .fcard { cursor: zoom-in; }
