@@ -2135,3 +2135,17 @@ html {
 .deck-catalog-header h2 {
   flex: 1;
 }
+
+.lang-switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lang-switch .flag {
+  width: 22px;
+  height: 15px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+  flex: none;
+}

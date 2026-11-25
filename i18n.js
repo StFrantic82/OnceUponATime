@@ -201,6 +201,12 @@
   };
 
   const LANGS = ["en", "fr", "it"];
+  // Small flags drawn in SVG (emoji flags do not show on Windows).
+  const FLAGS = {
+    en: '<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0 60 40M60 0 0 40" stroke="#fff" stroke-width="8"/><path d="M0 0 60 40M60 0 0 40" stroke="#c8102e" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="12"/><path d="M30 0v40M0 20h60" stroke="#c8102e" stroke-width="7"/></svg>',
+    fr: '<svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#002395"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ed2939"/></svg>',
+    it: '<svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="1" height="2" fill="#009246"/><rect x="1" width="1" height="2" fill="#fff"/><rect x="2" width="1" height="2" fill="#ce2b37"/></svg>',
+  };
   let lang = "en";
   try {
     lang = localStorage.getItem("ouat-lang") || "";
@@ -235,7 +241,7 @@
     for (const node of root.querySelectorAll("[data-i18n]")) node.textContent = t(node.dataset.i18n);
     for (const node of root.querySelectorAll("[data-i18n-ph]")) node.placeholder = t(node.dataset.i18nPh);
     for (const node of root.querySelectorAll(".lang-switch")) {
-      node.innerHTML = LANGS.map((l) => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" title="${S[l].langName}">${l.toUpperCase()}</button>`).join("");
+      node.innerHTML = LANGS.map((l) => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" title="${S[l].langName}" aria-label="${S[l].langName}">${FLAGS[l]}<span>${l.toUpperCase()}</span></button>`).join("");
     }
   }
 
