@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "writerOnlyXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "ai", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "writerOnlyXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "vpBy", "groupPicks", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -397,6 +397,8 @@ function turnPosition(seat) {
 }
 
 function canPlayChapter(p, number) {
+  // The Queen of Hearts may play the same chapter as an opponent (and wins the tie).
+  if (p.tableau.some((card) => card.name === "Queen of Hearts")) return true;
   const taken = chaptersTaken(p.seat);
   if (!taken.has(number)) return true;
   return p.hand.every((card) => taken.has(card.number));
@@ -1804,7 +1806,11 @@ function scoreWriter() {
     return Math.min(14, Math.floor((onCards + onWriter) / 2));
   }
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
-  if (name === "J. M. Barrie") return state.tableau.filter((card) => card.deck !== "legendary").length;
+  if (name === "J. M. Barrie") {
+    const counts = {};
+    for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
+    return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 3;
+  }
   if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 3;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
@@ -2586,6 +2592,9 @@ async function simulateGame(opts) {
     newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
     if (opts.boards) G.simBoards = opts.boards;
     if (opts.bonus) G.simBonus = { seat: 0, round: 1 + Math.floor(Math.random() * 8), effect: opts.bonus };
+    (opts.legacySeats || []).forEach((seat) => {
+      if (G.players[seat]) G.players[seat].ai = opts.legacyTag || "v1";
+    });
     (opts.strategies || []).forEach((strategy, seat) => {
       if (G.players[seat] && strategy) G.players[seat].strategy = strategy;
     });
@@ -2608,6 +2617,7 @@ async function simulateGame(opts) {
           cards: r.cardTotal,
           writerPts: r.writerTotal,
           writer: p.writer?.name || "-",
+          ai: p.ai || "v2",
           legendary: p.tableau.filter((c) => c.deck === "legendary").map((c) => c.name),
           upgraded: p.tableau.filter((c) => c.upgraded).length,
           common: p.tableau.filter((c) => c.deck === "common").map((c) => c.name),

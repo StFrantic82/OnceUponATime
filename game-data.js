@@ -1092,8 +1092,8 @@ window.GAME_DATA = {
       "name": "Queen of Hearts",
       "rank": null,
       "alignment": "Bad",
-      "base": "Ongoing: your Chapter cards count as +1 value for turn order. You win ties.",
-      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value for turn order. You win ties. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
+      "base": "Ongoing: your Chapter cards count as +1 value for turn order. You may play the same Chapter as an opponent, and you win ties.",
+      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value for turn order. You may play the same Chapter as an opponent, and you win ties. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
     {
@@ -1524,7 +1524,7 @@ window.GAME_DATA = {
       "level1": "The first Item you buy each round costs 1 fewer coin.",
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
-      "cost3": 3,
+      "cost3": 4,
       "level3": "2 VP for each Item.",
       "coins": 3
     },
@@ -1575,7 +1575,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 4,
-      "level3": "1 VP for each Common card.",
+      "level3": "3 VP for each pair of identical Common cards.",
       "coins": 2
     },
     {
