@@ -205,7 +205,7 @@
     "The Merry Men": { bg: "forest", m: [["figure", 64, 100, 0.8, 0, { coat: "#4f9a45", style: "short", hair: "#a8692f" }], ["figure", 136, 100, 0.8, 0, { coat: "#3f7a32", style: "beard", hair: "#6b3f1f" }], ["featherCap", 64, 66, 0.55, -6], ["featherCap", 136, 66, 0.55, 6], ["bow", 100, 96, 0.6, 0]] },
     "Mice": { bg: "castle", m: [["mouse", 66, 108, 0.9, 0, { hat: "#3f6fa8" }], ["mouse", 120, 112, 0.8, 0, { c: "#b8a68a", hat: "#c8312b" }], ["slipper", 160, 120, 0.5, 0, { glass: true }]] },
     "Wicked Witch of the West": { bg: "oz", m: [["broom", 142, 98, 0.8, 0], F({ skin: "#e9d9c4", style: "long", hair: "#6b5a8a", coat: "#5a3b6e" }), ["witchhat", 100, 56, 0.8, 0, { c: "#3a2a4a", band: "#c8312b" }]] },
-    "Wicked Witch of the East": { bg: "oz", m: [["cottage", 104, 92, 1, -8], ["slipper", 58, 126, 0.55, 0, { c: "#c2ccd4" }]] },
+    "Wicked Witch of the East": { bg: "oz", m: [["cottage", 160, 104, 0.45, -8], F({ skin: "#d9e4c4", style: "long", hair: "#2b2b2b", coat: "#2f4a3a" }), ["witchhat", 100, 56, 0.8, 0, { c: "#1f2a24", band: "#c2ccd4" }], ["slipper", 50, 128, 0.5, 0, { c: "#c2ccd4" }]] },
     "Wicked Witch of the North": { bg: "snow", m: [F({ style: "long", hair: "#fbfdff", coat: "#a9c9e8" }), ["tiara", 100, 66, 1, 0], ["wand", 152, 92, 0.6, 0]] },
     "Wicked Witch of the South": { bg: "dusk", m: [F({ style: "long", hair: "#c8312b", coat: "#f4f1ea" }), ["crown", 100, 64, 0.45, 0, { c: "#f3c64a", gem: "#d9467a" }], ["sparkles", 100, 70, 1.3, 0]] },
     "Scarecrow": { bg: "oz", m: [["road", 48, 120, 0.8, 0], F({ skin: "#efe1b8", style: "none", coat: "#5a7fb0" }), ["strawhat", 100, 64, 0.8, 0], ["bird", 160, 40, 1, 0]] },
