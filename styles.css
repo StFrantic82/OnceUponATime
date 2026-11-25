@@ -2878,3 +2878,8 @@ html {
 .card-preview .writer-card { width: 250px; }
 #statsScreen [data-card], #statsScreen [data-action] { cursor: zoom-in; }
 #statsScreen td[data-card]:hover, #statsScreen span[data-card]:hover, #statsScreen tr[data-action]:hover td { background: rgba(232, 184, 90, .18); }
+
+/* Legendary: the upgrade cost sits as a tag on the top edge of the upgraded effect */
+.fc-up { position: relative; padding-top: 9px; }
+.fc-up .fc-cost { position: absolute; top: -8px; right: 6px; z-index: 2; }
+.fc-up.on .fc-cost, .fc-up .fc-cost { opacity: 1; }

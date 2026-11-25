@@ -72,9 +72,9 @@
     return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
       ${head(card, 204, 16, `<small>${esc(t("legendary"))}</small>`)}
       <div class="fc-art">${CardArt.art(card.name)}</div>
-      <div class="fc-side fc-base"><strong>${esc(t("base"))}</strong>${formatGameText(stripIconPrefix(tc(card.base)))}</div>
+      <div class="fc-side fc-base">${formatGameText(stripIconPrefix(tc(card.base)))}</div>
       ${opts.xpSlot ? xpStep() : ""}
-      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}"><strong><span class="fc-cost">${cost} ${resourceIcon("xp", "XP")}</span>${esc(t("upgradeLabel"))}</strong>${formatGameText(tc(upgradeText))}</div>
+      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}"><span class="fc-cost">${cost} ${resourceIcon("xp", "XP")}</span>${formatGameText(tc(upgradeText))}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }

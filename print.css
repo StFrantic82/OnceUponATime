@@ -461,3 +461,20 @@ body.print-body {
 .print-writer .xp-step { margin: 1px 0; }
 .print-writer .xp-box { width: 50px; height: 36px; }
 .print-writer .xp-box .game-icon { width: 26px; height: 26px; }
+
+/* Legendary cards: the XP space straddles the line between the two effects, so it takes no height */
+.cell .fc-legendary .xp-step { height: 0; margin: 0; position: relative; z-index: 3; overflow: visible; }
+.cell .fc-legendary .xp-box { width: 40px; height: 32px; }
+.cell .fc-legendary .xp-box .game-icon { width: 22px; height: 22px; }
+.cell .fc-legendary .fc-base { padding-bottom: 14px; }
+.cell .fc-legendary .fc-art { height: 158px; }
+.cell .fc-legendary .fc-up { opacity: 1; padding-top: 18px; }
+.cell .fc-legendary .fc-base { padding-bottom: 18px; }
+
+/* Writer tiles: no illustration band, a framed portrait at the top right */
+.print-writer .writer-card-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px 4px 0; }
+.print-writer .writer-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.print-writer .writer-name { font-size: 24px; line-height: 1.1; }
+.print-writer .writer-level { font-size: 13px; }
+.print-writer .portrait { width: 78px; height: 78px; flex: 0 0 auto; filter: drop-shadow(0 2px 3px rgba(60, 30, 10, .35)); }
+.print-writer .writer-level-box { font-size: 14px; line-height: 1.28; }
