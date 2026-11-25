@@ -111,3 +111,4 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 .action-hand .ac-quest .quest-ico { width: 2.2em; }
 
 .ac-gears { display: inline-flex; gap: 1px; }
+.ac-draw { font-size: 0.78em; line-height: 1.15; font-weight: 600; padding: 0 2px; }

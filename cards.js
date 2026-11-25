@@ -233,7 +233,8 @@
       // Convention: 1 gear = activate 1 card, 3 gears = activate all your cards with an Activation effect.
       if (/Activate all/i.test(p)) return `<span class="ac-gears" title="${esc(t("activateAll"))}">${resourceIcon("activation", t("activateAll")).repeat(3)}</span>`;
       if (/Activate a single/i.test(p)) return `<span class="ac-gears" title="${esc(t("activateOne"))}">${resourceIcon("activation", t("activateOne"))}</span>`;
-      if ((m = p.match(/Free level up to (\d+)/i))) return `<span class="ac-big">${m[1]}</span>${FREEUP_ICON}`;
+      if ((m = p.match(/Free level up (?:to )?(\d+)/i))) return `<span class="ac-big">${m[1]}</span>${FREEUP_ICON}`;
+      if (/Draw 1 Chapter/i.test(p)) return `<span class="ac-draw">${esc(t("drawTuck"))}</span>`;
       if (/free level up/i.test(p)) return FREEUP_ICON;
       return formatGameText(p);
     });

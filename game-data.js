@@ -1304,43 +1304,43 @@ window.GAME_DATA = {
     },
     {
       "number": 2,
-      "effect": "Activate all + free level up + 1 Coin"
-    },
-    {
-      "number": 3,
-      "effect": "Draft Quest + 3 coins"
-    },
-    {
-      "number": 4,
-      "effect": "Free level up + 3 Coins"
-    },
-    {
-      "number": 5,
-      "effect": "Draft Quest + 2 XP"
-    },
-    {
-      "number": 6,
-      "effect": "Activate all + 2 coins"
-    },
-    {
-      "number": 7,
-      "effect": "Free level up + 1 Coin"
-    },
-    {
-      "number": 8,
       "effect": "Draft Quest"
     },
     {
-      "number": 9,
+      "number": 3,
+      "effect": "Activate all + 3 Coins"
+    },
+    {
+      "number": 4,
+      "effect": "Free level up 2"
+    },
+    {
+      "number": 5,
+      "effect": "6 XP"
+    },
+    {
+      "number": 6,
+      "effect": "Free level up"
+    },
+    {
+      "number": 7,
       "effect": "Activate all"
     },
     {
+      "number": 8,
+      "effect": "4 Coins"
+    },
+    {
+      "number": 9,
+      "effect": "3 XP"
+    },
+    {
       "number": 10,
-      "effect": "2 Coins + 1 XP"
+      "effect": "2 Coins"
     },
     {
       "number": 11,
-      "effect": "Activate a single card"
+      "effect": "Draw 1 Chapter"
     },
     {
       "number": 12,

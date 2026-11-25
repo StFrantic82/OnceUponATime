@@ -159,8 +159,8 @@ const RULES = {
       [[boards]]
       <h3>2. Play a Chapter card</h3>
       <p>Starting with the first player and going clockwise, everyone plays one Chapter card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. Some effects add to your chapter (Queen of Hearts, Carlo Collodi).</p>
-      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 2. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 2 activates all her cards and upgrades a Legendary for free.
-      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:2:Sofia]]</div></div>
+      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 4. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 4 gives her two free upgrades.
+      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:4:Sofia]]</div></div>
       <h3>3. Your turn</h3>
       <ol>
         <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
@@ -169,15 +169,15 @@ const RULES = {
         <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card. [[icon:freeup]] <b>Free upgrade</b>: the next step of one of your Legendary characters or of your Writer is completed at once (cover its empty spaces with XP from the supply).</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
-      <div class="example"><b>Example of a turn.</b> Léa played chapter 6 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins. With her 5 coins she could buy an Item, but she keeps them.
-      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:6]]</div></div>
+      <div class="example"><b>Example of a turn.</b> Léa played chapter 3 (“Activate all + 3 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 3 coins. With her 6 coins she could buy an Item, but she keeps them.
+      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:3]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
         <li>Discard the cards nobody took. Refill the Items to 1 + players and the Quests to 2 + players.</li>
         <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
-      ["effects", "Effects in detail", `<h3>The 12 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p><p class="legend-line">[[icon:activation]] activate 1 of your cards · [[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take a Quest.</p>[[actions]]
+      ["effects", "Effects in detail", `<h3>The 12 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p><p class="legend-line">[[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take a Quest.</p>[[actions]]
       <p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them, of your choice. An Activation that costs something (spend coins, discard a card…) is optional.</p>
       <p><b>Take a Quest.</b> Choose one face-up Quest and keep it in front of you. It will score at the end of the game.</p>
       <p><b>Free upgrade.</b> Fill at once all the star spaces of the next step of a Legendary character or of your Writer: it moves up a level (any XP already on that step is discarded).</p>
@@ -240,8 +240,8 @@ const RULES = {
       [[boards]]
       <h3>2. Jouer une carte Chapitre</h3>
       <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Chapitre face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. Certains effets augmentent votre chapitre (la Reine de cœur, Carlo Collodi).</p>
-      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 2. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 2 active toutes ses cartes et améliore gratuitement un Légendaire.
-      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:2:Sofia]]</div></div>
+      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 4. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 4 lui donne deux améliorations gratuites.
+      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:4:Sofia]]</div></div>
       <h3>3. Votre tour</h3>
       <ol>
         <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
@@ -250,15 +250,15 @@ const RULES = {
         <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée. [[icon:freeup]] <b>Amélioration gratuite</b> : la prochaine étape d’un de vos personnages Légendaires ou de votre Écrivain est complétée tout de suite (couvrez ses cases vides avec de l’XP de la réserve).</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
-      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 6 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces. Avec ses 5 pièces, elle pourrait acheter un Objet, mais elle les garde.
-      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:6]]</div></div>
+      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 3 (« Tout activer + 3 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 3 pièces. Avec ses 6 pièces, elle pourrait acheter un Objet, mais elle les garde.
+      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:3]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
         <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Quêtes jusqu’à 2 + joueurs.</li>
         <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
-      ["effects", "Les effets en détail", `<h3>Les 12 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p><p class="legend-line">[[icon:activation]] déclencher 1 de vos cartes · [[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Quête.</p>[[actions]]
+      ["effects", "Les effets en détail", `<h3>Les 12 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p><p class="legend-line">[[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Quête.</p>[[actions]]
       <p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux, au choix. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
       <p><b>Prendre une Quête.</b> Choisissez une Quête visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
       <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile de la prochaine étape d’un personnage Légendaire ou de votre Écrivain : il monte de niveau (l’XP déjà posé sur cette étape est défaussé).</p>
@@ -321,8 +321,8 @@ const RULES = {
       [[boards]]
       <h3>2. Giocare una carta Capitolo</h3>
       <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Capitolo scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). Alcuni effetti aumentano il tuo capitolo (la Regina di cuori, Carlo Collodi).</p>
-      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 2. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 2 attiva tutte le sue carte e potenzia gratis una Leggendaria.
-      <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:2:Sofia]]</div></div>
+      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 4. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 4 le dà due potenziamenti gratis.
+      <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:4:Sofia]]</div></div>
       <h3>3. Il tuo turno</h3>
       <ol>
         <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
@@ -331,15 +331,15 @@ const RULES = {
         <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata. [[icon:freeup]] <b>Potenziamento gratis</b>: il prossimo passaggio di uno dei tuoi personaggi Leggendari o del tuo Scrittore è completato subito (copri le caselle vuote con XP dalla riserva).</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
-      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 6 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete. Con le sue 5 monete potrebbe comprare un Oggetto, ma le tiene.
-      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:6]]</div></div>
+      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 3 («Attiva tutto + 3 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 3 monete. Con le sue 6 monete potrebbe comprare un Oggetto, ma le tiene.
+      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:3]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
         <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Missioni fino a 2 + giocatori.</li>
         <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],
-      ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p><p class="legend-line">[[icon:activation]] attiva 1 delle tue carte · [[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi una Missione.</p>[[actions]]
+      ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p><p class="legend-line">[[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi una Missione.</p>[[actions]]
       <p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi, a scelta. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
       <p><b>Prendere una Missione.</b> Scegli una Missione scoperta e tienila davanti a te. Darà punti a fine partita.</p>
       <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella del prossimo passaggio di un personaggio Leggendario o del tuo Scrittore: sale di livello (gli XP già posati su quel passaggio vengono scartati).</p>

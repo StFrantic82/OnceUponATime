@@ -576,6 +576,11 @@ async function activateActionStep() {
   state.phase = "resolving";
   await resolveAction(state.currentAction.effect);
   G.cur = seat;
+  // Simulations only: an extra chapter effect for one seat in one round, to measure what an effect is worth.
+  if (simMode && G.simBonus && G.simBonus.seat === seat && G.simBonus.round === G.round) {
+    await resolveAction(G.simBonus.effect);
+    G.cur = seat;
+  }
   if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 7) gain("xp", 1);
   state.phase = "roundDone";
 }
@@ -918,19 +923,16 @@ function checkBaumSets() {
 async function resolveAction(effect) {
   const seat = G.cur;
   const text = effect || "";
-  if (/3 Coins/i.test(text)) gain("coins", 3);
-  if (/4 Coins/i.test(text)) gain("coins", 4);
-  if (/2 coins/i.test(text)) gain("coins", 2);
-  if (/1 Coin/i.test(text)) gain("coins", 1);
-  if (/3 XP/i.test(text)) gain("xp", 3);
-  else if (/2 XP/i.test(text)) gain("xp", 2);
-  else if (/1 XP/i.test(text)) gain("xp", 1);
+  let m;
+  if ((m = text.match(/(\d+) Coins?/i))) gain("coins", Number(m[1]));
+  if ((m = text.match(/(\d+) XP/i))) gain("xp", Number(m[1]));
   if (/Quest/i.test(text)) grantQuestChoice("action");
   if (/Activate all/i.test(text)) await activateAll();
   G.cur = seat;
   if (/Activate a single/i.test(text)) await activateOne();
   G.cur = seat;
-  if (/Free level up (?:to )?2/i.test(text)) state.freeUpgrades += 2;
+  if (/Draw 1 Chapter/i.test(text)) drawAndTuck();
+  if ((m = text.match(/Free level up (?:to )?(\d+)/i))) state.freeUpgrades += Number(m[1]);
   else if (/free level up/i.test(text)) state.freeUpgrades += 1;
 }
 
@@ -2448,6 +2450,7 @@ async function simulateGame(opts) {
   const n = Math.min(4, Math.max(2, Number(opts.players) || 4));
   try {
     newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
+    if (opts.bonus) G.simBonus = { seat: 0, round: 1 + Math.floor(Math.random() * 8), effect: opts.bonus };
     (opts.strategies || []).forEach((strategy, seat) => {
       if (G.players[seat] && strategy) G.players[seat].strategy = strategy;
     });

@@ -3135,3 +3135,4 @@ button.needs-click { outline: none; }
 .action-hand .ac-quest .quest-ico { width: 2.2em; }
 
 .ac-gears { display: inline-flex; gap: 1px; }
+.ac-draw { font-size: 0.78em; line-height: 1.15; font-weight: 600; padding: 0 2px; }

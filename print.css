@@ -516,3 +516,4 @@ body.print-body {
 .score-grid .score-table th .game-icon { width: 3.8mm; height: 3.8mm; vertical-align: -1mm; margin-right: 1mm; }
 .score-grid .score-table td { height: 8mm; }
 .score-grid .score-table .srow-total th, .score-grid .score-table .srow-total td { height: 8.5mm; font-size: 9pt; }
+.ac-draw { font-size: 0.78em; line-height: 1.15; font-weight: 600; padding: 0 2px; }
