@@ -1239,7 +1239,7 @@ window.GAME_DATA = {
     },
     {
       "number": 2,
-      "effect": "Free level up + 2 coins"
+      "effect": "Activate all + free level up"
     },
     {
       "number": 3,
@@ -1247,23 +1247,23 @@ window.GAME_DATA = {
     },
     {
       "number": 4,
-      "effect": "Activate all + free level up"
+      "effect": "Free level up + 3 Coins"
     },
     {
       "number": 5,
-      "effect": "3 Coins + 2 XP"
+      "effect": "Draft Quest + 2 XP"
     },
     {
       "number": 6,
-      "effect": "Draft Quest + 1 XP"
-    },
-    {
-      "number": 7,
       "effect": "Activate all + 2 coins"
     },
     {
-      "number": 8,
+      "number": 7,
       "effect": "Free level up + 1 Coin"
+    },
+    {
+      "number": 8,
+      "effect": "Draft Quest"
     },
     {
       "number": 9,
