@@ -60,6 +60,11 @@
     </article>`;
   }
 
+  // Dashed space to stack XP tokens before levelling up (printed cards and Writer tiles).
+  function xpStep() {
+    return `<div class="xp-step"><span class="xp-arrow">▼</span><span class="xp-box">${resourceIcon("xp", "XP")}</span><span class="xp-arrow">▼</span></div>`;
+  }
+
   function legendary(card, opts = {}) {
     const align = (card.alignment || "neutral").toLowerCase();
     const cost = opts.cost ?? Number((String(card.upgrade).match(/Cost (\d+) XP/i) || [])[1] || 4);
@@ -68,6 +73,7 @@
       ${head(card, 204, 16, `<small>${esc(t("legendary"))}</small>`)}
       <div class="fc-art">${CardArt.art(card.name)}</div>
       <div class="fc-side fc-base"><strong>${esc(t("base"))}</strong>${formatGameText(stripIconPrefix(tc(card.base)))}</div>
+      ${opts.xpSlot ? xpStep() : ""}
       <div class="fc-side fc-up ${card.upgraded ? "on" : ""}"><strong><span class="fc-cost">${cost} ${resourceIcon("xp", "XP")}</span>${esc(t("upgradeLabel"))}</strong>${formatGameText(tc(upgradeText))}</div>
       ${alignFoot(card.alignment)}
     </article>`;
@@ -132,5 +138,5 @@
     </div>`;
   }
 
-  window.CardFace = { common, legendary, item, quest, character, action };
+  window.CardFace = { common, legendary, item, quest, character, action, xpStep };
 })();

@@ -62,7 +62,7 @@ const P = {
     intro: "Print on A4 paper at 100 % scale (“actual size”, no “fit to page”). Cut along the dotted lines. Card sizes are those of standard sleeves.",
     backsHow: "Backs: print each “Backs” page on the reverse of the pages of the same kind (long-edge duplex), or glue it on.",
     contents: "Contents",
-    sizes: { common: "Common characters · 58 cards · 56 × 87 mm", legendary: "Legendary characters · 39 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 35 tiles · 60 × 60 mm", quests: "Quest cards · 20 cards · 87 × 56 mm", writers: "Writer cards · 8 cards · 70 × 120 mm", actions: "Action cards · 5 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
+    sizes: { common: "Common characters · 58 cards · 56 × 87 mm", legendary: "Legendary characters · 39 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 35 tiles · 60 × 60 mm", quests: "Quest cards · 20 cards · 87 × 56 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Action cards · 5 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
     backs: "Backs",
     tagsTitle: "Tag tokens", resTitle: "Coins, XP and VP", firstPlayer: "First player",
     page: "Page",
@@ -86,7 +86,7 @@ const P = {
     intro: "Imprimez sur du papier A4 à l’échelle 100 % (« taille réelle », sans « ajuster à la page »). Découpez le long des pointillés. Les formats correspondent aux protège-cartes du commerce.",
     backsHow: "Dos : imprimez chaque page « Dos » au verso des pages du même type (recto verso, bord long), ou collez-la.",
     contents: "Contenu",
-    sizes: { common: "Personnages communs · 58 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 39 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 35 tuiles · 60 × 60 mm", quests: "Cartes Quête · 20 cartes · 87 × 56 mm", writers: "Cartes Écrivain · 8 cartes · 70 × 120 mm", actions: "Cartes Action · 5 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
+    sizes: { common: "Personnages communs · 58 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 39 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 35 tuiles · 60 × 60 mm", quests: "Cartes Quête · 20 cartes · 87 × 56 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Action · 5 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
     backs: "Dos",
     tagsTitle: "Jetons Tag", resTitle: "Pièces, XP et PV", firstPlayer: "Premier joueur",
     page: "Page",
@@ -110,7 +110,7 @@ const P = {
     intro: "Stampa su carta A4 in scala 100 % («dimensioni reali», senza «adatta alla pagina»). Ritaglia lungo le linee tratteggiate. I formati corrispondono alle bustine protettive in commercio.",
     backsHow: "Retri: stampa ogni pagina «Retri» sul retro delle pagine dello stesso tipo (fronte-retro, lato lungo), oppure incollala.",
     contents: "Contenuto",
-    sizes: { common: "Personaggi comuni · 58 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 39 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 35 tessere · 60 × 60 mm", quests: "Carte Missione · 20 carte · 87 × 56 mm", writers: "Carte Scrittore · 8 carte · 70 × 120 mm", actions: "Carte Azione · 5 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
+    sizes: { common: "Personaggi comuni · 58 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 39 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 35 tessere · 60 × 60 mm", quests: "Carte Missione · 20 carte · 87 × 56 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Azione · 5 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
     backs: "Retri",
     tagsTitle: "Segnalini Tag", resTitle: "Monete, XP e PV", firstPlayer: "Primo giocatore",
     page: "Pagina",
@@ -140,10 +140,10 @@ const SET_COLORS = ["#7a3a24", "#2f5d8a", "#3f7a32", "#6b4a8a", "#b5793a"];
 // ---- components: [kind, mm width, mm height, native px width, render] ----
 const KINDS = {
   common: { w: 56, h: 87, nw: 170, render: (c) => CardFace.common(c) },
-  legendary: { w: 61, h: 112, nw: 216, render: (c) => CardFace.legendary(c) },
+  legendary: { w: 61, h: 112, nw: 216, render: (c) => CardFace.legendary(c, { xpSlot: true }) },
   items: { w: 60, h: 60, nw: 205, render: (c) => CardFace.item(c) },
   quests: { w: 87, h: 56, nw: 300, render: (c) => CardFace.quest(c) },
-  writers: { w: 70, h: 120, nw: 300, render: (c) => writerCard(c) },
+  writers: { w: 99.9, h: 99.9, nw: 410, render: (c) => writerCard(c) },
   actions: { w: 41, h: 63, nw: 150, render: (c) => `<div class="acard" style="--spine:${SET_COLORS[c.set]}">${CardFace.action(c).replace(/^<div class="acard[^"]*">/, "").replace(/<\/div>\s*$/, "")}</div>` },
 };
 
@@ -154,12 +154,12 @@ function writerCard(writer) {
     { n: 3, type: "endgame", text: writer.level3, cost: writer.cost3 },
   ];
   return `<article class="writer-card print-writer">
-    <div class="book-notch" title="${esc(L.yourBookHint)}"><span class="notch-cut"></span><span class="notch-label"><b>${esc(L.yourBook)}</b>${esc(L.yourBookHint)}</span></div>
+    <div class="book-notch"><span class="notch-label"><b>${esc(L.yourBook)}</b> · ${esc(L.yourBookHint)}</span></div>
     <div class="writer-art">${CardArt.art(writer.name)}</div>
     <div class="writer-card-header"><div class="writer-name">${esc(tc(writer.name))}</div><div class="writer-level">${esc(t("writerWord"))}</div></div>
     <div class="writer-levels">${levels
       .map((l) => `<div class="writer-level-box"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}${l.cost ? ` · ${l.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(tc(l.text))}</div>`)
-      .join("")}</div>
+      .join(CardFace.xpStep())}</div>
   </article>`;
 }
 
@@ -173,8 +173,8 @@ function backFace(kind, set = 0) {
 // Lay out a list of components on as many A4 sheets as needed.
 function sheetsFor(kind, items, title, back = false) {
   const k = KINDS[kind];
-  const cols = Math.floor(190 / k.w);
-  const rows = Math.floor(265 / k.h);
+  const cols = Math.floor(200 / k.w);
+  const rows = Math.floor(280 / k.h);
   const per = cols * rows;
   const out = [];
   for (let i = 0; i < items.length; i += per) {
@@ -196,7 +196,7 @@ function sheetsFor(kind, items, title, back = false) {
 
 function backsSheet(kind, set = 0, count = 0) {
   const k = KINDS[kind];
-  const per = count || Math.floor(190 / k.w) * Math.floor(265 / k.h);
+  const per = count || Math.floor(200 / k.w) * Math.floor(280 / k.h);
   return sheetsFor(kind, Array.from({ length: per }, () => backFace(kind, set)), `${L.backs} · ${L.sizes[kind].split(" · ")[0]}${kind === "actions" ? ` · ${L.set} ${set + 1}` : ""}`, true);
 }
 

@@ -22,7 +22,7 @@ body.print-body {
   width: 210mm;
   height: 297mm;
   margin: 0 auto 8mm;
-  padding: 12mm 10mm 10mm;
+  padding: 5mm;
   overflow: hidden;
   background: #fff;
   page-break-after: always;
@@ -30,7 +30,7 @@ body.print-body {
 }
 
 .sheet-head {
-  margin: 0 0 4mm;
+  margin: 0 0 1.5mm;
   font: 700 10pt "Alegreya Sans", sans-serif;
   color: #7a5d44;
   text-align: center;
@@ -319,7 +319,7 @@ body.print-body {
 
 /* Tuning for the printed sizes */
 .cell .fc-legendary .fc-art {
-  height: 165px;
+  height: 128px;
 }
 
 .cell .fc-legendary .fc-side {
@@ -346,35 +346,60 @@ body.print-body {
   padding: 3px 6px;
 }
 
+/* Writer tiles: 100 x 100 mm squares */
 .print-writer .writer-art {
-  height: 150px;
+  height: 96px;
+  flex: 0 0 auto;
+}
+
+.print-writer .writer-card-header {
+  padding: 6px 14px 2px;
 }
 
 .print-writer .writer-name {
-  font-size: 22px;
+  font-size: 23px;
+}
+
+.print-writer .writer-levels {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 4px 12px 12px;
 }
 
 .print-writer .writer-level-box {
+  flex: 1;
   font-size: 15px;
-  line-height: 1.35;
+  line-height: 1.28;
+  padding: 5px 10px;
 }
 
-/* ---- Writer tile: notch showing where the Action deck (your book) goes ---- */
-.print-writer { position: relative; overflow: visible; }
-.book-notch { position: absolute; left: 0; top: 78px; transform: translateY(-50%); z-index: 4; display: flex; align-items: center; pointer-events: none; }
-.notch-cut {
-  width: 22px; height: 64px; margin-left: -3px; border-radius: 0 34px 34px 0;
-  background: #fffdf8; border: 2px dashed #6b4a8a; border-left: none; box-shadow: inset -3px 0 6px rgba(60, 30, 80, .15);
+/* ---- Writer tile: notch (63 mm high, the Action deck goes there) and XP slot ---- */
+.print-writer { position: relative; overflow: hidden; }
+.print-writer .writer-card-header, .print-writer .writer-levels { margin-left: 44px; }
+.book-notch {
+  position: absolute; left: 0; top: 50%; transform: translateY(-50%); z-index: 4;
+  width: 40px; height: 63%; /* 63 mm of a 100 mm tile */
+  box-sizing: border-box; border: 2.5px dashed #6b4a8a; border-left: none; border-radius: 0 12px 12px 0;
+  background: repeating-linear-gradient(135deg, #f4ecf8 0 8px, #ebdff2 8px 16px);
+  display: grid; place-items: center;
 }
 .notch-label {
-  writing-mode: vertical-rl; transform: rotate(180deg); margin-left: 4px; padding: 6px 2px; border-radius: 6px;
-  background: rgba(255, 250, 236, .92); color: #5a2a6e; font: 600 10px/1.15 "Alegreya Sans", sans-serif; text-align: center;
+  writing-mode: vertical-rl; transform: rotate(180deg); color: #5a2a6e;
+  font: 600 13px/1 "Alegreya Sans", sans-serif; white-space: nowrap; letter-spacing: .3px;
 }
-.notch-label b { display: block; font-size: 11px; }
+.notch-label b { font-weight: 800; }
+.xp-slot {
+  position: absolute; top: 8px; right: 10px; z-index: 4; width: 84px; height: 84px; box-sizing: border-box;
+  border: 3px dashed #c58b3c; border-radius: 14px; background: rgba(255, 250, 236, .88);
+  display: grid; place-items: center;
+}
+.xp-slot .game-icon { width: 54px; height: 54px; opacity: .45; }
 
 /* ---- Board ---- */
 .board {
-  height: 262mm; box-sizing: border-box; border: 2.5mm solid #7a3a24; border-radius: 8mm; padding: 6mm 7mm;
+  height: 280mm; box-sizing: border-box; border: 2.5mm solid #7a3a24; border-radius: 8mm; padding: 6mm 7mm;
   background: radial-gradient(ellipse at 50% 30%, #fff6e1, #efd9ac); display: flex; flex-direction: column; gap: 5mm;
   box-shadow: inset 0 0 0 1.2mm #e3c288;
 }
@@ -415,3 +440,24 @@ body.print-body {
 .score-table .srow-name td { height: 10mm; }
 .score-table .srow-total th, .score-table .srow-total td { border-top: .9mm solid #7a3a24; background: #f8ead0; height: 11mm; font-size: 11pt; }
 .score-table .srow-total th { font-weight: 800; color: #7a3a24; }
+
+/* XP space between levels: stack your XP tokens there, then level up */
+.xp-step { display: flex; align-items: center; justify-content: center; gap: 8px; flex: 0 0 auto; margin: 2px 0; }
+.xp-arrow { color: #c58b3c; font-size: 12px; line-height: 1; }
+.xp-box {
+  width: 44px; height: 40px; box-sizing: border-box; display: grid; place-items: center;
+  border: 2.5px dashed #c58b3c; border-radius: 10px; background: rgba(255, 248, 226, .9);
+}
+.xp-box .game-icon { width: 26px; height: 26px; opacity: .5; }
+.print-writer .writer-art { height: 58px; }
+.print-writer .writer-levels { gap: 0; }
+.print-writer .xp-box { width: 54px; height: 44px; }
+.print-writer .xp-box .game-icon { width: 30px; height: 30px; }
+.print-writer .writer-art { height: 50px; }
+.print-writer .writer-card-header { padding: 4px 14px 0; }
+.print-writer .writer-name { font-size: 21px; }
+.print-writer .writer-levels { padding: 2px 12px 10px; }
+.print-writer .writer-level-box { font-size: 13.5px; line-height: 1.25; padding: 4px 9px; flex: 1 1 auto; }
+.print-writer .xp-step { margin: 1px 0; }
+.print-writer .xp-box { width: 50px; height: 36px; }
+.print-writer .xp-box .game-icon { width: 26px; height: 26px; }
