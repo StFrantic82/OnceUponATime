@@ -1,5 +1,6 @@
 // Once Upon a Time — illustrated rules (English, French, Italian).
 // Illustrations are the real card faces of the game: [[common:Dwarf]], [[action:7]], [[icon:instant]]…
+(function () {
 const DATA = window.GAME_DATA;
 const ICON_FILES = {
   Charm: "assets/icons/tag-charm.png",
@@ -339,22 +340,41 @@ const RULES = {
   },
 };
 
-function build() {
+function build(root = document.querySelector("#rules")) {
+  if (!root) return;
   const L = RULES[I18N.lang] || RULES.en;
-  document.title = `Once Upon a Time · ${L.title}`;
-  document.querySelector("#rules").innerHTML = `
+  root.innerHTML = `
     <header class="rules-hero">
       <div class="rules-hero-art">${CardArt.art("Once Upon a Time")}</div>
       <p class="hero-kicker">${esc(L.kicker)}</p>
       <h1>${esc(L.title)}</h1>
-      <nav class="rules-toc" aria-label="${esc(L.toc)}">${L.sections.map(([id, title], i) => `<a href="#${id}">${i + 1}. ${esc(title)}</a>`).join("")}</nav>
+      <nav class="rules-toc" aria-label="${esc(L.toc)}">${L.sections.map(([id, title], i) => `<a href="#r-${id}">${i + 1}. ${esc(title)}</a>`).join("")}</nav>
     </header>
-    ${L.sections.map(([id, title, html], i) => `<section class="rules-section" id="${id}"><h2>${i + 1}. ${esc(title)}</h2>${render(html, L)}</section>`).join("")}`;
-  document.querySelector(".rules-home").textContent = `← ${t("home")}`;
+    ${L.sections.map(([id, title, html], i) => `<section class="rules-section" id="r-${id}"><h2>${i + 1}. ${esc(title)}</h2>${render(html, L)}</section>`).join("")}`;
+  // In-page links scroll inside whatever container shows the rules.
+  root.querySelectorAll(".rules-toc a").forEach((a) => a.addEventListener("click", (e) => {
+    e.preventDefault();
+    root.querySelector(a.getAttribute("href"))?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
 }
 
-const params = new URLSearchParams(location.search);
-if (params.get("lang")) I18N.setLang(params.get("lang"), false);
-I18N.apply();
-build();
-window.addEventListener("langchange", build);
+window.Rules = { render: build };
+// cards.js uses these helpers as globals; on the stand-alone page app.js is not loaded.
+for (const [name, fn] of Object.entries({ esc, resourceIcon, formatGameText, iconAmount, printedIcons, textIconAmount })) {
+  if (typeof window[name] !== "function") window[name] = fn;
+}
+
+// Stand-alone page (rules.html)
+if (document.body.classList.contains("rules-body")) {
+  const params = new URLSearchParams(location.search);
+  if (params.get("lang")) I18N.setLang(params.get("lang"), false);
+  I18N.apply();
+  const page = () => {
+    document.title = `Once Upon a Time · ${(RULES[I18N.lang] || RULES.en).title}`;
+    build();
+    document.querySelector(".rules-home").textContent = `← ${t("home")}`;
+  };
+  page();
+  window.addEventListener("langchange", page);
+}
+})();

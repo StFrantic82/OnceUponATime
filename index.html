@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Once Upon a Time</title>
     <link rel="stylesheet" href="assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="styles.css?v=12" />
+    <link rel="stylesheet" href="styles.css?v=16" />
+    <link rel="stylesheet" href="rules.css?v=16" />
   </head>
   <body>
     <section id="home" class="home-screen" hidden>
@@ -63,6 +64,11 @@
         <p class="online-note" id="lobbyWait" data-i18n="waitingHost"></p>
         <div class="lobby-actions"><button type="button" id="lobbyLeave" data-i18n="leave"></button><button type="button" id="lobbyStart" class="bigbtn" data-i18n="startGame"></button></div>
       </div>
+    </section>
+
+    <section id="rulesScreen" class="rules-screen" hidden>
+      <div class="rules-bar"><button type="button" id="rulesBack" class="primary">← <span data-i18n="home"></span></button><div class="lang-switch small" role="group" aria-label="Language"></div><button type="button" id="rulesPrint" title="Print">🖨</button></div>
+      <div id="rulesInApp" class="rules"></div>
     </section>
 
     <section id="statsScreen" class="stats-screen" hidden>
@@ -163,15 +169,16 @@
       </section>
     <div id="coach" class="coach" hidden role="status"></div>
 
-    <script src="game-data.js?v=12"></script>
-    <script src="i18n-cards.js?v=12"></script>
-    <script src="i18n.js?v=12"></script>
-    <script src="art.js?v=12"></script>
-    <script src="cards.js?v=12"></script>
-    <script src="app.js?v=12"></script>
-    <script src="bot.js?v=12"></script>
-    <script src="online.js?v=12"></script>
-    <script src="sims.js?v=12"></script>
-    <script src="home.js?v=12"></script>
+    <script src="game-data.js?v=16"></script>
+    <script src="i18n-cards.js?v=16"></script>
+    <script src="i18n.js?v=16"></script>
+    <script src="art.js?v=16"></script>
+    <script src="cards.js?v=16"></script>
+    <script src="app.js?v=16"></script>
+    <script src="bot.js?v=16"></script>
+    <script src="online.js?v=16"></script>
+    <script src="sims.js?v=16"></script>
+    <script src="rules.js?v=16"></script>
+    <script src="home.js?v=16"></script>
   </body>
 </html>

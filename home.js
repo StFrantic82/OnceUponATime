@@ -80,6 +80,7 @@
     $("#home").hidden = name !== "home";
     $("#lobbyScreen").hidden = name !== "lobby";
     $("#statsScreen").hidden = name !== "stats";
+    $("#rulesScreen").hidden = name !== "rules";
     document.querySelector(".app").hidden = name !== "game";
     if (name !== "game") {
       hideCoach();
@@ -127,7 +128,7 @@
       else if (btn.id === "statsBtn") return showStats();
       else if (btn.id === "createBtn") return createRoom();
       else if (btn.id === "pnpBtn") return showPrintAndPlay();
-      else if (btn.id === "rulesBtn") return window.open(`rules.html?lang=${I18N.lang}`, "_blank", "noopener");
+      else if (btn.id === "rulesBtn") return showRules();
       else if (btn.id === "joinBtn") return joinRoom();
       else return;
       savePrefs();
@@ -138,6 +139,11 @@
       savePrefs();
     });
     $("#statsBack").addEventListener("click", show);
+    $("#rulesBack").addEventListener("click", show);
+    $("#rulesPrint").addEventListener("click", () => window.print());
+    window.addEventListener("langchange", () => {
+      if (!$("#rulesScreen").hidden) window.Rules.render($("#rulesInApp"));
+    });
     for (const tab of document.querySelectorAll("[data-stats-tab]")) {
       tab.addEventListener("click", () => setStatsTab(tab.dataset.statsTab));
     }
@@ -165,6 +171,12 @@
     $("#myStats").hidden = tab !== "mine";
     $("#simScreen").hidden = tab !== "sims";
     if (tab === "sims") window.Sims?.show();
+  }
+
+  function showRules() {
+    showScreen("rules");
+    window.Rules.render($("#rulesInApp"));
+    window.scrollTo(0, 0);
   }
 
   function showStats() {

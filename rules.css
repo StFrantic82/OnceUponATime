@@ -85,3 +85,15 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
   .example, .anatomy, .fig-row, .boards { break-inside: avoid; }
   .rules-toc { display: none; }
 }
+
+/* rules shown inside the app (index.html) */
+.rules-screen { min-height: 100vh; }
+.rules-bar {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 20px; background: rgba(250, 242, 226, .94); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(122, 58, 36, .18);
+}
+@media print {
+  .rules-bar, .rules-screen ~ *, #home, .lang-switch { display: none !important; }
+}
+.rules-screen .rules-hero { background: #fffaf0; border-radius: 18px; border: 1px solid rgba(122, 58, 36, .16); margin-top: 8px; padding: 18px; }
+.rules-screen .rules-section { background: #fffaf0; }
