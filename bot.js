@@ -146,12 +146,26 @@
 
   async function playTurn() {
     const seat = G.cur;
+    while (state.activatePending > 0) {
+      const pick = activationCandidates()[0];
+      if (!pick) {
+        state.activatePending = 0;
+        break;
+      }
+      await activatePick(pick.id);
+      G.cur = seat;
+    }
     if (state.phase === "chooseGroup") chooseGroup();
     settleTuck();
     if (state.phase === "buyItem") {
       buySomething();
       await activateActionStep();
       G.cur = seat;
+      while (state.activatePending > 0 && activationCandidates().length) {
+        await activatePick(activationCandidates()[0].id);
+        G.cur = seat;
+      }
+      state.activatePending = 0;
     }
     takeQuests();
     await spendXp();

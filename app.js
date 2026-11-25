@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "activatePending", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -216,6 +216,7 @@ function newPlayer(seat, info) {
     coins: 2,
     xp: 0,
     writerXp: 0,
+    activatePending: 0,
     vp: 0,
     tagTokens: 0,
     freeUpgrades: 0,
@@ -474,7 +475,7 @@ async function activateActionStep() {
 }
 
 async function endTurn() {
-  if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || G.active !== G.cur) return;
+  if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0 || G.active !== G.cur) return;
   const seat = G.cur;
   for (const p of G.players) {
     if (p.xp > 0) {
@@ -742,9 +743,28 @@ async function activateAll() {
   log("l_activates", { p: state.name, n: cards.length });
 }
 
+function activationCandidates() {
+  return [...state.tableau, ...state.items].filter((entry) => /Activation/i.test(activeCardText(entry)));
+}
+
+// "Activate a single card": a human player chooses the card (it waits for a click); the computer takes the first one.
 async function activateOne() {
-  const card = [...state.tableau, ...state.items].find((entry) => /Activation/i.test(activeCardText(entry)));
-  if (card) await activateCard(card);
+  const options = activationCandidates();
+  if (!options.length) return;
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.activatePending = (state.activatePending || 0) + 1;
+    return;
+  }
+  await activateCard(options[0]);
+}
+
+async function activatePick(cardId) {
+  if (!(state.activatePending > 0)) return;
+  const card = activationCandidates().find((entry) => entry.id === cardId);
+  if (!card) return;
+  state.activatePending -= 1;
+  await activateCard(card);
 }
 
 async function activateCard(card) {
@@ -982,6 +1002,7 @@ const MOVES = {
   takeQuest,
   upgrade: upgradeLegendary,
   placeXp,
+  activatePick,
   writerDraft: resolveWriterDraft,
   writerDiscard: discardForWriter,
   writerDiscardDone: finishWriterDiscard,
@@ -1085,7 +1106,107 @@ function render() {
   renderTableau();
   renderRound();
   renderLog();
+  renderGuide();
   window.Home?.afterRender(state);
+}
+
+// ---------------------------------------------------------------------------
+// Guide: tells the local player what to click, and highlights it.
+// ---------------------------------------------------------------------------
+function markXpTargets() {
+  if (!(state.xp > 0) || G.gameOver) return [];
+  const marked = [];
+  const writerSteps = el.writerPanel.querySelectorAll(".xp-step");
+  if (state.writer && state.writerLevel < 3) {
+    const box = writerSteps[state.writerLevel - 1]?.querySelector(".xp-box:not(.on)");
+    if (box) {
+      box.classList.add("xp-target");
+      box.dataset.placeXp = "writer";
+      marked.push(box);
+    }
+  }
+  for (const wrap of el.tableau.querySelectorAll("[data-own-id]")) {
+    const card = state.tableau.find((entry) => entry.id === wrap.dataset.ownId && entry.deck === "legendary" && !entry.upgraded);
+    if (!card) continue;
+    const box = wrap.querySelector(".xp-step .xp-box:not(.on)");
+    if (box) {
+      box.classList.add("xp-target");
+      box.dataset.placeXp = card.id;
+      marked.push(box);
+    }
+  }
+  for (const box of marked) box.addEventListener("click", () => act("placeXp", box.dataset.placeXp));
+  return marked;
+}
+
+function renderGuide() {
+  const box = document.querySelector("#guide");
+  if (!box) return;
+  document.querySelectorAll(".needs-click").forEach((node) => node.classList.remove("needs-click"));
+  const lines = [];
+  const mark = (selector) => document.querySelectorAll(selector).forEach((node) => node.classList.add("needs-click"));
+  const me = G.players[view.seat];
+  if (G.gameOver || !me) {
+    box.hidden = true;
+    return;
+  }
+  const myTurn = G.active === view.seat;
+  if (state.phase === "chooseWriter") lines.push(t("g_writer"));
+  if (state.tuckPending > 0) {
+    lines.push(t("g_tuck"));
+    mark("#actionHand .action-card");
+  } else if (state.phase === "chooseAction") {
+    lines.push(t("g_chooseAction"));
+    mark("#actionHand .action-card:not(:disabled)");
+  }
+  if (myTurn && state.phase === "chooseGroup") {
+    lines.push(t("g_chooseGroup"));
+    mark("#groups [data-group]:not(:disabled)");
+  }
+  if (state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0) {
+    lines.push(t("g_perrault"));
+    mark("#itemDisplay [data-item]:not(:disabled)");
+  } else if (myTurn && state.phase === "buyItem") {
+    lines.push(t("g_buyItem"));
+    mark("#itemDisplay [data-item]:not(:disabled)");
+    mark("#resolveActionBtn");
+  }
+  if (state.activatePending > 0) {
+    lines.push(t("g_activate"));
+    const ids = activationCandidates().map((card) => card.id);
+    for (const wrap of el.tableau.querySelectorAll("[data-own-id]")) {
+      if (!ids.includes(wrap.dataset.ownId)) continue;
+      wrap.classList.add("needs-click", "pick-activate");
+      wrap.addEventListener("click", (event) => {
+        if (event.target.closest("button, summary")) return;
+        act("activatePick", wrap.dataset.ownId);
+      });
+    }
+  }
+  if (state.questChoices > 0) {
+    lines.push(t("g_quest"));
+    mark("#questDisplay [data-quest]");
+  }
+  if ((state.writerDraftChoices || []).length) {
+    lines.push(t("g_draft"));
+    mark("[data-writer-choice]");
+  }
+  if (state.writerDiscardRemaining > 0) {
+    lines.push(t("g_discard"));
+    mark("[data-writer-discard], [data-finish-writer-discard]");
+  }
+  if (state.freeUpgrades > 0 && state.tableau.some((card) => card.deck === "legendary" && !card.upgraded)) {
+    lines.push(t("g_free", { n: state.freeUpgrades }));
+    mark("[data-upgrade]");
+  }
+  if (markXpTargets().length) lines.push(t("g_xp", { n: state.xp, xp: resourceIcon("xp", "XP") }));
+  if (myTurn && state.phase === "roundDone" && !state.questChoices && !state.tuckPending && !state.activatePending) {
+    lines.push(t("g_endTurn"));
+    mark("#endRoundBtn");
+  }
+  if (!lines.length && G.active !== null && !myTurn && G.players[G.active]) lines.push(t("g_wait", { p: escapeHtml(G.players[G.active].name) }));
+  box.hidden = !lines.length;
+  box.innerHTML = lines.map((line) => `<p>${line}</p>`).join("");
 }
 
 function phaseMessage() {
@@ -1303,7 +1424,7 @@ function legendaryXpControls(card) {
 }
 
 function renderCompactOwnedCard(card) {
-  return `<div class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
+  return `<div data-own-id="${card.id}" class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
     <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><strong>${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</strong>${renderTags(card)}</div></div>
     ${card.deck === "legendary" ? `<details><summary>${t("effectsUpgrade")}</summary>${renderLegendaryEffects(card)}</details>${legendaryXpControls(card)}` : ""}
     ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
@@ -1313,7 +1434,7 @@ function renderCompactOwnedCard(card) {
 function renderOwnedCard(card) {
   if (card.zone === "Quest") return CardFace.quest(card, { cls: "fc-small" });
   return `
-    <div class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
+    <div data-own-id="${card.id}" class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
       <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><div class="card-title">${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
       ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(tc(card.effect))}</div>`}
       ${legendaryXpControls(card)}
@@ -1371,7 +1492,7 @@ function renderRound() {
     gameOver: "st_gameOver",
   };
   el.roundState.textContent = t(labels[state.phase] || "st_waitTurn");
-  el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0;
+  el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0;
   el.endRoundBtn.classList.toggle("primary", state.phase === "roundDone" && !state.questChoices && !state.tuckPending);
   el.resolveActionBtn.disabled = state.phase !== "buyItem";
   el.resolveActionBtn.classList.toggle("hidden", state.phase !== "buyItem");
