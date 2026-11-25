@@ -798,7 +798,7 @@ window.GAME_DATA = {
       "id": "I27",
       "deck": "item",
       "name": "Seven-League Boots",
-      "cost": 5,
+      "cost": 3,
       "icons": "Dexterity 1",
       "effect": "Instant: take the first player token.",
       "copy": 1

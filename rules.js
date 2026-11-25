@@ -166,14 +166,14 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
-        <li>Discard the cards nobody took. Refill the Items to 1 + players and the Adventures to 1 + players.</li>
+        <li>Discard the cards nobody took. Then discard the oldest Item and the oldest Adventure still on display (the leftmost of each row), slide the others to the left and refill on the right: Items to 1 + players, Adventures to 1 + players.</li>
         <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
       ["effects", "Effects in detail", `<h3>The 12 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p><p class="legend-line">[[icon:activation]] activate 1 of your cards · [[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take an Adventure.</p>[[actions]]
       <p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them, of your choice. An Activation that costs something (spend coins, discard a card…) is optional.</p>
       <p><b>Take an Adventure.</b> Choose one face-up Adventure and keep it in front of you. It will score at the end of the game.</p>
-      <p><b>Free upgrade.</b> Fill at once all the star spaces of a Legendary character: it is upgraded (any XP already on it is discarded). A free upgrade can <b>never</b> be used on your Writer: its levels are only reached with XP. If you have no Legendary character to upgrade by the end of your turn, the free upgrade is lost.</p>
+      <p><b>Free upgrade.</b> Fill at once all the remaining star spaces of a Legendary character: it is upgraded. A free upgrade can <b>never</b> be used on your Writer: its levels are only reached with XP. If you have no Legendary character to upgrade by the end of your turn, the free upgrade is lost.</p>
       <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free.</p>
       <p><b>Draw a Chapter card.</b> Draw 1 card from your Chapter deck, then put 1 Chapter card from your hand under your deck. If your Chapter deck is empty, the effect does nothing. This way the deck always counts the rounds.</p>
       <h3>Legendary characters</h3>
@@ -248,14 +248,14 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
-        <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Aventures jusqu’à 1 + joueurs.</li>
+        <li>Défaussez les cartes que personne n’a prises. Défaussez ensuite l’Objet et l’Aventure les plus anciens encore visibles (les plus à gauche de chaque rangée), décalez les autres vers la gauche et complétez par la droite : Objets jusqu’à 1 + joueurs, Aventures jusqu’à 1 + joueurs.</li>
         <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
       ["effects", "Les effets en détail", `<h3>Les 12 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p><p class="legend-line">[[icon:activation]] déclencher 1 de vos cartes · [[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Aventure.</p>[[actions]]
       <p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux, au choix. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
       <p><b>Prendre une Aventure.</b> Choisissez une Aventure visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
-      <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile d’un personnage Légendaire : il est amélioré (l’XP déjà posé dessus est défaussé). Une amélioration gratuite ne peut <b>jamais</b> servir sur votre Écrivain : ses niveaux ne s’atteignent qu’avec de l’XP. Si vous n’avez aucun personnage Légendaire à améliorer à la fin de votre tour, l’amélioration gratuite est perdue.</p>
+      <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile restantes d’un personnage Légendaire : il est amélioré. Une amélioration gratuite ne peut <b>jamais</b> servir sur votre Écrivain : ses niveaux ne s’atteignent qu’avec de l’XP. Si vous n’avez aucun personnage Légendaire à améliorer à la fin de votre tour, l’amélioration gratuite est perdue.</p>
       <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère.</p>
       <p><b>Piocher une carte Chapitre.</b> Piochez 1 carte de votre pioche Chapitre, puis remettez 1 carte Chapitre de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours les manches.</p>
       <h3>Personnages légendaires</h3>
@@ -330,14 +330,14 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
-        <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Avventure fino a 1 + giocatori.</li>
+        <li>Scarta le carte che nessuno ha preso. Poi scarta l’Oggetto e l’Avventura più vecchi ancora visibili (i più a sinistra di ogni fila), fai scorrere gli altri verso sinistra e completa da destra: Oggetti fino a 1 + giocatori, Avventure fino a 1 + giocatori.</li>
         <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],
       ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p><p class="legend-line">[[icon:activation]] attiva 1 delle tue carte · [[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi un’Avventura.</p>[[actions]]
       <p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi, a scelta. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
       <p><b>Prendere un’Avventura.</b> Scegli un’Avventura scoperta e tienila davanti a te. Darà punti a fine partita.</p>
-      <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella di un personaggio Leggendario: viene potenziato (gli XP già posati su di esso vengono scartati). Un potenziamento gratis non può <b>mai</b> essere usato sul tuo Scrittore: i suoi livelli si raggiungono solo con gli XP. Se alla fine del tuo turno non hai nessun personaggio Leggendario da potenziare, il potenziamento gratis è perso.</p>
+      <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella rimanenti di un personaggio Leggendario: viene potenziato. Un potenziamento gratis non può <b>mai</b> essere usato sul tuo Scrittore: i suoi livelli si raggiungono solo con gli XP. Se alla fine del tuo turno non hai nessun personaggio Leggendario da potenziare, il potenziamento gratis è perso.</p>
       <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera.</p>
       <p><b>Pescare una carta Capitolo.</b> Pesca 1 carta dal tuo mazzo Capitolo, poi rimetti 1 carta Capitolo dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre i round.</p>
       <h3>Personaggi leggendari</h3>

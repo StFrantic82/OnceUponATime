@@ -493,6 +493,13 @@ function endRoundAll() {
     return;
   }
   for (const p of G.players) withSeat(p.seat, drawActionCard);
+  // The oldest Item and the oldest Adventure still on display leave the game, so that both rows keep moving.
+  if (G.itemDisplay.length && G.decks.items.length) {
+    const [old] = G.itemDisplay.splice(0, 1);
+    G.discards = G.discards || { common: [], legendary: [], items: [] };
+    G.discards.items.push(old);
+  }
+  if (G.questDisplay.length && G.decks.quests.length) G.questDisplay.splice(0, 1);
   while (G.itemDisplay.length < 1 + G.players.length && G.decks.items.length) G.itemDisplay.push(...draw("items", 1));
   while (G.questDisplay.length < 1 + G.players.length && G.decks.quests.length) G.questDisplay.push(...draw("quests", 1));
   startRound();
