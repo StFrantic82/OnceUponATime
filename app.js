@@ -842,9 +842,61 @@ function resolveChoice(index) {
   applyOption(choice.options[i], choice.source);
 }
 
+// Villains' "mean" effects: they take from the other storytellers.
+function opponents() {
+  return G.players.filter((p) => p.seat !== G.cur);
+}
+
+function applyMean(text, source) {
+  let m;
+  const me = G.players[G.cur];
+  if ((m = text.match(/steal (\d+) coins? from each opponent( who has more coins than you)?/i))) {
+    const n = Number(m[1]);
+    for (const o of opponents()) {
+      if (m[2] && o.coins <= me.coins) continue;
+      const k = Math.min(n, o.coins);
+      if (!k) continue;
+      o.coins -= k;
+      gain("coins", k);
+      log("l_steal", { p: state.name, n: k, o: o.name, c: C(source) });
+    }
+  }
+  if ((m = text.match(/each opponent (?:with more coins than you )?loses (\d+) coins?/i))) {
+    const onlyRicher = /with more coins than you/i.test(text);
+    for (const o of opponents()) {
+      if (onlyRicher && o.coins <= me.coins) continue;
+      const k = Math.min(Number(m[1]), o.coins);
+      if (!k) continue;
+      o.coins -= k;
+      log("l_lose", { o: o.name, n: k, c: C(source) });
+    }
+  }
+  if ((m = text.match(/steal (\d+) VP from the opponent with the most VP/i))) {
+    const target = opponents().sort((a, b) => b.vp - a.vp)[0];
+    const k = target ? Math.min(Number(m[1]), target.vp) : 0;
+    if (k) {
+      target.vp -= k;
+      gain("vp", k);
+      log("l_stealVp", { p: state.name, n: k, o: target.name, c: C(source) });
+    }
+  }
+  if (/choose an opponent\. They discard 1 coin or 1 XP/i.test(text)) {
+    const target = opponents().sort((a, b) => b.coins + b.xp - (a.coins + a.xp))[0];
+    if (target && target.coins > 0) {
+      target.coins -= 1;
+      gain("coins", 1);
+      log("l_steal", { p: state.name, n: 1, o: target.name, c: C(source) });
+    } else if (target && target.xp > 0) {
+      target.xp -= 1;
+      gain("xp", 1);
+    }
+  }
+}
+
 function applyInstant(card) {
   const text = `${card.effect || ""} ${card.base || ""}`;
   if (!/Instant/i.test(text)) return;
+  applyMean(text, card.name);
   const options = choiceOptions(text);
   if (options) {
     const both = card.name === "Little Red Riding Hood" && countByName("The Wolf") > 0;
@@ -928,7 +980,9 @@ async function activateCard(card) {
     G.cur = seat;
     if (!ok) return;
   }
-  if (/choose one of those effects/i.test(text)) {
+  if (/Activation:[^.]*\bsteal\b/i.test(text)) {
+    applyMean(text.slice(text.search(/Activation:/i)), card.name);
+  } else if (/choose one of those effects/i.test(text)) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
   } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
@@ -1052,7 +1106,7 @@ function scoreQuest(quest) {
   if (/Lost Voice/.test(name)) return Math.min(10, icons.Intelligence * 2);
   if (/Glass Slipper/.test(name)) return Math.min(12, completeSets * 4);
   if (/Neverland/.test(name)) return Math.min(...ICONS.map((i) => icons[i])) >= 3 ? 10 : Math.min(...ICONS.map((i) => icons[i])) >= 2 ? 6 : 0;
-  if (/Apple's Bite/.test(name)) return Math.min(10, countAlignment("Bad") * 2);
+  if (/Apple's Bite/.test(name)) return Math.min(12, countAlignment("Bad") * 3);
   if (/Forest Awakening/.test(name)) return Math.min(10, countAlignment("Good"));
   if (/Queen's Command/.test(name)) return Math.min(10, countCardsWith("Instant") * 2);
   if (/House of Seven/.test(name)) return Math.min(10, state.tableau.length);
@@ -1097,19 +1151,19 @@ function scoreCards() {
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
     else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
     else if (n === "Evil Sorcerer") total += sets * 2;
-    else if (n === "The Evil Queen") total += up ? Math.min(10, icons.Charm * 2) : Math.min(10, maxCharmAtTable());
+    else if (n === "The Evil Queen") total += up ? Math.min(10, icons.Charm * 2) : Math.min(6, maxCharmAtTable());
     else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.floor(icons.Charm / 2);
-    else if (n === "Dorothy Gale") total += Math.min(16, sets * 4);
+    else if (n === "Dorothy Gale") total += Math.min(12, sets * 3);
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
-    else if (n === "Captain Hook") total += up ? Math.min(14, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);
+    else if (n === "Captain Hook") total += up ? Math.min(10, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);
     else if (n === "Little Red Riding Hood") total += Math.min(10, goodBadPairs * 2);
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2);
-    else if (n === "Prince John") total += Math.min(12, Math.floor(state.coins / 2));
+    else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
     else if (n === "Cinderella") total += Math.min(14, state.items.length * 2);
     else if (n === "Rumpelstiltskin") total += up ? Math.min(14, countAlignment("Bad") * 2) : Math.min(8, countAlignment("Bad"));
     else if (n === "Belle") total += Math.min(14, upgradedLeg * 2);
-    else if (n === "Beast") total += up ? Math.min(14, icons.Strength * 2) : Math.floor(icons.Strength / 2);
+    else if (n === "Beast") total += up ? Math.min(10, icons.Strength * 2) : Math.floor(icons.Strength / 2);
   }
   return total;
 }

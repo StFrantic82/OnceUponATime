@@ -123,7 +123,7 @@ window.GAME_DATA = {
       "name": "Pirate",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: discard 1 Character to gain 1 XP and 1 coin.",
+      "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 1
     },
     {
@@ -132,7 +132,7 @@ window.GAME_DATA = {
       "name": "Pirate",
       "alignment": "Bad",
       "icons": "Dexterity 1",
-      "effect": "Instant: discard 1 Character to gain 1 XP and 1 coin.",
+      "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 2
     },
     {
@@ -141,7 +141,7 @@ window.GAME_DATA = {
       "name": "Pirate",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: discard 1 Character to gain 1 XP and 1 coin.",
+      "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 3
     },
     {
@@ -150,7 +150,7 @@ window.GAME_DATA = {
       "name": "Pirate",
       "alignment": "Bad",
       "icons": "Dexterity 1",
-      "effect": "Instant: discard 1 Character to gain 1 XP and 1 coin.",
+      "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 4
     },
     {
@@ -159,7 +159,7 @@ window.GAME_DATA = {
       "name": "Pirate",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: discard 1 Character to gain 1 XP and 1 coin.",
+      "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 5
     },
     {
@@ -168,7 +168,7 @@ window.GAME_DATA = {
       "name": "Pirate",
       "alignment": "Bad",
       "icons": "Dexterity 1",
-      "effect": "Instant: discard 1 Character to gain 1 XP and 1 coin.",
+      "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 6
     },
     {
@@ -402,7 +402,7 @@ window.GAME_DATA = {
       "name": "Stepsister",
       "alignment": "Bad",
       "icons": "none",
-      "effect": "Instant: you may discard 1 Item to gain 3 coins.",
+      "effect": "Instant: each opponent loses 1 coin.",
       "copy": 1
     },
     {
@@ -411,7 +411,7 @@ window.GAME_DATA = {
       "name": "Stepsister",
       "alignment": "Bad",
       "icons": "none",
-      "effect": "Instant: you may discard 1 Item to gain 3 coins.",
+      "effect": "Instant: each opponent loses 1 coin.",
       "copy": 2
     },
     {
@@ -918,7 +918,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Instant: gain 2 XP if you have a Bad Character.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Bad Character you have, max 8 VP.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each Bad Character you have, max 8 VP.",
       "upgraded": false
     },
     {
@@ -947,7 +947,7 @@ window.GAME_DATA = {
       "name": "Sheriff of Nottingham",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: gain 1 coin for each Good Character you have, max 4 coins.",
+      "base": "Strength 1. Instant: each opponent loses 1 coin and you gain 2 coins.",
       "upgrade": "Cost 3 XP. Ongoing: whenever you gain coins from a card effect, gain +1 coin.",
       "upgraded": false
     },
@@ -1007,7 +1007,7 @@ window.GAME_DATA = {
       "name": "The Evil Queen",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1. Game End: score the Charm icons of the player with the most Charm: gain 1 VP for each of those icons, max 10 VP.",
+      "base": "Charm 1. Game End: score the Charm icons of the player with the most Charm: gain 1 VP for each of those icons, max 6 VP.",
       "upgrade": "Cost 5 XP. Game End: gain 2 VP for each Charm you have, max 10 VP.",
       "upgraded": false
     },
@@ -1028,7 +1028,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 1 Tag token of a type you do not have.",
-      "upgrade": "Cost 5 XP. Game End: 4 VP for each complete set of four icons, max 16 VP.",
+      "upgrade": "Cost 5 XP. Game End: 3 VP for each complete set of four icons, max 12 VP.",
       "upgraded": false
     },
     {
@@ -1078,7 +1078,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Dexterity 1. Game End: 1 VP for each pair of Dexterity icons you have.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Dexterity icon you have, max 14 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Dexterity icon you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1097,8 +1097,8 @@ window.GAME_DATA = {
       "name": "The Wolf",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: discard 1 Character to gain 3 VP.",
-      "upgrade": "Cost 4 XP. Activation: discard 1 Character to gain 2 VP and 2 coins.",
+      "base": "Strength 1. Instant: steal 2 VP from the opponent with the most VP.",
+      "upgrade": "Cost 4 XP. Activation: steal 1 coin from each opponent.",
       "upgraded": false
     },
     {
@@ -1137,8 +1137,8 @@ window.GAME_DATA = {
       "name": "Prince John",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1. Ongoing: whenever you sell an Item, gain +1 coin.",
-      "upgrade": "Cost 4 XP. Game End: 1 VP for every 2 coins you have, max 12 VP.",
+      "base": "Charm 1. Instant: steal 1 coin from each opponent.",
+      "upgrade": "Cost 4 XP. Game End: 1 VP for every 2 coins you have, max 8 VP.",
       "upgraded": false
     },
     {
@@ -1178,7 +1178,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: level up 1 Good Character for 2 less XP.",
-      "upgrade": "Cost 3 XP. Activation: level up 1 Character for 3 less XP, minimum 1 XP.",
+      "upgrade": "Cost 2 XP. Activation: level up 1 Character for 3 less XP, minimum 1 XP.",
       "upgraded": false
     },
     {
@@ -1218,7 +1218,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Game End: 1 VP for each pair of Strength icons you have.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon you have, max 14 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1228,7 +1228,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: recover one used Action card with value 7 or lower.",
-      "upgrade": "Cost 3 XP. Ongoing: the first time each round you play an Action card value 7 or lower, gain 1 XP.",
+      "upgrade": "Cost 2 XP. Ongoing: the first time each round you play an Action card value 7 or lower, gain 1 XP.",
       "upgraded": false
     }
   ],
@@ -1330,7 +1330,7 @@ window.GAME_DATA = {
       "number": 7,
       "name": "The Apple's Bite",
       "theme": "Snow White",
-      "scoring": "2 VP for each Bad card. Max 10 VP."
+      "scoring": "3 VP for each Bad card. Max 12 VP."
     },
     {
       "id": "Q8",

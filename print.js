@@ -222,8 +222,8 @@ function fitFace(face) {
   const texts = [...face.querySelectorAll(".fc-side, .fc-text")];
   if (!overflows()) return;
   const artStart = art ? art.offsetHeight : 0;
-  for (let h = artStart; art && h > artStart * 0.62 && overflows(); h -= 4) art.style.height = `${h}px`;
-  for (let i = 0; i < 12 && overflows(); i += 1) {
+  for (let h = artStart; art && h > artStart * 0.5 && overflows(); h -= 4) art.style.height = `${h}px`;
+  for (let i = 0; i < 20 && overflows(); i += 1) {
     for (const el of texts) el.style.fontSize = `${parseFloat(getComputedStyle(el).fontSize) - 0.5}px`;
   }
 }
@@ -331,7 +331,13 @@ function build() {
     face.style.transform = `scale(${scale})`;
     fitFace(face);
   }
-  document.body.dataset.ready = "1";
+  // Fit again once every picture and font has settled, then signal that the page is ready.
+  const refit = () => {
+    for (const cell of document.querySelectorAll(".cell[data-nw]")) if (cell.firstElementChild) fitFace(cell.firstElementChild);
+    document.body.dataset.ready = "1";
+  };
+  if (document.readyState === "complete") setTimeout(refit, 300);
+  else window.addEventListener("load", () => setTimeout(refit, 300));
 }
 
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
