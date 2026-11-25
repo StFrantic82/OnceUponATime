@@ -1239,7 +1239,7 @@ window.GAME_DATA = {
     },
     {
       "number": 2,
-      "effect": "Free level up to 2 card"
+      "effect": "Free level up + 2 coins"
     },
     {
       "number": 3,
@@ -1251,7 +1251,7 @@ window.GAME_DATA = {
     },
     {
       "number": 5,
-      "effect": "3 Coins + 3 XP"
+      "effect": "3 Coins + 2 XP"
     },
     {
       "number": 6,

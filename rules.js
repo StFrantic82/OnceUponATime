@@ -174,7 +174,7 @@ const RULES = {
       </ul>`],
       ["effects", "Effects in detail", `<p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them. An Activation that costs something (spend coins, discard a card…) is optional.</p>
       <p><b>Take a Quest.</b> Choose one face-up Quest and keep it in front of you. It will score at the end of the game.</p>
-      <p><b>Free upgrade.</b> Upgrade one Legendary character at once, without filling its star spaces (any XP already on it is discarded).</p>
+      <p><b>Free upgrade.</b> Fill at once all the star spaces of the next step of a Legendary character or of your Writer: it moves up a level (any XP already on that step is discarded).</p>
       <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free.</p>
       <p><b>Draw an Action card.</b> Draw 1 card from your Action deck, then put 1 Action card from your hand under your deck. If your Action deck is empty, the effect does nothing. This way the deck always counts the rounds.</p>
       <h3>Legendary characters</h3>
@@ -252,7 +252,7 @@ const RULES = {
       </ul>`],
       ["effects", "Les effets en détail", `<p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
       <p><b>Prendre une Quête.</b> Choisissez une Quête visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
-      <p><b>Amélioration gratuite.</b> Améliorez aussitôt un personnage Légendaire, sans remplir ses cases étoile (l’XP déjà posé dessus est défaussé).</p>
+      <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile de la prochaine étape d’un personnage Légendaire ou de votre Écrivain : il monte de niveau (l’XP déjà posé sur cette étape est défaussé).</p>
       <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère.</p>
       <p><b>Piocher une carte Action.</b> Piochez 1 carte de votre pioche Action, puis remettez 1 carte Action de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours les manches.</p>
       <h3>Personnages légendaires</h3>
@@ -330,7 +330,7 @@ const RULES = {
       </ul>`],
       ["effects", "Gli effetti nel dettaglio", `<p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
       <p><b>Prendere una Missione.</b> Scegli una Missione scoperta e tienila davanti a te. Darà punti a fine partita.</p>
-      <p><b>Potenziamento gratis.</b> Potenzia subito un personaggio Leggendario, senza riempire le sue caselle stella (gli XP già posati su di esso vengono scartati).</p>
+      <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella del prossimo passaggio di un personaggio Leggendario o del tuo Scrittore: sale di livello (gli XP già posati su quel passaggio vengono scartati).</p>
       <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera.</p>
       <p><b>Pescare una carta Azione.</b> Pesca 1 carta dal tuo mazzo Azione, poi rimetti 1 carta Azione dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre i round.</p>
       <h3>Personaggi leggendari</h3>

@@ -544,6 +544,16 @@ function upgradeLegendary(cardId) {
   completeUpgrade(card);
 }
 
+// A free upgrade can also complete the next level of your Writer.
+async function freeUpgradeWriter() {
+  if (G.gameOver || state.freeUpgrades <= 0 || !state.writer || state.writerLevel >= 3) return;
+  const seat = G.cur;
+  state.freeUpgrades -= 1;
+  state.writerXp = 0;
+  await levelUpWriter();
+  G.cur = seat;
+}
+
 function completeUpgrade(card) {
   card.upgraded = true;
   card.xpOn = 0;
@@ -720,6 +730,7 @@ async function resolveAction(effect) {
   if (/2 coins/i.test(text)) gain("coins", 2);
   if (/1 Coin/i.test(text)) gain("coins", 1);
   if (/3 XP/i.test(text)) gain("xp", 3);
+  else if (/2 XP/i.test(text)) gain("xp", 2);
   else if (/1 XP/i.test(text)) gain("xp", 1);
   if (/Quest/i.test(text)) grantQuestChoice("action");
   if (/Activate all/i.test(text)) await activateAll();
@@ -1032,6 +1043,7 @@ const MOVES = {
   takeQuest,
   upgrade: upgradeLegendary,
   placeXp,
+  writerFree: freeUpgradeWriter,
   activatePick,
   writerDraft: resolveWriterDraft,
   writerDiscard: discardForWriter,
@@ -1231,9 +1243,9 @@ function renderGuide() {
     bubble(el.tableau, t("g_discard"));
     mark("[data-writer-discard], [data-finish-writer-discard]");
   }
-  if (state.freeUpgrades > 0 && state.tableau.some((card) => card.deck === "legendary" && !card.upgraded)) {
-    bubble(el.tableau, t("g_free", { n: state.freeUpgrades }));
-    mark("[data-upgrade]");
+  if (state.freeUpgrades > 0 && (state.tableau.some((card) => card.deck === "legendary" && !card.upgraded) || (state.writer && state.writerLevel < 3))) {
+    bubble(el.writerPanel, t("g_free", { n: state.freeUpgrades }));
+    mark("[data-upgrade], [data-writer-free]");
   }
   if (markXpTargets().length) bubble(el.writerPanel, t("g_xp", { n: state.xp, xp: resourceIcon("xp", "XP") }));
   if (myTurn && state.phase === "roundDone" && !state.questChoices && !state.tuckPending && !state.activatePending) {
@@ -1643,6 +1655,8 @@ function renderWriter() {
   el.writerPanel.innerHTML = state.writer ? renderWriterCard(state.writer, state.writerLevel, false) : "";
   const upgrade = el.writerPanel.querySelector("[data-writer-upgrade]");
   if (upgrade) upgrade.addEventListener("click", () => act("placeXp", "writer"));
+  const writerFree = el.writerPanel.querySelector("[data-writer-free]");
+  if (writerFree) writerFree.addEventListener("click", () => act("writerFree"));
   const finishDiscard = el.writerPanel.querySelector("[data-finish-writer-discard]");
   if (finishDiscard) finishDiscard.addEventListener("click", () => act("writerDiscardDone"));
   for (const button of el.writerPanel.querySelectorAll("[data-writer-choice]")) {
@@ -1693,7 +1707,7 @@ function renderWriterCard(writer, level, selectable, preview = false) {
   const drafts = own ? state.writerDraftChoices || [] : [];
   const extra = `${drafts.length ? `<div class="writer-draft">${drafts.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : escapeHtml(tc(choice.name))}</button>`).join("")}</div>` : ""}
     ${preview ? "" : `<div class="writer-card-actions">
-      ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 && own ? `<button type="button" ${!canPlace ? "disabled" : ""} data-writer-upgrade>${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button>` : ""}
+      ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 && own ? `<button type="button" ${!canPlace ? "disabled" : ""} data-writer-upgrade>${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button>${state.freeUpgrades > 0 && !G.gameOver ? `<button type="button" data-writer-free>${t("freeUpBtn")}</button>` : ""}` : ""}
       ${own && state.writerDiscardRemaining > 0 ? `<button type="button" data-finish-writer-discard>${t("finishDiscard")}</button>` : ""}
     </div>`}`;
   return CardFace.writer(writer, { level: own ? level : 0, xpPlaced: own ? state.writerXp || 0 : 0, extra });
