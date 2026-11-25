@@ -316,9 +316,9 @@ h2::after {
 /* ---------- Action hand: storybook pages ---------- */
 .action-hand {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-bottom: 18px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 14px;
 }
 
 .action-card {
@@ -1388,7 +1388,7 @@ h2::after {
   }
 
   .action-hand {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .menu-deck-buttons {
@@ -2928,3 +2928,26 @@ html {
 .wcard .portrait { width: 64px; height: 64px; flex: 0 0 auto; filter: drop-shadow(0 2px 3px rgba(60, 30, 10, .35)); }
 .wcard .writer-levels { gap: 0; padding-bottom: 6px; }
 .wcard .writer-level-box strong .game-icon { width: 16px; height: 16px; vertical-align: -3px; }
+
+/* Action cards in hand: four small pages in a row, in chapter order */
+.action-hand .acard { padding: 4px 4px 4px 7px; background: linear-gradient(90deg, var(--spine, #7a3a24) 0 4px, #e9d3a6 4px 5px, #f3e2bd 5px 6px, #e9d3a6 6px); box-shadow: 0 3px 8px rgba(20, 10, 4, 0.3); }
+.action-hand .ac-page { padding: 4px 2px 3px; box-shadow: inset 0 0 8px rgba(170, 120, 60, 0.2); }
+.action-hand .ac-label { font-size: 8px; }
+.action-hand .ac-num { font-size: 22px; }
+.action-hand .ac-rule { margin: 1px 0 2px; height: 6px; }
+.action-hand .ac-effect { font-size: 9.5px; line-height: 1.1; gap: 1px; }
+.action-hand .ac-line { gap: 2px; }
+.action-hand .ac-line .game-icon { width: 15px; height: 15px; }
+.action-hand .ac-big { font-size: 14px; }
+.action-hand .ac-and { font-size: 9px; }
+.action-hand .ac-scroll { width: 10px; height: 12px; border-width: 1.5px; }
+.action-hand .ac-foot { font-size: 7px; }
+.action-hand .action-card:hover:not(:disabled) { transform: translateY(-3px); }
+.action-hand .ac-foot { display: none; }
+.action-hand .ac-effect { font-size: 9px; }
+.action-hand .ac-line .game-icon { width: 13px; height: 13px; }
+.action-hand .ac-label, .action-hand .ac-rule { display: none; }
+.action-hand .ac-num { font-size: 20px; margin-bottom: 2px; }
+.action-hand .ac-and { line-height: 1; }
+.action-hand .ac-effect { justify-content: flex-start; }
+.action-hand .acard { aspect-ratio: 5 / 7.8; }
