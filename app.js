@@ -348,13 +348,18 @@ function startRound() {
   maybeBotsChoose();
 }
 
+function hasSevenDwarves() {
+  return state.quests.some((q) => /House of Seven/.test(q.name)) && countByName("Dwarf") >= 7;
+}
+
 function endGame() {
   G.gameOver = true;
   G.active = null;
   for (const p of G.players) p.phase = "gameOver";
   G.results = G.players
-    .map((p) => withSeat(p.seat, () => ({ seat: p.seat, name: p.name, writer: p.writer?.name || "-", ...finalScore() })))
-    .sort((a, b) => b.total - a.total);
+    .map((p) => withSeat(p.seat, () => ({ seat: p.seat, name: p.name, writer: p.writer?.name || "-", ...finalScore(), sevenDwarves: hasSevenDwarves() })))
+    // The House of Seven with all 7 Dwarves wins the game outright.
+    .sort((a, b) => b.sevenDwarves - a.sevenDwarves || b.total - a.total);
   log("l_over");
 }
 
@@ -498,7 +503,7 @@ function groupValue(group) {
   return group.cards.reduce((sum, card) => {
     let value = card.deck === "legendary" ? 7 : 3;
     value += totalIcons(card) * 0.8;
-    if (/Quest|Game End|Activation|Ongoing/i.test(card.effect || card.base || "")) value += 1.2;
+    if (/Quest|Adventure|Game End|Activation|Ongoing/i.test(card.effect || card.base || "")) value += 1.2;
     return sum + value;
   }, 0);
 }
@@ -609,7 +614,7 @@ function takeQuest(questId) {
   state.quests.push(quest);
   G.questDisplay = G.questDisplay.filter((entry) => entry.id !== questId);
   state.questChoices -= 1;
-  const questRewardCards = state.tableau.filter((card) => /whenever you take a Quest, gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
+  const questRewardCards = state.tableau.filter((card) => /whenever you take an? (?:Quest|Adventure), gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
   const mermaid = state.tableau.find((card) => card.name === "Little Mermaid" && card.upgraded);
   if (mermaid) {
@@ -659,10 +664,15 @@ function botTokenIcon() {
 }
 
 // Common deck effects (White Rabbit, Cheshire Cat): look at / draw N cards, keep or play one.
-function commonPick(n, source, rest) {
+function commonPick(n, source, rest, keep = 1) {
   const cards = draw("common", n).map((card) => ({ ...card, source: "Normal" }));
   if (!cards.length) return;
-  G.limbo = { ...(G.limbo || {}), [source]: { cards, rest } };
+  offerPick(cards, source, rest, keep);
+}
+
+// Offer the cards of a pick; with keep > 1 the player picks again among the cards left.
+function offerPick(cards, source, rest, keep) {
+  G.limbo = { ...(G.limbo || {}), [source]: { cards, rest, keep } };
   const options = cards.map((card) => `pick ${card.id}`);
   const p = G.players[G.cur];
   if (p && p.kind === "human" && !simMode) {
@@ -750,8 +760,8 @@ function completeUpgrade(card) {
   card.upgraded = true;
   card.xpOn = 0;
   applyUpgradeGain(card);
-  if (/take 1 Quest/i.test(card.upgrade || "")) grantQuestChoice(card.name);
-  if (/take 1 Quest and gain 1 XP/i.test(card.upgrade || "")) gain("xp", 1);
+  if (/take 1 (?:Quest|Adventure)/i.test(card.upgrade || "")) grantQuestChoice(card.name);
+  if (/take 1 (?:Quest|Adventure) and gain 1 XP/i.test(card.upgrade || "")) gain("xp", 1);
   const servants = state.tableau.filter((entry) => entry.name === "The Invisible Servants").length;
   if (servants) gain("coins", servants);
   log("l_upgrades", { p: state.name, c: C(card.name) });
@@ -983,6 +993,15 @@ function applyOption(option, source) {
     delete G.limbo[source];
     const card = pending.cards.find((c) => c.id === m[1]);
     const others = pending.cards.filter((c) => c !== card);
+    if ((pending.keep || 1) > 1 && card && others.length) {
+      state.tableau.push(card);
+      log("l_takes", { p: state.name, cards: { cs: [card.name] } });
+      applyInstant(card);
+      checkPeterPan();
+      onTakeTagless([card]);
+      offerPick(others, source, pending.rest, pending.keep - 1);
+      return;
+    }
     if (pending.rest === "bottom") G.decks.common.push(...others.map(({ source: _s, ...c }) => c));
     else if (pending.rest === "discard") others.forEach(toDiscard);
     if (pending.rest === "fromDiscard" && card) {
@@ -1008,7 +1027,7 @@ function applyOption(option, source) {
   }
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
-  else if (/take 1 Quest/i.test(option)) grantQuestChoice(source);
+  else if (/take 1 (?:Quest|Adventure)/i.test(option)) grantQuestChoice(source);
 }
 
 // A human player picks with buttons; the computer picks on the spot.
@@ -1035,7 +1054,7 @@ function botOption(options) {
     if (card && card.deck === "legendary" && hunt[best] < 6) return null;
     return best;
   }
-  const quest = options.findIndex((o) => /take 1 Quest/i.test(o));
+  const quest = options.findIndex((o) => /take 1 (?:Quest|Adventure)/i.test(o));
   if (quest >= 0 && G.questDisplay.length && state.quests.length < 4) return quest;
   const xp = options.findIndex((o) => /XP/i.test(o));
   const coins = options.findIndex((o) => /coin/i.test(o));
@@ -1186,7 +1205,7 @@ function applyInstantInner(card) {
   if (/coins? and 1 XP|Tag token of your choice and 1 XP/i.test(text)) gain("xp", 1);
   if (/Gain 2 Tag tokens/i.test(text)) gainTagToken(2, card.name);
   else if (/Tag token/i.test(text)) gainTagToken(1, card.name);
-  if (/take 1 Quest|Take 1 Quest/i.test(text)) grantQuestChoice(card.name);
+  if (/take 1 (?:Quest|Adventure)/i.test(text)) grantQuestChoice(card.name);
   if (/level up .*free|place XP on a Character so that it levels up/i.test(text)) state.freeUpgrades += 1;
   if (/draw 1 (?:Chapter|Action) card, then put/i.test(text)) drawAndTuck();
 }
@@ -1212,7 +1231,7 @@ function instantLinks(card) {
   if (n === "Prince Charming") gain("vp", Math.min(4, iconCounts().Charm));
   if (n === "Snow White") gain("xp", countByName("Dwarf"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
-  if (n === "Cheshire Cat") commonPick(3, n, "discard");
+  if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
   if (n === "Cinderella") state.writerItemDiscount = 2;
   if (n === "The Glass Coffin") pickFromDiscard(n);
@@ -1911,7 +1930,7 @@ function renderGuide() {
       let m;
       if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
       if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
-      if (/take 1 Quest/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
+      if (/take 1 (?:Quest|Adventure)/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
       if ((m = o.match(/^token (\w+) (\d+)/))) return `+${m[2]} ${squareTag(m[1])}`;
       if ((m = o.match(/^(?:tuck|mirror) (\S+)/))) {
         const card = state.tableau.find((c) => c.id === m[1]);
@@ -2447,7 +2466,7 @@ function formatGameText(text) {
     .replace(/\bVP\b/g, resourceIcon("vp", "VP"))
     .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
     .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
-    .replace(/\bGoals?\b/gi, "Quest")
+    .replace(/\bGoals?\b/gi, "Adventure")
     .replace(/\u0002/g, '<span class="fc-max">').replace(/\u0003/g, "</span>")
     .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence"].map(skillIcon).join("")}</span>`);
 }

@@ -692,7 +692,7 @@ window.GAME_DATA = {
       "name": "Pumpkin Carriage",
       "cost": 5,
       "icons": "Charm 1",
-      "effect": "Instant: take 1 Quest.",
+      "effect": "Instant: take 1 Adventure.",
       "copy": 1
     },
     {
@@ -791,7 +791,7 @@ window.GAME_DATA = {
       "name": "Glass Slipper",
       "cost": 5,
       "icons": "Charm 1",
-      "effect": "Game End: 2 VP for each Quest you completed, max 10 VP. If you have Cinderella, gain 3 VP more.",
+      "effect": "Game End: 2 VP for each Adventure you completed, max 10 VP. If you have Cinderella, gain 3 VP more.",
       "copy": 1
     },
     {
@@ -818,7 +818,7 @@ window.GAME_DATA = {
       "name": "Magic Lamp",
       "cost": 7,
       "icons": "Intelligence 1",
-      "effect": "Instant: choose one: gain 5 coins, gain 4 XP, or take 1 Quest.",
+      "effect": "Instant: choose one: gain 5 coins, gain 4 XP, or take 1 Adventure.",
       "copy": 1
     },
     {
@@ -903,7 +903,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: look at the top 3 cards of the Common deck, keep 1 and put the other 2 under the deck.",
-      "upgrade": "Cost 5 XP. Instant: take 1 Quest and gain 1 XP.",
+      "upgrade": "Cost 5 XP. Instant: take 1 Adventure and gain 1 XP.",
       "upgraded": false
     },
     {
@@ -912,8 +912,8 @@ window.GAME_DATA = {
       "name": "Alice",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1, Intelligence 1. Game End: 1 VP for each Quest you completed.",
-      "upgrade": "Cost 2 XP. Game End: 2 VP for each Quest you completed, max 12 VP.",
+      "base": "Charm 1, Intelligence 1. Game End: 1 VP for each Adventure you completed.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure you completed, max 12 VP.",
       "upgraded": false
     },
     {
@@ -1102,7 +1102,7 @@ window.GAME_DATA = {
       "name": "Cheshire Cat",
       "rank": null,
       "alignment": "Neutral",
-      "base": "Dexterity 1. Instant: draw 3 cards from the Common deck, play 1 and discard the others. If you have Alice, gain 2 XP.",
+      "base": "Dexterity 1. Instant: draw 3 cards from the Common deck, play 2 and discard the other. If you have Alice, gain 2 XP.",
       "upgrade": "Cost 3 XP. Activation: draw 2 cards from the Common deck, play 1 and discard the other.",
       "upgraded": false
     },
@@ -1162,8 +1162,8 @@ window.GAME_DATA = {
       "name": "Little Mermaid",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: whenever you take a Quest, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you take a Quest, gain 1 XP and 2 VP.",
+      "base": "Charm 1. Ongoing: whenever you take an Adventure, gain 1 XP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you take an Adventure, gain 1 XP and 2 VP.",
       "upgraded": false
     },
     {
@@ -1416,7 +1416,7 @@ window.GAME_DATA = {
       "number": 10,
       "name": "The House of Seven",
       "theme": "Snow White",
-      "scoring": "1 / 3 / 5 Dwarves: 2 / 4 / 6 VP."
+      "scoring": "1 / 3 / 5 Dwarves: 2 / 4 / 6 VP. All 7 Dwarves: you win the game!"
     },
     {
       "id": "Q11",
@@ -1479,7 +1479,7 @@ window.GAME_DATA = {
       "number": 19,
       "name": "The Final Wish",
       "theme": "Aladdin",
-      "scoring": "2 VP for each Quest."
+      "scoring": "2 VP for each Adventure."
     },
     {
       "id": "Q20",

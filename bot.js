@@ -75,7 +75,7 @@
     let value = item.cost;
     if (state.strategy === "tagless" && (isTagless(item) || /without tags/.test(item.effect))) value += 4;
     if (/VP/.test(item.effect)) value += 2;
-    if (/Quest/.test(item.effect)) value += 1.5;
+    if (/Quest|Adventure/.test(item.effect)) value += 1.5;
     if (/Geppetto/.test(state.tableau.map((c) => c.name).join())) value += 1;
     if (state.tableau.some((c) => item.effect.includes(c.name) || `${c.base || ""} ${c.upgrade || ""}`.includes(item.name))) value += 2;
     value += totalIcons(item);

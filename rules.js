@@ -134,21 +134,21 @@ const RULES = {
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
-      ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Quests. After <b>8 rounds</b>, the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
+      ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Adventures. After <b>8 rounds</b>, the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
       <p>The heart of the game is your hand of <b>Chapter cards</b>, numbered 1 to 12 like the chapters of a book. A high chapter lets you choose first; a low chapter gives a stronger effect. Every chapter you play is gone, so choose wisely when to spend it.</p>`],
       ["components", "The cards", `<p>Every character and Item shows the same elements:</p>
       [[anatomy:common]]
       [[anatomy:legendary]]
       [[anatomy:item]]
-      <p><b>Quest cards</b> score at the end of the game; some have tiers (2 / 4 / 6 VP). <b>Writer cards</b> give each player a personal power that grows over three levels. <b>Chapter cards</b> are pages of a book: their chapter number sets the turn order, their effect is resolved during your turn.</p>
+      <p><b>Adventure cards</b> score at the end of the game; some have tiers (2 / 4 / 6 VP). <b>Writer cards</b> give each player a personal power that grows over three levels. <b>Chapter cards</b> are pages of a book: their chapter number sets the turn order, their effect is resolved during your turn.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>The four skills are <b>Charm</b> [[tag:Charm]], <b>Strength</b> [[tag:Strength]], <b>Cunning</b> [[tag:Dexterity]] and <b>Intelligence</b> [[tag:Intelligence]]. Many Quests and effects count them. A square <b>Tag token</b> counts as one icon of its type: when you gain one, you choose its type. A round green badge with a feather marks the cards that grant VP; it is <b>not a tag</b>. Some cards have <b>no tag</b> at all: they are rewarded in other ways, often with Victory Points during the game (Spinning Wheel, Mad Hatter, “The Queen’s Command”…).</p>
+      <p>The four skills are <b>Charm</b> [[tag:Charm]], <b>Strength</b> [[tag:Strength]], <b>Cunning</b> [[tag:Dexterity]] and <b>Intelligence</b> [[tag:Intelligence]]. Many Adventures and effects count them. A square <b>Tag token</b> counts as one icon of its type: when you gain one, you choose its type. A round green badge with a feather marks the cards that grant VP; it is <b>not a tag</b>. Some cards have <b>no tag</b> at all: they are rewarded in other ways, often with Victory Points during the game (Spinning Wheel, Mad Hatter, “The Queen’s Command”…).</p>
       <p><b>Story links.</b> Cards from the same tale work together: “if you have X” means X is in your tableau (Characters) or among your Items. For example, the Scarecrow gives 2 XP instead of 1 if you have Dorothy Gale, and the Cat and the Fox steal 2 coins from a player who has Pinocchio. Villains’ links often target the cards of your opponents.</p>
       <p><b>Good and Bad cards.</b> A “Good card” or “Bad card” is any card that shows that icon: Characters, but also some Items (the Poisoned Apple, the Spinning Wheel and the Magic Contract are Bad). Only Bad cards have mean effects on other players.</p>
       <p>Effects have four types: [[icon:instant]] <b>Instant</b> (once, when you take the card), [[icon:activation]] <b>Activation</b> (each time an effect activates it), [[icon:ongoing]] <b>Ongoing</b> (always true) and [[icon:endgame]] <b>Game End</b> (scored at the end).</p>`],
       ["setup", "Setup", `<ol>
         <li>Shuffle the Common characters and the Legendary characters into two separate decks.</li>
-        <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>1 + the number of players</b>.</li>
+        <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Adventures and reveal <b>1 + the number of players</b>.</li>
         <li>Each player takes the 12 Chapter cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Chapter deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
         <li>Place your Chapter deck to the left of your Writer, against the notch: it is the book you are writing.</li>
@@ -164,7 +164,7 @@ const RULES = {
       <h3>3. Your turn</h3>
       <ol>
         <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
-        <li><b>Resolve your Chapter card.</b> Coins, XP, Quests, activations or free upgrades.</li>
+        <li><b>Resolve your Chapter card.</b> Coins, XP, Adventures, activations or free upgrades.</li>
         <li><b>Buy one Item</b> if you wish (one only), by paying its price in coins.</li>
         <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card. [[icon:freeup]] <b>Free upgrade</b>: the next step of one of your Legendary characters or of your Writer is completed at once (cover its empty spaces with XP from the supply).</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
@@ -173,13 +173,13 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
-        <li>Discard the cards nobody took. Refill the Items to 1 + players and the Quests to 1 + players.</li>
+        <li>Discard the cards nobody took. Refill the Items to 1 + players and the Adventures to 1 + players.</li>
         <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
-      ["effects", "Effects in detail", `<h3>The 12 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p><p class="legend-line">[[icon:activation]] activate 1 of your cards · [[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take a Quest.</p>[[actions]]
+      ["effects", "Effects in detail", `<h3>The 12 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p><p class="legend-line">[[icon:activation]] activate 1 of your cards · [[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take an Adventure.</p>[[actions]]
       <p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them, of your choice. An Activation that costs something (spend coins, discard a card…) is optional.</p>
-      <p><b>Take a Quest.</b> Choose one face-up Quest and keep it in front of you. It will score at the end of the game.</p>
+      <p><b>Take an Adventure.</b> Choose one face-up Adventure and keep it in front of you. It will score at the end of the game.</p>
       <p><b>Free upgrade.</b> Fill at once all the star spaces of the next step of a Legendary character or of your Writer: it moves up a level (any XP already on that step is discarded).</p>
       <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free.</p>
       <p><b>Draw a Chapter card.</b> Draw 1 card from your Chapter deck, then put 1 Chapter card from your hand under your deck. If your Chapter deck is empty, the effect does nothing. This way the deck always counts the rounds.</p>
@@ -192,12 +192,12 @@ const RULES = {
       ["end", "End of the game and scoring", `<p>The game ends after the 8th round, when only 1 card is left in each Chapter deck. Each player adds up:</p>
       <ul>
         <li>the Victory Points [[icon:vp]] gained during the game;</li>
-        <li>their Quests [[icon:endgame]];</li>
+        <li>their Adventures [[icon:endgame]];</li>
         <li>the [[icon:endgame]] Game End effects of their characters and Items;</li>
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Quest “The Midnight Ball” gives her 1 VP per Charm, up to 10 VP: 7 VP. Her upgraded Evil Queen gives 2 VP per Charm, up to 14 VP: another 14 VP.
+      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Adventure “The Midnight Ball” gives her 1 VP per Charm, up to 10 VP: 7 VP. Her upgraded Evil Queen gives 2 VP per Charm, up to 14 VP: another 14 VP.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
@@ -215,21 +215,21 @@ const RULES = {
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
-      ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Quêtes. Après <b>8 manches</b>, le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
+      ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Aventures. Après <b>8 manches</b>, le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
       <p>Le cœur du jeu, c’est votre main de <b>cartes Chapitre</b>, numérotées de 1 à 12 comme les chapitres d’un livre. Un grand chapitre vous fait choisir en premier ; un petit chapitre donne un effet plus fort. Chaque chapitre joué est perdu : choisissez bien quand le dépenser.</p>`],
       ["components", "Les cartes", `<p>Chaque personnage et chaque Objet présente les mêmes éléments :</p>
       [[anatomy:common]]
       [[anatomy:legendary]]
       [[anatomy:item]]
-      <p>Les <b>cartes Quête</b> rapportent des points en fin de partie ; certaines ont des paliers (2 / 4 / 6 PV). Les <b>cartes Écrivain</b> donnent à chaque joueur un pouvoir personnel qui grandit sur trois niveaux. Les <b>cartes Chapitre</b> sont des pages de livre : leur numéro de chapitre fixe l’ordre du tour, leur effet se résout pendant votre tour.</p>
+      <p>Les <b>cartes Aventure</b> rapportent des points en fin de partie ; certaines ont des paliers (2 / 4 / 6 PV). Les <b>cartes Écrivain</b> donnent à chaque joueur un pouvoir personnel qui grandit sur trois niveaux. Les <b>cartes Chapitre</b> sont des pages de livre : leur numéro de chapitre fixe l’ordre du tour, leur effet se résout pendant votre tour.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup de Quêtes et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type : quand vous en gagnez un, vous choisissez son type. Un badge rond vert avec une plume signale les cartes qui rapportent des PV ; ce n’est <b>pas un tag</b>. Certaines cartes n’ont <b>aucun tag</b> : elles sont récompensées autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…).</p>
+      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup de Aventures et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type : quand vous en gagnez un, vous choisissez son type. Un badge rond vert avec une plume signale les cartes qui rapportent des PV ; ce n’est <b>pas un tag</b>. Certaines cartes n’ont <b>aucun tag</b> : elles sont récompensées autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…).</p>
       <p><b>Liens entre contes.</b> Les cartes d’un même conte fonctionnent ensemble : « si vous avez X » veut dire que X est dans votre tableau (Personnages) ou parmi vos Objets. Par exemple, l’Épouvantail donne 2 XP au lieu de 1 si vous avez Dorothy Gale, et le Chat et le Renard volent 2 pièces à un joueur qui a Pinocchio. Les liens des méchants visent souvent les cartes de vos adversaires.</p>
       <p><b>Cartes Gentilles et Méchantes.</b> Une « carte Gentille » ou « carte Méchante » est toute carte qui porte cette icône : les Personnages, mais aussi certains Objets (la Pomme empoisonnée, le Rouet et le Contrat magique sont Méchants). Seules les cartes Méchantes ont des effets contre les autres joueurs.</p>
       <p>Les effets sont de quatre types : [[icon:instant]] <b>Instantané</b> (une fois, quand vous prenez la carte), [[icon:activation]] <b>Activation</b> (chaque fois qu’un effet l’active), [[icon:ongoing]] <b>Permanent</b> (toujours valable) et [[icon:endgame]] <b>Fin de partie</b> (compté à la fin).</p>`],
       ["setup", "Mise en place", `<ol>
         <li>Mélangez les personnages Communs et les personnages Légendaires en deux pioches séparées.</li>
-        <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>1 + le nombre de joueurs</b>.</li>
+        <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Aventures et révélez-en <b>1 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Chapitre d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Chapitre.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
         <li>Posez votre pioche Chapitre à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
@@ -245,7 +245,7 @@ const RULES = {
       <h3>3. Votre tour</h3>
       <ol>
         <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
-        <li><b>Résolvez votre carte Chapitre.</b> Pièces, XP, Quêtes, activations ou améliorations gratuites.</li>
+        <li><b>Résolvez votre carte Chapitre.</b> Pièces, XP, Aventures, activations ou améliorations gratuites.</li>
         <li><b>Achetez un Objet</b> si vous le souhaitez (un seul), en payant son prix en pièces.</li>
         <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée. [[icon:freeup]] <b>Amélioration gratuite</b> : la prochaine étape d’un de vos personnages Légendaires ou de votre Écrivain est complétée tout de suite (couvrez ses cases vides avec de l’XP de la réserve).</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
@@ -254,13 +254,13 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
-        <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Quêtes jusqu’à 1 + joueurs.</li>
+        <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Aventures jusqu’à 1 + joueurs.</li>
         <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
-      ["effects", "Les effets en détail", `<h3>Les 12 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p><p class="legend-line">[[icon:activation]] déclencher 1 de vos cartes · [[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Quête.</p>[[actions]]
+      ["effects", "Les effets en détail", `<h3>Les 12 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p><p class="legend-line">[[icon:activation]] déclencher 1 de vos cartes · [[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Aventure.</p>[[actions]]
       <p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux, au choix. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
-      <p><b>Prendre une Quête.</b> Choisissez une Quête visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
+      <p><b>Prendre une Aventure.</b> Choisissez une Aventure visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
       <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile de la prochaine étape d’un personnage Légendaire ou de votre Écrivain : il monte de niveau (l’XP déjà posé sur cette étape est défaussé).</p>
       <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère.</p>
       <p><b>Piocher une carte Chapitre.</b> Piochez 1 carte de votre pioche Chapitre, puis remettez 1 carte Chapitre de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours les manches.</p>
@@ -273,12 +273,12 @@ const RULES = {
       ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e manche, quand il ne reste plus qu’une carte dans chaque pioche Chapitre. Chaque joueur additionne :</p>
       <ul>
         <li>les Points de Victoire [[icon:vp]] gagnés pendant la partie ;</li>
-        <li>ses Quêtes [[icon:endgame]] ;</li>
+        <li>ses Aventures [[icon:endgame]] ;</li>
         <li>les effets [[icon:endgame]] Fin de partie de ses personnages et Objets ;</li>
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Quête « Le Bal de minuit » lui donne 1 PV par Charme, jusqu’à 10 PV : 7 PV. Sa Méchante Reine améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Aventure « Le Bal de minuit » lui donne 1 PV par Charme, jusqu’à 10 PV : 7 PV. Sa Méchante Reine améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
@@ -296,21 +296,21 @@ const RULES = {
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [
-      ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Missioni. Dopo <b>8 round</b>, vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
+      ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Avventure. Dopo <b>8 round</b>, vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
       <p>Il cuore del gioco è la tua mano di <b>carte Capitolo</b>, numerate da 1 a 12 come i capitoli di un libro. Un capitolo alto ti fa scegliere per primo; un capitolo basso dà un effetto più forte. Ogni capitolo giocato è perso: scegli bene quando usarlo.</p>`],
       ["components", "Le carte", `<p>Ogni personaggio e ogni Oggetto mostra gli stessi elementi:</p>
       [[anatomy:common]]
       [[anatomy:legendary]]
       [[anatomy:item]]
-      <p>Le <b>carte Missione</b> danno punti a fine partita; alcune hanno delle soglie (2 / 4 / 6 PV). Le <b>carte Scrittore</b> danno a ogni giocatore un potere personale che cresce su tre livelli. Le <b>carte Capitolo</b> sono pagine di un libro: il numero del capitolo decide l’ordine di turno, il loro effetto si risolve durante il tuo turno.</p>
+      <p>Le <b>carte Avventura</b> danno punti a fine partita; alcune hanno delle soglie (2 / 4 / 6 PV). Le <b>carte Scrittore</b> danno a ogni giocatore un potere personale che cresce su tre livelli. Le <b>carte Capitolo</b> sono pagine di un libro: il numero del capitolo decide l’ordine di turno, il loro effetto si risolve durante il tuo turno.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Le quattro abilità sono <b>Fascino</b> [[tag:Charm]], <b>Forza</b> [[tag:Strength]], <b>Astuzia</b> [[tag:Dexterity]] e <b>Intelligenza</b> [[tag:Intelligence]]. Molte Missioni ed effetti le contano. Un <b>segnalino Tag</b> quadrato conta come un’icona del suo tipo: quando ne ottieni uno, ne scegli il tipo. Un distintivo rotondo verde con una piuma segnala le carte che danno PV; <b>non è un tag</b>. Alcune carte non hanno <b>nessun tag</b>: sono premiate in altro modo, spesso con Punti Vittoria durante la partita (Arcolaio, Cappellaio Matto, «La Regina Ordina»…).</p>
+      <p>Le quattro abilità sono <b>Fascino</b> [[tag:Charm]], <b>Forza</b> [[tag:Strength]], <b>Astuzia</b> [[tag:Dexterity]] e <b>Intelligenza</b> [[tag:Intelligence]]. Molte Avventure ed effetti le contano. Un <b>segnalino Tag</b> quadrato conta come un’icona del suo tipo: quando ne ottieni uno, ne scegli il tipo. Un distintivo rotondo verde con una piuma segnala le carte che danno PV; <b>non è un tag</b>. Alcune carte non hanno <b>nessun tag</b>: sono premiate in altro modo, spesso con Punti Vittoria durante la partita (Arcolaio, Cappellaio Matto, «La Regina Ordina»…).</p>
       <p><b>Legami tra le fiabe.</b> Le carte di una stessa fiaba funzionano insieme: «se hai X» significa che X è nel tuo tableau (Personaggi) o tra i tuoi Oggetti. Per esempio, lo Spaventapasseri dà 2 XP invece di 1 se hai Dorothy Gale, e il Gatto e la Volpe rubano 2 monete a un giocatore che ha Pinocchio. I legami dei cattivi colpiscono spesso le carte degli avversari.</p>
       <p><b>Carte Buone e Cattive.</b> Una «carta Buona» o «carta Cattiva» è ogni carta che porta quell’icona: i Personaggi, ma anche alcuni Oggetti (la Mela avvelenata, l’Arcolaio e il Contratto magico sono Cattivi). Solo le carte Cattive hanno effetti contro gli altri giocatori.</p>
       <p>Gli effetti sono di quattro tipi: [[icon:instant]] <b>Istantaneo</b> (una volta, quando prendi la carta), [[icon:activation]] <b>Attivazione</b> (ogni volta che un effetto la attiva), [[icon:ongoing]] <b>Permanente</b> (sempre valido) e [[icon:endgame]] <b>Fine partita</b> (contato alla fine).</p>`],
       ["setup", "Preparazione", `<ol>
         <li>Mescola i personaggi Comuni e i personaggi Leggendari in due mazzi separati.</li>
-        <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>1 + il numero di giocatori</b>.</li>
+        <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Avventure e rivelane <b>1 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Capitolo di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Capitolo.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
         <li>Metti il tuo mazzo Capitolo a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
@@ -326,7 +326,7 @@ const RULES = {
       <h3>3. Il tuo turno</h3>
       <ol>
         <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
-        <li><b>Risolvi la tua carta Capitolo.</b> Monete, XP, Missioni, attivazioni o potenziamenti gratis.</li>
+        <li><b>Risolvi la tua carta Capitolo.</b> Monete, XP, Avventure, attivazioni o potenziamenti gratis.</li>
         <li><b>Compra un Oggetto</b> se vuoi (uno solo), pagando il suo prezzo in monete.</li>
         <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata. [[icon:freeup]] <b>Potenziamento gratis</b>: il prossimo passaggio di uno dei tuoi personaggi Leggendari o del tuo Scrittore è completato subito (copri le caselle vuote con XP dalla riserva).</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
@@ -335,13 +335,13 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
-        <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Missioni fino a 1 + giocatori.</li>
+        <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Avventure fino a 1 + giocatori.</li>
         <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],
-      ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p><p class="legend-line">[[icon:activation]] attiva 1 delle tue carte · [[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi una Missione.</p>[[actions]]
+      ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p><p class="legend-line">[[icon:activation]] attiva 1 delle tue carte · [[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi un’Avventura.</p>[[actions]]
       <p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi, a scelta. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
-      <p><b>Prendere una Missione.</b> Scegli una Missione scoperta e tienila davanti a te. Darà punti a fine partita.</p>
+      <p><b>Prendere un’Avventura.</b> Scegli un’Avventura scoperta e tienila davanti a te. Darà punti a fine partita.</p>
       <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella del prossimo passaggio di un personaggio Leggendario o del tuo Scrittore: sale di livello (gli XP già posati su quel passaggio vengono scartati).</p>
       <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera.</p>
       <p><b>Pescare una carta Capitolo.</b> Pesca 1 carta dal tuo mazzo Capitolo, poi rimetti 1 carta Capitolo dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre i round.</p>
@@ -354,12 +354,12 @@ const RULES = {
       ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° round, quando in ogni mazzo Capitolo resta una sola carta. Ogni giocatore somma:</p>
       <ul>
         <li>i Punti Vittoria [[icon:vp]] ottenuti durante la partita;</li>
-        <li>le sue Missioni [[icon:endgame]];</li>
+        <li>le sue Avventure [[icon:endgame]];</li>
         <li>gli effetti [[icon:endgame]] Fine partita dei suoi personaggi e Oggetti;</li>
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Missione «Il Ballo di Mezzanotte» le dà 1 PV per Fascino, fino a 10 PV: 7 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» le dà 1 PV per Fascino, fino a 10 PV: 7 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },

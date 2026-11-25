@@ -227,7 +227,7 @@
     });
     window.addEventListener("scroll", close, { passive: true });
 
-    // In the game: Quest and Item offers are shown small; hovering shows them full size.
+    // In the game: Adventure and Item offers are shown small; hovering shows them full size.
     const offer = (target) => target.closest?.(".slot-quest .fcard, .slot-item .fcard, .group-cards .fcard");
     document.addEventListener("pointermove", (e) => {
       if (e.pointerType === "touch") return;

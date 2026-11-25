@@ -27,7 +27,7 @@
       .replace(/\bplac(?:ez|er) de l[’']XP sur un Personnage de manière à l[’']améliorer\b/gi, FREEUP_ICON)
       .replace(/\bpiazza(?:re)? XP su un Personaggio in modo da potenziarlo\b/gi, FREEUP_ICON)
       .replace(/\b(?:all )?(?:four|4)(?: different)? icons\b/gi, SET4)
-      .replace(/\b(take|takes|prenez|prend|prendre|prendi|prende)\s+(1|a|une|una)\s+(?:Quest|Quête|Missione)\b/gi, (_, verb, n) => `${verb} ${/^\d$/.test(n) ? n : "1"} ${QUEST_ICON}`)
+      .replace(/\b(take|takes|prenez|prend|prendre|prendi|prende)\s+(1|an?|une|una|un’)\s*(?:Quest|Quête|Missione|Adventure|Aventure|Avventura)\b/gi, (_, verb, n) => `${verb} ${/^\d$/.test(n) ? n : "1"} ${QUEST_ICON}`)
       .replace(/\b(?:des quatre icônes|de 4 icônes différentes)/gi, `de ${SET4}`)
       .replace(/\b(?:delle quattro icone|di 4 icone diverse)/gi, `di ${SET4}`)
       .replace(/\b(\d+|a|one|two)\s+Tag tokens?/gi, (_, n) => `${/^\d$/.test(n) ? n : { a: "1", one: "1", two: "2" }[n.toLowerCase()]} ${TAG_ICON}`)
