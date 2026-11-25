@@ -230,7 +230,7 @@ function fitFace(face) {
 }
 
 // Board: one space per group of characters. Front 2–3 players, back 4 players.
-const BOARDS = { 2: [[1, 0], [1, 1], [2, 1]], 3: [[1, 0], [2, 0], [1, 1], [2, 1]], 4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]] };
+const BOARDS = { 2: [[0, 1], [1, 1], [3, 0]], 3: [[0, 1], [1, 1], [3, 0], [2, 1]], 4: [[0, 1], [2, 0], [3, 0], [2, 1], [0, 2]] };
 
 function boardSection(n) {
   const groups = BOARDS[n].map(([c, l], i) => {
