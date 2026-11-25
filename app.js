@@ -1869,6 +1869,8 @@ window.Game = {
   afterChange,
   seatToBot,
   runBot,
+  currentChooser,
+  turnPosition,
 };
 window.addEventListener("langchange", () => {
   if (G.started) render();

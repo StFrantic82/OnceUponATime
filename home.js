@@ -299,34 +299,55 @@
 
   // ---------- Tutorial ----------
   const tutorialState = { on: false, seen: new Set() };
+  // Tutorial: a short explanation the first time each situation comes up, pointing at what to use.
   const STEPS = {
-    chooseAction: {
-      target: "#actionHand",
-    },
-    chooseGroup: {
-      target: "#groups",
-    },
-    buyItem: {
-      target: "#itemDisplay",
-    },
-    questPick: {
-      target: "#questDisplay",
-    },
-    roundDone: {
-      target: "#endRoundBtn",
-    },
+    intro: { target: ".offer-row" },
+    chooseAction: { target: "#actionHand" },
+    waitChoose: { target: "#playersPanel" },
+    chooseGroup: { target: ".offer-row" },
+    resolve: { target: "#resolveActionBtn" },
+    activatePick: { target: "#tableau" },
+    questPick: { target: "#questDisplay" },
+    tuck: { target: "#actionHand" },
+    placeXp: { target: "#writerPanel" },
+    buyAfter: { target: "#itemDisplay" },
+    roundDone: { target: "#endRoundBtn" },
+    newRound: { target: "#playersPanel" },
   };
+
+  function tutorialKeys(state) {
+    const G = Game.G;
+    const me = G.players[Game.view.seat];
+    const keys = [];
+    if (state.phase === "chooseWriter" || G.gameOver) return keys;
+    keys.push("intro");
+    if (state.activatePending > 0) keys.push("activatePick");
+    if (state.questChoices > 0) keys.push("questPick");
+    if (state.tuckPending > 0) keys.push("tuck");
+    if (state.phase === "chooseAction") {
+      if (G.round >= 2) keys.push("newRound");
+      keys.push(Game.currentChooser() === me ? "chooseAction" : "waitChoose");
+    }
+    if (state.phase === "chooseGroup" && G.active === Game.view.seat) keys.push("chooseGroup");
+    if (state.phase === "buyItem" && G.active === Game.view.seat) keys.push("resolve");
+    if (state.xp > 0) keys.push("placeXp");
+    if (state.phase === "roundDone" && G.active === Game.view.seat) {
+      if (!state.writerRound?.itemBought) keys.push("buyAfter");
+      keys.push("roundDone");
+    }
+    return keys;
+  }
 
   function afterRender(state) {
     if (!tutorialState.on) return;
-    let key = state.phase;
-    if (state.questChoices > 0) key = "questPick";
-    const step = STEPS[key];
-    if (!step || tutorialState.seen.has(key)) {
-      if (!step) hideCoach();
+    const key = tutorialKeys(state).find((k) => !tutorialState.seen.has(k));
+    if (!key) {
+      hideCoach();
       return;
     }
-    showCoach(key, { ...step, title: t(`tuto_${key}_t`), text: t(`tuto_${key}`) });
+    if (tutorialState.lastKey === key && !$("#coach").hidden) return;
+    tutorialState.lastKey = key;
+    showCoach(key, { ...STEPS[key], title: t(`tuto_${key}_t`), text: t(`tuto_${key}`) });
   }
 
   function showCoach(key, step) {
@@ -345,6 +366,8 @@
       tutorialState.seen.add(key);
       if (btn.dataset.coach === "stop") tutorialState.on = false;
       hideCoach();
+      tutorialState.lastKey = null;
+      if (tutorialState.on) afterRender(Game.state);
     };
   }
 

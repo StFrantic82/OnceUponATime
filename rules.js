@@ -81,7 +81,7 @@ function squareTag(icon) {
 // Card anatomy: a card with numbered markers and their legend.
 const ANATOMY = {
   common: { card: () => CardFace.common(find(DATA.common, "Pirate")), marks: [[0, 5], [100, 5], [100, 30], [100, 70], [100, 95]] },
-  legendary: { card: () => CardFace.legendary(find(DATA.legendary, "Snow White")), marks: [[0, 4], [100, 4], [100, 30], [0, 63], [100, 69], [0, 76], [100, 96]] },
+  legendary: { card: () => CardFace.legendary(find(DATA.legendary, "Snow White")), marks: [[0, 4], [100, 4], [100, 30], [0, 60], [100, 66], [0, 76], [100, 96]] },
   item: { card: () => CardFace.item(find(DATA.items, "Magic Lamp")), marks: [[0, 8], [100, 8], [0, 28], [100, 85]] },
 };
 
@@ -102,6 +102,7 @@ function render(text, L) {
   return text
     .replace(/\[\[anatomy:(\w+)\]\]/g, (_, k) => anatomy(k, L.anatomy[k]))
     .replace(/\[\[boards\]\]/g, () => boardsTable(L))
+    .replace(/\[\[actions\]\]/g, () => `<div class="actions-grid">${DATA.actions.map((a) => `<figure class="fig fig-action">${CardFace.action(a)}</figure>`).join("")}</div>`)
     .replace(/\[\[common:([^\]]+)\]\]/g, (_, n) => `<figure class="fig">${CardFace.common(find(DATA.common, n))}</figure>`)
     .replace(/\[\[legendary:([^\]]+)\]\]/g, (_, n) => `<figure class="fig">${CardFace.legendary(find(DATA.legendary, n))}</figure>`)
     .replace(/\[\[legendaryUp:([^\]]+)\]\]/g, (_, n) => `<figure class="fig">${CardFace.legendary({ ...find(DATA.legendary, n), upgraded: true })}</figure>`)
@@ -127,7 +128,7 @@ const RULES = {
     legendary: "Legendary character",
     anatomy: {
       common: ["Skill tags (square, top left): Charm, Strength, Cunning, Intelligence.", "Name of the character.", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
-      legendary: ["Skill tags.", "Name and “Legendary”.", "Illustration.", "Base effect, active as soon as you take the card.", "Upgrade cost in XP.", "Upgraded effect (replaces the base effect).", "Good or Bad."],
+      legendary: ["Skill tags.", "Name and “Legendary”.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (replaces the base effect).", "Good or Bad."],
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
@@ -147,7 +148,7 @@ const RULES = {
         <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
         <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing.</li>
-        <li>Put the board in the middle, on the side for your number of players. Choose a first player at random.</li>
+        <li>Put the board in the middle, on the side for your number of players. Choose a first player at random: they take the first player token.</li>
       </ol>`],
       ["round", "A round", `<h3>1. Reveal the groups</h3>
       <p>Reveal Normal and Legendary characters under the spaces of the board to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
@@ -170,9 +171,10 @@ const RULES = {
       <ul>
         <li>Discard the cards nobody took. Refill the Items to 1 + players and the Quests to 2 + players.</li>
         <li>Each player draws <b>exactly 1 Action card</b> from their Action deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
-        <li>The player who played the highest chapter becomes the first player.</li>
+        <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
-      ["effects", "Effects in detail", `<p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them. An Activation that costs something (spend coins, discard a card…) is optional.</p>
+      ["effects", "Effects in detail", `<h3>The 12 Action cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p>[[actions]]
+      <p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them, of your choice. An Activation that costs something (spend coins, discard a card…) is optional.</p>
       <p><b>Take a Quest.</b> Choose one face-up Quest and keep it in front of you. It will score at the end of the game.</p>
       <p><b>Free upgrade.</b> Fill at once all the star spaces of the next step of a Legendary character or of your Writer: it moves up a level (any XP already on that step is discarded).</p>
       <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free.</p>
@@ -205,7 +207,7 @@ const RULES = {
     legendary: "Personnage légendaire",
     anatomy: {
       common: ["Tags de compétence (carrés, en haut à gauche) : Charme, Force, Ruse, Intelligence.", "Nom du personnage.", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
-      legendary: ["Tags de compétence.", "Nom et mention « Légendaire ».", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Coût d’amélioration en XP.", "Effet amélioré (remplace l’effet de base).", "Gentil ou Méchant."],
+      legendary: ["Tags de compétence.", "Nom et mention « Légendaire ».", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (remplace l’effet de base).", "Gentil ou Méchant."],
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
@@ -225,7 +227,7 @@ const RULES = {
         <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
         <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
-        <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard.</li>
+        <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard : il prend le jeton premier joueur.</li>
       </ol>`],
       ["round", "Une manche", `<h3>1. Révéler les groupes</h3>
       <p>Révélez des personnages Normaux et Légendaires sous les emplacements du plateau pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
@@ -248,9 +250,10 @@ const RULES = {
       <ul>
         <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Quêtes jusqu’à 2 + joueurs.</li>
         <li>Chaque joueur pioche <b>exactement 1 carte Action</b> dans sa pioche Action. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
-        <li>Le joueur qui a joué le plus grand chapitre devient premier joueur.</li>
+        <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
-      ["effects", "Les effets en détail", `<p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
+      ["effects", "Les effets en détail", `<h3>Les 12 cartes Action</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p>[[actions]]
+      <p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux, au choix. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
       <p><b>Prendre une Quête.</b> Choisissez une Quête visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
       <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile de la prochaine étape d’un personnage Légendaire ou de votre Écrivain : il monte de niveau (l’XP déjà posé sur cette étape est défaussé).</p>
       <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère.</p>
@@ -283,7 +286,7 @@ const RULES = {
     legendary: "Personaggio leggendario",
     anatomy: {
       common: ["Tag di abilità (quadrati, in alto a sinistra): Fascino, Forza, Astuzia, Intelligenza.", "Nome del personaggio.", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
-      legendary: ["Tag di abilità.", "Nome e dicitura «Leggendaria».", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Costo del potenziamento in XP.", "Effetto potenziato (sostituisce quello base).", "Buono o Cattivo."],
+      legendary: ["Tag di abilità.", "Nome e dicitura «Leggendaria».", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (sostituisce quello base).", "Buono o Cattivo."],
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [
@@ -303,7 +306,7 @@ const RULES = {
         <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
         <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
-        <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore.</li>
+        <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore: prende il segnalino primo giocatore.</li>
       </ol>`],
       ["round", "Un round", `<h3>1. Rivelare i gruppi</h3>
       <p>Rivela personaggi Normali e Leggendari sotto gli spazi della plancia per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
@@ -326,9 +329,10 @@ const RULES = {
       <ul>
         <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Missioni fino a 2 + giocatori.</li>
         <li>Ogni giocatore pesca <b>esattamente 1 carta Azione</b> dal suo mazzo Azione. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
-        <li>Chi ha giocato il capitolo più alto diventa il primo giocatore.</li>
+        <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],
-      ["effects", "Gli effetti nel dettaglio", `<p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
+      ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Azione</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p>[[actions]]
+      <p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi, a scelta. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
       <p><b>Prendere una Missione.</b> Scegli una Missione scoperta e tienila davanti a te. Darà punti a fine partita.</p>
       <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella del prossimo passaggio di un personaggio Leggendario o del tuo Scrittore: sale di livello (gli XP già posati su quel passaggio vengono scartati).</p>
       <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera.</p>
