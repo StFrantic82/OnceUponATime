@@ -292,7 +292,7 @@
     "\"Eat Me\" Cake": { bg: "wonder", m: [["cake", 100, 84, 1.5, 0]] },
     "The Crown of England": { bg: "castle", m: [["crown", 100, 78, 1.5, 0]] },
     "Glass Slipper": { bg: "castle", m: [["slipper", 100, 84, 1.5, 0, { glass: true }], ["sparkles", 100, 70, 1, 0]] },
-    "Boots": { bg: "village", m: [["boot", 100, 82, 1.2, 0, { c: "#5e3618", c2: "#8a5a2b" }], ["footprints", 156, 112, 0.8, 0]] },
+    "Seven-League Boots": { bg: "village", m: [["boot", 100, 82, 1.2, 0, { c: "#5e3618", c2: "#8a5a2b" }], ["footprints", 156, 112, 0.8, 0]] },
     "Trident": { bg: "under", m: [["trident", 100, 76, 1.3, 0]] },
     "Magic Lamp": { bg: "desert", m: [["lamp", 100, 92, 1.4, 0], ["smoke", 110, 54, 0.6, 0]] },
     "Enchanted Rose": { bg: "castle", m: [["rose", 100, 78, 1.4, 0, { dome: true }]] },

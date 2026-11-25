@@ -444,6 +444,17 @@ function beginTurns() {
     if (queen) withSeat(first.seat, () => gain("vp", hasCard("Playing Card Soldier") ? 2 : 1));
   }
   for (const p of G.players) if (p.currentAction) withSeat(p.seat, () => onPlayChapter(p.currentAction.number));
+  // Rabbit's Clock: the player of the lowest Chapter is late.
+  const played = G.players.filter((p) => p.currentAction);
+  const lowest = Math.min(...played.map((p) => p.currentAction.number));
+  for (const p of played) {
+    if (p.currentAction.number !== lowest) continue;
+    const clocks = p.items.filter((item) => item.name === "Rabbit's Clock").length;
+    if (clocks) withSeat(p.seat, () => {
+      gain("coins", 2 * clocks);
+      gain("xp", clocks);
+    });
+  }
   G.history.push({ round: G.round, plays: G.players.filter((p) => p.currentAction).map((p) => ({ seat: p.seat, number: p.currentAction.number, first: p.seat === order[0], pos: order.indexOf(p.seat) })) });
   log("l_played", { list: G.players.filter((p) => p.currentAction).map((p) => `${p.name} ${p.currentAction.number}`).join(" · ") });
   for (const p of G.players) p.phase = "waitTurn";
@@ -1198,9 +1209,14 @@ function instantLinks(card) {
   if (n === "Prince Charming") gain("vp", Math.min(4, iconCounts().Charm));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard");
-  if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 7);
+  if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
   if (n === "Cinderella") state.writerItemDiscount = 2;
   if (n === "The Glass Coffin") pickFromDiscard(n);
+  if (n === "Seven-League Boots") {
+    G.firstSeat = G.cur;
+    for (const p of G.players) p.playerFirst = p.seat === G.cur;
+    log("l_boots", { p: state.name });
+  }
   if (n === "Mad Hatter's Hat") {
     const [legend] = draw("legendary", 1);
     if (legend) {
@@ -1283,7 +1299,7 @@ function onPlayChapter(number) {
     log("l_nose", { p: state.name });
   }
   const briar = state.tableau.find((card) => card.name === "Princess Briar Rose" && card.upgraded);
-  if (briar && number <= 7) gain("xp", 1);
+  if (briar && number <= 6) gain("xp", 1);
   const crickets = state.tableau.filter((card) => card.name === "The Talking Cricket").length;
   if (crickets && number <= 4) gain("vp", crickets * (pino ? 2 : 1));
 }
@@ -1374,10 +1390,10 @@ async function activateCardInner(card) {
     gain("vp", k);
   } else if (card.name === "Cheshire Cat" && card.upgraded) {
     commonPick(2, card.name, "discard");
-  } else if (card.name === "Rabbit's Clock") {
-    takeBackChapter((v) => v <= 8);
+  } else if (card.name === "Magic Wand") {
+    placeFreeXp(1, true);
   } else if (card.name === "Crocodile's Clock") {
-    takeBackChapter((v) => v >= 8);
+    takeBackChapter((v) => v >= 7);
   } else if (card.name === "The Fairies") {
     placeXpOnGood(2);
   } else if (card.name === "Hot Air Balloon") {

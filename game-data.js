@@ -656,7 +656,7 @@ window.GAME_DATA = {
       "name": "Rabbit's Clock",
       "cost": 3,
       "icons": "Dexterity 1",
-      "effect": "Activation: take back 1 Chapter card with value 8 or lower from your discard.",
+      "effect": "Ongoing: whenever you play the lowest Chapter of the round, you are late: gain 2 coins and 1 XP.",
       "copy": 1
     },
     {
@@ -701,7 +701,7 @@ window.GAME_DATA = {
       "name": "Magic Wand",
       "cost": 4,
       "icons": "Charm 1",
-      "effect": "Ongoing: you may hold 1 additional Quest.",
+      "effect": "Activation: place 1 XP on a Good Character.",
       "copy": 1
     },
     {
@@ -797,10 +797,10 @@ window.GAME_DATA = {
     {
       "id": "I27",
       "deck": "item",
-      "name": "Boots",
+      "name": "Seven-League Boots",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Ongoing: your first level up each round costs 1 less XP.",
+      "effect": "Instant: take the first player token.",
       "copy": 1
     },
     {
@@ -872,7 +872,7 @@ window.GAME_DATA = {
       "name": "Crocodile's Clock",
       "cost": 3,
       "icons": "Dexterity 1",
-      "effect": "Activation: take back 1 Chapter card with value 8 or higher from your discard.",
+      "effect": "Activation: take back 1 Chapter card with value 7 or higher from your discard.",
       "copy": 1
     },
     {
@@ -1272,8 +1272,8 @@ window.GAME_DATA = {
       "name": "Princess Briar Rose",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: take back 1 Chapter card with value 7 or lower from your discard. If you have The Fairies, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you play a Chapter card with value 7 or lower, gain 1 XP.",
+      "base": "Charm 1. Instant: take back 1 Chapter card with value 6 or lower from your discard. If you have The Fairies, gain 1 XP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP.",
       "upgraded": false
     },
     {
