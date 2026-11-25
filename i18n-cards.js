@@ -160,7 +160,7 @@ window.CARD_I18N = [
   ["Instant: take 1 Quest.", "Instant : prenez 1 Quête.", "Instant: prendi 1 Missione."],
   ["Ongoing: you may hold 1 additional Quest.", "Ongoing : vous pouvez garder 1 Quête supplémentaire.", "Ongoing: puoi tenere 1 Missione in più."],
   ["Instant: activate one of your Activation cards.", "Instant : déclenchez l’une de vos cartes Activation.", "Instant: attiva una delle tue carte Activation."],
-  ["Ongoing: when choosing a group, you may ignore one unwanted Item in that group and sell it for 2 coins.", "Ongoing : en choisissant un groupe, vous pouvez défausser un Objet qui s’y trouve pour gagner 2 coins.", "Ongoing: quando scegli un gruppo, puoi ignorare un Oggetto indesiderato del gruppo e venderlo per 2 coins."],
+  ["Ongoing: when choosing a group, you may discard an Item in it to gain 2 coins.", "Ongoing : en choisissant un groupe, vous pouvez défausser un Objet qui s’y trouve pour gagner 2 coins.", "Ongoing: quando scegli un gruppo, puoi scartare un Oggetto che vi si trova per ottenere 2 coins."],
   ["Activation: discard 1 Character to gain 3 XP. If it was Good, gain +1 XP.", "Activation : défaussez 1 Personnage pour gagner 3 XP. S’il était Gentil, gagnez +1 XP.", "Activation: scarta 1 Personaggio per ottenere 3 XP. Se era Buono, ottieni +1 XP."],
   ["Instant: discard 1 Character to level up another Character for 2 less XP this turn.", "Instant : défaussez 1 Personnage pour améliorer un autre Personnage pour 2 XP de moins ce tour-ci.", "Instant: scarta 1 Personaggio per potenziarne un altro con 2 XP in meno in questo turno."],
   ["Instant: gain 2 coins and 1 XP.", "Instant : gagnez 2 coins et 1 XP.", "Instant: ottieni 2 coins e 1 XP."],
