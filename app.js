@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -215,6 +215,7 @@ function newPlayer(seat, info) {
     uid: info.uid || null,
     coins: 2,
     xp: 0,
+    writerXp: 0,
     vp: 0,
     tagTokens: 0,
     freeUpgrades: 0,
@@ -471,8 +472,17 @@ async function activateActionStep() {
   state.phase = "roundDone";
 }
 
-function endTurn() {
+async function endTurn() {
   if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || G.active !== G.cur) return;
+  const seat = G.cur;
+  for (const p of G.players) {
+    if (p.xp > 0) {
+      G.cur = p.seat;
+      await autoPlaceXp();
+    }
+  }
+  G.cur = seat;
+  if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0) return;
   state.writerDiscardRemaining = 0;
   state.phase = "waitRound";
   nextTurn();
@@ -497,16 +507,14 @@ function grantQuestChoice(source) {
 
 function upgradeLegendary(cardId) {
   const card = state.tableau.find((entry) => entry.id === cardId && entry.deck === "legendary");
-  if (!card || card.upgraded || G.gameOver) return;
-  const cost = upgradeCost(card);
-  if (state.freeUpgrades > 0) {
-    state.freeUpgrades -= 1;
-  } else if (state.xp >= cost) {
-    state.xp -= cost;
-  } else {
-    return;
-  }
+  if (!card || card.upgraded || G.gameOver || state.freeUpgrades <= 0) return;
+  state.freeUpgrades -= 1;
+  completeUpgrade(card);
+}
+
+function completeUpgrade(card) {
   card.upgraded = true;
+  card.xpOn = 0;
   applyUpgradeGain(card);
   if (/take 1 Quest/i.test(card.upgrade || "")) grantQuestChoice(card.name);
   const servants = state.tableau.filter((entry) => entry.name === "The Invisible Servants").length;
@@ -523,13 +531,63 @@ function chooseWriter(writerId) {
   maybeBotsChoose();
 }
 
-async function upgradeWriter() {
-  if (!state.writer || state.writerLevel >= 3 || G.gameOver) return;
+function writerNextCost() {
+  if (!state.writer || state.writerLevel >= 3) return 0;
+  return state.writerLevel === 1 ? state.writer.cost2 : state.writer.cost3;
+}
+
+// XP rule: every XP gained goes on a free star space (Writer's next level, or a Legendary not yet upgraded).
+// Placed XP can never move. When all the spaces of a step are filled, the card moves up at once.
+// XP that is not placed by the end of a turn goes to the first free space (the Writer first).
+function xpTargets() {
+  const out = [];
+  if (state.writer && state.writerLevel < 3) out.push("writer");
+  for (const card of state.tableau) if (card.deck === "legendary" && !card.upgraded) out.push(card.id);
+  return out;
+}
+
+async function placeXp(target = "writer", count = 1) {
+  if (G.gameOver) return;
+  const seat = G.cur;
+  for (let i = 0; i < count && state.xp > 0; i += 1) {
+    if (target === "writer") {
+      if (!state.writer || state.writerLevel >= 3) return;
+      state.xp -= 1;
+      state.writerXp += 1;
+      if (state.writerXp >= writerNextCost()) {
+        state.writerXp = 0;
+        await levelUpWriter();
+        G.cur = seat;
+      }
+    } else {
+      const card = state.tableau.find((entry) => entry.id === target && entry.deck === "legendary" && !entry.upgraded);
+      if (!card) return;
+      state.xp -= 1;
+      card.xpOn = (card.xpOn || 0) + 1;
+      if (card.xpOn >= upgradeCost(card)) completeUpgrade(card);
+    }
+  }
+}
+
+async function autoPlaceXp() {
+  const seat = G.cur;
+  let guard = 60;
+  while (state.xp > 0 && guard-- > 0) {
+    const target = xpTargets()[0];
+    if (!target) break;
+    await placeXp(target, 1);
+    G.cur = seat;
+  }
+}
+
+// XP still "in play": the reserve plus XP placed on spaces that have not been completed yet.
+function xpRemaining() {
+  return state.xp + state.writerXp + state.tableau.reduce((sum, card) => sum + (card.upgraded ? 0 : card.xpOn || 0), 0);
+}
+
+async function levelUpWriter() {
   const seat = G.cur;
   const nextLevel = state.writerLevel + 1;
-  const cost = nextLevel === 2 ? state.writer.cost2 : state.writer.cost3;
-  if (state.xp < cost) return;
-  state.xp -= cost;
   state.writerLevel = nextLevel;
   log("l_writerUp", { p: state.name, w: C(state.writer.name), n: nextLevel });
   if (nextLevel === 2) await resolveWriterInstant();
@@ -825,7 +883,7 @@ function scoreQuest(quest) {
   if (/Pact with the Beast/.test(name)) return Math.min(15, upgraded * 5);
   if (/Enchanted Rose/.test(name)) return Math.min(15, countCardsWith("less XP|free|place XP on a Character") * 3);
   if (/Rob the Rich/.test(name)) return Math.min(12, Math.floor(state.coins / 2));
-  if (/Rubbed Lamp/.test(name)) return Math.min(12, Math.floor(state.xp / 2));
+  if (/Rubbed Lamp/.test(name)) return Math.min(12, Math.floor(xpRemaining() / 2));
   if (/Arrow on Target/.test(name)) return Math.min(15, countCardsWith("VP|Game End") * 3);
   if (/Final Wish/.test(name)) return Math.min(15, Math.max(0, state.quests.length - 1) * 5);
   if (/Once Upon a Time/.test(name)) {
@@ -895,7 +953,7 @@ function scoreWriter() {
   if (name === "Charles Perrault") return Math.min(14, state.items.length * 2);
   if (name === "Brothers Grimm") return Math.min(15, Math.min(countAlignment("Good"), countAlignment("Bad")) * 3);
   if (name === "Hans Christian Andersen") return Math.min(14, countCardsWith("Game End") * 2);
-  if (name === "Carlo Collodi") return Math.min(14, Math.floor(state.coins / 2) + Math.floor(state.xp / 2));
+  if (name === "Carlo Collodi") return Math.min(14, Math.floor(state.coins / 2) + Math.floor(xpRemaining() / 2));
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
   if (name === "L. Frank Baum") return Math.min(15, Math.min(...ICONS.map(countIcon)) * 5);
@@ -922,7 +980,7 @@ const MOVES = {
   endTurn,
   takeQuest,
   upgrade: upgradeLegendary,
-  writerUp: upgradeWriter,
+  placeXp,
   writerDraft: resolveWriterDraft,
   writerDiscard: discardForWriter,
   writerDiscardDone: finishWriterDiscard,
@@ -1228,13 +1286,25 @@ function activeCardText(card) {
 }
 
 function canUpgradeCard(card) {
-  return card.deck === "legendary" && !card.upgraded && !G.gameOver && (state.xp >= upgradeCost(card) || state.freeUpgrades > 0);
+  return card.deck === "legendary" && !card.upgraded && !G.gameOver && state.freeUpgrades > 0;
+}
+
+// Star spaces: filled ones show the XP already placed.
+function xpPips(filled, total) {
+  return `<span class="xp-pips" title="${filled}/${total}">${Array.from({ length: total }, (_, i) => `<i class="${i < filled ? "on" : ""}">${resourceIcon("xp", "XP")}</i>`).join("")}</span>`;
+}
+
+function legendaryXpControls(card) {
+  if (card.deck !== "legendary" || card.upgraded || G.gameOver) return "";
+  return `<div class="xp-place">${xpPips(card.xpOn || 0, upgradeCost(card))}
+    <button type="button" ${state.xp > 0 ? "" : "disabled"} data-place-xp="${card.id}">${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button>
+    ${state.freeUpgrades > 0 ? `<button type="button" data-upgrade="${card.id}">${t("freeUpBtn")}</button>` : ""}</div>`;
 }
 
 function renderCompactOwnedCard(card) {
   return `<div class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
     <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><strong>${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</strong>${renderTags(card)}</div></div>
-    ${card.deck === "legendary" ? `<details><summary>${t("effectsUpgrade")}</summary>${renderLegendaryEffects(card)}</details><button type="button" ${!canUpgradeCard(card) ? "disabled" : ""} data-upgrade="${card.id}">${t("upgradeBtn", { n: `${upgradeCost(card)} ${resourceIcon("xp", "XP")}` })}</button>` : ""}
+    ${card.deck === "legendary" ? `<details><summary>${t("effectsUpgrade")}</summary>${renderLegendaryEffects(card)}</details>${legendaryXpControls(card)}` : ""}
     ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
   </div>`;
 }
@@ -1245,7 +1315,7 @@ function renderOwnedCard(card) {
     <div class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
       <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><div class="card-title">${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
       ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(tc(card.effect))}</div>`}
-      ${card.deck === "legendary" ? `<button type="button" ${!canUpgradeCard(card) ? "disabled" : ""} data-upgrade="${card.id}">${t("upgradeBtn", { n: `${upgradeCost(card)} ${resourceIcon("xp", "XP")}` })}</button>` : ""}
+      ${legendaryXpControls(card)}
       ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
     </div>
   `;
@@ -1309,6 +1379,9 @@ function renderRound() {
   for (const button of el.tableau.querySelectorAll("[data-upgrade]")) {
     button.addEventListener("click", () => act("upgrade", button.dataset.upgrade));
   }
+  for (const button of el.tableau.querySelectorAll("[data-place-xp]")) {
+    button.addEventListener("click", () => act("placeXp", button.dataset.placeXp));
+  }
   for (const button of el.tableau.querySelectorAll("[data-writer-discard]")) {
     button.addEventListener("click", () => act("writerDiscard", button.dataset.writerDiscard));
   }
@@ -1371,7 +1444,7 @@ function renderWriter() {
   }
   el.writerPanel.innerHTML = state.writer ? renderWriterCard(state.writer, state.writerLevel, false) : "";
   const upgrade = el.writerPanel.querySelector("[data-writer-upgrade]");
-  if (upgrade) upgrade.addEventListener("click", () => act("writerUp"));
+  if (upgrade) upgrade.addEventListener("click", () => act("placeXp", "writer"));
   const finishDiscard = el.writerPanel.querySelector("[data-finish-writer-discard]");
   if (finishDiscard) finishDiscard.addEventListener("click", () => act("writerDiscardDone"));
   for (const button of el.writerPanel.querySelectorAll("[data-writer-choice]")) {
@@ -1420,7 +1493,7 @@ function renderWriterCard(writer, level, selectable, preview = false) {
   const own = !selectable && !preview;
   const nextLevel = level + 1;
   const nextCost = nextLevel === 2 ? writer.cost2 : writer.cost3;
-  const canUpgrade = own && level < 3 && state.xp >= nextCost && !G.gameOver;
+  const canUpgrade = own && level < 3 && state.xp > 0 && !G.gameOver;
   const levels = [
     { number: 1, type: "ongoing", text: writer.level1 },
     { number: 2, type: "instant", text: writer.level2, cost: writer.cost2 },
@@ -1442,7 +1515,7 @@ function renderWriterCard(writer, level, selectable, preview = false) {
       </div>
       ${drafts.length ? `<div class="writer-draft">${drafts.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : escapeHtml(tc(choice.name))}</button>`).join("")}</div>` : ""}
       ${preview ? "" : `<div class="writer-card-actions">
-        ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>${t("levelN", { n: nextLevel })} (${nextCost} ${resourceIcon("xp", "XP")})</button>` : ""}
+        ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 && own ? `<span class="xp-place">${t("levelN", { n: nextLevel })} ${xpPips(state.writerXp || 0, nextCost)}<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button></span>` : ""}
         ${own && state.writerDiscardRemaining > 0 ? `<button type="button" data-finish-writer-discard>${t("finishDiscard")}</button>` : ""}
       </div>`}
     </article>

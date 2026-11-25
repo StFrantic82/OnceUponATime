@@ -102,39 +102,33 @@
     state.writerDiscardRemaining = 0;
   }
 
+  // XP goes on star spaces and never moves: the bot fills the step closest to completion,
+  // weighing a Legendary's upgrade against the Writer's next level.
   async function spendXp() {
     const seat = G.cur;
-    let guard = 10;
-    while (guard > 0) {
-      guard -= 1;
+    let guard = 40;
+    while (guard-- > 0) {
       const legends = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded);
       if (state.freeUpgrades > 0 && legends.length) {
-        upgradeLegendary([...legends].sort((a, b) => upgradeCost(b) - upgradeCost(a))[0].id);
+        upgradeLegendary([...legends].sort((a, b) => (upgradeCost(b) - (b.xpOn || 0)) - (upgradeCost(a) - (a.xpOn || 0)))[0].id);
         continue;
       }
-      if (level() === "easy" && Math.random() < 0.5) return;
-      const nextWriterCost = state.writer && state.writerLevel < 3 ? (state.writerLevel === 1 ? state.writer.cost2 : state.writer.cost3) : Infinity;
-      const cheapest = [...legends].sort((a, b) => upgradeCost(a) - upgradeCost(b))[0];
-      const legendCost = cheapest ? upgradeCost(cheapest) : Infinity;
-      const preferWriter = level() === "hard" ? nextWriterCost <= legendCost + 1 : nextWriterCost < legendCost;
-      if (preferWriter && state.xp >= nextWriterCost) {
-        await upgradeWriter();
-        G.cur = seat;
-        settleWriterChoices();
-        if (state.writerItemDiscount > 0) buySomething();
-        continue;
+      if (state.xp <= 0) return;
+      if (level() === "easy") return; // easy bots let their XP go to the Writer at the end of the turn
+      const options = [];
+      if (state.writer && state.writerLevel < 3) {
+        const left = writerNextCost() - (state.writerXp || 0);
+        options.push({ target: "writer", left, value: state.writerLevel === 2 ? 9 : 6 });
       }
-      if (cheapest && state.xp >= legendCost) {
-        upgradeLegendary(cheapest.id);
-        continue;
-      }
-      if (state.xp >= nextWriterCost) {
-        await upgradeWriter();
-        G.cur = seat;
-        settleWriterChoices();
-        continue;
-      }
-      return;
+      for (const c of legends) options.push({ target: c.id, left: upgradeCost(c) - (c.xpOn || 0), value: 7 + (cardWorth ? Math.min(6, cardWorth(c) / 3) : 0) });
+      if (!options.length) return;
+      // Prefer what can be completed with the XP we have, then the best value per missing XP.
+      options.sort((a, b) => (b.left <= state.xp) - (a.left <= state.xp) || b.value / b.left - a.value / a.left);
+      const pick = options[0];
+      await placeXp(pick.target, Math.min(state.xp, pick.left));
+      G.cur = seat;
+      settleWriterChoices();
+      if (state.writerItemDiscount > 0) buySomething();
     }
   }
 
@@ -165,7 +159,7 @@
     takeQuests();
     settleWriterChoices();
     settleTuck();
-    if (state.phase === "roundDone") endTurn();
+    if (state.phase === "roundDone") await endTurn();
   }
 
   const Bot = {

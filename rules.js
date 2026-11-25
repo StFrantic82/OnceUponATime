@@ -139,7 +139,7 @@ const RULES = {
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
         <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
-        <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing. Between two levels of your Writer or of a Legendary character, each dashed star space stands for 1 XP: the number of spaces is the cost. To level up, put one XP token on each space; the card then moves to the next level.</li>
+        <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing.</li>
         <li>Put the board in the middle, on the side for your number of players. Choose a first player at random.</li>
       </ol>`],
       ["round", "A round", `<h3>1. Reveal the groups</h3>
@@ -154,7 +154,7 @@ const RULES = {
         <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
         <li><b>Buy one Item</b> if you wish, by paying its price in coins.</li>
         <li><b>Resolve your Action card.</b> Coins, XP, Quests, activations or free upgrades.</li>
-        <li><b>Upgrade</b>: at any time during your turn you may spend XP [[icon:xp]] to upgrade a Legendary character (for example by turning it 90°) or to raise your Writer to the next level.</li>
+        <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once.</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
       <div class="example"><b>Example of a turn.</b> Léa played chapter 7 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. She buys nothing. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins.
@@ -167,13 +167,14 @@ const RULES = {
       </ul>`],
       ["effects", "Effects in detail", `<p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them. An Activation that costs something (spend coins, discard a card…) is optional.</p>
       <p><b>Take a Quest.</b> Choose one face-up Quest and keep it in front of you. It will score at the end of the game.</p>
-      <p><b>Free upgrade.</b> Upgrade one Legendary character without paying its XP cost.</p>
+      <p><b>Free upgrade.</b> Upgrade one Legendary character at once, without filling its star spaces (any XP already on it is discarded).</p>
+      <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free.</p>
       <p><b>Draw an Action card.</b> Draw 1 card from your Action deck, then put 1 Action card from your hand under your deck. If your Action deck is empty, the effect does nothing. This keeps the deck an exact count of the rounds left.</p>
       <h3>Legendary characters</h3>
-      <p>A Legendary character starts on its base side. Pay the XP cost to upgrade it (turn it 90° to show it): from then on, only the upgraded effect counts.</p>
+      <p>A Legendary character starts on its base side. When its star spaces are full, it is upgraded (turn it 90° to show it): from then on, only the upgraded effect counts.</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Writers</h3>
-      <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. Each level is bought with XP.</p>
+      <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. You reach each level by filling its star spaces with XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
       ["end", "End of the game and scoring", `<p>The game ends after the 8th or 9th round, when the Action decks are empty. Each player adds up:</p>
       <ul>
@@ -216,7 +217,7 @@ const RULES = {
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
-        <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire. Entre deux niveaux de votre Écrivain ou d’un personnage Légendaire, chaque case étoile en pointillés vaut 1 XP : le nombre de cases indique le coût. Pour monter de niveau, posez un jeton XP sur chaque case ; la carte passe alors au niveau suivant.</li>
+        <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
         <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard.</li>
       </ol>`],
       ["round", "Une manche", `<h3>1. Révéler les groupes</h3>
@@ -231,7 +232,7 @@ const RULES = {
         <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
         <li><b>Achetez un Objet</b> si vous le souhaitez, en payant son prix en pièces.</li>
         <li><b>Résolvez votre carte Action.</b> Pièces, XP, Quêtes, activations ou améliorations gratuites.</li>
-        <li><b>Améliorez</b> : à tout moment pendant votre tour, vous pouvez dépenser de l’XP [[icon:xp]] pour améliorer un personnage Légendaire (par exemple en la tournant de 90°) ou faire monter votre Écrivain au niveau suivant.</li>
+        <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant.</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
       <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 7 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Elle n’achète rien. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces.
@@ -244,13 +245,14 @@ const RULES = {
       </ul>`],
       ["effects", "Les effets en détail", `<p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
       <p><b>Prendre une Quête.</b> Choisissez une Quête visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
-      <p><b>Amélioration gratuite.</b> Améliorez un personnage Légendaire sans payer son coût en XP.</p>
+      <p><b>Amélioration gratuite.</b> Améliorez aussitôt un personnage Légendaire, sans remplir ses cases étoile (l’XP déjà posé dessus est défaussé).</p>
+      <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère.</p>
       <p><b>Piocher une carte Action.</b> Piochez 1 carte de votre pioche Action, puis remettez 1 carte Action de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours exactement les manches restantes.</p>
       <h3>Personnages légendaires</h3>
-      <p>Un personnage Légendaire commence sur sa face de base. Payez son coût en XP pour l’améliorer (tournez la carte de 90° pour le montrer) : dès lors, seul l’effet amélioré compte.</p>
+      <p>Un personnage Légendaire commence sur sa face de base. Quand ses cases étoile sont pleines, il est amélioré (tournez la carte de 90° pour le montrer) : dès lors, seul l’effet amélioré compte.</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Écrivains</h3>
-      <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. Chaque niveau s’achète avec de l’XP.</p>
+      <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. On atteint chaque niveau en remplissant ses cases étoile avec de l’XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
       ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e ou la 9e manche, quand les pioches Action sont vides. Chaque joueur additionne :</p>
       <ul>
@@ -293,7 +295,7 @@ const RULES = {
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
-        <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo. Tra due livelli del tuo Scrittore o di un personaggio Leggendario, ogni casella stella tratteggiata vale 1 XP: il numero di caselle indica il costo. Per salire di livello, metti un segnalino XP su ogni casella; la carta passa allora al livello successivo.</li>
+        <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
         <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore.</li>
       </ol>`],
       ["round", "Un round", `<h3>1. Rivelare i gruppi</h3>
@@ -308,7 +310,7 @@ const RULES = {
         <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
         <li><b>Compra un Oggetto</b> se vuoi, pagando il suo prezzo in monete.</li>
         <li><b>Risolvi la tua carta Azione.</b> Monete, XP, Missioni, attivazioni o potenziamenti gratis.</li>
-        <li><b>Potenzia</b>: in qualsiasi momento del tuo turno puoi spendere XP [[icon:xp]] per potenziare un personaggio Leggendario (per esempio ruotandolo di 90°) o far salire di livello il tuo Scrittore.</li>
+        <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello.</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
       <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 7 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Non compra nulla. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete.
@@ -321,13 +323,14 @@ const RULES = {
       </ul>`],
       ["effects", "Gli effetti nel dettaglio", `<p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
       <p><b>Prendere una Missione.</b> Scegli una Missione scoperta e tienila davanti a te. Darà punti a fine partita.</p>
-      <p><b>Potenziamento gratis.</b> Potenzia un personaggio Leggendario senza pagare il suo costo in XP.</p>
+      <p><b>Potenziamento gratis.</b> Potenzia subito un personaggio Leggendario, senza riempire le sue caselle stella (gli XP già posati su di esso vengono scartati).</p>
+      <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera.</p>
       <p><b>Pescare una carta Azione.</b> Pesca 1 carta dal tuo mazzo Azione, poi rimetti 1 carta Azione dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre esattamente i round rimasti.</p>
       <h3>Personaggi leggendari</h3>
-      <p>Un personaggio Leggendario inizia sul lato base. Paga il suo costo in XP per potenziarlo (ruota la carta di 90° per mostrarlo): da quel momento conta solo l’effetto potenziato.</p>
+      <p>Un personaggio Leggendario inizia sul lato base. Quando le sue caselle stella sono piene, è potenziato (ruota la carta di 90° per mostrarlo): da quel momento conta solo l’effetto potenziato.</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Scrittori</h3>
-      <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Ogni livello si compra con XP.</p>
+      <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Si raggiunge ogni livello riempiendo le sue caselle stella con XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
       ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° o il 9° round, quando i mazzi Azione sono vuoti. Ogni giocatore somma:</p>
       <ul>

@@ -2893,3 +2893,11 @@ html {
 .tagtok-ico i:nth-child(2) { background: #b8402e; }
 .tagtok-ico i:nth-child(3) { background: #8a5426; }
 .tagtok-ico i:nth-child(4) { background: #26487c; }
+
+/* XP placed on star spaces */
+.xp-place { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.xp-pips { display: inline-flex; gap: 2px; }
+.xp-pips i { display: inline-grid; place-items: center; width: 20px; height: 20px; border: 1.5px dashed #c58b3c; border-radius: 5px; background: #fff8e2; }
+.xp-pips i .game-icon { width: 14px; height: 14px; opacity: .25; }
+.xp-pips i.on { border-style: solid; background: #fde7a6; }
+.xp-pips i.on .game-icon { opacity: 1; }
