@@ -1145,6 +1145,12 @@ async function activateCard(card) {
   } else if (/choose one of those effects/i.test(text)) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
+  } else if (card.name === "The Evil Fairy" && card.upgraded) {
+    gain("vp", Math.min(5, countAlignment("Bad")));
+  } else if (card.name === "The Hunter" && card.upgraded) {
+    if (countAlignment("Bad") > 0) gain("vp", 2);
+  } else if (card.name === "Puss in Boots" && card.upgraded) {
+    gain("coins", Math.min(3, countAlignment("Bad")));
   } else if (card.name === "The Wizard of Oz") {
     // resolved in activationLinks: spend coins, gain XP and VP
   } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
@@ -1162,7 +1168,7 @@ async function activateCard(card) {
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(7, countByName("Pirate") + countAlignment("Bad")));
     if (/gain 1 coin for each Item you have, max 3/i.test(text)) gain("coins", Math.min(3, state.items.length));
-    if (/gain 1 coin for each Good Character/i.test(text)) gain("coins", Math.min(5, countAlignment("Good")));
+    if (/gain 1 coin for each Good (?:Character|card)/i.test(text)) gain("coins", Math.min(5, countAlignment("Good")));
     if (/gain 1 XP for each Charm/i.test(text)) gain("xp", Math.min(5, countIcon("Charm")));
     if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
@@ -1279,8 +1285,10 @@ function countIcon(icon) {
   return iconCounts()[icon] || 0;
 }
 
+// Good / Bad cards: Characters by their alignment, Items (and any other card) by their Good / Bad icon.
 function countAlignment(alignment) {
-  return (state.tableau || []).filter((card) => card.alignment === alignment).length;
+  const items = (state.items || []).filter((item) => new RegExp(`\\b${alignment}\\b`).test(item.icons || "")).length;
+  return (state.tableau || []).filter((card) => card.alignment === alignment).length + items;
 }
 
 function countByName(name) {

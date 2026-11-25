@@ -48,7 +48,7 @@
       for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence"]) {
         if (new RegExp(icon).test(quest.scoring)) value += iconAmount(card, icon) * 1.5;
       }
-      if (/Bad Character/.test(quest.scoring) && card.alignment === "Bad") value += 2;
+      if (/Bad card/.test(quest.scoring) && card.alignment === "Bad") value += 2;
       if (/Good Legendary/.test(quest.scoring) && card.alignment === "Good" && card.deck === "legendary") value += 2;
       if (/each Dwarf/.test(quest.scoring) && card.name === "Dwarf") value += 2;
     }

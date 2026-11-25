@@ -674,7 +674,7 @@ window.GAME_DATA = {
       "name": "Long Bow",
       "cost": 3,
       "icons": "Strength 1",
-      "effect": "Instant: gain 1 VP for each Bad Character you have, max 5 VP. If you have Robin Hood, gain 2 VP more.",
+      "effect": "Instant: gain 1 VP for each Bad card you have, max 5 VP. If you have Robin Hood, gain 2 VP more.",
       "copy": 1
     },
     {
@@ -683,7 +683,7 @@ window.GAME_DATA = {
       "name": "Horn of Sherwood",
       "cost": 3,
       "icons": "Intelligence 1",
-      "effect": "Activation: gain 1 coin for each Good Character you have, max 5 coins.",
+      "effect": "Activation: gain 1 coin for each Good card you have, max 5 coins.",
       "copy": 1
     },
     {
@@ -854,7 +854,7 @@ window.GAME_DATA = {
       "name": "Pirate Ship",
       "cost": 5,
       "icons": "Strength 1",
-      "effect": "Activation: gain 1 coin for each Pirate and each Bad Character you have, max 7 coins.",
+      "effect": "Activation: gain 1 coin for each Pirate and each Bad card you have, max 7 coins.",
       "copy": 1
     },
     {
@@ -962,8 +962,8 @@ window.GAME_DATA = {
       "name": "Grandmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Instant: gain 2 XP if you have a Bad Character.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Bad Character you have, max 8 VP.",
+      "base": "Intelligence 1. Instant: gain 2 XP if you have a Bad card.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each Bad card you have, max 8 VP.",
       "upgraded": false
     },
     {
@@ -973,7 +973,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 4 VP (6 VP if it is The Wolf or The Evil Queen).",
-      "upgrade": "Cost 3 XP. Activation: gain 2 VP if you have at least one Bad Character.",
+      "upgrade": "Cost 3 XP. Activation: gain 2 VP if you have at least one Bad card.",
       "upgraded": false
     },
     {
@@ -1043,7 +1043,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Intelligence 1. Instant: choose an opponent. They discard 1 coin or 1 XP. You gain the chosen resource.",
-      "upgrade": "Cost 4 XP. Activation: gain 1 VP for each Bad Character you have, max 5 VP.",
+      "upgrade": "Cost 4 XP. Activation: gain 1 VP for each Bad card you have, max 5 VP.",
       "upgraded": false
     },
     {
@@ -1133,7 +1133,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 2 coins or 2 XP. If you have The Wolf, gain both.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Good–Bad pair of Characters you have, max 10 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Good–Bad pair of cards you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1202,8 +1202,8 @@ window.GAME_DATA = {
       "name": "Rumpelstiltskin",
       "rank": null,
       "alignment": "Bad",
-      "base": "Intelligence 1. Game End: 1 VP for each Bad Character you have, max 8 VP.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Bad Character you have, max 14 VP.",
+      "base": "Intelligence 1. Game End: 1 VP for each Bad card you have, max 8 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Bad card you have, max 14 VP.",
       "upgraded": false
     },
     {
@@ -1213,7 +1213,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 3 coins.",
-      "upgrade": "Cost 4 XP. Activation: steal 1 coin from the opponent with the most coins.",
+      "upgrade": "Cost 4 XP. Activation: gain 1 coin for each Bad card you have, max 3 coins.",
       "upgraded": false
     },
     {
@@ -1283,7 +1283,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Ongoing: whenever you play an Action card with value 9 or higher, his nose grows: gain 1 Tag token.",
-      "upgrade": "Cost 4 XP. Game End: he becomes a real boy: 2 VP for each Good Character you have, max 12 VP.",
+      "upgrade": "Cost 4 XP. Game End: he becomes a real boy: 2 VP for each Good card you have, max 12 VP.",
       "upgraded": false
     },
     {
@@ -1395,7 +1395,7 @@ window.GAME_DATA = {
       "number": 7,
       "name": "The Apple's Bite",
       "theme": "Snow White",
-      "scoring": "2 VP for each Bad Character. Max 14 VP."
+      "scoring": "2 VP for each Bad card. Max 14 VP."
     },
     {
       "id": "Q8",
@@ -1486,7 +1486,7 @@ window.GAME_DATA = {
       "number": 20,
       "name": "Once Upon a Time",
       "theme": "Ensemble Finale",
-      "scoring": "2 VP for each category in which you have at least 3 cards: Good Characters, Bad Characters, Characters, Items, Activation cards. Max 10 VP."
+      "scoring": "2 VP for each category in which you have at least 3 cards: Good cards, Bad cards, Characters, Items, Activation cards. Max 10 VP."
     },
     {
       "id": "Q21",
