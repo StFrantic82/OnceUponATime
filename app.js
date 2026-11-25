@@ -1064,7 +1064,7 @@ function scoreQuest(quest) {
   if (/Rob the Rich/.test(name)) return Math.min(10, Math.floor((state.coinsGained || 0) / 3));
   if (/Rubbed Lamp/.test(name)) return Math.min(10, Math.floor((state.xpGained || 0) / 2));
   if (/Arrow on Target/.test(name)) return Math.min(10, countCardsWith("VP|Game End") * 2);
-  if (/Final Wish/.test(name)) return Math.min(9, Math.max(0, state.quests.length - 1) * 3);
+  if (/Final Wish/.test(name)) return Math.min(12, Math.max(0, state.quests.length - 1) * 4);
   if (/Once Upon a Time/.test(name)) {
     const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 3).length;
     return Math.min(10, categories * 2);

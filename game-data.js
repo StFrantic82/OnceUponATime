@@ -1414,7 +1414,7 @@ window.GAME_DATA = {
       "number": 19,
       "name": "The Final Wish",
       "theme": "Aladdin",
-      "scoring": "3 VP for each other completed Quest. Max 9 VP."
+      "scoring": "4 VP for each other completed Quest. Max 12 VP."
     },
     {
       "id": "Q20",

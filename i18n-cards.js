@@ -278,7 +278,7 @@ window.CARD_I18N = [
   ["1 VP for every 3 coins gained during the game. Max 10 VP.", "1 VP par tranche de 3 coins gagnées pendant la partie. Max 10 VP.", "1 VP ogni 3 coins ottenute durante la partita. Max 10 VP."],
   ["1 VP for every 2 XP gained during the game. Max 10 VP.", "1 VP par tranche de 2 XP gagnés pendant la partie. Max 10 VP.", "1 VP ogni 2 XP ottenuti durante la partita. Max 10 VP."],
   ["2 VP for each card that grants VP directly or at Game End. Max 10 VP.", "2 VP par carte qui rapporte des VP directement ou en Game End. Max 10 VP.", "2 VP per ogni carta che dà VP direttamente o a Game End. Max 10 VP."],
-  ["3 VP for each other completed Quest. Max 9 VP.", "3 VP par autre Quête accomplie. Max 9 VP.", "3 VP per ogni altra Missione completata. Max 9 VP."],
+  ["4 VP for each other completed Quest. Max 12 VP.", "4 VP par autre Quête accomplie. Max 12 VP.", "4 VP per ogni altra Missione completata. Max 12 VP."],
   ["2 VP for each category in which you have at least 3 cards: Good, Bad, Character, Item, Activation. Max 10 VP.", "2 VP par catégorie où vous avez au moins 3 cartes : Gentil, Méchant, Personnage, Objet, Activation. Max 10 VP.", "2 VP per ogni categoria in cui hai almeno 3 carte: Buono, Cattivo, Personaggio, Oggetto, Activation. Max 10 VP."],
 
   // ---- Writers ----
