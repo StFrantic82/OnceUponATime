@@ -158,6 +158,10 @@
 
   async function playTurn() {
     const seat = G.cur;
+    while ((state.choices || []).length) {
+      const c = state.choices[0];
+      resolveChoice(botOption(c.options));
+    }
     while (state.activatePending > 0) {
       const pick = activationCandidates()[0];
       if (!pick) {

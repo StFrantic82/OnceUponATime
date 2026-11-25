@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "activatePending", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "activatePending", "choices", "coinsGained", "xpGained", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -233,6 +233,9 @@ function newPlayer(seat, info) {
     xp: 0,
     writerXp: 0,
     activatePending: 0,
+    choices: [],
+    coinsGained: 0,
+    xpGained: 0,
     vp: 0,
     tagTokens: 0,
     freeUpgrades: 0,
@@ -348,7 +351,7 @@ function endGame() {
 // Action cards and turn order
 // ---------------------------------------------------------------------------
 function actionBonus(p, number) {
-  const writerBonus = p.writer?.name === "Carlo Collodi" && number <= 5 ? 1 : 0;
+  const writerBonus = p.writer?.name === "Carlo Collodi" && number <= 6 ? 2 : 0;
   const queen = p.tableau.find((card) => card.name === "Queen of Hearts");
   const queenBonus = queen ? (queen.upgraded ? 2 : 1) : 0;
   return writerBonus + queenBonus;
@@ -537,12 +540,12 @@ async function activateActionStep() {
   state.phase = "resolving";
   await resolveAction(state.currentAction.effect);
   G.cur = seat;
-  if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 7 && state.playerFirst) gain("xp", 1);
+  if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 7) gain("xp", 1);
   state.phase = "roundDone";
 }
 
 async function endTurn() {
-  if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0 || G.active !== G.cur) return;
+  if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0 || (state.choices || []).length || G.active !== G.cur) return;
   const seat = G.cur;
   for (const p of G.players) {
     if (p.xp > 0) {
@@ -740,8 +743,12 @@ function finishWriterDiscard() {
 }
 
 function applyWriterAfterGroup(cards) {
+  if (state.writer?.name === "Hans Christian Andersen" && !state.writerRound.gameEndRewarded && cards.some((card) => /Game End/i.test(`${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`))) {
+    gain("xp", 1);
+    state.writerRound.gameEndRewarded = true;
+  }
   if (state.writer?.name !== "Brothers Grimm" || state.writerRound.alignmentRewarded) return;
-  if (cards.some((card) => card.alignment === "Good" || card.alignment === "Bad")) {
+  if (cards.some((card) => card.alignment === "Good") && cards.some((card) => card.alignment === "Bad")) {
     gain("coins", 1);
     state.writerRound.alignmentRewarded = true;
   }
@@ -778,9 +785,73 @@ async function resolveAction(effect) {
   else if (/free level up/i.test(text)) state.freeUpgrades += 1;
 }
 
+// "Choose one" effects: the options of a text ("gain 4 coins", "gain 3 XP", "take 1 Quest").
+function choiceOptions(text) {
+  const m = String(text).match(/choose one:\s*([^.]+)\./i);
+  if (m) return m[1].split(/,\s*(?:or\s+)?|\s+or\s+/i).map((o) => o.trim()).filter(Boolean);
+  const g = String(text).match(/(?:Instant:|to)\s*gain (\d+ (?:coins?|XP)) or (\d+ (?:coins?|XP))/i);
+  if (g) return [`gain ${g[1]}`, `gain ${g[2]}`];
+  return null;
+}
+
+function applyOption(option, source) {
+  let m;
+  if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
+  else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
+  else if (/take 1 Quest/i.test(option)) grantQuestChoice(source);
+}
+
+// A human player picks with buttons; the computer picks on the spot.
+function offerChoice(source, options, cost = null) {
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source, options, cost }];
+    return;
+  }
+  const pick = botOption(options);
+  if (pick === null) return;
+  if (cost === "discardCommon" && !discardWeakestCommon()) return;
+  applyOption(options[pick], source);
+}
+
+function botOption(options) {
+  const quest = options.findIndex((o) => /take 1 Quest/i.test(o));
+  if (quest >= 0 && G.questDisplay.length && state.quests.length < 4) return quest;
+  const xp = options.findIndex((o) => /XP/i.test(o));
+  const coins = options.findIndex((o) => /coin/i.test(o));
+  if (xp >= 0 && xpTargets().length && (coins < 0 || state.coins >= 4)) return xp;
+  return coins >= 0 ? coins : 0;
+}
+
+function discardWeakestCommon() {
+  const commons = state.tableau.filter((card) => card.deck === "common");
+  if (!commons.length) return false;
+  const weakest = commons.sort((a, b) => iconAmount(a, "Charm") + iconAmount(a, "Strength") + iconAmount(a, "Dexterity") + iconAmount(a, "Intelligence") - (iconAmount(b, "Charm") + iconAmount(b, "Strength") + iconAmount(b, "Dexterity") + iconAmount(b, "Intelligence")))[0];
+  state.tableau = state.tableau.filter((card) => card !== weakest);
+  log("l_discards", { p: state.name, c: C(weakest.name) });
+  return true;
+}
+
+function resolveChoice(index) {
+  const choice = (state.choices || [])[0];
+  if (!choice) return;
+  state.choices = state.choices.slice(1);
+  const i = Number(index);
+  if (i < 0 || i >= choice.options.length) return; // "nothing"
+  if (choice.cost === "discardCommon" && !discardWeakestCommon()) return;
+  applyOption(choice.options[i], choice.source);
+}
+
 function applyInstant(card) {
   const text = `${card.effect || ""} ${card.base || ""}`;
   if (!/Instant/i.test(text)) return;
+  const options = choiceOptions(text);
+  if (options) {
+    const both = card.name === "Little Red Riding Hood" && countByName("The Wolf") > 0;
+    if (both) options.forEach((o) => applyOption(o, card.name));
+    else offerChoice(card.name, options, /discard 1 Character to gain/i.test(text) ? "discardCommon" : null);
+    return;
+  }
   if (/gain 5 XP/i.test(text)) gain("xp", 5);
   else if (/gain 4 XP/i.test(text)) gain("xp", 4);
   else if (/gain 3 XP/i.test(text)) gain("xp", 3);
@@ -857,7 +928,10 @@ async function activateCard(card) {
     G.cur = seat;
     if (!ok) return;
   }
-  if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
+  if (/choose one of those effects/i.test(text)) {
+    const options = choiceOptions(card.base || "");
+    if (options) offerChoice(card.name, options);
+  } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
     state.coins -= 1;
     gain("xp", 1);
   } else if (/spend 1 XP to gain 3 coins/i.test(text)) {
@@ -890,8 +964,14 @@ async function activateCard(card) {
 
 function gain(kind, amount) {
   if (!amount) return;
-  if (kind === "coins") state.coins += amount;
-  if (kind === "xp") state.xp += amount;
+  if (kind === "coins") {
+    state.coins += amount;
+    state.coinsGained = (state.coinsGained || 0) + amount;
+  }
+  if (kind === "xp") {
+    state.xp += amount;
+    state.xpGained = (state.xpGained || 0) + amount;
+  }
   if (kind === "vp") state.vp += amount;
 }
 
@@ -966,28 +1046,28 @@ function scoreQuest(quest) {
   const completeSets = Math.min(...ICONS.map((icon) => icons[icon]));
   const upgraded = state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length;
   const name = quest.name;
-  if (/Midnight Ball/.test(name)) return Math.min(14, icons.Charm * 2);
-  if (/Hook/.test(name)) return Math.min(14, icons.Strength * 2);
-  if (/Rabbit Hole/.test(name)) return Math.min(14, icons.Dexterity * 2);
-  if (/Lost Voice/.test(name)) return Math.min(14, icons.Intelligence * 2);
-  if (/Glass Slipper/.test(name)) return Math.min(15, completeSets * 5);
-  if (/Neverland/.test(name)) return Math.min(...ICONS.map((i) => icons[i])) >= 3 ? 12 : Math.min(...ICONS.map((i) => icons[i])) >= 2 ? 8 : 0;
-  if (/Apple's Bite/.test(name)) return Math.min(14, countAlignment("Bad") * 2);
-  if (/Forest Awakening/.test(name)) return Math.min(12, countAlignment("Good"));
-  if (/Queen's Command/.test(name)) return Math.min(15, countAlignment("Neutral") * 3);
-  if (/House of Seven/.test(name)) return Math.min(12, state.tableau.length);
-  if (/King's Trident/.test(name)) return Math.min(14, state.items.length * 2);
-  if (/Hatter's Tea Party/.test(name)) return Math.min(15, countCardsWith("Ongoing") * 3);
-  if (/Second Star/.test(name)) return Math.min(14, countCardsWith("Activation") * 2);
-  if (/Pact with the Beast/.test(name)) return Math.min(15, upgraded * 5);
-  if (/Enchanted Rose/.test(name)) return Math.min(15, countCardsWith("less XP|free|place XP on a Character") * 3);
-  if (/Rob the Rich/.test(name)) return Math.min(12, Math.floor(state.coins / 2));
-  if (/Rubbed Lamp/.test(name)) return Math.min(12, Math.floor(xpRemaining() / 2));
-  if (/Arrow on Target/.test(name)) return Math.min(15, countCardsWith("VP|Game End") * 3);
-  if (/Final Wish/.test(name)) return Math.min(15, Math.max(0, state.quests.length - 1) * 5);
+  if (/Midnight Ball/.test(name)) return Math.min(10, icons.Charm * 2);
+  if (/Hook/.test(name)) return Math.min(10, icons.Strength * 2);
+  if (/Rabbit Hole/.test(name)) return Math.min(10, icons.Dexterity * 2);
+  if (/Lost Voice/.test(name)) return Math.min(10, icons.Intelligence * 2);
+  if (/Glass Slipper/.test(name)) return Math.min(12, completeSets * 4);
+  if (/Neverland/.test(name)) return Math.min(...ICONS.map((i) => icons[i])) >= 3 ? 10 : Math.min(...ICONS.map((i) => icons[i])) >= 2 ? 6 : 0;
+  if (/Apple's Bite/.test(name)) return Math.min(10, countAlignment("Bad") * 2);
+  if (/Forest Awakening/.test(name)) return Math.min(10, countAlignment("Good"));
+  if (/Queen's Command/.test(name)) return Math.min(10, countCardsWith("Instant") * 2);
+  if (/House of Seven/.test(name)) return Math.min(10, state.tableau.length);
+  if (/King's Trident/.test(name)) return Math.min(10, state.items.length * 2);
+  if (/Hatter's Tea Party/.test(name)) return Math.min(10, countCardsWith("Ongoing") * 2);
+  if (/Second Star/.test(name)) return Math.min(10, countCardsWith("Activation") * 2);
+  if (/Pact with the Beast/.test(name)) return Math.min(12, upgraded * 3);
+  if (/Enchanted Rose/.test(name)) return Math.min(12, countCardsWith("less XP|free|place XP on a Character") * 3);
+  if (/Rob the Rich/.test(name)) return Math.min(10, Math.floor((state.coinsGained || 0) / 3));
+  if (/Rubbed Lamp/.test(name)) return Math.min(10, Math.floor((state.xpGained || 0) / 2));
+  if (/Arrow on Target/.test(name)) return Math.min(10, countCardsWith("VP|Game End") * 2);
+  if (/Final Wish/.test(name)) return Math.min(9, Math.max(0, state.quests.length - 1) * 3);
   if (/Once Upon a Time/.test(name)) {
     const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 3).length;
-    return Math.min(15, categories * 3);
+    return Math.min(10, categories * 2);
   }
   return 0;
 }
@@ -1010,19 +1090,19 @@ function scoreCards() {
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
     else if (n === "The Crown of England") total += sets * 3;
     else if (n === "Glass Slipper") total += Math.min(10, quests * 2);
-    else if (n === "Enchanted Rose") total += Math.min(12, upgradedLeg * 2);
+    else if (n === "Enchanted Rose") total += Math.min(8, upgradedLeg * 2);
     else if (n === "Undersea Throne") total += Math.min(8, state.items.length);
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
     else if (n === "Grandmother") total += Math.min(8, countAlignment("Bad") * 2);
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
     else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
-    else if (n === "Evil Sorcerer") total += sets * 3;
-    else if (n === "The Evil Queen") total += up ? Math.min(14, icons.Charm * 2) : Math.min(10, maxCharmAtTable());
+    else if (n === "Evil Sorcerer") total += sets * 2;
+    else if (n === "The Evil Queen") total += up ? Math.min(10, icons.Charm * 2) : Math.min(10, maxCharmAtTable());
     else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.floor(icons.Charm / 2);
     else if (n === "Dorothy Gale") total += Math.min(16, sets * 4);
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
     else if (n === "Captain Hook") total += up ? Math.min(14, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);
-    else if (n === "Little Red Riding Hood") total += Math.min(15, goodBadPairs * 3);
+    else if (n === "Little Red Riding Hood") total += Math.min(10, goodBadPairs * 2);
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2);
     else if (n === "Prince John") total += Math.min(12, Math.floor(state.coins / 2));
@@ -1049,14 +1129,14 @@ function finalScore() {
 function scoreWriter() {
   if (!state.writer || state.writerLevel < 3) return 0;
   const name = state.writer.name;
-  if (name === "Charles Perrault") return Math.min(14, state.items.length * 2);
-  if (name === "Brothers Grimm") return Math.min(15, Math.min(countAlignment("Good"), countAlignment("Bad")) * 3);
-  if (name === "Hans Christian Andersen") return Math.min(14, countCardsWith("Game End") * 2);
-  if (name === "Carlo Collodi") return Math.min(14, Math.floor(state.coins / 2) + Math.floor(xpRemaining() / 2));
+  if (name === "Charles Perrault") return Math.min(10, state.items.length * 2);
+  if (name === "Brothers Grimm") return Math.min(12, Math.min(countAlignment("Good"), countAlignment("Bad")) * 2);
+  if (name === "Hans Christian Andersen") return Math.min(15, countCardsWith("Game End") * 3);
+  if (name === "Carlo Collodi") return Math.min(14, Math.floor((state.coinsGained || 0) / 2) + Math.floor((state.xpGained || 0) / 2));
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
   if (name === "L. Frank Baum") return Math.min(15, Math.min(...ICONS.map(countIcon)) * 5);
-  if (name === "Le Prince de Beaumont") return Math.min(16, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 4);
+  if (name === "Le Prince de Beaumont") return Math.min(9, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
 }
 
@@ -1082,6 +1162,7 @@ const MOVES = {
   placeXp,
   writerFree: freeUpgradeWriter,
   activatePick,
+  choose: resolveChoice,
   writerDraft: resolveWriterDraft,
   writerDiscard: discardForWriter,
   writerDiscardDone: finishWriterDiscard,
@@ -1273,6 +1354,19 @@ function renderGuide() {
         act("activatePick", wrap.dataset.ownId);
       });
     }
+  }
+  if ((state.choices || []).length) {
+    const choice = state.choices[0];
+    const label = (o) => {
+      let m;
+      if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
+      if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
+      if (/take 1 Quest/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
+      return escapeHtml(o);
+    };
+    const html = `${t("g_choose", { c: escapeHtml(tc(choice.source)) })}${choice.cost === "discardCommon" ? ` <small>${t("g_chooseDiscard")}</small>` : ""}<span class="choice-btns">${choice.options.map((o, i) => `<button type="button" class="primary" data-choice="${i}">${label(o)}</button>`).join("")}${choice.cost ? `<button type="button" data-choice="-1">${t("g_nothing")}</button>` : ""}</span>`;
+    bubble(el.tableau, html);
+    for (const btn of document.querySelectorAll("[data-choice]")) btn.addEventListener("click", () => act("choose", btn.dataset.choice));
   }
   if (state.questChoices > 0) {
     bubble(el.questDisplay, t("g_quest"));
@@ -1629,7 +1723,7 @@ function renderRound() {
     gameOver: "st_gameOver",
   };
   el.roundState.textContent = t(labels[state.phase] || "st_waitTurn");
-  el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0;
+  el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0 || (state.choices || []).length > 0;
   el.endRoundBtn.classList.toggle("primary", state.phase === "roundDone" && !state.questChoices && !state.tuckPending);
   el.resolveActionBtn.disabled = state.phase !== "buyItem";
   el.resolveActionBtn.classList.toggle("hidden", state.phase !== "buyItem");
