@@ -196,10 +196,10 @@ function withSeat(seat, fn) {
 // ---------------------------------------------------------------------------
 // Setup
 // ---------------------------------------------------------------------------
-// Board layout per player count (groups of Normal + Legendary cards), from the Board sheet.
+// Board layout per player count (groups of Normal + Legendary cards). 2-3 players updated by the author (Nov 2026).
 const BOARDS = {
-  2: [[1, 0], [1, 1], [2, 1]],
-  3: [[1, 0], [2, 0], [1, 1], [2, 1]],
+  2: [[0, 1], [2, 0], [1, 1]],
+  3: [[0, 1], [2, 0], [1, 1], [2, 1]],
   4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]],
   5: [[1, 0], [2, 0], [1, 1], [2, 1], [0, 2], [1, 2]],
 };
