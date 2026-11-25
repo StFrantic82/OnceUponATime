@@ -674,7 +674,7 @@ window.GAME_DATA = {
       "name": "Long Bow",
       "cost": 4,
       "icons": "Strength 1",
-      "effect": "Instant: gain 1 VP for each Bad card, max 5 VP. If you have Robin Hood, gain 2 VP more.",
+      "effect": "Instant: gain 1 VP for each Bad card. If you have Robin Hood, gain 2 VP more.",
       "copy": 1
     },
     {
@@ -791,7 +791,7 @@ window.GAME_DATA = {
       "name": "Glass Slipper",
       "cost": 6,
       "icons": "Charm 1",
-      "effect": "Game End: 2 VP for each Adventure you completed, max 10 VP. If you have Cinderella, gain 3 VP more.",
+      "effect": "Game End: 2 VP for each Adventure you completed. If you have Cinderella, gain 3 VP more.",
       "copy": 1
     },
     {
@@ -861,9 +861,9 @@ window.GAME_DATA = {
       "id": "I34",
       "deck": "item",
       "name": "Undersea Throne",
-      "cost": 5,
+      "cost": 6,
       "icons": "Intelligence 1",
-      "effect": "Game End: 1 VP for each Item, max 8 VP.",
+      "effect": "Game End: 1 VP for each Item.",
       "copy": 1
     },
     {
@@ -881,7 +881,7 @@ window.GAME_DATA = {
       "name": "The Whale",
       "cost": 5,
       "icons": "Strength 1",
-      "effect": "Game End: 1 VP for each of your cards without tags, max 8 VP.",
+      "effect": "Game End: 1 VP for each of your cards without tags.",
       "copy": 1
     }
   ],

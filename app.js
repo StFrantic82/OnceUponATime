@@ -1286,7 +1286,7 @@ function instantLinks(card) {
       checkPeterPan();
     }
   }
-  if (n === "Long Bow") gain("vp", Math.min(5, countAlignment("Bad")) + (hasCard("Robin Hood") ? 2 : 0));
+  if (n === "Long Bow") gain("vp", countAlignment("Bad") + (hasCard("Robin Hood") ? 2 : 0));
 }
 
 // The Hunter: discard 1 Bad Character for 4 VP, or 6 VP for The Wolf or The Evil Queen.
@@ -1686,9 +1686,9 @@ function scoreCards(only = null) {
     if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
     else if (n === "The Crown of England") total += sets;
-    else if (n === "Glass Slipper") total += Math.min(10, quests * 2) + (hasCard("Cinderella") ? 3 : 0);
+    else if (n === "Glass Slipper") total += quests * 2 + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += upgradedLeg;
-    else if (n === "Undersea Throne") total += Math.min(8, state.items.length);
+    else if (n === "Undersea Throne") total += state.items.length;
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
     else if (n === "Grandmother") total += Math.min(8, countAlignment("Bad") * 2);
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
@@ -1708,7 +1708,7 @@ function scoreCards(only = null) {
     else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 3 : 0);
     else if (n === "Pinocchio") total += Math.min(12, countAlignment("Good") * 2);
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
-    else if (n === "The Whale") total += Math.min(8, countTagless());
+    else if (n === "The Whale") total += countTagless();
     else if (n === "Beast") total += up ? icons.Strength + (hasCard("Belle") ? 3 : 0) : Math.floor(icons.Strength / 2);
   }
   return total;
