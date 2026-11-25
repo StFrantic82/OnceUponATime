@@ -1586,21 +1586,21 @@ function scoreQuest(quest) {
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
   if (/Neverland/.test(name)) return completeSets >= 6 ? 6 : completeSets >= 5 ? 3 : 0;
   if (/Apple's Bite/.test(name)) return countAlignment("Bad");
-  if (/Yellow Brick Road/.test(name)) return state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length * 2;
+  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 3, 5, 7);
   if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 2, 4, 6);
   if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 9).length * 2;
   if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 4, 7, 10);
   if (/Queen's Command/.test(name)) return countTagless();
-  if (/House of Seven/.test(name)) return countByName("Dwarf") * 2;
+  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 2, 4, 6);
   if (/King's Trident/.test(name)) return state.items.length;
   if (/Hatter's Tea Party/.test(name)) return countCardsWith("Ongoing");
   if (/Second Star/.test(name)) return tiers(countCardsWith("Activation"), 6, 9, 12);
   if (/Pact with the Beast/.test(name)) return upgraded;
   if (/Enchanted Rose/.test(name)) return countCardsWith("less XP|free|place (?:\\d+ )?XP on") * 2;
-  if (/Rob the Rich/.test(name)) return Math.floor((state.coinsGained || 0) / 5);
+  if (/Rob the Rich/.test(name)) return Math.floor((state.vp || 0) / 3);
   if (/Rubbed Lamp/.test(name)) return Math.floor((state.xpGained || 0) / 4);
   if (/Arrow on Target/.test(name)) return tiers(countCardsWith("VP|Game End"), 6, 9, 12);
-  if (/Final Wish/.test(name)) return state.quests.length * 3;
+  if (/Final Wish/.test(name)) return state.quests.length * 2;
   if (/A Real Boy/.test(name)) return state.actionDiscard.filter((c) => c.number <= 4).length * 2;
   if (/Once Upon a Time/.test(name)) {
     const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 6).length;

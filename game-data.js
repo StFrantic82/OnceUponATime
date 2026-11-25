@@ -1402,7 +1402,7 @@ window.GAME_DATA = {
       "number": 8,
       "name": "The Yellow Brick Road",
       "theme": "The Wizard of Oz",
-      "scoring": "2 VP for each Character from Oz: Dorothy Gale, Scarecrow, Tin Woodman, Cowardly Lion, Wizard of Oz, Witches and Munchkins."
+      "scoring": "3 / 5 / 7 Characters from Oz: 2 / 4 / 6 VP."
     },
     {
       "id": "Q9",
@@ -1416,7 +1416,7 @@ window.GAME_DATA = {
       "number": 10,
       "name": "The House of Seven",
       "theme": "Snow White",
-      "scoring": "2 VP for each Dwarf."
+      "scoring": "2 / 4 / 6 Dwarves: 2 / 4 / 6 VP."
     },
     {
       "id": "Q11",
@@ -1458,7 +1458,7 @@ window.GAME_DATA = {
       "number": 16,
       "name": "Rob the Rich",
       "theme": "Robin Hood",
-      "scoring": "1 VP for every 5 coins gained during the game."
+      "scoring": "1 VP for every 3 VP in tokens."
     },
     {
       "id": "Q17",
@@ -1479,7 +1479,7 @@ window.GAME_DATA = {
       "number": 19,
       "name": "The Final Wish",
       "theme": "Aladdin",
-      "scoring": "3 VP for each Quest."
+      "scoring": "2 VP for each Quest."
     },
     {
       "id": "Q20",
