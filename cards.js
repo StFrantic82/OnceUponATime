@@ -81,11 +81,17 @@
     return `<header class="fc-head">${skillTags(skills)}<div class="fc-name" style="${nameStyle(name, innerWidth, skills.length, max)}">${esc(name)}${extra}</div></header>`;
   }
 
+  // Round VP mark (not a tag): the card grants VP during the game or at Game End.
+  function vpMark(card) {
+    const text = `${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`;
+    return /\bVP\b|Game End/i.test(text) ? `<span class="fc-vpmark" title="VP">${resourceIcon("vp", "VP")}</span>` : "";
+  }
+
   function common(card, opts = {}) {
     const align = (card.alignment || "neutral").toLowerCase();
     return `<article class="fcard fc-common fc-${align} ${opts.cls || ""}">
       ${head(card, 160, 15)}
-      <div class="fc-art">${CardArt.art(card.name)}</div>
+      <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
       <div class="fc-text">${card.effect ? `<p>${formatGameText(tc(card.effect))}</p>` : ""}</div>
       ${alignFoot(card.alignment)}
     </article>`;
@@ -183,7 +189,7 @@
     const upgradeText = String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
     return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
       ${head(card, 204, 16, `<small>${esc(t("legendary"))}</small>`)}
-      <div class="fc-art">${CardArt.art(card.name)}</div>
+      <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
       <div class="fc-side fc-base">${formatGameText(stripIconPrefix(tc(card.base)))}</div>
       ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
       <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${formatGameText(tc(upgradeText))}</div>
@@ -196,7 +202,7 @@
     const bad = /\bBad\b/.test(card.icons || "");
     return `<article class="fcard fc-item ${opts.cls || ""}">
       ${head(card, 188, 14)}
-      <div class="fc-art">${CardArt.art(card.name)}
+      <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}
         <span class="fc-price">${opts.original != null && opts.original !== price ? `<s>${opts.original}</s>` : ""}${price}${resourceIcon("coins", "coins")}</span>
       </div>
       <div class="fc-text"><p>${formatGameText(tc(card.effect))}</p></div>

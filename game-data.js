@@ -1353,63 +1353,63 @@ window.GAME_DATA = {
       "number": 1,
       "name": "The Midnight Ball",
       "theme": "Cinderella",
-      "scoring": "1 VP for each Charm icon. Max 10 VP."
+      "scoring": "6 / 8 / 10 Charm icons: 3 / 6 / 9 VP. Fewer than 6: −3 VP."
     },
     {
       "id": "Q2",
       "number": 2,
       "name": "The Duel with Hook",
       "theme": "Peter Pan",
-      "scoring": "1 VP for each Strength icon. Max 10 VP."
+      "scoring": "6 / 8 / 10 Strength icons: 3 / 6 / 9 VP. Fewer than 6: −3 VP."
     },
     {
       "id": "Q3",
       "number": 3,
       "name": "Down the Rabbit Hole",
       "theme": "Alice",
-      "scoring": "1 VP for each Dexterity icon. Max 10 VP."
+      "scoring": "6 / 8 / 10 Dexterity icons: 3 / 6 / 9 VP. Fewer than 6: −3 VP."
     },
     {
       "id": "Q4",
       "number": 4,
       "name": "The Lost Voice",
       "theme": "The Little Mermaid",
-      "scoring": "1 VP for each Intelligence icon. Max 10 VP."
+      "scoring": "6 / 8 / 10 Intelligence icons: 3 / 6 / 9 VP. Fewer than 6: −3 VP."
     },
     {
       "id": "Q5",
       "number": 5,
       "name": "The Glass Slipper Found",
       "theme": "Cinderella",
-      "scoring": "4 VP for each complete set of four icons. Max 12 VP."
+      "scoring": "2 VP for each complete set of four icons."
     },
     {
       "id": "Q6",
       "number": 6,
       "name": "Neverland",
       "theme": "Peter Pan",
-      "scoring": "10 VP if you have at least 3 icons of each type. Otherwise, 6 VP if you have at least 2 of each type."
+      "scoring": "5 / 6 icons of each type: 4 / 8 VP. Fewer than 5 of one type: −3 VP."
     },
     {
       "id": "Q7",
       "number": 7,
       "name": "The Apple's Bite",
       "theme": "Snow White",
-      "scoring": "2 VP for each Bad card. Max 14 VP."
+      "scoring": "1 VP for each Bad card. Fewer than 3: −3 VP."
     },
     {
       "id": "Q8",
       "number": 8,
       "name": "Forest Awakening",
       "theme": "Snow White",
-      "scoring": "2 VP for each Good Legendary card. Max 12 VP."
+      "scoring": "1 VP for each Good Legendary card."
     },
     {
       "id": "Q9",
       "number": 9,
       "name": "The Queen's Command",
       "theme": "Alice",
-      "scoring": "3 VP for each card without tags. Max 12 VP."
+      "scoring": "2 VP for each card without tags. Fewer than 2: −3 VP."
     },
     {
       "id": "Q10",
@@ -1423,77 +1423,77 @@ window.GAME_DATA = {
       "number": 11,
       "name": "The King's Trident",
       "theme": "The Little Mermaid",
-      "scoring": "2 VP for each Item. Max 10 VP."
+      "scoring": "1 VP for each Item."
     },
     {
       "id": "Q12",
       "number": 12,
       "name": "The Hatter's Tea Party",
       "theme": "Alice",
-      "scoring": "2 VP for each card with an Ongoing effect. Max 10 VP."
+      "scoring": "1 VP for each card with an Ongoing effect."
     },
     {
       "id": "Q13",
       "number": 13,
       "name": "Second Star to the Right",
       "theme": "Peter Pan",
-      "scoring": "2 VP for each card with an Activation effect. Max 10 VP."
+      "scoring": "6 / 9 / 12 cards with an Activation effect: 3 / 6 / 9 VP. Fewer than 6: −3 VP."
     },
     {
       "id": "Q14",
       "number": 14,
       "name": "The Pact with the Beast",
       "theme": "Beauty and the Beast",
-      "scoring": "2 VP for each upgraded Legendary card. Max 14 VP."
+      "scoring": "1 VP for each upgraded Legendary card."
     },
     {
       "id": "Q15",
       "number": 15,
       "name": "The Enchanted Rose",
       "theme": "Beauty and the Beast",
-      "scoring": "3 VP for each card that reduces an XP cost or places XP for free. Max 12 VP."
+      "scoring": "2 VP for each card that reduces an XP cost or places XP for free."
     },
     {
       "id": "Q16",
       "number": 16,
       "name": "Rob the Rich",
       "theme": "Robin Hood",
-      "scoring": "1 VP for every 3 coins gained during the game. Max 10 VP."
+      "scoring": "1 VP for every 4 coins gained during the game."
     },
     {
       "id": "Q17",
       "number": 17,
       "name": "The Rubbed Lamp",
       "theme": "Aladdin",
-      "scoring": "1 VP for every 2 XP gained during the game. Max 10 VP."
+      "scoring": "1 VP for every 3 XP gained during the game."
     },
     {
       "id": "Q18",
       "number": 18,
       "name": "Arrow on Target",
       "theme": "Robin Hood",
-      "scoring": "2 VP for each card that grants VP directly or at Game End. Max 10 VP."
+      "scoring": "6 / 9 / 12 cards that grant VP directly or at Game End: 3 / 6 / 9 VP. Fewer than 6: −3 VP."
     },
     {
       "id": "Q19",
       "number": 19,
       "name": "The Final Wish",
       "theme": "Aladdin",
-      "scoring": "4 VP for each other completed Quest. Max 12 VP."
+      "scoring": "3 VP for each Quest."
     },
     {
       "id": "Q20",
       "number": 20,
       "name": "Once Upon a Time",
       "theme": "Ensemble Finale",
-      "scoring": "2 VP for each category in which at least 3 cards: Good cards, Bad cards, Characters, Items, Activation cards. Max 10 VP."
+      "scoring": "2 VP for each category in which you have at least 5 cards: Good cards, Bad cards, Characters, Items, Activation cards."
     },
     {
       "id": "Q21",
       "number": 21,
       "name": "A Real Boy",
       "theme": "Pinocchio",
-      "scoring": "3 VP for each upgraded Good Legendary card. Max 12 VP."
+      "scoring": "1 VP for each upgraded Good Legendary card."
     }
   ],
   "writers": [

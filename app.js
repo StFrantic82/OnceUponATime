@@ -1577,29 +1577,31 @@ function scoreQuest(quest) {
   const completeSets = Math.min(...ICONS.map((icon) => icons[icon]));
   const upgraded = state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length;
   const name = quest.name;
-  if (/Midnight Ball/.test(name)) return Math.min(10, icons.Charm);
-  if (/Hook/.test(name)) return Math.min(10, icons.Strength);
-  if (/Rabbit Hole/.test(name)) return Math.min(10, icons.Dexterity);
-  if (/Lost Voice/.test(name)) return Math.min(10, icons.Intelligence);
-  if (/Glass Slipper/.test(name)) return Math.min(12, completeSets * 4);
-  if (/Neverland/.test(name)) return Math.min(...ICONS.map((i) => icons[i])) >= 3 ? 10 : Math.min(...ICONS.map((i) => icons[i])) >= 2 ? 6 : 0;
-  if (/Apple's Bite/.test(name)) return Math.min(14, countAlignment("Bad") * 2);
-  if (/Forest Awakening/.test(name)) return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.alignment === "Good").length * 2);
-  if (/Queen's Command/.test(name)) return Math.min(12, countTagless() * 3);
+  // Tiers: 4 / 6 / 8 icons give 3 / 6 / 9 VP; a Quest left unfulfilled costs 3 VP.
+  const tiers = (n, a = 6, b = 8, c = 10) => (n >= c ? 9 : n >= b ? 6 : n >= a ? 3 : -3);
+  if (/Midnight Ball/.test(name)) return tiers(icons.Charm);
+  if (/Hook/.test(name)) return tiers(icons.Strength);
+  if (/Rabbit Hole/.test(name)) return tiers(icons.Dexterity);
+  if (/Lost Voice/.test(name)) return tiers(icons.Intelligence);
+  if (/Glass Slipper/.test(name)) return completeSets * 2;
+  if (/Neverland/.test(name)) return completeSets >= 6 ? 8 : completeSets >= 5 ? 4 : -3;
+  if (/Apple's Bite/.test(name)) return countAlignment("Bad") >= 3 ? countAlignment("Bad") : -3;
+  if (/Forest Awakening/.test(name)) return state.tableau.filter((card) => card.deck === "legendary" && card.alignment === "Good").length;
+  if (/Queen's Command/.test(name)) return countTagless() >= 2 ? countTagless() * 2 : -3;
   if (/House of Seven/.test(name)) return countByName("Dwarf") * 2;
-  if (/King's Trident/.test(name)) return Math.min(10, state.items.length * 2);
-  if (/Hatter's Tea Party/.test(name)) return Math.min(10, countCardsWith("Ongoing") * 2);
-  if (/Second Star/.test(name)) return Math.min(10, countCardsWith("Activation") * 2);
-  if (/Pact with the Beast/.test(name)) return Math.min(14, upgraded * 2);
-  if (/Enchanted Rose/.test(name)) return Math.min(12, countCardsWith("less XP|free|place (?:\\d+ )?XP on") * 3);
-  if (/Rob the Rich/.test(name)) return Math.min(10, Math.floor((state.coinsGained || 0) / 3));
-  if (/Rubbed Lamp/.test(name)) return Math.min(10, Math.floor((state.xpGained || 0) / 2));
-  if (/Arrow on Target/.test(name)) return Math.min(10, countCardsWith("VP|Game End") * 2);
-  if (/A Real Boy/.test(name)) return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded && card.alignment === "Good").length * 3);
-  if (/Final Wish/.test(name)) return Math.min(12, Math.max(0, state.quests.length - 1) * 4);
+  if (/King's Trident/.test(name)) return state.items.length;
+  if (/Hatter's Tea Party/.test(name)) return countCardsWith("Ongoing");
+  if (/Second Star/.test(name)) return tiers(countCardsWith("Activation"), 6, 9, 12);
+  if (/Pact with the Beast/.test(name)) return upgraded;
+  if (/Enchanted Rose/.test(name)) return countCardsWith("less XP|free|place (?:\\d+ )?XP on") * 2;
+  if (/Rob the Rich/.test(name)) return Math.floor((state.coinsGained || 0) / 4);
+  if (/Rubbed Lamp/.test(name)) return Math.floor((state.xpGained || 0) / 3);
+  if (/Arrow on Target/.test(name)) return tiers(countCardsWith("VP|Game End"), 6, 9, 12);
+  if (/Final Wish/.test(name)) return state.quests.length * 3;
+  if (/A Real Boy/.test(name)) return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded && card.alignment === "Good").length;
   if (/Once Upon a Time/.test(name)) {
-    const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 3).length;
-    return Math.min(10, categories * 2);
+    const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 5).length;
+    return categories * 2;
   }
   return 0;
 }
