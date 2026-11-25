@@ -7,41 +7,42 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:wght@400;500;700;800&display=swap" />
-    <link rel="stylesheet" href="styles.css?v=4" />
+    <link rel="stylesheet" href="styles.css?v=6" />
   </head>
   <body>
     <section id="home" class="home-screen" hidden>
       <div class="hero">
-        <p class="hero-kicker">A fairy-tale card game</p>
+        <div class="lang-switch" role="group" aria-label="Language"></div>
+        <p class="hero-kicker" data-i18n="kicker"></p>
         <h1 class="biglogo">Once Upon a Time</h1>
-        <p class="tagline">Gather the heroes, villains and treasures of the classic tales, and write the story worth the most Victory Points.</p>
+        <p class="tagline" data-i18n="tagline"></p>
         <div class="hero-cards" id="heroCards"></div>
       </div>
       <div class="setupcard">
         <div class="modetabs" role="group" aria-label="Game mode">
-          <button type="button" data-mode="solo">Solo</button>
-          <button type="button" data-mode="online">Online</button>
+          <button type="button" data-mode="solo" data-i18n="solo"></button>
+          <button type="button" data-mode="online" data-i18n="online"></button>
         </div>
         <div class="hpanel">
-          <div class="hrow"><span class="hl2">Your name</span><label class="namebox"><input id="pname" type="text" maxlength="16" placeholder="Storyteller" aria-label="Your name" /></label></div>
-          <div class="hrow"><span class="hl2">Players</span><div class="dots" id="nseg"></div></div>
+          <div class="hrow"><span class="hl2" data-i18n="yourName"></span><label class="namebox"><input id="pname" type="text" maxlength="16" data-i18n-ph="namePh" aria-label="Name" /></label></div>
+          <div class="hrow"><span class="hl2" data-i18n="players"></span><div class="dots" id="nseg"></div></div>
           <p class="hint" id="nhint"></p>
-          <div class="hrow col"><span class="hl2">Computer level</span><div class="lvls" id="lvseg"></div></div>
+          <div class="hrow col"><span class="hl2" data-i18n="level"></span><div class="lvls" id="lvseg"></div></div>
           <p class="hint" id="lvhint"></p>
-          <div class="hrow col"><span class="hl2">Your Writer</span><div class="lvls two" id="wseg"></div></div>
+          <div class="hrow col"><span class="hl2" data-i18n="yourWriter"></span><div class="lvls two" id="wseg"></div></div>
         </div>
-        <div id="soloBox" class="playbox"><button type="button" id="startBtn" class="bigbtn">Start the story</button></div>
+        <div id="soloBox" class="playbox"><button type="button" id="startBtn" class="bigbtn" data-i18n="start"></button></div>
         <div id="onlineBox" class="playbox" hidden>
-          <p class="online-note">Online play with friends is being written: rooms will open here soon. In the meantime, play solo against the computer.</p>
-          <button type="button" class="bigbtn" disabled>Create a room</button>
-          <div class="joinrow"><input type="text" maxlength="5" placeholder="Room code" aria-label="Room code" disabled /><button type="button" disabled>Join</button></div>
+          <p class="online-note" data-i18n="onlineNote"></p>
+          <button type="button" class="bigbtn" disabled data-i18n="createRoom"></button>
+          <div class="joinrow"><input type="text" maxlength="5" data-i18n-ph="roomCode" aria-label="Room code" disabled /><button type="button" disabled data-i18n="join"></button></div>
         </div>
         <div class="secbtns">
-          <button type="button" id="tutoBtn"><img class="game-icon" src="assets/icons/tag-intelligence.png" alt="" />Tutorial</button>
-          <button type="button" id="statsBtn"><img class="game-icon" src="assets/icons/vp.png" alt="" />Statistics</button>
+          <button type="button" id="tutoBtn"><img class="game-icon" src="assets/icons/tag-intelligence.png" alt="" /><span data-i18n="tutorial"></span></button>
+          <button type="button" id="statsBtn"><img class="game-icon" src="assets/icons/vp.png" alt="" /><span data-i18n="statistics"></span></button>
         </div>
         <div class="decklinks">
-          <span class="hl2">The cards</span>
+          <span class="hl2" data-i18n="theCards"></span>
           <div class="deck-btns" id="deckBtns"></div>
         </div>
       </div>
@@ -49,9 +50,9 @@
 
     <section id="statsScreen" class="stats-screen" hidden>
       <div class="stats-card">
-        <div class="stats-head"><h2>Your statistics</h2><button type="button" id="statsBack">Home</button></div>
+        <div class="stats-head"><h2 data-i18n="statsTitle"></h2><button type="button" id="statsBack" data-i18n="home"></button></div>
         <div id="statsBody"></div>
-        <div class="stats-foot"><button type="button" id="statsClear">Clear statistics</button></div>
+        <div class="stats-foot"><button type="button" id="statsClear" data-i18n="clearStats"></button></div>
       </div>
     </section>
 
@@ -61,56 +62,56 @@
           <h1>Once Upon a Time</h1>
           <p id="phaseText">Set up the game and choose an Action card.</p>
         </div>
-        <div class="stats" id="stats"></div>
+        <div class="topbar-right"><div class="lang-switch small" role="group" aria-label="Language"></div><div class="stats" id="stats"></div></div>
       </header>
 
       <section class="player-bar">
         <div class="controls">
-          <button id="newGameBtn" type="button">Home</button>
-          <button id="resolveActionBtn" class="hidden" type="button" disabled>4. Resolve Action card effect</button>
-          <button id="endRoundBtn" type="button" disabled>End round</button>
-          <button id="scoreBtn" type="button">Calculate score</button>
+          <button id="newGameBtn" type="button" data-i18n="home"></button>
+          <button id="resolveActionBtn" class="hidden" type="button" disabled data-i18n="resolveAction"></button>
+          <button id="endRoundBtn" type="button" disabled data-i18n="endRound"></button>
+          <button id="scoreBtn" type="button" data-i18n="calcScore"></button>
         </div>
         <div id="tableauSummary" class="summary-grid" aria-label="Icon and card summary"></div>
       </section>
 
       <section class="layout">
         <aside class="panel left-panel">
-          <h2>1. Play an Action card</h2>
+          <h2 data-i18n="playAction"></h2>
           <div id="actionHand" class="action-hand"></div>
-          <h2>Quests</h2>
+          <h2 data-i18n="quests"></h2>
           <div id="questDisplay" class="stack"></div>
-          <h2>3. Buy 1 Item <span class="optional-label">(optional)</span></h2>
+          <h2><span data-i18n="buyItem"></span> <span class="optional-label" data-i18n="optional"></span></h2>
           <div id="itemDisplay" class="stack"></div>
         </aside>
 
         <section class="board">
           <div class="round-strip">
             <div>
-              <span class="label">You</span>
+              <span class="label" data-i18n="you"></span>
               <strong id="playerAction">-</strong>
             </div>
             <div>
-              <span class="label">Opponents</span>
+              <span class="label" data-i18n="opponents"></span>
               <strong id="botAction">-</strong>
             </div>
             <div>
-              <span class="label">Status</span>
+              <span class="label" data-i18n="status"></span>
               <strong id="roundState">Choose Action</strong>
             </div>
           </div>
 
-          <h2>2. Choose and take a Group</h2>
+          <h2 data-i18n="chooseGroupTitle"></h2>
           <div id="groups" class="groups"></div>
 
-          <h2>Story so far</h2>
+          <h2 data-i18n="storySoFar"></h2>
           <div id="log" class="log"></div>
         </section>
 
         <aside class="panel right-panel">
-          <h2>Writer</h2>
+          <h2 data-i18n="writer"></h2>
           <div id="writerPanel"></div>
-          <h2>Tableau</h2>
+          <h2 data-i18n="tableau"></h2>
           <div id="tableau" class="tableau"></div>
         </aside>
       </section>
@@ -123,23 +124,26 @@
           <div id="writerChoices" class="writer-choice-grid"></div>
         </div>
       </section>
-      <section id="deckCatalog" class="deck-catalog hidden" aria-modal="true" role="dialog" aria-label="Catalogo mazzi">
+    </main>
+    <section id="deckCatalog" class="deck-catalog hidden" aria-modal="true" role="dialog" aria-label="Cards">
         <div class="deck-catalog-content">
           <div class="deck-catalog-header">
             <h2 id="deckCatalogTitle">Decks</h2>
-            <button id="closeCatalogBtn" type="button">Back to menu</button>
+            <div class="lang-switch small" role="group" aria-label="Language"></div>
+            <button id="closeCatalogBtn" type="button" class="primary">← <span data-i18n="back">Back</span></button>
           </div>
           <nav id="deckCatalogTabs" class="deck-catalog-tabs" aria-label="Choose deck"></nav>
           <div id="deckCatalogCards" class="deck-catalog-cards"></div>
         </div>
       </section>
-    </main>
     <div id="coach" class="coach" hidden role="status"></div>
 
-    <script src="game-data.js?v=4"></script>
-    <script src="art.js?v=4"></script>
-    <script src="cards.js?v=4"></script>
-    <script src="app.js?v=4"></script>
-    <script src="home.js?v=4"></script>
+    <script src="game-data.js?v=6"></script>
+    <script src="i18n-cards.js?v=6"></script>
+    <script src="i18n.js?v=6"></script>
+    <script src="art.js?v=6"></script>
+    <script src="cards.js?v=6"></script>
+    <script src="app.js?v=6"></script>
+    <script src="home.js?v=6"></script>
   </body>
 </html>

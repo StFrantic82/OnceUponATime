@@ -21,17 +21,17 @@
   };
 
   const LEVELS = {
-    easy: { label: "Easy", hint: "The storytellers play their Action cards at random and often grab any group." },
-    normal: { label: "Normal", hint: "The storytellers like high cards and always take the most valuable group." },
-    hard: { label: "Hard", hint: "The storytellers read the table: they spend high cards only when one group is clearly the best." },
+    easy: { label: () => t("easy"), hint: () => t("hintEasy") },
+    normal: { label: () => t("normal"), hint: () => t("hintNormal") },
+    hard: { label: () => t("hard"), hint: () => t("hintHard") },
   };
   const DECKS = [
-    { key: "actions", label: "Actions", icon: "activation" },
-    { key: "common", label: "Common", icon: "Good" },
-    { key: "legendary", label: "Legendary", icon: "xp" },
-    { key: "items", label: "Items", icon: "coins" },
-    { key: "quests", label: "Quests", icon: "endgame" },
-    { key: "writers", label: "Writers", icon: "vp" },
+    { key: "actions", icon: "activation" },
+    { key: "common", icon: "Good" },
+    { key: "legendary", icon: "xp" },
+    { key: "items", icon: "coins" },
+    { key: "quests", icon: "endgame" },
+    { key: "writers", icon: "vp" },
   ];
 
   const prefs = Object.assign({ mode: "solo", name: "", players: 2, level: "normal", writerMode: "random" }, store.get("ouat-prefs", {}));
@@ -42,6 +42,7 @@
 
   // ---------- Home ----------
   function renderHome() {
+    I18N.apply();
     const data = window.GAME_DATA;
     const pick = (list, name) => list.find((card) => card.name === name) || list[0];
     $("#heroCards").innerHTML = [
@@ -60,15 +61,15 @@
     $("#nseg").innerHTML = [2, 3, 4, 5]
       .map((n) => `<button type="button" aria-pressed="${n === prefs.players}" data-players="${n}" aria-label="${n} players">${n}</button>`)
       .join("");
-    $("#nhint").textContent = prefs.players === 2 ? "You against one computer storyteller." : `You against ${prefs.players - 1} computer storytellers.`;
+    $("#nhint").textContent = prefs.players === 2 ? t("hintOne") : t("hintMany", { n: prefs.players - 1 });
     $("#lvseg").innerHTML = Object.entries(LEVELS)
-      .map(([key, level], i) => `<button type="button" aria-pressed="${key === prefs.level}" data-level="${key}">${"★".repeat(i + 1)}<span>${level.label}</span></button>`)
+      .map(([key, level], i) => `<button type="button" aria-pressed="${key === prefs.level}" data-level="${key}">${"★".repeat(i + 1)}<span>${level.label()}</span></button>`)
       .join("");
-    $("#lvhint").textContent = LEVELS[prefs.level].hint;
-    $("#wseg").innerHTML = [["random", "Draw at random"], ["choose", "Choose mine"]]
+    $("#lvhint").textContent = LEVELS[prefs.level].hint();
+    $("#wseg").innerHTML = [["random", t("writerRandom")], ["choose", t("writerChoose")]]
       .map(([key, label]) => `<button type="button" aria-pressed="${key === prefs.writerMode}" data-writer-pick="${key}">${label}</button>`)
       .join("");
-    $("#deckBtns").innerHTML = DECKS.map((deck) => `<button type="button" data-open-deck="${deck.key}">${resourceIcon(deck.icon, deck.label)}<b>${deck.label}</b><span>${(data[deck.key] || []).length}</span></button>`).join("");
+    $("#deckBtns").innerHTML = DECKS.map((deck) => `<button type="button" data-open-deck="${deck.key}">${resourceIcon(deck.icon, t(`deck_${deck.key}`))}<b>${t(`deck_${deck.key}`)}</b><span>${(data[deck.key] || []).length}</span></button>`).join("");
   }
 
   function show() {
@@ -90,8 +91,8 @@
     tutorialState.seen = new Set();
     Game.newGame(
       tutorial
-        ? { players: 2, level: "easy", writerMode: "random", name: prefs.name || "You", tutorial: true }
-        : { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode, name: prefs.name || "You", tutorial: false },
+        ? { players: 2, level: "easy", writerMode: "random", name: prefs.name || t("you"), tutorial: true }
+        : { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode, name: prefs.name || t("you"), tutorial: false },
     );
     window.scrollTo(0, 0);
   }
@@ -132,13 +133,14 @@
   }
 
   function showStats() {
+    I18N.apply();
     $("#home").hidden = true;
     document.querySelector(".app").hidden = true;
     $("#statsScreen").hidden = false;
     const history = store.get("ouat-history", []);
     const body = $("#statsBody");
     if (!history.length) {
-      body.innerHTML = `<p class="stats-empty">No finished game yet. Your scores are saved in this browser each time you calculate the final score of a finished game (the tutorial is not counted).</p>`;
+      body.innerHTML = `<p class="stats-empty">${esc(t("statsEmpty"))}</p>`;
       return;
     }
     const scores = history.map((g) => g.score);
@@ -155,18 +157,18 @@
     const recent = history.slice(-10).reverse();
     body.innerHTML = `
       <div class="kpis">
-        <div class="kpi"><b>${history.length}</b><span>games played</span></div>
-        <div class="kpi"><b>${best}</b><span>best score</span></div>
-        <div class="kpi"><b>${avg.toFixed(1)}</b><span>average score</span></div>
-        <div class="kpi"><b>${esc(writers[0][0])}</b><span>best Writer on average</span></div>
+        <div class="kpi"><b>${history.length}</b><span>${esc(t("gamesPlayed"))}</span></div>
+        <div class="kpi"><b>${best}</b><span>${esc(t("bestScore"))}</span></div>
+        <div class="kpi"><b>${avg.toFixed(1)}</b><span>${esc(t("avgScore"))}</span></div>
+        <div class="kpi"><b>${esc(tc(writers[0][0]))}</b><span>${esc(t("bestWriter"))}</span></div>
       </div>
-      <h3>By Writer</h3>
-      <table class="stab"><thead><tr><th>Writer</th><th>Games</th><th>Average</th><th>Best</th></tr></thead><tbody>
-        ${writers.map(([name, w]) => `<tr><td>${esc(name)}</td><td>${w.games}</td><td>${(w.total / w.games).toFixed(1)}</td><td>${w.best}</td></tr>`).join("")}
+      <h3>${esc(t("byWriter"))}</h3>
+      <table class="stab"><thead><tr><th>${esc(t("colWriter"))}</th><th>${esc(t("colGames"))}</th><th>${esc(t("colAvg"))}</th><th>${esc(t("colBest"))}</th></tr></thead><tbody>
+        ${writers.map(([name, w]) => `<tr><td>${esc(tc(name))}</td><td>${w.games}</td><td>${(w.total / w.games).toFixed(1)}</td><td>${w.best}</td></tr>`).join("")}
       </tbody></table>
-      <h3>Last games</h3>
-      <table class="stab"><thead><tr><th>Date</th><th class="txt">Writer</th><th>Players</th><th>Bots</th><th>Quests</th><th>Score</th></tr></thead><tbody>
-        ${recent.map((g) => `<tr><td>${new Date(g.date).toLocaleDateString()}</td><td class="txt">${esc(g.writer)}</td><td>${g.players}</td><td>${esc(LEVELS[g.level]?.label || g.level)}</td><td>${g.quests}</td><td>${g.score}</td></tr>`).join("")}
+      <h3>${esc(t("lastGames"))}</h3>
+      <table class="stab"><thead><tr><th>${esc(t("colDate"))}</th><th class="txt">${esc(t("colWriter"))}</th><th>${esc(t("colPlayers"))}</th><th>${esc(t("colBots"))}</th><th>${esc(t("colQuests"))}</th><th>${esc(t("colScore"))}</th></tr></thead><tbody>
+        ${recent.map((g) => `<tr><td>${new Date(g.date).toLocaleDateString(I18N.lang)}</td><td class="txt">${esc(tc(g.writer))}</td><td>${g.players}</td><td>${esc(LEVELS[g.level]?.label() || g.level)}</td><td>${g.quests}</td><td>${g.score}</td></tr>`).join("")}
       </tbody></table>`;
   }
 
@@ -174,28 +176,18 @@
   const tutorialState = { on: false, seen: new Set() };
   const STEPS = {
     chooseAction: {
-      title: "1. Play an Action card",
-      text: "Each round, everyone plays one Action card. Its chapter number sets the turn order: the highest number chooses a group first. Its effect (coins, XP, Quests, activations…) is resolved at the end of your turn. Played cards are gone, so use your high chapters wisely!",
       target: "#actionHand",
     },
     chooseGroup: {
-      title: "2. Take a group of cards",
-      text: "The groups in the middle hold Normal and Legendary characters. Take one: Instant effects happen right away, and the icons on the cards count for your Quests and scoring. Groups already taken by the other storyteller are greyed out.",
       target: "#groups",
     },
     buyItem: {
-      title: "3. Buy an Item, then resolve your Action",
-      text: "You may buy one Item tile with your coins (optional). Then press “Resolve Action card effect” to get what your chapter gives you.",
       target: "#itemDisplay",
     },
     questPick: {
-      title: "Take a Quest",
-      text: "Your effect lets you take a Quest. Quests score Victory Points at the end of the game: pick one that matches the icons you are collecting.",
       target: "#questDisplay",
     },
     roundDone: {
-      title: "4. Upgrade and end the round",
-      text: "Spend XP to upgrade your Legendary characters (in your tableau) or to level up your Writer. When you are ready, press “End round”. The game ends when your Action cards run out.",
       target: "#endRoundBtn",
     },
   };
@@ -209,13 +201,13 @@
       if (!step) hideCoach();
       return;
     }
-    showCoach(key, step);
+    showCoach(key, { ...step, title: t(`tuto_${key}_t`), text: t(`tuto_${key}`) });
   }
 
   function showCoach(key, step) {
     const coach = $("#coach");
     coach.hidden = false;
-    coach.innerHTML = `<b>${esc(step.title)}</b><p>${esc(step.text)}</p><div class="cbtn"><button type="button" class="ghost" data-coach="stop">Leave tutorial</button><button type="button" data-coach="ok">Got it</button></div>`;
+    coach.innerHTML = `<b>${esc(step.title)}</b><p>${esc(step.text)}</p><div class="cbtn"><button type="button" class="ghost" data-coach="stop">${esc(t("leaveTuto"))}</button><button type="button" data-coach="ok">${esc(t("gotIt"))}</button></div>`;
     document.querySelectorAll(".hl").forEach((node) => node.classList.remove("hl"));
     const target = document.querySelector(step.target);
     if (target) {
@@ -236,6 +228,15 @@
     if (coach) coach.hidden = true;
     document.querySelectorAll(".hl").forEach((node) => node.classList.remove("hl"));
   }
+
+  window.addEventListener("langchange", () => {
+    if (!$("#home").hidden) renderHome();
+    if (!$("#statsScreen").hidden) showStats();
+    if (!document.querySelector(".app").hidden && tutorialState.on) {
+      tutorialState.lastKey = null;
+      afterRender(Game.state);
+    }
+  });
 
   window.Home = { show, afterRender, recordGame };
   bindHome();

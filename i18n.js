@@ -1,0 +1,262 @@
+// Once Upon a Time — interface languages (English, French, Italian).
+(function () {
+  const S = {
+    en: {
+      langName: "English",
+      // home
+      kicker: "A fairy-tale card game",
+      tagline: "Gather the heroes, villains and treasures of the classic tales, and write the story worth the most Victory Points.",
+      solo: "Solo", online: "Online", yourName: "Your name", namePh: "Storyteller", players: "Players",
+      hintOne: "You against one computer storyteller.", hintMany: "You against {n} computer storytellers.",
+      level: "Computer level", easy: "Easy", normal: "Normal", hard: "Hard",
+      hintEasy: "The storytellers play their Action cards at random and often grab any group.",
+      hintNormal: "The storytellers like high cards and always take the most valuable group.",
+      hintHard: "The storytellers read the table: they spend high cards only when one group is clearly the best.",
+      yourWriter: "Your Writer", writerRandom: "Draw at random", writerChoose: "Choose mine",
+      start: "Start the story", onlineNote: "Online play with friends is being written: rooms will open here soon. In the meantime, play solo against the computer.",
+      createRoom: "Create a room", roomCode: "Room code", join: "Join", tutorial: "Tutorial", statistics: "Statistics", theCards: "The cards",
+      // decks
+      deck_actions: "Actions", deck_common: "Common", deck_legendary: "Legendary", deck_items: "Items", deck_quests: "Quests", deck_writers: "Writers",
+      back: "Back",
+      // stats
+      statsTitle: "Your statistics", home: "Home", clearStats: "Clear statistics",
+      statsEmpty: "No finished game yet. Your scores are saved in this browser each time you calculate the final score of a finished game (the tutorial is not counted).",
+      gamesPlayed: "games played", bestScore: "best score", avgScore: "average score", bestWriter: "best Writer on average",
+      byWriter: "By Writer", lastGames: "Last games", colWriter: "Writer", colGames: "Games", colAvg: "Average", colBest: "Best",
+      colDate: "Date", colPlayers: "Players", colBots: "Computer", colQuests: "Quests", colScore: "Score",
+      // tutorial
+      gotIt: "Got it", leaveTuto: "Leave tutorial",
+      tuto_chooseAction_t: "1. Play an Action card",
+      tuto_chooseAction: "Each round, everyone plays one Action card. Its chapter number sets the turn order: the highest number chooses a group first. Its effect (coins, XP, Quests, activations…) is resolved at the end of your turn. Played cards are gone, so use your high chapters wisely!",
+      tuto_chooseGroup_t: "2. Take a group of cards",
+      tuto_chooseGroup: "The groups in the middle hold Normal and Legendary characters. Take one: Instant effects happen right away, and the icons on the cards count for your Quests and scoring. Groups already taken by another storyteller are greyed out.",
+      tuto_buyItem_t: "3. Buy an Item, then resolve your Action",
+      tuto_buyItem: "You may buy one Item tile with your coins (optional). Then press “Resolve Action card effect” to get what your chapter gives you.",
+      tuto_questPick_t: "Take a Quest",
+      tuto_questPick: "Your effect lets you take a Quest. Quests score Victory Points at the end of the game: pick one that matches the icons you are collecting.",
+      tuto_roundDone_t: "4. Upgrade and end the round",
+      tuto_roundDone: "Spend XP to upgrade your Legendary characters (in your tableau) or to level up your Writer. When you are ready, press “End round”. The game ends when your Action cards run out.",
+      // game layout
+      endRound: "End round", calcScore: "Calculate score", resolveAction: "4. Resolve Action card effect",
+      playAction: "1. Play an Action card", quests: "Quests", buyItem: "3. Buy 1 Item", optional: "(optional)",
+      you: "You", opponents: "Opponents", status: "Status", chooseGroupTitle: "2. Choose and take a Group", storySoFar: "Story so far",
+      writer: "Writer", tableau: "Tableau", round: "Round", quest: "Quest", freeUp: "Free up", items: "Items", upgrade: "Upgraded", upgradeLabel: "Upgrade",
+      st_chooseWriter: "Choose Writer", st_chooseAction: "Choose Action", st_buyItem: "Buy or resolve effect", st_chooseGroup: "Take group", st_gameOver: "Game over", st_roundDone: "Round resolved",
+      ph_perrault: "Perrault: immediately buy an Item for 2 fewer coins.", ph_gameOver: "Game over. Calculate the final score.",
+      ph_chooseWriter: "Choose a Writer to start the game.", ph_chooseAction: "Choose an Action card. Highest chapter picks a group first.",
+      ph_buyItem: "You may buy up to 1 Item, then resolve the Action card effect.", ph_chooseGroup: "Choose and take an available group.",
+      ph_quest: "Choose {n} Quest from the display to resolve the effect.", ph_roundDone: "Round complete. You may upgrade Legendary cards or end the round.",
+      chooseYourWriter: "Choose your Writer",
+      // buttons in game
+      takeQuest: "Take this Quest", buyFor: "Buy for {n}", group: "Group {n}", takenBy: "taken by {who}", yours: "yours", takeGroup: "Take this group",
+      effectsUpgrade: "Effects and upgrade", upgradeBtn: "Upgrade ({n})", discardBtn: "Discard: +2 {coin} +2 {xp}", yes: "Yes", no: "No",
+      sec_act: "Activations", sec_ong: "Ongoing Effects", sec_inst: "Instant Effects", sec_other: "Other Cards",
+      base: "Base", legendary: "Legendary", good: "Good", bad: "Bad", neutral: "Neutral",
+      finalScore: "Final Score", totalLine: "Total: {total} ({base} during the game + {quests} from Quests + {writer} from the Writer)", colScoring: "Scoring",
+      levelN: "Level {n}", lvN: "Lv {n}", choose: "Choose", finishDiscard: "Finish discarding", writerWord: "Writer",
+      // action cards
+      chapter: "Chapter", takeAQuest: "Take a Quest", activateAll: "Activate all", activateOne: "Activate 1 card", freeUpgrades: "free upgrades", freeUpgrade: "free upgrade",
+      noEffect: "No effect.<br>Only the turn order matters.",
+      // logs
+      l_chooseWriter: "Choose your Writer.", l_isWriter: "{w} is your Writer.", l_chooseAction: "Choose an Action card from your hand.",
+      l_over: "No Action cards left: the story is over. Calculate your final score.",
+      l_play: "You play {n}{bonus}. {bots}.", l_counts: " (counts as {v})", l_noGroup: "No group is left for you this round (the decks are running out). You may still buy an Item, then resolve your Action card.",
+      l_first: "You choose first. Take a group.", l_yourTurn: "Your turn: take one of the remaining groups.", l_resolved: "Action card effect resolved.",
+      l_botTakes: "{who} takes {cards}.", l_youTake: "You take {cards}.", l_mayBuy: "You may now buy up to 1 Item, then resolve the Action card effect.",
+      l_buy: "You buy {item} for {n} {coin}.", l_takeQuest: "You take the Quest {q}.", l_questEmpty: "{src} grants a Quest, but the display is empty.",
+      l_questChoose: "{src}: choose 1 Quest from the display.", l_upgraded: "{c} is upgraded.", l_chose: "You chose {w}.", l_writerLevel: "{w} reaches level {n}.",
+      l_perrault: "Perrault: your next Item costs 2 fewer coins.", l_andersen: "Andersen: you may discard up to two cards from your tableau.",
+      l_activateN: "You activate {n} card(s).", l_activate: "You activate {c}.", l_noCoins: "{c}: you do not have enough coins to use the optional effect.",
+      l_noXp: "{c}: you do not have enough XP to use the optional effect.", l_costAsk: "{c}: this Activation has a cost. Do you want to use it?",
+      l_skip: "You chose not to use the effect of {c}.", l_merry: "The Merry Men: spend 1 coin and gain 1 XP.", l_forest: "{c}: spend 3 coins and gain one free upgrade.",
+      l_andersenDiscard: "You discard {c} with Andersen.", l_actionCard: "Action card",
+      botNames: ["Mother Goose", "The Narrator", "The Old Bard", "Aesop"],
+    },
+    fr: {
+      langName: "Français",
+      kicker: "Un jeu de cartes de contes de fées",
+      tagline: "Rassemblez les héros, les méchants et les trésors des contes classiques, et écrivez l’histoire qui rapporte le plus de Points de Victoire.",
+      solo: "Solo", online: "En ligne", yourName: "Votre nom", namePh: "Conteur", players: "Joueurs",
+      hintOne: "Vous contre un conteur de l’ordinateur.", hintMany: "Vous contre {n} conteurs de l’ordinateur.",
+      level: "Niveau de l’ordinateur", easy: "Facile", normal: "Normal", hard: "Difficile",
+      hintEasy: "Les conteurs jouent leurs cartes Action au hasard et prennent souvent n’importe quel groupe.",
+      hintNormal: "Les conteurs aiment les grosses cartes et prennent toujours le groupe le plus intéressant.",
+      hintHard: "Les conteurs lisent la table : ils ne sortent leurs grosses cartes que si un groupe est nettement le meilleur.",
+      yourWriter: "Votre Écrivain", writerRandom: "Tirer au hasard", writerChoose: "Le choisir",
+      start: "Commencer l’histoire", onlineNote: "Le jeu en ligne entre amis est en cours d’écriture : les salles ouvriront ici bientôt. En attendant, jouez en solo contre l’ordinateur.",
+      createRoom: "Créer une salle", roomCode: "Code de salle", join: "Rejoindre", tutorial: "Tutoriel", statistics: "Statistiques", theCards: "Les cartes",
+      deck_actions: "Actions", deck_common: "Communes", deck_legendary: "Légendaires", deck_items: "Objets", deck_quests: "Quêtes", deck_writers: "Écrivains",
+      back: "Retour",
+      statsTitle: "Vos statistiques", home: "Accueil", clearStats: "Effacer les statistiques",
+      statsEmpty: "Aucune partie terminée pour l’instant. Vos scores sont enregistrés dans ce navigateur chaque fois que vous calculez le score final d’une partie terminée (le tutoriel n’est pas compté).",
+      gamesPlayed: "parties jouées", bestScore: "meilleur score", avgScore: "score moyen", bestWriter: "meilleur Écrivain en moyenne",
+      byWriter: "Par Écrivain", lastGames: "Dernières parties", colWriter: "Écrivain", colGames: "Parties", colAvg: "Moyenne", colBest: "Record",
+      colDate: "Date", colPlayers: "Joueurs", colBots: "Ordinateur", colQuests: "Quêtes", colScore: "Score",
+      gotIt: "Compris", leaveTuto: "Quitter le tutoriel",
+      tuto_chooseAction_t: "1. Jouez une carte Action",
+      tuto_chooseAction: "À chaque manche, chacun joue une carte Action. Son numéro de chapitre fixe l’ordre du tour : le plus grand numéro choisit un groupe en premier. Son effet (pièces, XP, Quêtes, activations…) se résout à la fin de votre tour. Les cartes jouées sont perdues : utilisez vos grands chapitres avec sagesse !",
+      tuto_chooseGroup_t: "2. Prenez un groupe de cartes",
+      tuto_chooseGroup: "Les groupes au centre contiennent des personnages Normaux et Légendaires. Prenez-en un : les effets Instantanés s’appliquent tout de suite, et les icônes des cartes comptent pour vos Quêtes et votre score. Les groupes déjà pris par un autre conteur sont grisés.",
+      tuto_buyItem_t: "3. Achetez un Objet, puis résolvez votre Action",
+      tuto_buyItem: "Vous pouvez acheter une tuile Objet avec vos pièces (facultatif). Puis appuyez sur « Résoudre l’effet de la carte Action » pour recevoir ce que donne votre chapitre.",
+      tuto_questPick_t: "Prenez une Quête",
+      tuto_questPick: "Votre effet vous permet de prendre une Quête. Les Quêtes rapportent des Points de Victoire en fin de partie : choisissez-en une qui correspond aux icônes que vous collectionnez.",
+      tuto_roundDone_t: "4. Améliorez et terminez la manche",
+      tuto_roundDone: "Dépensez de l’XP pour améliorer vos personnages Légendaires (dans votre tableau) ou faire monter de niveau votre Écrivain. Quand vous êtes prêt, appuyez sur « Fin de manche ». La partie se termine quand vos cartes Action sont épuisées.",
+      endRound: "Fin de manche", calcScore: "Calculer le score", resolveAction: "4. Résoudre l’effet de la carte Action",
+      playAction: "1. Jouez une carte Action", quests: "Quêtes", buyItem: "3. Achetez 1 Objet", optional: "(facultatif)",
+      you: "Vous", opponents: "Adversaires", status: "Étape", chooseGroupTitle: "2. Choisissez et prenez un Groupe", storySoFar: "L’histoire jusqu’ici",
+      writer: "Écrivain", tableau: "Tableau", round: "Manche", quest: "Quêtes", freeUp: "Gratuites", items: "Objets", upgrade: "Améliorés", upgradeLabel: "Amélioration",
+      st_chooseWriter: "Choix de l’Écrivain", st_chooseAction: "Choix de l’Action", st_buyItem: "Achat ou effet", st_chooseGroup: "Prendre un groupe", st_gameOver: "Partie terminée", st_roundDone: "Manche résolue",
+      ph_perrault: "Perrault : achetez immédiatement un Objet pour 2 pièces de moins.", ph_gameOver: "Partie terminée. Calculez le score final.",
+      ph_chooseWriter: "Choisissez un Écrivain pour commencer.", ph_chooseAction: "Choisissez une carte Action. Le plus grand chapitre choisit un groupe en premier.",
+      ph_buyItem: "Vous pouvez acheter 1 Objet, puis résoudre l’effet de la carte Action.", ph_chooseGroup: "Choisissez et prenez un groupe disponible.",
+      ph_quest: "Choisissez {n} Quête dans la réserve pour résoudre l’effet.", ph_roundDone: "Manche terminée. Vous pouvez améliorer vos Légendaires ou finir la manche.",
+      chooseYourWriter: "Choisissez votre Écrivain",
+      takeQuest: "Prendre cette Quête", buyFor: "Acheter pour {n}", group: "Groupe {n}", takenBy: "pris par {who}", yours: "à vous", takeGroup: "Prendre ce groupe",
+      effectsUpgrade: "Effets et amélioration", upgradeBtn: "Améliorer ({n})", discardBtn: "Défausser : +2 {coin} +2 {xp}", yes: "Oui", no: "Non",
+      sec_act: "Activations", sec_ong: "Effets permanents", sec_inst: "Effets instantanés", sec_other: "Autres cartes",
+      base: "Base", legendary: "Légendaire", good: "Gentil", bad: "Méchant", neutral: "Neutre",
+      finalScore: "Score final", totalLine: "Total : {total} ({base} pendant la partie + {quests} grâce aux Quêtes + {writer} grâce à l’Écrivain)", colScoring: "Décompte",
+      levelN: "Niveau {n}", lvN: "Niv. {n}", choose: "Choisir", finishDiscard: "Terminer la défausse", writerWord: "Écrivain",
+      chapter: "Chapitre", takeAQuest: "Prendre une Quête", activateAll: "Tout activer", activateOne: "Activer 1 carte", freeUpgrades: "améliorations gratuites", freeUpgrade: "amélioration gratuite",
+      noEffect: "Aucun effet.<br>Seul l’ordre du tour compte.",
+      l_chooseWriter: "Choisissez votre Écrivain.", l_isWriter: "{w} est votre Écrivain.", l_chooseAction: "Choisissez une carte Action dans votre main.",
+      l_over: "Plus de cartes Action : l’histoire est terminée. Calculez votre score final.",
+      l_play: "Vous jouez {n}{bonus}. {bots}.", l_counts: " (compte pour {v})", l_noGroup: "Il ne reste aucun groupe pour vous cette manche (les pioches s’épuisent). Vous pouvez quand même acheter un Objet, puis résoudre votre carte Action.",
+      l_first: "Vous choisissez en premier. Prenez un groupe.", l_yourTurn: "À vous : prenez l’un des groupes restants.", l_resolved: "Effet de la carte Action résolu.",
+      l_botTakes: "{who} prend {cards}.", l_youTake: "Vous prenez {cards}.", l_mayBuy: "Vous pouvez maintenant acheter 1 Objet, puis résoudre l’effet de la carte Action.",
+      l_buy: "Vous achetez {item} pour {n} {coin}.", l_takeQuest: "Vous prenez la Quête {q}.", l_questEmpty: "{src} donne une Quête, mais la réserve est vide.",
+      l_questChoose: "{src} : choisissez 1 Quête dans la réserve.", l_upgraded: "{c} est amélioré(e).", l_chose: "Vous avez choisi {w}.", l_writerLevel: "{w} atteint le niveau {n}.",
+      l_perrault: "Perrault : votre prochain Objet coûte 2 pièces de moins.", l_andersen: "Andersen : vous pouvez défausser jusqu’à deux cartes de votre tableau.",
+      l_activateN: "Vous activez {n} carte(s).", l_activate: "Vous activez {c}.", l_noCoins: "{c} : pas assez de pièces pour utiliser l’effet.",
+      l_noXp: "{c} : pas assez d’XP pour utiliser l’effet.", l_costAsk: "{c} : cette Activation a un coût. Voulez-vous l’utiliser ?",
+      l_skip: "Vous n’utilisez pas l’effet de {c}.", l_merry: "Les Joyeux Compagnons : 1 pièce dépensée, 1 XP gagné.", l_forest: "{c} : 3 pièces dépensées, une amélioration gratuite gagnée.",
+      l_andersenDiscard: "Vous défaussez {c} avec Andersen.", l_actionCard: "La carte Action",
+      botNames: ["Ma Mère l’Oye", "Le Narrateur", "Le Vieux Barde", "Ésope"],
+    },
+    it: {
+      langName: "Italiano",
+      kicker: "Un gioco di carte delle fiabe",
+      tagline: "Riunisci gli eroi, i cattivi e i tesori delle fiabe classiche, e scrivi la storia che vale più Punti Vittoria.",
+      solo: "Solo", online: "Online", yourName: "Il tuo nome", namePh: "Narratore", players: "Giocatori",
+      hintOne: "Tu contro un narratore del computer.", hintMany: "Tu contro {n} narratori del computer.",
+      level: "Livello del computer", easy: "Facile", normal: "Normale", hard: "Difficile",
+      hintEasy: "I narratori giocano le carte Azione a caso e spesso prendono un gruppo qualsiasi.",
+      hintNormal: "I narratori amano le carte alte e prendono sempre il gruppo più prezioso.",
+      hintHard: "I narratori leggono il tavolo: usano le carte alte solo quando un gruppo è chiaramente il migliore.",
+      yourWriter: "Il tuo Scrittore", writerRandom: "Pesca a caso", writerChoose: "Sceglilo tu",
+      start: "Inizia la storia", onlineNote: "Il gioco online con gli amici è in lavorazione: le stanze apriranno qui presto. Nel frattempo, gioca da solo contro il computer.",
+      createRoom: "Crea una stanza", roomCode: "Codice stanza", join: "Entra", tutorial: "Tutorial", statistics: "Statistiche", theCards: "Le carte",
+      deck_actions: "Azioni", deck_common: "Comuni", deck_legendary: "Leggendarie", deck_items: "Oggetti", deck_quests: "Missioni", deck_writers: "Scrittori",
+      back: "Indietro",
+      statsTitle: "Le tue statistiche", home: "Home", clearStats: "Cancella statistiche",
+      statsEmpty: "Ancora nessuna partita conclusa. I tuoi punteggi vengono salvati in questo browser ogni volta che calcoli il punteggio finale di una partita conclusa (il tutorial non conta).",
+      gamesPlayed: "partite giocate", bestScore: "punteggio migliore", avgScore: "punteggio medio", bestWriter: "miglior Scrittore in media",
+      byWriter: "Per Scrittore", lastGames: "Ultime partite", colWriter: "Scrittore", colGames: "Partite", colAvg: "Media", colBest: "Record",
+      colDate: "Data", colPlayers: "Giocatori", colBots: "Computer", colQuests: "Missioni", colScore: "Punteggio",
+      gotIt: "Capito", leaveTuto: "Esci dal tutorial",
+      tuto_chooseAction_t: "1. Gioca una carta Azione",
+      tuto_chooseAction: "A ogni round, tutti giocano una carta Azione. Il numero del capitolo decide l’ordine: il numero più alto sceglie per primo un gruppo. Il suo effetto (monete, XP, Missioni, attivazioni…) si risolve alla fine del tuo turno. Le carte giocate sono perse: usa con saggezza i capitoli alti!",
+      tuto_chooseGroup_t: "2. Prendi un gruppo di carte",
+      tuto_chooseGroup: "I gruppi al centro contengono personaggi Normali e Leggendari. Prendine uno: gli effetti Istantanei si applicano subito, e le icone delle carte contano per le Missioni e il punteggio. I gruppi già presi da un altro narratore sono in grigio.",
+      tuto_buyItem_t: "3. Compra un Oggetto, poi risolvi l’Azione",
+      tuto_buyItem: "Puoi comprare una tessera Oggetto con le tue monete (facoltativo). Poi premi «Risolvi l’effetto della carta Azione» per ottenere ciò che dà il tuo capitolo.",
+      tuto_questPick_t: "Prendi una Missione",
+      tuto_questPick: "Il tuo effetto ti fa prendere una Missione. Le Missioni danno Punti Vittoria a fine partita: scegline una adatta alle icone che stai raccogliendo.",
+      tuto_roundDone_t: "4. Potenzia e chiudi il round",
+      tuto_roundDone: "Spendi XP per potenziare i tuoi personaggi Leggendari (nel tuo tableau) o far salire di livello il tuo Scrittore. Quando sei pronto, premi «Fine round». La partita finisce quando finiscono le tue carte Azione.",
+      endRound: "Fine round", calcScore: "Calcola il punteggio", resolveAction: "4. Risolvi l’effetto della carta Azione",
+      playAction: "1. Gioca una carta Azione", quests: "Missioni", buyItem: "3. Compra 1 Oggetto", optional: "(facoltativo)",
+      you: "Tu", opponents: "Avversari", status: "Fase", chooseGroupTitle: "2. Scegli e prendi un Gruppo", storySoFar: "La storia finora",
+      writer: "Scrittore", tableau: "Tableau", round: "Round", quest: "Missioni", freeUp: "Gratis", items: "Oggetti", upgrade: "Potenziate", upgradeLabel: "Potenziamento",
+      st_chooseWriter: "Scelta Scrittore", st_chooseAction: "Scelta Azione", st_buyItem: "Acquisto o effetto", st_chooseGroup: "Prendi un gruppo", st_gameOver: "Partita finita", st_roundDone: "Round risolto",
+      ph_perrault: "Perrault: compra subito un Oggetto pagando 2 monete in meno.", ph_gameOver: "Partita finita. Calcola il punteggio finale.",
+      ph_chooseWriter: "Scegli uno Scrittore per iniziare.", ph_chooseAction: "Scegli una carta Azione. Il capitolo più alto sceglie per primo.",
+      ph_buyItem: "Puoi comprare 1 Oggetto, poi risolvi l’effetto della carta Azione.", ph_chooseGroup: "Scegli e prendi un gruppo disponibile.",
+      ph_quest: "Scegli {n} Missione dall’esposizione per risolvere l’effetto.", ph_roundDone: "Round concluso. Puoi potenziare le Leggendarie o chiudere il round.",
+      chooseYourWriter: "Scegli il tuo Scrittore",
+      takeQuest: "Prendi questa Missione", buyFor: "Compra per {n}", group: "Gruppo {n}", takenBy: "preso da {who}", yours: "tuo", takeGroup: "Prendi questo gruppo",
+      effectsUpgrade: "Effetti e potenziamento", upgradeBtn: "Potenzia ({n})", discardBtn: "Scarta: +2 {coin} +2 {xp}", yes: "Sì", no: "No",
+      sec_act: "Attivazioni", sec_ong: "Effetti permanenti", sec_inst: "Effetti istantanei", sec_other: "Altre carte",
+      base: "Base", legendary: "Leggendaria", good: "Buono", bad: "Cattivo", neutral: "Neutrale",
+      finalScore: "Punteggio finale", totalLine: "Totale: {total} ({base} durante la partita + {quests} dalle Missioni + {writer} dallo Scrittore)", colScoring: "Punteggio",
+      levelN: "Livello {n}", lvN: "Liv. {n}", choose: "Scegli", finishDiscard: "Termina gli scarti", writerWord: "Scrittore",
+      chapter: "Capitolo", takeAQuest: "Prendi una Missione", activateAll: "Attiva tutto", activateOne: "Attiva 1 carta", freeUpgrades: "potenziamenti gratis", freeUpgrade: "potenziamento gratis",
+      noEffect: "Nessun effetto.<br>Conta solo l’ordine di turno.",
+      l_chooseWriter: "Scegli il tuo Scrittore.", l_isWriter: "{w} è il tuo Scrittore.", l_chooseAction: "Scegli una carta Azione dalla tua mano.",
+      l_over: "Niente più carte Azione: la storia è finita. Calcola il tuo punteggio finale.",
+      l_play: "Giochi {n}{bonus}. {bots}.", l_counts: " (vale {v})", l_noGroup: "Non resta nessun gruppo per te in questo round (i mazzi stanno finendo). Puoi comunque comprare un Oggetto, poi risolvere la tua carta Azione.",
+      l_first: "Scegli per primo. Prendi un gruppo.", l_yourTurn: "Tocca a te: prendi uno dei gruppi rimasti.", l_resolved: "Effetto della carta Azione risolto.",
+      l_botTakes: "{who} prende {cards}.", l_youTake: "Prendi {cards}.", l_mayBuy: "Ora puoi comprare 1 Oggetto, poi risolvere l’effetto della carta Azione.",
+      l_buy: "Compri {item} per {n} {coin}.", l_takeQuest: "Prendi la Missione {q}.", l_questEmpty: "{src} dà una Missione, ma l’esposizione è vuota.",
+      l_questChoose: "{src}: scegli 1 Missione dall’esposizione.", l_upgraded: "{c} è potenziato/a.", l_chose: "Hai scelto {w}.", l_writerLevel: "{w} raggiunge il livello {n}.",
+      l_perrault: "Perrault: il tuo prossimo Oggetto costa 2 monete in meno.", l_andersen: "Andersen: puoi scartare fino a due carte dal tuo tableau.",
+      l_activateN: "Attivi {n} carta/e.", l_activate: "Attivi {c}.", l_noCoins: "{c}: non hai abbastanza monete per usare l’effetto.",
+      l_noXp: "{c}: non hai abbastanza XP per usare l’effetto.", l_costAsk: "{c}: questa Attivazione ha un costo. Vuoi usarla?",
+      l_skip: "Non usi l’effetto di {c}.", l_merry: "Gli Allegri Compagni: 1 moneta spesa, 1 XP ottenuto.", l_forest: "{c}: 3 monete spese, un potenziamento gratis ottenuto.",
+      l_andersenDiscard: "Scarti {c} con Andersen.", l_actionCard: "La carta Azione",
+      botNames: ["Mamma Oca", "Il Narratore", "Il Vecchio Bardo", "Esopo"],
+    },
+  };
+
+  const LANGS = ["en", "fr", "it"];
+  let lang = "en";
+  try {
+    lang = localStorage.getItem("ouat-lang") || "";
+  } catch (e) {
+    lang = "";
+  }
+  if (!LANGS.includes(lang)) {
+    const nav = (navigator.language || "en").slice(0, 2);
+    lang = LANGS.includes(nav) ? nav : "en";
+  }
+
+  const cardMap = new Map((window.CARD_I18N || []).map((row) => [row[0], row]));
+
+  function t(key, vars) {
+    let text = (S[lang] && S[lang][key]) ?? S.en[key] ?? key;
+    if (vars && typeof text === "string") {
+      text = text.replace(/\{(\w+)\}/g, (m, k) => (vars[k] !== undefined ? vars[k] : m));
+    }
+    return text;
+  }
+
+  // Card text in the current language (falls back to the English original).
+  function tc(en) {
+    if (lang === "en" || en == null) return en;
+    const row = cardMap.get(en);
+    if (!row) return en;
+    return lang === "fr" ? row[1] : row[2];
+  }
+
+  function apply(root = document) {
+    document.documentElement.lang = lang;
+    for (const node of root.querySelectorAll("[data-i18n]")) node.textContent = t(node.dataset.i18n);
+    for (const node of root.querySelectorAll("[data-i18n-ph]")) node.placeholder = t(node.dataset.i18nPh);
+    for (const node of root.querySelectorAll(".lang-switch")) {
+      node.innerHTML = LANGS.map((l) => `<button type="button" data-lang="${l}" aria-pressed="${l === lang}" title="${S[l].langName}">${l.toUpperCase()}</button>`).join("");
+    }
+  }
+
+  function setLang(next) {
+    if (!LANGS.includes(next) || next === lang) return;
+    lang = next;
+    try {
+      localStorage.setItem("ouat-lang", lang);
+    } catch (e) {
+      /* not remembered */
+    }
+    apply();
+    window.dispatchEvent(new CustomEvent("langchange"));
+  }
+
+  document.addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-lang]");
+    if (btn) setLang(btn.dataset.lang);
+  });
+
+  window.I18N = { t, tc, apply, setLang, get lang() { return lang; } };
+  window.t = t;
+  window.tc = tc;
+})();

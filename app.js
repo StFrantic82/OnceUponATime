@@ -84,7 +84,7 @@ function askConfirm(message) {
   return new Promise((resolve) => {
     const box = document.createElement("div");
     box.className = "confirm-overlay";
-    box.innerHTML = `<div class="confirm-box" role="dialog" aria-modal="true"><p></p><div class="confirm-actions"><button type="button" data-yes>Yes</button><button type="button" data-no>No</button></div></div>`;
+    box.innerHTML = `<div class="confirm-box" role="dialog" aria-modal="true"><p></p><div class="confirm-actions"><button type="button" data-yes>${t("yes")}</button><button type="button" data-no>${t("no")}</button></div></div>`;
     box.querySelector("p").textContent = message;
     const done = (answer) => { box.remove(); resolve(answer); };
     box.querySelector("[data-yes]").addEventListener("click", () => done(true));
@@ -174,7 +174,7 @@ function newGame(options = {}) {
   state.writerRound = {};
   state.rewardedIconSets = 0;
   state.currentAction = null;
-  state.bots = BOT_NAMES.slice(0, players - 1).map((name) => ({ name, deck: shuffle(DATA.actions), hand: [], played: null, cards: 0 }));
+  state.bots = t("botNames").slice(0, players - 1).map((name) => ({ name, deck: shuffle(DATA.actions), hand: [], played: null, cards: 0 }));
   for (const bot of state.bots) bot.hand = bot.deck.splice(0, 4);
   state.order = [];
   state.playerFirst = false;
@@ -185,12 +185,12 @@ function newGame(options = {}) {
   startRound();
   if (settings.writerMode === "choose") {
     state.phase = "chooseWriter";
-    log("Choose your Writer.");
+    log(t("l_chooseWriter"));
   } else {
     const writers = DATA.writers || [];
     state.writer = writers.length ? clone(writers[Math.floor(Math.random() * writers.length)]) : null;
-    if (state.writer) log(`${state.writer.name} is your Writer.`);
-    log("Choose an Action card from your hand.");
+    if (state.writer) log(t("l_isWriter", { w: tc(state.writer.name) }));
+    log(t("l_chooseAction"));
   }
   render();
 }
@@ -199,7 +199,7 @@ function startRound() {
   if (!state.hand.length) {
     state.gameOver = true;
     state.phase = "gameOver";
-    log("No Action cards left: the story is over. Calculate your final score.");
+    log(t("l_over"));
     return;
   }
   state.round += 1;
@@ -270,17 +270,17 @@ function playAction(action) {
   ].sort((a, b) => b.value - a.value || (a.who === "you" ? -1 : b.who === "you" ? 1 : 0));
   state.playerFirst = state.order[0].who === "you";
   if (queen?.upgraded && state.playerFirst) gain("vp", 1);
-  log(`You play ${action.number}${writerBonus || queenBonus ? ` (counts as ${actionValue})` : ""}. ${state.bots.map((bot) => `${bot.name}: ${bot.played}`).join(", ")}.`);
+  log(t("l_play", { n: action.number, bonus: writerBonus || queenBonus ? t("l_counts", { v: actionValue }) : "", bots: state.bots.map((bot) => `${bot.name}: ${bot.played}`).join(", ") }));
   runBotsUntilPlayer();
   if (!state.groups.some((group) => !group.taken && !group.removedByBot)) {
     runRemainingBots();
     state.phase = "buyItem";
-    log("No group is left for you this round (the decks are running out). You may still buy an Item, then resolve your Action card.");
+    log(t("l_noGroup"));
     render();
     return;
   }
   state.phase = "chooseGroup";
-  log(state.playerFirst ? "You choose first. Take a group." : "Your turn: take one of the remaining groups.");
+  log(state.playerFirst ? t("l_first") : t("l_yourTurn"));
   render();
 }
 
@@ -302,7 +302,7 @@ async function activateActionStep() {
   await resolveAction(state.currentAction.effect);
   if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 7 && state.playerFirst) gain("xp", 1);
   state.phase = "roundDone";
-  log("Action card effect resolved.");
+  log(t("l_resolved"));
   render();
 }
 
@@ -330,7 +330,7 @@ function botTakeGroup(botName) {
   choice.takenBy = botName;
   const bot = state.bots.find((entry) => entry.name === botName);
   if (bot) bot.cards += choice.cards.length;
-  log(`${botName} takes ${choice.cards.map((card) => card.name).join(", ")}.`);
+  log(t("l_botTakes", { who: botName, cards: choice.cards.map((card) => tc(card.name)).join(", ") }));
 }
 
 function takeGroup(groupId) {
@@ -344,10 +344,10 @@ function takeGroup(groupId) {
   }
   applyWriterAfterGroup(group.cards);
   checkBaumSets();
-  log(`You take ${group.cards.map((card) => card.name).join(", ")}.`);
+  log(t("l_youTake", { cards: group.cards.map((card) => tc(card.name)).join(", ") }));
   runRemainingBots();
   state.phase = "buyItem";
-  log("You may now buy up to 1 Item, then resolve the Action card effect.");
+  log(t("l_mayBuy"));
   render();
 }
 
@@ -381,7 +381,7 @@ function buyItem(itemId) {
   applyInstant(item);
   triggerOnTakeItem();
   checkBaumSets();
-  log(`You buy ${item.name} for ${price} coin${price === 1 ? "" : "s"}${discount ? ` (${discount} discount)` : ""}.`);
+  log(t("l_buy", { item: tc(item.name), n: price, coin: resourceIcon("coins", "coins") }));
   render();
 }
 
@@ -394,17 +394,17 @@ function takeQuest(questId) {
   state.questChoices -= 1;
   const questRewardCards = state.tableau.filter((card) => /whenever you take a Quest, gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
-  log(`You take the Quest ${quest.name}.`);
+  log(t("l_takeQuest", { q: tc(quest.name) }));
   render();
 }
 
 function grantQuestChoice(source) {
   if (!state.questDisplay.length) {
-    log(`${source} grants a Quest, but the display is empty.`);
+    log(t("l_questEmpty", { src: source }));
     return;
   }
   state.questChoices += 1;
-  log(`${source}: choose 1 Quest from the display.`);
+  log(t("l_questChoose", { src: source }));
 }
 
 function upgradeLegendary(cardId) {
@@ -420,8 +420,8 @@ function upgradeLegendary(cardId) {
   }
   card.upgraded = true;
   applyUpgradeGain(card);
-  if (/take 1 Quest/i.test(card.upgrade || "")) grantQuestChoice(card.name);
-  log(`${card.name} is upgraded.`);
+  if (/take 1 Quest/i.test(card.upgrade || "")) grantQuestChoice(tc(card.name));
+  log(t("l_upgraded", { c: tc(card.name) }));
   render();
 }
 
@@ -430,7 +430,7 @@ function chooseWriter(writerId) {
   if (!writer || state.writer) return;
   state.writer = clone(writer);
   state.phase = "chooseAction";
-  log(`You chose ${writer.name}.`);
+  log(t("l_chose", { w: tc(writer.name) }));
   render();
 }
 
@@ -455,7 +455,7 @@ async function upgradeWriter() {
   if (state.xp < cost) return;
   state.xp -= cost;
   state.writerLevel = nextLevel;
-  log(`${state.writer.name} reaches level ${nextLevel}.`);
+  log(t("l_writerLevel", { w: tc(state.writer.name), n: nextLevel }));
   if (nextLevel === 2) await resolveWriterInstant();
   render();
 }
@@ -464,12 +464,12 @@ async function resolveWriterInstant() {
   const name = state.writer.name;
   if (name === "Charles Perrault") {
     state.writerItemDiscount = 2;
-    log("Perrault: your next Item costs 2 fewer coins.");
+    log(t("l_perrault"));
   } else if (name === "Brothers Grimm") {
     gain("xp", Math.min(5, Math.min(countAlignment("Good"), countAlignment("Bad"))));
   } else if (name === "Hans Christian Andersen") {
     state.writerDiscardRemaining = 2;
-    log("Andersen: you may discard up to two cards from your tableau.");
+    log(t("l_andersen"));
   } else if (name === "Carlo Collodi") {
     const recovered = state.actionDiscard.pop();
     if (recovered) {
@@ -483,7 +483,7 @@ async function resolveWriterInstant() {
   } else if (name === "Lewis Carroll") {
     const cards = [...state.tableau, ...state.items].filter((card) => /Activation/i.test(`${card.effect || ""} ${card.base || ""}`)).slice(0, 2);
     for (const card of cards) await activateCard(card);
-    log(`Carroll activates ${cards.length} card${cards.length === 1 ? "" : "s"}.`);
+    log(t("l_activateN", { n: cards.length }));
   } else if (name === "J. M. Barrie") {
     state.writerDraftChoices = draw("common", 3);
   } else if (name === "L. Frank Baum") {
@@ -518,7 +518,7 @@ function discardForWriter(cardId) {
       state.writerDiscardRemaining -= 1;
       gain("coins", 2);
       gain("xp", 2);
-      log(`Scarti ${card.name} con Andersen.`);
+      log(t("l_andersenDiscard", { c: tc(card.name) }));
       break;
     }
   }
@@ -555,7 +555,7 @@ async function resolveAction(effect) {
   if (/1 Coin/i.test(text)) gain("coins", 1);
   if (/3 XP/i.test(text)) gain("xp", 3);
   else if (/1 XP/i.test(text)) gain("xp", 1);
-  if (/Quest/i.test(text)) grantQuestChoice("Action card");
+  if (/Quest/i.test(text)) grantQuestChoice(t("l_actionCard"));
   if (/Activate all/i.test(text)) await activateAll();
   if (/Activate a single/i.test(text)) await activateOne();
   if (/Free level up (?:to )?2/i.test(text)) state.freeUpgrades += 2;
@@ -579,7 +579,7 @@ function applyInstant(card) {
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
   if (/Tag token/i.test(text)) state.tagTokens += 1;
   if (/take 1 Quest|Take 1 Quest/i.test(text)) {
-    grantQuestChoice(card.name);
+    grantQuestChoice(tc(card.name));
   }
   if (/level up .*free/i.test(text)) state.freeUpgrades += 1;
   if (/draw and discard 1 Action/i.test(text)) {
@@ -604,7 +604,7 @@ async function activateAll() {
     /Activation/i.test(`${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`),
   );
   for (const card of cards) await activateCard(card);
-  log(`You activate ${cards.length} card${cards.length === 1 ? "" : "s"}.`);
+  log(t("l_activateN", { n: cards.length }));
 }
 
 async function activateOne() {
@@ -613,7 +613,7 @@ async function activateOne() {
   );
   if (card) {
     await activateCard(card);
-    log(`You activate ${card.name}.`);
+    log(t("l_activate", { c: tc(card.name) }));
   }
 }
 
@@ -621,19 +621,19 @@ async function activateCard(card) {
   const text = `${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`;
   const hasActivationCost = /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) {
-    log(`${card.name}: you do not have enough coins to use the optional effect.`);
+    log(t("l_noCoins", { c: tc(card.name) }));
     return;
   }
   if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1) {
-    log(`${card.name}: you do not have enough XP to use the optional effect.`);
+    log(t("l_noXp", { c: tc(card.name) }));
     return;
   }
   if (/spend 3 coins to level up/i.test(text) && state.coins < 3) {
-    log(`${card.name}: you do not have enough coins to use the optional effect.`);
+    log(t("l_noCoins", { c: tc(card.name) }));
     return;
   }
-  if (hasActivationCost && !(await askConfirm(`${card.name}: this Activation has a cost. Do you want to use it?`))) {
-    log(`You chose not to use ${card.name}'s effect.`);
+  if (hasActivationCost && !(await askConfirm(t("l_costAsk", { c: tc(card.name) })))) {
+    log(t("l_skip", { c: tc(card.name) }));
     return;
   }
   if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
@@ -643,7 +643,7 @@ async function activateCard(card) {
       gain("coins", 1);
       state.writerRound.activationRewarded = true;
     }
-    log("The Merry Men: spend 1 coin and gain 1 XP.");
+    log(t("l_merry"));
     return;
   }
   if (/spend 1 XP to gain 3 coins/i.test(text)) {
@@ -653,7 +653,7 @@ async function activateCard(card) {
   if (/spend 3 coins to level up/i.test(text)) {
     state.coins -= 3;
     state.freeUpgrades += 1;
-    log(`${card.name}: spend 3 coins and gain one free upgrade.`);
+    log(t("l_forest", { c: tc(card.name) }));
     return;
   }
   if (/gain 2 XP/i.test(text)) gain("xp", 2);
@@ -691,15 +691,28 @@ function iconCounts() {
     }
     if (card.deck === "legendary" && card.upgraded) {
       for (const icon of ICONS) {
-        counts[icon] += textIconAmount(card.upgrade || "", icon);
+        counts[icon] += textIconAmount(upgradeIcons(card), icon);
       }
     }
   }
   return counts;
 }
 
+// Icons printed on a card: the "icons" field, or the icon list that opens a Legendary's base text
+// (e.g. "Charm 1, Intelligence 1. Game End: ..."). Mentions inside effect text do not count.
+function printedIcons(card) {
+  const lead = String(card.base || "").match(/^\s*(?:(?:Charm|Strength|Dexterity|Intelligence)(?:\s*\d+)?\s*[,.]?\s*)+/i);
+  return `${card.icons || ""} ${lead ? lead[0] : ""}`;
+}
+
 function iconAmount(card, icon) {
-  return textIconAmount(`${card.icons || ""} ${card.base || ""}`, icon);
+  return textIconAmount(printedIcons(card), icon);
+}
+
+// Icons gained by an upgrade: only the "Gains X and Y." sentence counts.
+function upgradeIcons(card) {
+  const gains = String(card.upgrade || "").match(/Gains ([^.]*)\./i);
+  return gains ? gains[1] : "";
 }
 
 function totalIcons(card) {
@@ -810,38 +823,38 @@ function render() {
 function renderStats() {
   const icons = iconCounts();
   el.stats.innerHTML = [
-    ["Round", state.round],
+    [t("round"), state.round],
     [resourceIcon("coins", "Coins"), state.coins],
     [resourceIcon("xp", "XP"), state.xp],
     [resourceIcon("vp", "VP"), state.vp],
-    ["Quest", state.quests.length],
-    ["Free up", state.freeUpgrades],
+    [t("quest"), state.quests.length],
+    [t("freeUp"), state.freeUpgrades],
   ]
     .map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`)
     .join("");
   el.phaseText.textContent = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0
-    ? "Perrault: immediately buy an Item for 2 fewer coins."
+    ? t("ph_perrault")
     : state.gameOver
-    ? "Game over. Calculate the final score."
+    ? t("ph_gameOver")
     : state.phase === "writerMode"
-      ? "Choose whether to draw or select your Writer."
+      ? t("ph_chooseWriter")
       : state.phase === "chooseWriter"
-      ? "Choose a Writer to start the game."
+      ? t("ph_chooseWriter")
       : state.phase === "chooseAction"
-      ? "Choose an Action card. Highest chapter picks a group first."
+      ? t("ph_chooseAction")
       : state.phase === "buyItem"
-        ? "You may buy up to 1 Item, then resolve the Action card effect."
+        ? t("ph_buyItem")
       : state.phase === "chooseGroup"
-        ? "Choose and take an available group."
+        ? t("ph_chooseGroup")
         : state.questChoices > 0
-          ? `Choose ${state.questChoices} Quest from the display to resolve the effect.`
-          : "Round complete. You may upgrade Legendary cards or end the round.";
+          ? t("ph_quest", { n: state.questChoices })
+          : t("ph_roundDone");
   el.tableauSummary.innerHTML = [
     ...ICONS.map((icon) => [resourceIcon(icon, ICON_LABELS[icon]), icons[icon]]),
     [resourceIcon("Good", "Good"), countAlignment("Good")],
     [resourceIcon("Bad", "Bad"), countAlignment("Bad")],
-    ["Items", state.items.length],
-    ["Upgrade", state.tableau.filter((card) => card.upgraded).length],
+    [t("items"), state.items.length],
+    [t("upgrade"), state.tableau.filter((card) => card.upgraded).length],
   ]
     .map(([label, value]) => `<div class="summary-cell"><span class="label">${label}</span><strong>${value}</strong></div>`)
     .join("");
@@ -881,7 +894,7 @@ function renderQuest(quest) {
   return `
     <div class="slot slot-quest ${state.questChoices > 0 ? "can-pick" : ""}">
       ${CardFace.quest(quest)}
-      ${state.questChoices > 0 ? `<button type="button" class="primary" data-quest="${quest.id}">Take this Quest</button>` : ""}
+      ${state.questChoices > 0 ? `<button type="button" class="primary" data-quest="${quest.id}">${t("takeQuest")}</button>` : ""}
     </div>
   `;
 }
@@ -895,7 +908,7 @@ function renderItem(item) {
   return `
     <div class="slot slot-item">
       ${CardFace.item(item, { price, original: discount ? item.cost : null })}
-      <button type="button" class="${canBuy && state.coins >= price ? "primary" : ""}" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">Buy for ${price} ${resourceIcon("coins", "coins")}</button>
+      <button type="button" class="${canBuy && state.coins >= price ? "primary" : ""}" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">${t("buyFor", { n: `${price} ${resourceIcon("coins", "coins")}` })}</button>
     </div>
   `;
 }
@@ -905,9 +918,9 @@ function renderGroups() {
     .map(
       (group) => `
         <div class="group ${group.removedByBot ? "removed" : ""} ${group.taken ? "taken" : ""}">
-          <h3>Group ${group.id.slice(1)}${group.removedByBot ? ` · taken by ${group.takenBy || "an opponent"}` : group.taken ? " · yours" : ""}</h3>
+          <h3>${t("group", { n: group.id.slice(1) })}${group.removedByBot ? ` · ${t("takenBy", { who: group.takenBy || "?" })}` : group.taken ? ` · ${t("yours")}` : ""}</h3>
           <div class="group-cards">${group.cards.map(renderCard).join("")}</div>
-          <button type="button" class="${state.phase === "chooseGroup" && !group.taken && !group.removedByBot ? "primary" : ""}" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">Take this group</button>
+          <button type="button" class="${state.phase === "chooseGroup" && !group.taken && !group.removedByBot ? "primary" : ""}" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">${t("takeGroup")}</button>
         </div>
       `,
     )
@@ -924,17 +937,17 @@ function renderTableau() {
     ...state.quests.map((card) => ({ ...card, zone: "Quest" })),
   ];
   const sections = [
-    { title: "Activations", test: (card) => /Activation:/i.test(activeCardText(card)) },
-    { title: "Ongoing Effects", test: (card) => /Ongoing:/i.test(activeCardText(card)) },
-    { title: "Instant Effects", test: (card) => /Instant:/i.test(activeCardText(card)) && !/Game End:/i.test(activeCardText(card)) },
-    { title: "Other Cards", test: () => true },
+    { title: t("sec_act"), test: (card) => /Activation:/i.test(activeCardText(card)) },
+    { title: t("sec_ong"), test: (card) => /Ongoing:/i.test(activeCardText(card)) },
+    { title: t("sec_inst"), test: (card) => /Instant:/i.test(activeCardText(card)) && !/Game End:/i.test(activeCardText(card)) },
+    { title: t("sec_other"), test: () => true },
   ];
   const remaining = [...cards];
   el.tableau.innerHTML = sections.map((section) => {
     const selected = remaining.filter(section.test);
     for (const card of selected) remaining.splice(remaining.indexOf(card), 1);
     if (!selected.length) return "";
-    return `<section class="tableau-section"><h3>${section.title} <span>${selected.length}</span></h3><div class="tableau-section-cards">${selected.map((card) => section.title === "Instant Effects" ? renderCompactOwnedCard(card) : renderOwnedCard(card)).join("")}</div></section>`;
+    return `<section class="tableau-section"><h3>${section.title} <span>${selected.length}</span></h3><div class="tableau-section-cards">${selected.map((card) => section.title === t("sec_inst") ? renderCompactOwnedCard(card) : renderOwnedCard(card)).join("")}</div></section>`;
   }).join("");
 }
 
@@ -945,9 +958,9 @@ function activeCardText(card) {
 function renderCompactOwnedCard(card) {
   const canUpgrade = card.deck === "legendary" && !card.upgraded && (state.xp >= upgradeCost(card) || state.freeUpgrades > 0);
   return `<div class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
-    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><strong>${card.name}${card.upgraded ? " +" : ""}</strong>${renderTags(card)}</div></div>
-    ${card.deck === "legendary" ? `<details><summary>Effects and upgrade</summary>${renderLegendaryEffects(card)}</details><button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
-    ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Discard: +2 ${resourceIcon("coins", "coins")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
+    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><strong>${tc(card.name)}${card.upgraded ? " ✦" : ""}</strong>${renderTags(card)}</div></div>
+    ${card.deck === "legendary" ? `<details><summary>${t("effectsUpgrade")}</summary>${renderLegendaryEffects(card)}</details><button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">${t("upgradeBtn", { n: `${upgradeCost(card)} ${resourceIcon("xp", "XP")}` })}</button>` : ""}
+    ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
   </div>`;
 }
 
@@ -958,11 +971,11 @@ function renderOwnedCard(card) {
   const canUpgrade = card.deck === "legendary" && !card.upgraded && (state.xp >= upgradeCost(card) || state.freeUpgrades > 0);
   return `
     <div class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
-      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><div class="card-title">${card.name}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
-      <div class="meta">${card.alignment || card.rank || card.zone}</div>
-      ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(card.effect)}</div>`}
-      ${card.deck === "legendary" ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
-      ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Discard: +2 ${resourceIcon("coins", "coins")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
+      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><div class="card-title">${tc(card.name)}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
+      
+      ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(tc(card.effect))}</div>`}
+      ${card.deck === "legendary" ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">${t("upgradeBtn", { n: `${upgradeCost(card)} ${resourceIcon("xp", "XP")}` })}</button>` : ""}
+      ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
     </div>
   `;
 }
@@ -976,12 +989,12 @@ function renderLegendaryEffects(card) {
   return `
     <div class="legendary-effects">
       <div class="legendary-effect-block">
-        <strong>Base</strong>
-        <div class="effect">${formatGameText(card.base)}</div>
+        <strong>${t("base")}</strong>
+        <div class="effect">${formatGameText(tc(card.base))}</div>
       </div>
       <div class="legendary-effect-block upgrade-effect ${card.upgraded ? "unlocked" : ""}">
-        <div class="legendary-upgrade-heading"><span>${upgradeCost(card)} ${resourceIcon("xp", "XP")}</span><strong>Upgrade</strong></div>
-        <div class="legendary-upgrade-ability ${card.upgraded ? "" : "locked"}"><div class="effect">${formatGameText(upgradeText)}</div></div>
+        <div class="legendary-upgrade-heading"><span>${upgradeCost(card)} ${resourceIcon("xp", "XP")}</span><strong>${t("upgradeLabel")}</strong></div>
+        <div class="legendary-upgrade-ability ${card.upgraded ? "" : "locked"}"><div class="effect">${formatGameText(tc(upgradeText))}</div></div>
       </div>
     </div>
   `;
@@ -991,12 +1004,12 @@ function renderTags(card) {
   const tags = [];
   for (const icon of ICONS) {
     const count = iconAmount(card, icon);
-    for (let i = 0; i < count; i += 1) tags.push(`<span class="tag icon-tag">${resourceIcon(icon, ICON_LABELS[icon])}</span>`);
+    for (let i = 0; i < count; i += 1) tags.push(`<span class="skill-tag">${resourceIcon(icon, ICON_LABELS[icon])}</span>`);
   }
   if (card.alignment === "Good" || card.alignment === "Bad") {
     tags.push(`<span class="tag icon-tag alignment-icon">${resourceIcon(card.alignment, card.alignment)}</span>`);
   } else if (card.alignment) {
-    tags.push(`<span class="tag ${card.alignment.toLowerCase()}">${card.alignment}</span>`);
+    tags.push(`<span class="tag ${card.alignment.toLowerCase()}">${t(card.alignment.toLowerCase())}</span>`);
   }
   return `<div class="tag-row">${tags.join("")}</div>`;
 }
@@ -1006,18 +1019,18 @@ function renderRound() {
   el.botAction.textContent = state.bots?.some((bot) => bot.played) ? state.bots.map((bot) => bot.played).join(" · ") : "-";
   el.roundState.textContent =
     state.phase === "writerMode"
-      ? "Start game"
+      ? t("st_chooseWriter")
       : state.phase === "chooseWriter"
-      ? "Choose Writer"
+      ? t("st_chooseWriter")
       : state.phase === "chooseAction"
-      ? "Choose Action"
+      ? t("st_chooseAction")
       : state.phase === "buyItem"
-        ? "Buy or resolve effect"
+        ? t("st_buyItem")
       : state.phase === "chooseGroup"
-        ? "Take group"
+        ? t("st_chooseGroup")
         : state.phase === "gameOver"
-          ? "Game over"
-          : "Round resolved";
+          ? t("st_gameOver")
+          : t("st_roundDone");
   el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0;
   el.resolveActionBtn.disabled = state.phase !== "buyItem";
   el.resolveActionBtn.classList.toggle("hidden", state.phase !== "buyItem");
@@ -1041,13 +1054,13 @@ function showScore() {
   }
   el.scorePanel.classList.remove("hidden");
   el.scorePanel.innerHTML = `
-    <h2>Final Score</h2>
-    <p>Total: <strong>${score.total} ${resourceIcon("vp", "VP")}</strong> (${score.base} VP during the game + ${score.questTotal} VP from Quests + ${score.writerTotal} VP from the Writer)</p>
+    <h2>${t("finalScore")}</h2>
+    <p>${t("totalLine", { total: `<strong>${score.total} ${resourceIcon("vp", "VP")}</strong>`, base: score.base, quests: score.questTotal, writer: score.writerTotal })}</p>
     <table class="score-table">
-      <thead><tr><th>Quest</th><th>Scoring</th><th>VP</th></tr></thead>
+      <thead><tr><th>${t("quest")}</th><th>${t("colScoring")}</th><th>${resourceIcon("vp", "VP")}</th></tr></thead>
       <tbody>
         ${score.questScores
-          .map((entry) => `<tr><td>${entry.quest.name}</td><td>${entry.quest.scoring}</td><td>${entry.points}</td></tr>`)
+          .map((entry) => `<tr><td>${tc(entry.quest.name)}</td><td>${formatGameText(tc(entry.quest.scoring))}</td><td>${entry.points}</td></tr>`)
           .join("")}
       </tbody>
     </table>
@@ -1058,7 +1071,7 @@ function renderWriter() {
   const writers = DATA.writers || [];
   const setupOpen = state.phase === "writerMode" || state.phase === "chooseWriter";
   el.writerSetup.classList.toggle("hidden", !setupOpen);
-  el.writerSetupTitle.textContent = state.phase === "writerMode" ? "Once Upon a Time" : "Choose your Writer";
+  el.writerSetupTitle.textContent = t("chooseYourWriter");
   el.writerChoices.className = state.phase === "writerMode" ? "main-menu" : "writer-choice-grid";
   el.writerChoices.innerHTML = state.phase === "writerMode"
     ? `<div class="main-menu-modes">
@@ -1116,10 +1129,11 @@ const DECK_CATALOG = [
 function openCatalog(key) {
   const deck = DECK_CATALOG.find((entry) => entry.key === key);
   if (!deck) return;
-  el.deckCatalogTitle.textContent = `${deck.label} (${DATA[key].length})`;
+  el.deckCatalogTitle.textContent = `${t(`deck_${key}`)} (${DATA[key].length})`;
   el.deckCatalogTabs.innerHTML = DECK_CATALOG.map((entry) =>
-    `<button type="button" class="${entry.key === key ? "selected" : ""}" data-catalog-tab="${entry.key}" aria-current="${entry.key === key ? "true" : "false"}">${entry.label}</button>`,
+    `<button type="button" class="${entry.key === key ? "selected" : ""}" data-catalog-tab="${entry.key}" aria-current="${entry.key === key ? "true" : "false"}">${t(`deck_${entry.key}`)}</button>`,
   ).join("");
+  el.deckCatalog.dataset.key = key;
   el.deckCatalogCards.className = `deck-catalog-cards catalog-${key}`;
   el.deckCatalogCards.innerHTML = DATA[key].map((card) => {
     if (key === "writers") return renderWriterCard(card, 1, false, true);
@@ -1152,19 +1166,19 @@ function renderWriterCard(writer, level, selectable, preview = false) {
     <article class="writer-card">
       <div class="writer-art">${CardArt.art(writer.name)}</div>
       <div class="writer-card-header">
-        <div class="writer-name">${writer.name}</div>
-        <div class="writer-level">${selectable || preview ? "Writer" : `Level ${level}`}</div>
+        <div class="writer-name">${tc(writer.name)}</div>
+        <div class="writer-level">${selectable || preview ? t("writerWord") : t("levelN", { n: level })}</div>
       </div>
       <div class="writer-effect-icons">
-        ${levels.map((entry) => `<div class="writer-effect-icon">${resourceIcon(entry.type, effectLabel(entry.type))}<span>Lv ${entry.number}</span></div>`).join("")}
+        ${levels.map((entry) => `<div class="writer-effect-icon">${resourceIcon(entry.type, effectLabel(entry.type))}<span>${t("lvN", { n: entry.number })}</span></div>`).join("")}
       </div>
       <div class="writer-levels">
-        ${levels.map((entry) => `<div class="writer-level-box ${!selectable && !preview && entry.number > level ? "locked" : ""}"><strong>Level ${entry.number}${entry.cost ? ` · ${entry.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(entry.text)}</div>`).join("")}
+        ${levels.map((entry) => `<div class="writer-level-box ${!selectable && !preview && entry.number > level ? "locked" : ""}"><strong>${t("levelN", { n: entry.number })}${entry.cost ? ` · ${entry.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(tc(entry.text))}</div>`).join("")}
       </div>
-      ${state.writerDraftChoices.length && !selectable ? `<div class="writer-draft">${state.writerDraftChoices.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : choice.name}</button>`).join("")}</div>` : ""}
+      ${state.writerDraftChoices.length && !selectable ? `<div class="writer-draft">${state.writerDraftChoices.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : tc(choice.name)}</button>`).join("")}</div>` : ""}
       ${preview ? "" : `<div class="writer-card-actions">
-        ${selectable ? `<button type="button" data-writer="${writer.id}">Choose</button>` : level < 3 ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>Level ${nextLevel} (${nextCost} ${resourceIcon("xp", "XP")})</button>` : ""}
-        ${state.writerDiscardRemaining > 0 && !selectable ? `<button type="button" data-finish-writer-discard>Finish discarding</button>` : ""}
+        ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>${t("levelN", { n: nextLevel })} (${nextCost} ${resourceIcon("xp", "XP")})</button>` : ""}
+        ${state.writerDiscardRemaining > 0 && !selectable ? `<button type="button" data-finish-writer-discard>${t("finishDiscard")}</button>` : ""}
       </div>`}
     </article>
   `;
@@ -1201,3 +1215,8 @@ el.scoreBtn.addEventListener("click", showScore);
 el.closeCatalogBtn.addEventListener("click", closeCatalog);
 
 window.Game = { newGame, state, settings, finalScore, showScore };
+window.addEventListener("langchange", () => {
+  if (state.round) render();
+  if (!el.deckCatalog.classList.contains("hidden") && el.deckCatalog.dataset.key) openCatalog(el.deckCatalog.dataset.key);
+  if (!el.scorePanel.classList.contains("hidden")) showScore();
+});

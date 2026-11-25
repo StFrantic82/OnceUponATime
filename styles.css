@@ -625,7 +625,6 @@ h2::after {
 }
 
 .fc-up {
-  flex: 1;
   margin-bottom: 6px;
   opacity: 0.62;
 }
@@ -1935,4 +1934,204 @@ html {
     font-size: 13px;
     gap: 3px;
   }
+}
+
+/* ---------- Card header: square skill tags + name; footer: Good / Bad ---------- */
+.fc-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 40px;
+  padding: 5px 6px;
+  background: var(--frame);
+}
+
+.fc-head .fc-name {
+  flex: 1;
+  padding: 0;
+  background: none;
+  line-height: 1.05;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.fc-skills {
+  display: flex;
+  flex: none;
+  gap: 3px;
+}
+
+.skill-tag {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  border: 2px solid #2a190f;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.skill-tag .game-icon {
+  width: 160%;
+  height: 160%;
+  max-width: none;
+  vertical-align: middle;
+  filter: none;
+}
+
+.sk-charm {
+  background: #7a4f9e;
+}
+
+.sk-strength {
+  background: #b8402e;
+}
+
+.sk-dexterity {
+  background: #e2a24a;
+}
+
+.sk-intelligence {
+  background: #26487c;
+}
+
+.tag-row .skill-tag {
+  width: 20px;
+  height: 20px;
+}
+
+.fc-foot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: auto;
+  padding: 3px 8px;
+  border-top: 1px dashed #c9b07c;
+  font: 800 11px "Alegreya Sans", sans-serif;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+}
+
+.fc-foot .game-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.fc-foot-good {
+  background: rgba(47, 93, 138, 0.1);
+  color: #2f5d8a;
+}
+
+.fc-foot-bad {
+  background: rgba(138, 43, 43, 0.1);
+  color: #8a2b2b;
+}
+
+.fc-neutral-dot {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: #c2bdb4;
+  font: 800 10px "Alegreya", serif;
+  color: var(--ink);
+}
+
+.fc-legendary .fc-head {
+  background: linear-gradient(#2a190f, #4a2e1c);
+}
+
+.fc-legendary.fc-good .fc-head {
+  background: linear-gradient(#1f3f63, #2f5d8a);
+}
+
+.fc-legendary.fc-bad .fc-head {
+  background: linear-gradient(#5a1a1a, #8a2b2b);
+}
+
+.fc-legendary .fc-head .fc-name {
+  display: grid;
+  color: #f6d98a;
+}
+
+.fc-legendary .fc-head .fc-name small {
+  font: 700 9px "Alegreya Sans", sans-serif;
+  letter-spacing: 0.08em;
+  color: #c9b98a;
+}
+
+.fc-legendary .fc-up {
+  flex: none;
+  margin-bottom: 6px;
+}
+
+.fc-item .fc-head {
+  background: linear-gradient(#b5793a, #8a5a2b);
+}
+
+.fc-item .fc-head .fc-name {
+  color: #fff8e8;
+}
+
+.fc-common .fc-text,
+.fc-item .fc-text {
+  flex: 1;
+}
+
+.lang-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.lang-switch button {
+  min-height: 32px;
+  padding: 2px 10px;
+  border-width: 1px;
+  font-size: 13px;
+  box-shadow: none;
+  background: transparent;
+  color: #fbeed2;
+  border-color: transparent;
+}
+
+.lang-switch button[aria-pressed="true"] {
+  background: linear-gradient(#f6bd5a, #d98a2b);
+  color: #2a1608;
+  border-color: #8f4a12;
+}
+
+.hero .lang-switch {
+  margin-bottom: 14px;
+}
+
+.lang-switch.small {
+  background: rgba(120, 80, 40, 0.15);
+}
+
+.lang-switch.small button {
+  color: var(--ink);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.deck-catalog-header button {
+  flex: none;
+}
+
+.deck-catalog-header h2 {
+  flex: 1;
 }
