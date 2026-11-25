@@ -139,7 +139,7 @@ const RULES = {
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
         <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
-        <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing. To save XP towards a level, stack your XP tokens on the dashed star space between two levels of your Writer or of a Legendary character; when there are enough, spend them and the card moves to the next level.</li>
+        <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing. Between two levels of your Writer or of a Legendary character, each dashed star space stands for 1 XP: the number of spaces is the cost. To level up, put one XP token on each space; the card then moves to the next level.</li>
         <li>Put the board in the middle, on the side for your number of players. Choose a first player at random.</li>
       </ol>`],
       ["round", "A round", `<h3>1. Reveal the groups</h3>
@@ -216,7 +216,7 @@ const RULES = {
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
-        <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire. Pour préparer un niveau, empilez vos jetons XP sur la case étoile en pointillés placée entre deux niveaux de votre Écrivain ou d’un personnage Légendaire ; quand il y en a assez, dépensez-les et la carte passe au niveau suivant.</li>
+        <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire. Entre deux niveaux de votre Écrivain ou d’un personnage Légendaire, chaque case étoile en pointillés vaut 1 XP : le nombre de cases indique le coût. Pour monter de niveau, posez un jeton XP sur chaque case ; la carte passe alors au niveau suivant.</li>
         <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard.</li>
       </ol>`],
       ["round", "Une manche", `<h3>1. Révéler les groupes</h3>
@@ -293,7 +293,7 @@ const RULES = {
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
-        <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo. Per preparare un livello, impila i segnalini XP sulla casella stella tratteggiata tra due livelli del tuo Scrittore o di un personaggio Leggendario; quando bastano, spendili e la carta passa al livello successivo.</li>
+        <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo. Tra due livelli del tuo Scrittore o di un personaggio Leggendario, ogni casella stella tratteggiata vale 1 XP: il numero di caselle indica il costo. Per salire di livello, metti un segnalino XP su ogni casella; la carta passa allora al livello successivo.</li>
         <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore.</li>
       </ol>`],
       ["round", "Un round", `<h3>1. Rivelare i gruppi</h3>

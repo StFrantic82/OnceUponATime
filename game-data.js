@@ -267,7 +267,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the West",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: level up another Character for free.",
+      "effect": "Instant: place XP on a Character so that it levels up.",
       "copy": 1
     },
     {
@@ -276,7 +276,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the East",
       "alignment": "Bad",
       "icons": "Dexterity 1",
-      "effect": "Instant: level up another Character for free.",
+      "effect": "Instant: place XP on a Character so that it levels up.",
       "copy": 1
     },
     {
@@ -285,7 +285,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the North",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Instant: level up another Character for free.",
+      "effect": "Instant: place XP on a Character so that it levels up.",
       "copy": 1
     },
     {
@@ -294,7 +294,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the South",
       "alignment": "Good",
       "icons": "Charm 1",
-      "effect": "Instant: level up another Character for free.",
+      "effect": "Instant: place XP on a Character so that it levels up.",
       "copy": 1
     },
     {

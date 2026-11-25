@@ -659,7 +659,7 @@ function applyInstant(card) {
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
   if (/Tag token/i.test(text)) state.tagTokens += 1;
   if (/take 1 Quest|Take 1 Quest/i.test(text)) grantQuestChoice(card.name);
-  if (/level up .*free/i.test(text)) state.freeUpgrades += 1;
+  if (/level up .*free|place XP on a Character so that it levels up/i.test(text)) state.freeUpgrades += 1;
   if (/draw 1 Action card, then put/i.test(text)) drawAndTuck();
 }
 
@@ -823,7 +823,7 @@ function scoreQuest(quest) {
   if (/Hatter's Tea Party/.test(name)) return Math.min(15, countCardsWith("Ongoing") * 3);
   if (/Second Star/.test(name)) return Math.min(14, countCardsWith("Activation") * 2);
   if (/Pact with the Beast/.test(name)) return Math.min(15, upgraded * 5);
-  if (/Enchanted Rose/.test(name)) return Math.min(15, countCardsWith("less XP|free") * 3);
+  if (/Enchanted Rose/.test(name)) return Math.min(15, countCardsWith("less XP|free|place XP on a Character") * 3);
   if (/Rob the Rich/.test(name)) return Math.min(12, Math.floor(state.coins / 2));
   if (/Rubbed Lamp/.test(name)) return Math.min(12, Math.floor(state.xp / 2));
   if (/Arrow on Target/.test(name)) return Math.min(15, countCardsWith("VP|Game End") * 3);

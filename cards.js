@@ -74,8 +74,10 @@
   }
 
   // Dashed space to stack XP tokens before levelling up (printed cards and Writer tiles).
-  function xpStep() {
-    return `<div class="xp-step"><span class="xp-arrow">▼</span><span class="xp-box">${resourceIcon("xp", "XP")}</span><span class="xp-arrow">▼</span></div>`;
+  // One dashed star space per XP needed: the number of spaces shows the cost.
+  function xpStep(n = 1) {
+    const boxes = Array.from({ length: Math.max(1, n) }, () => `<span class="xp-box">${resourceIcon("xp", "XP")}</span>`).join("");
+    return `<div class="xp-step"><span class="xp-arrow">▼</span><span class="xp-boxes">${boxes}</span><span class="xp-arrow">▼</span></div>`;
   }
 
   function legendary(card, opts = {}) {
@@ -86,8 +88,8 @@
       ${head(card, 204, 16, `<small>${esc(t("legendary"))}</small>`)}
       <div class="fc-art">${CardArt.art(card.name)}</div>
       <div class="fc-side fc-base">${formatGameText(stripIconPrefix(tc(card.base)))}</div>
-      ${opts.xpSlot ? xpStep() : ""}
-      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}"><span class="fc-cost">${cost} ${resourceIcon("xp", "XP")}</span>${formatGameText(tc(upgradeText))}</div>
+      ${opts.xpSlot ? xpStep(cost) : ""}
+      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${opts.xpSlot ? "" : `<span class="fc-cost">${cost} ${resourceIcon("xp", "XP")}</span>`}${formatGameText(tc(upgradeText))}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }

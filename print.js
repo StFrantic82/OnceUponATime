@@ -64,7 +64,7 @@ const P = {
     contents: "Contents",
     sizes: { common: "Common characters · 58 cards · 56 × 87 mm", legendary: "Legendary characters · 39 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 35 tiles · 60 × 60 mm", quests: "Quest cards · 20 cards · 87 × 56 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Action cards · 5 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
     backs: "Backs",
-    tagsTitle: "Tag tokens", resTitle: "Coins, XP and VP", firstPlayer: "First player",
+    tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
     page: "Page",
     set: "Set",
     board: "Board · group spaces · front: 2–3 players, back: 4–5 players",
@@ -88,7 +88,7 @@ const P = {
     contents: "Contenu",
     sizes: { common: "Personnages communs · 58 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 39 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 35 tuiles · 60 × 60 mm", quests: "Cartes Quête · 20 cartes · 87 × 56 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Action · 5 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
     backs: "Dos",
-    tagsTitle: "Jetons Tag", resTitle: "Pièces, XP et PV", firstPlayer: "Premier joueur",
+    tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
     page: "Page",
     set: "Jeu",
     board: "Plateau · emplacements des lots · recto : 2–3 joueurs, verso : 4–5 joueurs",
@@ -112,7 +112,7 @@ const P = {
     contents: "Contenuto",
     sizes: { common: "Personaggi comuni · 58 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 39 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 35 tessere · 60 × 60 mm", quests: "Carte Missione · 20 carte · 87 × 56 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Azione · 5 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
     backs: "Retri",
-    tagsTitle: "Segnalini Tag", resTitle: "Monete, XP e PV", firstPlayer: "Primo giocatore",
+    tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
     page: "Pagina",
     set: "Mazzo",
     board: "Plancia · spazi dei gruppi · fronte: 2–3 giocatori, retro: 4–5 giocatori",
@@ -201,10 +201,10 @@ function writerCard(writer) {
   ];
   return `<article class="writer-card print-writer">
     <div class="book-notch"><span class="notch-label"><b>${esc(L.yourBook)}</b> · ${esc(L.yourBookHint)}</span></div>
-    <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(writer.name))}</div><div class="writer-level">${esc(t("writerWord"))}</div></div>${writerPortrait(writer.name)}</div>
+    <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(writer.name))}</div></div>${writerPortrait(writer.name)}</div>
     <div class="writer-levels">${levels
-      .map((l) => `<div class="writer-level-box"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}${l.cost ? ` · ${l.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(tc(l.text))}</div>`)
-      .join(CardFace.xpStep())}</div>
+      .map((l, i) => `${i ? CardFace.xpStep(l.cost) : ""}<div class="writer-level-box"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}</strong>${formatGameText(tc(l.text))}</div>`)
+      .join("")}</div>
   </article>`;
 }
 
@@ -248,11 +248,13 @@ function backsSheet(kind, set = 0, count = 0) {
 function tokenSheet() {
   const tags = ["Charm", "Strength", "Dexterity", "Intelligence"].flatMap((icon) => Array.from({ length: 9 }, () => `<div class="tok tag-tok sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon, true)}</div>`));
   const round = (icon, value, n) => Array.from({ length: n }, () => `<div class="tok round-tok tok-${icon}">${resourceIcon(icon, icon, true)}<b>${value}</b></div>`);
-  const res = [...round("coins", 1, 27), ...round("coins", 3, 9), ...round("xp", 1, 27), ...round("xp", 3, 9), ...round("vp", 1, 9), ...round("vp", 5, 9)];
+  const res = [...round("coins", 1, 27), ...round("coins", 3, 9), ...round("vp", 1, 18), ...round("vp", 5, 9)];
+  const xp = Array.from({ length: 90 }, () => `<div class="tok xp-tok">${resourceIcon("xp", "XP", true)}</div>`);
   return [
     `<section class="sheet"><header class="sheet-head">${esc(L.tagsTitle)} · 20 × 20 mm</header><div class="tok-grid">${tags.join("")}</div>
      <header class="sheet-head second">${esc(L.firstPlayer)}</header><div class="tok-grid"><div class="tok first-tok"><b>1</b><small>${esc(L.firstPlayer)}</small></div></div></section>`,
-    `<section class="sheet"><header class="sheet-head">${esc(L.resTitle)} · Ø 20 mm</header><div class="tok-grid">${res.join("")}</div></section>`,
+    `<section class="sheet"><header class="sheet-head">${esc(L.resTitle)} · Ø 20 mm</header><div class="tok-grid">${res.join("")}</div>
+     <header class="sheet-head second">${esc(L.xpTitle)} · 10 × 10 mm</header><div class="tok-grid xp-grid">${xp.join("")}</div></section>`,
   ];
 }
 

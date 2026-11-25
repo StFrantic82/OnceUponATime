@@ -133,7 +133,7 @@ window.CARD_I18N = [
   ["Instant: discard 1 Character to gain 1 XP and 1 coin.", "Instant : défaussez 1 Personnage pour gagner 1 XP et 1 coin.", "Instant: scarta 1 Personaggio per ottenere 1 XP e 1 coin."],
   ["Activation: you may spend 1 coin to gain 1 XP.", "Activation : vous pouvez dépenser 1 coin pour gagner 1 XP.", "Activation: puoi spendere 1 coin per ottenere 1 XP."],
   ["Instant: gain 1 Tag token.", "Instant : gagnez 1 jeton d’icône.", "Instant: ottieni 1 segnalino icona."],
-  ["Instant: level up another Character for free.", "Instant : améliorez gratuitement un autre Personnage.", "Instant: potenzia gratis un altro Personaggio."],
+  ["Instant: place XP on a Character so that it levels up.", "Instant : placez de l’XP sur un Personnage de manière à l’améliorer.", "Instant: metti XP su un Personaggio in modo da potenziarlo."],
   ["Instant: gain 1 XP.", "Instant : gagnez 1 XP.", "Instant: ottieni 1 XP."],
   ["Activation: spend 1 XP to gain 3 coins.", "Activation : dépensez 1 XP pour gagner 3 coins.", "Activation: spendi 1 XP per ottenere 3 coins."],
   ["Instant: you may discard 1 Item to gain 3 coins.", "Instant : vous pouvez défausser 1 Objet pour gagner 3 coins.", "Instant: puoi scartare 1 Oggetto per ottenere 3 coins."],
