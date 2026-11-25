@@ -26,7 +26,7 @@ const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterit
 const PERSONAL = new Set([
   "coins", "xp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
-  "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat",
+  "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
 
 let G = emptyGame();
@@ -136,10 +136,27 @@ function draw(deckName, count) {
   return cards;
 }
 
-function refillActionHand() {
-  while (state.hand.length < 4 && state.actionDeck.length) {
-    state.hand.push(state.actionDeck.shift());
-  }
+// One Action card is drawn at the end of every round, so the Action deck counts the rounds left.
+function drawActionCard() {
+  if (state.actionDeck.length) state.hand.push(state.actionDeck.shift());
+}
+
+// "Draw an Action card": draw 1, then put 1 card from your hand under your deck.
+// The deck size does not change; with an empty deck the effect does nothing.
+function drawAndTuck() {
+  if (!state.actionDeck.length) return;
+  state.hand.push(state.actionDeck.shift());
+  state.tuckPending = (state.tuckPending || 0) + 1;
+}
+
+function tuckAction(number) {
+  if (!(state.tuckPending > 0)) return;
+  const card = state.hand.find((entry) => entry.number === Number(number));
+  if (!card) return;
+  state.hand = state.hand.filter((entry) => entry !== card);
+  state.actionDeck.push(card);
+  state.tuckPending -= 1;
+  log("l_tuck", { p: state.name });
 }
 
 // Log entries are stored as keys + values so each viewer reads them in their own language.
@@ -219,6 +236,7 @@ function newPlayer(seat, info) {
     actionValue: 0,
     playerFirst: false,
     phase: "chooseAction",
+    tuckPending: 0,
   };
 }
 
@@ -227,6 +245,7 @@ function newGame(options = {}, seats = null) {
   Object.assign(settings, options);
   const players = Math.min(5, Math.max(2, Number(settings.players) || 2));
   settings.players = players;
+  settings.rounds = Number(settings.rounds) === 8 ? 8 : 9;
   if (!seats) {
     const names = t("botNames");
     seats = [{ name: settings.name || t("you"), kind: "human", uid: "local" }];
@@ -261,7 +280,7 @@ function newGame(options = {}, seats = null) {
 }
 
 function startRound() {
-  if (G.players.every((p) => !p.hand.length)) {
+  if (G.players.every((p) => !p.hand.length && !p.actionDeck.length)) {
     endGame();
     return;
   }
@@ -288,6 +307,7 @@ function startRound() {
     if (p.phase !== "chooseWriter") p.phase = p.hand.length ? "chooseAction" : "waitAction";
   }
   log("l_round", { n: G.round });
+  if (G.round === G.settings.rounds) log("l_lastRound");
   // The computer picks its Action card once humans are done (they may react to what is played).
   maybeBotsChoose();
 }
@@ -368,19 +388,15 @@ function nextTurn() {
   if (p.kind === "bot") Bot.queueTurn(seat);
 }
 
-// End of the story (rulebook): once the Action decks are empty and everyone has a full hand
-// again, one last round is played. With 12 Action cards (4 in hand, 8 in the deck) that is 9 rounds.
+// The story lasts a fixed number of rounds (8 or 9). Each player draws one Action card per round:
+// with 4 cards in hand and 8 in the deck, the deck runs out at the end of round 8.
 function endRoundAll() {
   G.active = null;
-  if (G.finalRound) {
+  if (G.round >= G.settings.rounds) {
     endGame();
     return;
   }
-  for (const p of G.players) withSeat(p.seat, refillActionHand);
-  if (G.players.every((p) => !p.actionDeck.length)) {
-    G.finalRound = true;
-    log("l_lastRound");
-  }
+  for (const p of G.players) withSeat(p.seat, drawActionCard);
   while (G.itemDisplay.length < 1 + G.players.length && G.decks.items.length) G.itemDisplay.push(...draw("items", 1));
   while (G.questDisplay.length < 2 + G.players.length && G.decks.quests.length) G.questDisplay.push(...draw("quests", 1));
   startRound();
@@ -450,7 +466,7 @@ async function activateActionStep() {
 }
 
 function endTurn() {
-  if (state.phase !== "roundDone" || state.questChoices > 0 || G.active !== G.cur) return;
+  if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || G.active !== G.cur) return;
   state.writerDiscardRemaining = 0;
   state.phase = "waitRound";
   nextTurn();
@@ -638,10 +654,7 @@ function applyInstant(card) {
   if (/Tag token/i.test(text)) state.tagTokens += 1;
   if (/take 1 Quest|Take 1 Quest/i.test(text)) grantQuestChoice(card.name);
   if (/level up .*free/i.test(text)) state.freeUpgrades += 1;
-  if (/draw and discard 1 Action/i.test(text)) {
-    const drawn = state.actionDeck.shift();
-    if (drawn) state.hand.push(drawn);
-  }
+  if (/draw 1 Action card, then put/i.test(text)) drawAndTuck();
 }
 
 function applyUpgradeGain(card) {
@@ -884,10 +897,8 @@ function scoreWriter() {
   return 0;
 }
 
-// Expected number of rounds: one per card left in the Action deck, plus the final round.
 function roundsTotal() {
-  if (G.finalRound || G.gameOver) return G.round;
-  return G.round + Math.max(0, ...G.players.map((p) => p.actionDeck.length)) + (G.players.every((p) => !p.actionDeck.length) ? 0 : 1);
+  return G.settings.rounds || 9;
 }
 
 function liveScore(seat) {
@@ -910,6 +921,7 @@ const MOVES = {
   writerDiscard: discardForWriter,
   writerDiscardDone: finishWriterDiscard,
   chooseWriter,
+  tuck: tuckAction,
 };
 
 let queue = Promise.resolve();
@@ -1012,7 +1024,8 @@ function render() {
 
 function phaseMessage() {
   if (G.gameOver) return t("ph_gameOver");
-  if (G.finalRound && state.phase === "chooseAction") return `${t("lastRoundTag")} ${t("ph_chooseAction")}`;
+  if (state.tuckPending > 0) return t("ph_tuck");
+  if (G.round === G.settings.rounds && state.phase === "chooseAction") return `${t("lastRoundTag")} ${t("ph_chooseAction")}`;
   if (state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0) return t("ph_perrault");
   if (state.questChoices > 0) return t("ph_quest", { n: state.questChoices });
   const active = G.active !== null ? G.players[G.active] : null;
@@ -1073,7 +1086,7 @@ function renderPlayers() {
       const canHandOver = view.role === "host" && !me && p.kind === "human" && !G.gameOver;
       return `<button type="button" class="pp ${me ? "me" : ""} ${G.active === p.seat ? "active" : ""}" data-player="${p.seat}">
         <span class="pp-top"><b>${escapeHtml(p.name)}${p.kind === "bot" ? ` <small>${escapeHtml(t("computer"))}</small>` : ""}</b>${played}</span>
-        <span class="pp-writer">${p.writer ? escapeHtml(tc(p.writer.name)) + ` · ${t("lvN", { n: p.writerLevel })}` : "…"}</span>
+        <span class="pp-writer">${p.writer ? escapeHtml(tc(p.writer.name)) + ` · ${t("lvN", { n: p.writerLevel })}` : "…"} · <span class="pp-deck" title="${escapeHtml(t("deckLeft"))}">${p.actionDeck.length}</span></span>
         <span class="pp-res">${resourceIcon("coins", "coins")}${p.coins} ${resourceIcon("xp", "XP")}${p.xp} ${resourceIcon("vp", "VP")}${score}</span>
         <span class="pp-icons">${ICONS.map((i) => `${resourceIcon(i, i)}${icons[i]}`).join(" ")}</span>
         <span class="pp-status">${escapeHtml(playerStatus(p))}${canHandOver ? ` <span class="pp-bot" data-to-bot="${p.seat}">${escapeHtml(t("toBot"))}</span>` : ""}</span>
@@ -1107,17 +1120,24 @@ function showPlayerTableau(seat) {
 
 function renderActions() {
   const hand = [...state.hand].sort((a, b) => a.number - b.number);
-  el.actionHand.innerHTML = hand
+  const tucking = state.tuckPending > 0;
+  const deck = state.actionDeck.length;
+  const deckInfo = `<div class="action-deck ${deck === 0 ? "empty" : ""}" title="${escapeHtml(t("deckHint"))}">
+      <span class="deck-stack">${Array.from({ length: Math.min(deck, 9) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>
+      <span><b>${deck}</b> ${escapeHtml(t("deckLeft"))}<br><small>${escapeHtml(t("roundOf", { n: G.round, total: roundsTotal() }))}</small></span>
+    </div>`;
+  el.actionHand.innerHTML = deckInfo + hand
     .map(
       (action) => `
-        <button class="action-card" type="button" ${state.phase !== "chooseAction" ? "disabled" : ""} data-action="${action.number}" aria-label="${escapeHtml(t("chapter"))} ${action.number}">
+        <button class="action-card ${tucking ? "tucking" : ""}" type="button" ${state.phase !== "chooseAction" && !tucking ? "disabled" : ""} data-action="${action.number}" aria-label="${escapeHtml(t("chapter"))} ${action.number}">
           ${CardFace.action(action)}
+          ${tucking ? `<span class="tuck-label">${escapeHtml(t("tuckBtn"))}</span>` : ""}
         </button>
       `,
     )
     .join("");
   for (const button of el.actionHand.querySelectorAll("[data-action]")) {
-    button.addEventListener("click", () => act("playAction", Number(button.dataset.action)));
+    button.addEventListener("click", () => act(tucking ? "tuck" : "playAction", Number(button.dataset.action)));
   }
 }
 
@@ -1275,8 +1295,8 @@ function renderRound() {
     gameOver: "st_gameOver",
   };
   el.roundState.textContent = t(labels[state.phase] || "st_waitTurn");
-  el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0;
-  el.endRoundBtn.classList.toggle("primary", state.phase === "roundDone" && !state.questChoices);
+  el.endRoundBtn.disabled = state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0;
+  el.endRoundBtn.classList.toggle("primary", state.phase === "roundDone" && !state.questChoices && !state.tuckPending);
   el.resolveActionBtn.disabled = state.phase !== "buyItem";
   el.resolveActionBtn.classList.toggle("hidden", state.phase !== "buyItem");
   for (const button of el.tableau.querySelectorAll("[data-upgrade]")) {

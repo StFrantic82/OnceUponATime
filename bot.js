@@ -138,9 +138,22 @@
     }
   }
 
+  // After "draw 1 Action card", put back the card the bot needs least (a middle chapter).
+  function settleTuck() {
+    let guard = 4;
+    while (state.tuckPending > 0 && state.hand.length && guard > 0) {
+      guard -= 1;
+      const sorted = [...state.hand].sort((a, b) => a.number - b.number);
+      const pick = level() === "easy" ? rand(sorted) : sorted[Math.floor(sorted.length / 2)];
+      tuckAction(pick.number);
+    }
+    state.tuckPending = 0;
+  }
+
   async function playTurn() {
     const seat = G.cur;
     if (state.phase === "chooseGroup") chooseGroup();
+    settleTuck();
     if (state.phase === "buyItem") {
       buySomething();
       await activateActionStep();
@@ -151,6 +164,7 @@
     G.cur = seat;
     takeQuests();
     settleWriterChoices();
+    settleTuck();
     if (state.phase === "roundDone") endTurn();
   }
 

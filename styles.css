@@ -2473,3 +2473,88 @@ html {
   border-color: var(--amber);
   box-shadow: 0 0 0 3px rgba(240, 176, 74, 0.45);
 }
+
+/* ---------- Action deck (round counter) and tucking ---------- */
+.action-deck {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px dashed #c9a46a;
+  border-radius: 12px;
+  background: rgba(255, 250, 238, 0.7);
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+.action-deck b {
+  font: 800 22px "Alegreya", serif;
+  color: #6b2a1a;
+}
+
+.action-deck small {
+  color: var(--muted);
+}
+
+.action-deck.empty b {
+  color: #a8323a;
+}
+
+.deck-stack {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 46px;
+}
+
+.deck-stack i {
+  position: absolute;
+  left: calc(var(--i) * 2px);
+  bottom: calc(var(--i) * 2px);
+  width: 30px;
+  height: 38px;
+  border-radius: 3px 5px 5px 3px;
+  border: 1px solid #8a5a2b;
+  border-left: 4px solid #7a3a24;
+  background: #fbf1d8;
+}
+
+.action-card {
+  position: relative;
+}
+
+.action-card.tucking .acard {
+  outline: 3px dashed var(--amber);
+  outline-offset: 2px;
+}
+
+.tuck-label {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #3b2414;
+  color: #f6d98a;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.pp-deck {
+  display: inline-block;
+  min-width: 20px;
+  padding: 0 5px;
+  border-radius: 3px 5px 5px 3px;
+  border-left: 3px solid #7a3a24;
+  background: #fbf1d8;
+  color: var(--ink);
+  font-weight: 800;
+  text-align: center;
+}
+
+.hrow .lvls.rounds {
+  margin-top: 0;
+  width: 240px;
+}

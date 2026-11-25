@@ -253,7 +253,7 @@
     $("#lobbyMembers").innerHTML = list
       .map(([id, m]) => `<li>${esc(m.name)}${meta && id === meta.host ? ` <small>${esc(t("hostTag"))}</small>` : ""}${id === pid ? ` <small>${esc(t("youTag"))}</small>` : ""}</li>`)
       .join("") + Array.from({ length: bots }, () => `<li class="bot">${esc(t("computer"))}</li>`).join("");
-    $("#lobbyInfo").textContent = s.players ? `${t("players")} ${total} · ${t("level")} ${t(s.level || "normal")}` : "";
+    $("#lobbyInfo").textContent = s.players ? `${t("players")} ${total} · ${t("level")} ${t(s.level || "normal")} · ${t("roundsN", { n: s.rounds || 9 })}` : "";
     $("#lobbyStart").hidden = !isHost;
     $("#lobbyStart").disabled = list.length > 5;
     $("#lobbyWait").hidden = isHost;

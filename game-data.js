@@ -69,7 +69,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw and discard 1 Action card.",
+      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
       "copy": 1
     },
     {
@@ -78,7 +78,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw and discard 1 Action card.",
+      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
       "copy": 2
     },
     {
@@ -87,7 +87,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw and discard 1 Action card.",
+      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
       "copy": 3
     },
     {
@@ -96,7 +96,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw and discard 1 Action card.",
+      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
       "copy": 4
     },
     {
@@ -105,7 +105,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw and discard 1 Action card.",
+      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
       "copy": 5
     },
     {
@@ -114,7 +114,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw and discard 1 Action card.",
+      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
       "copy": 6
     },
     {

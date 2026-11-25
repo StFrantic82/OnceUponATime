@@ -129,7 +129,7 @@ window.CARD_I18N = [
 
   // ---- Common effects ----
   ["Activation: gain 1 coin.", "Activation : gagnez 1 coin.", "Activation: ottieni 1 coin."],
-  ["Instant: draw and discard 1 Action card.", "Instant : piochez puis défaussez 1 carte Action.", "Instant: pesca e scarta 1 carta Azione."],
+  ["Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.", "Instant : piochez 1 carte Action, puis remettez 1 carte Action de votre main sous votre pioche.", "Instant: pesca 1 carta Azione, poi rimetti 1 carta Azione dalla tua mano sotto il tuo mazzo."],
   ["Instant: discard 1 Character to gain 1 XP and 1 coin.", "Instant : défaussez 1 Personnage pour gagner 1 XP et 1 coin.", "Instant: scarta 1 Personaggio per ottenere 1 XP e 1 coin."],
   ["Activation: you may spend 1 coin to gain 1 XP.", "Activation : vous pouvez dépenser 1 coin pour gagner 1 XP.", "Activation: puoi spendere 1 coin per ottenere 1 XP."],
   ["Instant: gain 1 Tag token.", "Instant : gagnez 1 jeton d’icône.", "Instant: ottieni 1 segnalino icona."],
