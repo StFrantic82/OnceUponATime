@@ -220,7 +220,7 @@ function newPlayer(seat, info) {
     tagTokens: 0,
     freeUpgrades: 0,
     actionDeck,
-    hand: actionDeck.splice(0, 5),
+    hand: actionDeck.splice(0, 4),
     actionDiscard: [],
     tableau: [],
     items: [],
@@ -395,7 +395,8 @@ function nextTurn() {
 }
 
 // The story lasts 8 rounds. Each player draws one Action card at the end of each round:
-// with 5 cards in hand and 7 in the deck, the deck is empty for the last round.
+// with 4 cards in hand and 8 in the deck, 1 card is left in the deck during the last round,
+// so "draw 1 Action card, then put 1 under your deck" effects still work until the end.
 function endRoundAll() {
   G.active = null;
   if (simMode) G.curve.push(G.players.map((p) => liveScore(p.seat)));

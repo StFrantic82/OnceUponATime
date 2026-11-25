@@ -137,7 +137,7 @@ const RULES = {
       ["setup", "Setup", `<ol>
         <li>Shuffle the Normal characters and the Legendary characters into two separate decks.</li>
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
-        <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>5</b> into their hand and places the other <b>7</b> face down: this is their Action deck.</li>
+        <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
         <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing.</li>
         <li>Put the board in the middle, on the side for your number of players. Choose a first player at random.</li>
@@ -162,21 +162,21 @@ const RULES = {
       <h3>4. End of the round</h3>
       <ul>
         <li>Discard the cards nobody took. Refill the Items to 1 + players and the Quests to 2 + players.</li>
-        <li>Each player draws <b>exactly 1 Action card</b> from their Action deck. The deck therefore shrinks by one card each round: it shows how many rounds are left.</li>
+        <li>Each player draws <b>exactly 1 Action card</b> from their Action deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player.</li>
       </ul>`],
       ["effects", "Effects in detail", `<p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them. An Activation that costs something (spend coins, discard a card…) is optional.</p>
       <p><b>Take a Quest.</b> Choose one face-up Quest and keep it in front of you. It will score at the end of the game.</p>
       <p><b>Free upgrade.</b> Upgrade one Legendary character at once, without filling its star spaces (any XP already on it is discarded).</p>
       <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free.</p>
-      <p><b>Draw an Action card.</b> Draw 1 card from your Action deck, then put 1 Action card from your hand under your deck. If your Action deck is empty, the effect does nothing. This keeps the deck an exact count of the rounds left.</p>
+      <p><b>Draw an Action card.</b> Draw 1 card from your Action deck, then put 1 Action card from your hand under your deck. If your Action deck is empty, the effect does nothing. This way the deck always counts the rounds.</p>
       <h3>Legendary characters</h3>
       <p>A Legendary character starts on its base side. When its star spaces are full, it is upgraded (turn it 90° to show it): from then on, only the upgraded effect counts.</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Writers</h3>
       <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. You reach each level by filling its star spaces with XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "End of the game and scoring", `<p>The game ends after the 8th round, when the Action decks are empty. Each player adds up:</p>
+      ["end", "End of the game and scoring", `<p>The game ends after the 8th round, when only 1 card is left in each Action deck. Each player adds up:</p>
       <ul>
         <li>the Victory Points [[icon:vp]] gained during the game;</li>
         <li>their Quests [[icon:endgame]];</li>
@@ -215,7 +215,7 @@ const RULES = {
       ["setup", "Mise en place", `<ol>
         <li>Mélangez les personnages Normaux et les personnages Légendaires en deux pioches séparées.</li>
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
-        <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>5</b> et pose les <b>7</b> autres face cachée : c’est sa pioche Action.</li>
+        <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
         <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
         <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard.</li>
@@ -240,21 +240,21 @@ const RULES = {
       <h3>4. Fin de la manche</h3>
       <ul>
         <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Quêtes jusqu’à 2 + joueurs.</li>
-        <li>Chaque joueur pioche <b>exactement 1 carte Action</b> dans sa pioche Action. La pioche diminue donc d’une carte par manche : elle indique combien de manches il reste.</li>
+        <li>Chaque joueur pioche <b>exactement 1 carte Action</b> dans sa pioche Action. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur.</li>
       </ul>`],
       ["effects", "Les effets en détail", `<p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative.</p>
       <p><b>Prendre une Quête.</b> Choisissez une Quête visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
       <p><b>Amélioration gratuite.</b> Améliorez aussitôt un personnage Légendaire, sans remplir ses cases étoile (l’XP déjà posé dessus est défaussé).</p>
       <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère.</p>
-      <p><b>Piocher une carte Action.</b> Piochez 1 carte de votre pioche Action, puis remettez 1 carte Action de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours exactement les manches restantes.</p>
+      <p><b>Piocher une carte Action.</b> Piochez 1 carte de votre pioche Action, puis remettez 1 carte Action de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours les manches.</p>
       <h3>Personnages légendaires</h3>
       <p>Un personnage Légendaire commence sur sa face de base. Quand ses cases étoile sont pleines, il est amélioré (tournez la carte de 90° pour le montrer) : dès lors, seul l’effet amélioré compte.</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Écrivains</h3>
       <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. On atteint chaque niveau en remplissant ses cases étoile avec de l’XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e manche, quand les pioches Action sont vides. Chaque joueur additionne :</p>
+      ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e manche, quand il ne reste plus qu’une carte dans chaque pioche Action. Chaque joueur additionne :</p>
       <ul>
         <li>les Points de Victoire [[icon:vp]] gagnés pendant la partie ;</li>
         <li>ses Quêtes [[icon:endgame]] ;</li>
@@ -293,7 +293,7 @@ const RULES = {
       ["setup", "Preparazione", `<ol>
         <li>Mescola i personaggi Normali e i personaggi Leggendari in due mazzi separati.</li>
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
-        <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>5</b> e mette le altre <b>7</b> coperte: è il suo mazzo Azione.</li>
+        <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
         <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
         <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore.</li>
@@ -318,21 +318,21 @@ const RULES = {
       <h3>4. Fine del round</h3>
       <ul>
         <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Missioni fino a 2 + giocatori.</li>
-        <li>Ogni giocatore pesca <b>esattamente 1 carta Azione</b> dal suo mazzo Azione. Il mazzo cala quindi di una carta per round: indica quanti round restano.</li>
+        <li>Ogni giocatore pesca <b>esattamente 1 carta Azione</b> dal suo mazzo Azione. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore.</li>
       </ul>`],
       ["effects", "Gli effetti nel dettaglio", `<p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa.</p>
       <p><b>Prendere una Missione.</b> Scegli una Missione scoperta e tienila davanti a te. Darà punti a fine partita.</p>
       <p><b>Potenziamento gratis.</b> Potenzia subito un personaggio Leggendario, senza riempire le sue caselle stella (gli XP già posati su di esso vengono scartati).</p>
       <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera.</p>
-      <p><b>Pescare una carta Azione.</b> Pesca 1 carta dal tuo mazzo Azione, poi rimetti 1 carta Azione dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre esattamente i round rimasti.</p>
+      <p><b>Pescare una carta Azione.</b> Pesca 1 carta dal tuo mazzo Azione, poi rimetti 1 carta Azione dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre i round.</p>
       <h3>Personaggi leggendari</h3>
       <p>Un personaggio Leggendario inizia sul lato base. Quando le sue caselle stella sono piene, è potenziato (ruota la carta di 90° per mostrarlo): da quel momento conta solo l’effetto potenziato.</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Scrittori</h3>
       <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Si raggiunge ogni livello riempiendo le sue caselle stella con XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° round, quando i mazzi Azione sono vuoti. Ogni giocatore somma:</p>
+      ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° round, quando in ogni mazzo Azione resta una sola carta. Ogni giocatore somma:</p>
       <ul>
         <li>i Punti Vittoria [[icon:vp]] ottenuti durante la partita;</li>
         <li>le sue Missioni [[icon:endgame]];</li>
