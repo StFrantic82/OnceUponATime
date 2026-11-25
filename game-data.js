@@ -1255,7 +1255,7 @@ window.GAME_DATA = {
     },
     {
       "number": 6,
-      "effect": "Draft a Quest"
+      "effect": "Draft Quest + 1 XP"
     },
     {
       "number": 7,
@@ -1263,7 +1263,7 @@ window.GAME_DATA = {
     },
     {
       "number": 8,
-      "effect": "Free level up"
+      "effect": "Free level up + 1 Coin"
     },
     {
       "number": 9,
@@ -1271,26 +1271,14 @@ window.GAME_DATA = {
     },
     {
       "number": 10,
-      "effect": "4 Coins"
+      "effect": "2 Coins + 1 XP"
     },
     {
       "number": 11,
-      "effect": "1 Coin + 1 XP"
-    },
-    {
-      "number": 12,
-      "effect": "1 XP"
-    },
-    {
-      "number": 13,
-      "effect": "1 Coin"
-    },
-    {
-      "number": 14,
       "effect": "Activate a single card"
     },
     {
-      "number": 15,
+      "number": 12,
       "effect": ""
     }
   ],

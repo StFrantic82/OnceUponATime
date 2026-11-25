@@ -368,9 +368,19 @@ function nextTurn() {
   if (p.kind === "bot") Bot.queueTurn(seat);
 }
 
+// End of the story (rulebook): once the Action decks are empty and everyone has a full hand
+// again, one last round is played. With 12 Action cards (4 in hand, 8 in the deck) that is 9 rounds.
 function endRoundAll() {
   G.active = null;
+  if (G.finalRound) {
+    endGame();
+    return;
+  }
   for (const p of G.players) withSeat(p.seat, refillActionHand);
+  if (G.players.every((p) => !p.actionDeck.length)) {
+    G.finalRound = true;
+    log("l_lastRound");
+  }
   while (G.itemDisplay.length < 1 + G.players.length && G.decks.items.length) G.itemDisplay.push(...draw("items", 1));
   while (G.questDisplay.length < 2 + G.players.length && G.decks.quests.length) G.questDisplay.push(...draw("quests", 1));
   startRound();
@@ -874,6 +884,12 @@ function scoreWriter() {
   return 0;
 }
 
+// Expected number of rounds: one per card left in the Action deck, plus the final round.
+function roundsTotal() {
+  if (G.finalRound || G.gameOver) return G.round;
+  return G.round + Math.max(0, ...G.players.map((p) => p.actionDeck.length)) + (G.players.every((p) => !p.actionDeck.length) ? 0 : 1);
+}
+
 function liveScore(seat) {
   return withSeat(seat, () => finalScore().total);
 }
@@ -996,6 +1012,7 @@ function render() {
 
 function phaseMessage() {
   if (G.gameOver) return t("ph_gameOver");
+  if (G.finalRound && state.phase === "chooseAction") return `${t("lastRoundTag")} ${t("ph_chooseAction")}`;
   if (state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0) return t("ph_perrault");
   if (state.questChoices > 0) return t("ph_quest", { n: state.questChoices });
   const active = G.active !== null ? G.players[G.active] : null;
@@ -1016,7 +1033,7 @@ function phaseMessage() {
 function renderStats() {
   const icons = iconCounts();
   el.stats.innerHTML = [
-    [t("round"), G.round],
+    [t("round"), `${G.round}/${roundsTotal()}`],
     [resourceIcon("coins", "Coins"), state.coins],
     [resourceIcon("xp", "XP"), state.xp],
     [resourceIcon("vp", "VP"), liveScore(view.seat)],
