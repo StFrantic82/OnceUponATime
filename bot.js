@@ -130,12 +130,6 @@
     let guard = 40;
     while (guard-- > 0) {
       const legends = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded);
-      if (state.freeUpgrades > 0 && state.writer && state.writerLevel < 3 && (!legends.length || writerNextCost() - (state.writerXp || 0) >= Math.max(...legends.map((c) => upgradeCost(c) - (c.xpOn || 0))))) {
-        await freeUpgradeWriter();
-        G.cur = seat;
-        settleWriterChoices();
-        continue;
-      }
       if (state.freeUpgrades > 0 && legends.length) {
         upgradeLegendary([...legends].sort((a, b) => (upgradeCost(b) - (b.xpOn || 0)) - (upgradeCost(a) - (a.xpOn || 0)))[0].id);
         continue;

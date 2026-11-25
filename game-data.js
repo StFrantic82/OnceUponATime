@@ -1524,7 +1524,7 @@ window.GAME_DATA = {
       "level1": "The first Item you buy each round costs 1 fewer coin.",
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
-      "cost3": 4,
+      "cost3": 3,
       "level3": "2 VP for each Item.",
       "coins": 3
     },
@@ -1534,7 +1534,7 @@ window.GAME_DATA = {
       "level1": "The first time each round you take both a Good and a Bad card, gain 1 coin.",
       "cost2": 2,
       "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
-      "cost3": 5,
+      "cost3": 4,
       "level3": "2 VP for each Good–Bad pair. Max 12 VP.",
       "coins": 4
     },
@@ -1544,7 +1544,7 @@ window.GAME_DATA = {
       "level1": "The first time each round you take a card with a Game End effect, gain 1 XP.",
       "cost2": 2,
       "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
-      "cost3": 6,
+      "cost3": 5,
       "level3": "3 VP for each card with a Game End effect. Max 15 VP.",
       "coins": 4
     },
@@ -1554,7 +1554,7 @@ window.GAME_DATA = {
       "level1": "When you are the first to choose a group in a round, gain 1 coin for each player.",
       "cost2": 2,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
-      "cost3": 5,
+      "cost3": 4,
       "level3": "1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP.",
       "coins": 2
     },
@@ -1564,7 +1564,7 @@ window.GAME_DATA = {
       "level1": "The first Activation each round produces 1 additional coin.",
       "cost2": 2,
       "level2": "Immediately activate up to two different cards.",
-      "cost3": 4,
+      "cost3": 3,
       "level3": "2 VP for each card with Activation. Max 14 VP.",
       "coins": 2
     },
@@ -1574,7 +1574,7 @@ window.GAME_DATA = {
       "level1": "When you play a Chapter card valued 1–7, gain 1 XP.",
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
-      "cost3": 6,
+      "cost3": 5,
       "level3": "2 VP for each Dexterity icon. Max 14 VP.",
       "coins": 2
     },
@@ -1584,7 +1584,7 @@ window.GAME_DATA = {
       "level1": "At the start of each round, gain 1 coin per set of 4 different icons.",
       "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
-      "cost3": 6,
+      "cost3": 5,
       "level3": "3 VP per set of 4 different icons.",
       "coins": 0
     },
@@ -1594,7 +1594,7 @@ window.GAME_DATA = {
       "level1": "Your Legendary upgrades cost 1 fewer XP.",
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
-      "cost3": 6,
+      "cost3": 5,
       "level3": "3 VP for each upgraded Legendary card. Max 12 VP.",
       "coins": 2
     }
