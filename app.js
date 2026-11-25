@@ -26,10 +26,11 @@ const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterit
 const PERSONAL = new Set([
   "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
-  "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
+  "writerRound", "rewardedIconSets", "vpBy", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
 
 let G = emptyGame();
+let vpSource = null; // simulations: which card produced in-game VP
 let simMode = false; // AI simulations: no drawing, no waiting, no network
 const view = { seat: 0, role: "solo" }; // role: solo | host | guest
 const state = new Proxy(
@@ -428,6 +429,7 @@ function beginTurns() {
     first.playerFirst = true;
     G.firstSeat = order[0];
     const queen = first.tableau.find((card) => card.name === "Queen of Hearts" && card.upgraded);
+    vpSource = "Queen of Hearts";
     if (queen) withSeat(first.seat, () => gain("vp", hasCard("Playing Card Soldier") ? 2 : 1));
   }
   for (const p of G.players) if (p.currentAction) withSeat(p.seat, () => onPlayChapter(p.currentAction.number));
@@ -504,6 +506,7 @@ function takeGroup(choice) {
     state.tableau.push(card);
     applyInstant(card);
   }
+  checkPeterPan();
   applyWriterAfterGroup(group.cards);
   onTakeTagless(group.cards);
   checkBaumSets();
@@ -513,7 +516,8 @@ function takeGroup(choice) {
 
 function itemPrice(item) {
   const baseDiscount = state.writer?.name === "Charles Perrault" && !state.writerRound.itemBought ? 1 : 0;
-  const discount = Math.max(baseDiscount, state.writerItemDiscount || 0);
+  const jasmine = state.tableau.find((card) => card.name === "Princess Jasmine");
+  const discount = Math.max(baseDiscount, state.writerItemDiscount || 0) + (jasmine ? (jasmine.upgraded ? 2 : 1) : 0);
   return { price: Math.max(0, item.cost - discount), discount };
 }
 
@@ -571,6 +575,11 @@ function takeQuest(questId) {
   state.questChoices -= 1;
   const questRewardCards = state.tableau.filter((card) => /whenever you take a Quest, gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
+  const mermaid = state.tableau.find((card) => card.name === "Little Mermaid" && card.upgraded);
+  if (mermaid) {
+    vpSource = "Little Mermaid";
+    gain("vp", 1);
+  }
   log("l_takesQuest", { p: state.name, q: C(quest.name) });
 }
 
@@ -596,11 +605,17 @@ async function freeUpgradeWriter() {
   G.cur = seat;
 }
 
+function checkPeterPan() {
+  const pan = state.tableau.find((card) => card.name === "Peter Pan" && !card.upgraded);
+  if (pan && state.tableau.some((card) => card.name === "Pirate" || card.name === "Captain Hook")) completeUpgrade(pan);
+}
+
 function completeUpgrade(card) {
   card.upgraded = true;
   card.xpOn = 0;
   applyUpgradeGain(card);
   if (/take 1 Quest/i.test(card.upgrade || "")) grantQuestChoice(card.name);
+  if (/take 1 Quest and gain 1 XP/i.test(card.upgrade || "")) gain("xp", 1);
   const servants = state.tableau.filter((entry) => entry.name === "The Invisible Servants").length;
   if (servants) gain("coins", servants);
   log("l_upgrades", { p: state.name, c: C(card.name) });
@@ -797,6 +812,7 @@ function choiceOptions(text) {
 }
 
 function applyOption(option, source) {
+  vpSource = source;
   let m;
   if ((m = option.match(/^discard (\S+) gain (\d+) VP/))) {
     const card = state.tableau.find((c) => c.id === m[1]);
@@ -894,6 +910,15 @@ function applyMean(text, source) {
       log("l_lose", { o: o.name, n: k, c: C(source) });
     }
   }
+  if ((m = text.match(/steal (\d+) coins? from the opponent with the most coins/i))) {
+    const target = opponents().sort((a, b) => b.coins - a.coins)[0];
+    const k = target ? Math.min(Number(m[1]), target.coins) : 0;
+    if (k) {
+      target.coins -= k;
+      gain("coins", k);
+      log("l_steal", { p: state.name, n: k, o: target.name, c: C(source) });
+    }
+  }
   if ((m = text.match(/steal (\d+) VP from the opponent with the most VP/i))) {
     const target = opponents().sort((a, b) => b.vp - a.vp)[0];
     const k = target ? Math.min(Number(m[1]), target.vp) : 0;
@@ -917,6 +942,7 @@ function applyMean(text, source) {
 }
 
 function applyInstant(card) {
+  vpSource = card.name;
   const full = `${card.effect || ""} ${card.base || ""}`;
   if (!/Instant/i.test(full)) return;
   applyMean(full, card.name);
@@ -965,7 +991,12 @@ function instantLinks(card) {
   if (n === "Crocodile" && opponentHas("Captain Hook")) gain("vp", 2);
   if (n === "Cheshire Cat" && hasCard("Alice")) gain("xp", 2);
   if (n === "Princess Briar Rose" && hasCard("The Fairies")) gain("xp", 1);
-  if (n === "Fairy Godmother") gain("coins", Math.min(3, countByName("Mice")));
+  if (n === "Fairy Godmother") {
+    gain("coins", Math.min(3, countByName("Mice")));
+    placeFreeXp(2, true);
+  }
+  if (n === "Fairy Dust") placeFreeXp(2, true);
+  if (n === "The Prince") activateOne();
   if (n === "Long Bow") gain("vp", Math.min(5, countAlignment("Bad")) + (hasCard("Robin Hood") ? 2 : 0));
 }
 
@@ -982,6 +1013,7 @@ function hunterChoice() {
 }
 
 function applyUpgradeGain(card) {
+  vpSource = card.name;
   const tagless = (card.upgrade || "").match(/Gain 1 VP for each of your cards without tags, max (\d+) VP/i);
   if (tagless) {
     gain("vp", Math.min(Number(tagless[1]), countTagless()));
@@ -1001,6 +1033,7 @@ function countTagless() {
 }
 
 function onTakeTagless(cards) {
+  vpSource = "Spinning Wheel";
   const wheels = (state.items || []).filter((item) => item.name === "Spinning Wheel").length;
   if (!wheels) return;
   const n = cards.filter(isTagless).length * wheels;
@@ -1029,6 +1062,7 @@ function hasCard(name) {
 }
 
 function onPlayChapter(number) {
+  vpSource = "The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "Pinocchio");
   if (pino && !pino.upgraded && number >= 9) {
     state.tagTokens += 1;
@@ -1039,6 +1073,7 @@ function onPlayChapter(number) {
 }
 
 function triggerOnTakeItem() {
+  vpSource = "The Munchkins";
   const munchkins = state.tableau.filter((card) => /The Munchkins/i.test(card.name)).length;
   if (munchkins) gain("vp", munchkins);
 }
@@ -1078,18 +1113,29 @@ async function activatePick(cardId) {
 }
 
 async function activateCard(card) {
+  vpSource = card.name;
   const seat = G.cur;
   const fullText = activeCardText(card);
   const text = stripLinks(fullText);
-  activationLinks(card, fullText);
   const hasActivationCost = /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
   if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1) return;
-  if (/spend 3 coins to level up/i.test(text) && state.coins < 3) return;
+  if (/spend 3 coins to (?:level up|place XP)/i.test(text) && state.coins < 3) return;
   if (hasActivationCost) {
     const ok = await confirmCost(card);
     G.cur = seat;
     if (!ok) return;
+  }
+  activationLinks(card, fullText);
+  if (card.name === "Sand Hourglass" && !card.busy) {
+    const other = activationCandidates().find((entry) => entry !== card && entry.name !== "Sand Hourglass");
+    if (other) {
+      card.busy = true;
+      await activateCard(other);
+      G.cur = seat;
+      card.busy = false;
+    }
+    return;
   }
   const taglessAct = text.match(/Activation: gain 1 VP for each of your cards without tags, max (\d+) VP/i);
   if (taglessAct) {
@@ -1099,13 +1145,15 @@ async function activateCard(card) {
   } else if (/choose one of those effects/i.test(text)) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
+  } else if (card.name === "The Wizard of Oz") {
+    // resolved in activationLinks: spend coins, gain XP and VP
   } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
     state.coins -= 1;
     gain("xp", 1);
   } else if (/spend 1 XP to gain 3 coins/i.test(text)) {
     state.xp -= 1;
     gain("coins", 3);
-  } else if (/spend 3 coins to level up/i.test(text)) {
+  } else if (/spend 3 coins to (?:level up|place XP)/i.test(text)) {
     state.coins -= 3;
     state.freeUpgrades += 1;
   } else {
@@ -1131,8 +1179,20 @@ async function activateCard(card) {
   }
 }
 
+// "Place N XP on a (Good) Character": the XP goes straight onto a Legendary that is not upgraded yet.
+function placeFreeXp(n, goodOnly) {
+  const target = state.tableau
+    .filter((card) => card.deck === "legendary" && !card.upgraded && (!goodOnly || card.alignment === "Good"))
+    .sort((a, b) => upgradeCost(a) - (a.xpOn || 0) - (upgradeCost(b) - (b.xpOn || 0)))[0];
+  if (!target) return;
+  target.xpOn = (target.xpOn || 0) + n;
+  if (target.xpOn >= upgradeCost(target)) completeUpgrade(target);
+}
+
 function activationLinks(card, text) {
   const n = card.name;
+  if (n === "Fairy Godmother" && card.upgraded) placeFreeXp(2, false);
+  if (n === "The Magic Mirror" && hasCard("The Evil Queen")) gain("vp", 1);
   if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
   if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
   if (n === "Aladin" && card.upgraded) {
@@ -1160,7 +1220,10 @@ function gain(kind, amount) {
     state.xp += amount;
     state.xpGained = (state.xpGained || 0) + amount;
   }
-  if (kind === "vp") state.vp += amount;
+  if (kind === "vp") {
+    state.vp += amount;
+    if (simMode && vpSource) state.vpBy = { ...(state.vpBy || {}), [vpSource]: ((state.vpBy || {})[vpSource] || 0) + amount };
+  }
 }
 
 function upgradeCost(card) {
@@ -1234,21 +1297,21 @@ function scoreQuest(quest) {
   const completeSets = Math.min(...ICONS.map((icon) => icons[icon]));
   const upgraded = state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length;
   const name = quest.name;
-  if (/Midnight Ball/.test(name)) return Math.min(10, icons.Charm * 2);
-  if (/Hook/.test(name)) return Math.min(10, icons.Strength * 2);
-  if (/Rabbit Hole/.test(name)) return Math.min(10, icons.Dexterity * 2);
-  if (/Lost Voice/.test(name)) return Math.min(10, icons.Intelligence * 2);
+  if (/Midnight Ball/.test(name)) return Math.min(10, icons.Charm);
+  if (/Hook/.test(name)) return Math.min(10, icons.Strength);
+  if (/Rabbit Hole/.test(name)) return Math.min(10, icons.Dexterity);
+  if (/Lost Voice/.test(name)) return Math.min(10, icons.Intelligence);
   if (/Glass Slipper/.test(name)) return Math.min(12, completeSets * 4);
   if (/Neverland/.test(name)) return Math.min(...ICONS.map((i) => icons[i])) >= 3 ? 10 : Math.min(...ICONS.map((i) => icons[i])) >= 2 ? 6 : 0;
-  if (/Apple's Bite/.test(name)) return Math.min(12, countAlignment("Bad") * 3);
-  if (/Forest Awakening/.test(name)) return Math.min(10, countAlignment("Good"));
+  if (/Apple's Bite/.test(name)) return Math.min(14, countAlignment("Bad") * 2);
+  if (/Forest Awakening/.test(name)) return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.alignment === "Good").length * 2);
   if (/Queen's Command/.test(name)) return Math.min(12, countTagless() * 3);
-  if (/House of Seven/.test(name)) return Math.min(10, state.tableau.length);
+  if (/House of Seven/.test(name)) return countByName("Dwarf") * 2;
   if (/King's Trident/.test(name)) return Math.min(10, state.items.length * 2);
   if (/Hatter's Tea Party/.test(name)) return Math.min(10, countCardsWith("Ongoing") * 2);
   if (/Second Star/.test(name)) return Math.min(10, countCardsWith("Activation") * 2);
-  if (/Pact with the Beast/.test(name)) return Math.min(12, upgraded * 3);
-  if (/Enchanted Rose/.test(name)) return Math.min(12, countCardsWith("less XP|free|place XP on a Character") * 3);
+  if (/Pact with the Beast/.test(name)) return Math.min(14, upgraded * 2);
+  if (/Enchanted Rose/.test(name)) return Math.min(12, countCardsWith("less XP|free|place (?:\\d+ )?XP on") * 3);
   if (/Rob the Rich/.test(name)) return Math.min(10, Math.floor((state.coinsGained || 0) / 3));
   if (/Rubbed Lamp/.test(name)) return Math.min(10, Math.floor((state.xpGained || 0) / 2));
   if (/Arrow on Target/.test(name)) return Math.min(10, countCardsWith("VP|Game End") * 2);
@@ -1262,7 +1325,7 @@ function scoreQuest(quest) {
 }
 
 // Game End effects printed on characters and items.
-function scoreCards() {
+function scoreCards(only = null) {
   let total = 0;
   const icons = iconCounts();
   const sets = Math.min(...ICONS.map((icon) => icons[icon]));
@@ -1270,7 +1333,7 @@ function scoreCards() {
   const upgradedLeg = state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length;
   const plainLeg = state.tableau.filter((card) => card.deck === "legendary" && !card.upgraded).length;
   const quests = state.quests.length;
-  for (const card of [...state.tableau, ...state.items]) {
+  for (const card of only || [...state.tableau, ...state.items]) {
     const text = card.deck === "legendary" ? (card.upgraded ? card.upgrade : card.base) : card.effect;
     if (!/Game End/i.test(text || "")) continue;
     const n = card.name;
@@ -2091,7 +2154,7 @@ el.closeCatalogBtn.addEventListener("click", closeCatalog);
 // ---------------------------------------------------------------------------
 async function simulateGame(opts) {
   simMode = true;
-  const n = Math.min(5, Math.max(2, Number(opts.players) || 4));
+  const n = Math.min(4, Math.max(2, Number(opts.players) || 4));
   try {
     newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
     (opts.strategies || []).forEach((strategy, seat) => {
@@ -2121,6 +2184,8 @@ async function simulateGame(opts) {
           common: p.tableau.filter((c) => c.deck === "common").map((c) => c.name),
           items: p.items.map((c) => c.name),
           questNames: r.questScores.map((q) => [q.quest.name, q.points]),
+          endPts: withSeat(p.seat, () => [...p.tableau, ...p.items].filter((c) => /Game End/i.test(c.deck === "legendary" ? (c.upgraded ? c.upgrade : c.base) : c.effect || "")).map((c) => [c.name, scoreCards([c]), Boolean(c.upgraded)])),
+          vpBy: p.vpBy || {},
           actions: p.actionDiscard.map((c) => c.number),
           writerLevel: p.writerLevel,
           coinsLeft: p.coins,

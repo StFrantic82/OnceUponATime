@@ -177,7 +177,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Activation: you may spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 1
     },
     {
@@ -186,7 +186,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Activation: you may spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 2
     },
     {
@@ -195,7 +195,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Activation: you may spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 3
     },
     {
@@ -204,7 +204,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Activation: you may spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 4
     },
     {
@@ -213,7 +213,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Activation: you may spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 5
     },
     {
@@ -483,7 +483,7 @@ window.GAME_DATA = {
       "name": "The Forest Animals",
       "alignment": "Good",
       "icons": "Dexterity 1",
-      "effect": "Activation: spend 3 coins to level up a Character for free.",
+      "effect": "Activation: spend 3 coins to place XP on a Character so that it levels up.",
       "copy": 1
     },
     {
@@ -492,7 +492,7 @@ window.GAME_DATA = {
       "name": "The Forest Animals",
       "alignment": "Good",
       "icons": "Dexterity 1",
-      "effect": "Activation: spend 3 coins to level up a Character for free.",
+      "effect": "Activation: spend 3 coins to place XP on a Character so that it levels up.",
       "copy": 2
     },
     {
@@ -566,7 +566,7 @@ window.GAME_DATA = {
       "name": "Enchanted Sword",
       "cost": 3,
       "icons": "Strength 1",
-      "effect": "Instant: gain 1 XP for each Strength you have.",
+      "effect": "Instant: gain 1 XP for each Strength icon you have.",
       "copy": 1
     },
     {
@@ -575,7 +575,7 @@ window.GAME_DATA = {
       "name": "Puss’s Boots",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: gain 1 coin for each Dexterity you have (2 coins more if you have Puss in Boots).",
+      "effect": "Activation: gain 1 coin for each Dexterity icon you have (2 coins more if you have Puss in Boots).",
       "copy": 1
     },
     {
@@ -593,7 +593,7 @@ window.GAME_DATA = {
       "name": "Spellbook",
       "cost": 3,
       "icons": "Intelligence 1",
-      "effect": "Instant: gain 1 XP for each Intelligence you have.",
+      "effect": "Instant: gain 1 XP for each Intelligence icon you have.",
       "copy": 1
     },
     {
@@ -611,7 +611,7 @@ window.GAME_DATA = {
       "name": "The Magic Mirror",
       "cost": 4,
       "icons": "Intelligence 1",
-      "effect": "Activation: discard 1 Good Character to gain XP equal to double its coin cost, minimum 2 XP.",
+      "effect": "Activation: gain 2 XP. If you have The Evil Queen, gain 1 VP too.",
       "copy": 1
     },
     {
@@ -629,7 +629,7 @@ window.GAME_DATA = {
       "name": "The Glass Coffin",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Instant: recover 1 Character from your discard/graveyard area.",
+      "effect": "Instant: take back 1 Character you discarded during the game.",
       "copy": 1
     },
     {
@@ -710,7 +710,7 @@ window.GAME_DATA = {
       "name": "Sand Hourglass",
       "cost": 3,
       "icons": "Intelligence 1",
-      "effect": "Instant: activate one of your Activation cards.",
+      "effect": "Activation: activate another of your Activation cards.",
       "copy": 1
     },
     {
@@ -755,7 +755,7 @@ window.GAME_DATA = {
       "name": "Fairy Dust",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Instant: level up 1 Good Character for 1 less XP.",
+      "effect": "Instant: place 2 XP on a Good Character.",
       "copy": 1
     },
     {
@@ -764,7 +764,7 @@ window.GAME_DATA = {
       "name": "Seashell",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Activation: gain 1 XP for each Charm you have, max 5 XP.",
+      "effect": "Activation: gain 1 XP for each Charm icon you have, max 5 XP.",
       "copy": 1
     },
     {
@@ -782,7 +782,7 @@ window.GAME_DATA = {
       "name": "The Crown of England",
       "cost": 5,
       "icons": "none",
-      "effect": "Game End: 3 VP for each complete set of Charm, Strength, Dexterity and Intelligence.",
+      "effect": "Game End: 3 VP for each complete set of four icons.",
       "copy": 1
     },
     {
@@ -836,7 +836,7 @@ window.GAME_DATA = {
       "name": "Ruby Slippers",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: double the next coin or XP gain from one of your activated cards this turn.",
+      "effect": "Activation: the next card you activate this turn gives double coins or XP.",
       "copy": 1
     },
     {
@@ -892,8 +892,8 @@ window.GAME_DATA = {
       "name": "The Prince",
       "rank": null,
       "alignment": "Good",
-      "base": "Instant: activate 1 of your cards.",
-      "upgrade": "Cost 2 XP. Gain 1 VP for each of your cards without tags, max 5 VP.",
+      "base": "Instant: activate 1 of your Activation cards.",
+      "upgrade": "Cost 2 XP. Instant: gain 1 VP for each of your cards without tags, max 5 VP.",
       "upgraded": false
     },
     {
@@ -902,8 +902,8 @@ window.GAME_DATA = {
       "name": "The White Rabbit",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: look at the top 3 Normal cards, keep 1 and discard the rest.",
-      "upgrade": "Cost 4 XP. Take 1 Quest and gain 1 XP.",
+      "base": "Dexterity 1. Instant: look at the top 3 Common cards, keep 1 and discard the rest.",
+      "upgrade": "Cost 4 XP. Instant: take 1 Quest and gain 1 XP.",
       "upgraded": false
     },
     {
@@ -953,7 +953,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. You gain 1 coin. If an opponent has Captain Hook, gain 2 VP.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each used Action card with value 10 or higher in your discard. Max 4 coins.",
+      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each used Action card with value 10 or higher in your discard, max 4 coins.",
       "upgraded": false
     },
     {
@@ -1012,8 +1012,8 @@ window.GAME_DATA = {
       "name": "Prince Charming",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 VP for each Charm you have, max 4 VP.",
-      "upgrade": "Cost 3 XP. Gains Charm. Game End: 1 VP for each Charm you have, max 8 VP.",
+      "base": "Charm 1. Instant: gain 1 VP for each Charm icon you have, max 4 VP.",
+      "upgrade": "Cost 3 XP. Gains Charm. Game End: 1 VP for each Charm icon you have, max 8 VP.",
       "upgraded": false
     },
     {
@@ -1022,8 +1022,8 @@ window.GAME_DATA = {
       "name": "Princess Jasmine",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: your first Item each round costs 1 less coin.",
-      "upgrade": "Cost 1 XP. Ongoing: your first Item each round costs 2 less coins, minimum 1 coin.",
+      "base": "Dexterity 1. Ongoing: your Items cost 1 coin less.",
+      "upgrade": "Cost 1 XP. Ongoing: your Items cost 2 coins less.",
       "upgraded": false
     },
     {
@@ -1053,7 +1053,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1. Game End: score the Charm icons of the player with the most Charm: gain 1 VP for each of those icons, max 6 VP.",
-      "upgrade": "Cost 5 XP. Game End: gain 2 VP for each Charm you have, max 10 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1082,8 +1082,8 @@ window.GAME_DATA = {
       "name": "The Wizard of Oz",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Activation: convert 1 coin into 2 XP.",
-      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: convert up to 2 coins into 2 XP each, then gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion you have.",
+      "base": "Intelligence 1. Activation: spend 1 coin to gain 2 XP.",
+      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: spend up to 2 coins to gain 2 XP for each coin spent, then gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion you have.",
       "upgraded": false
     },
     {
@@ -1102,8 +1102,8 @@ window.GAME_DATA = {
       "name": "Cheshire Cat",
       "rank": null,
       "alignment": "Neutral",
-      "base": "Dexterity 1. Instant: draw 3 Normal cards, play 1 and discard the others. If you have Alice, gain 2 XP.",
-      "upgrade": "Cost 3 XP. Activation: draw 2 Normal cards, play 1 and discard the other.",
+      "base": "Dexterity 1. Instant: draw 3 Common cards, play 1 and discard the others. If you have Alice, gain 2 XP.",
+      "upgrade": "Cost 3 XP. Activation: draw 2 Common cards, play 1 and discard the other.",
       "upgraded": false
     },
     {
@@ -1112,7 +1112,7 @@ window.GAME_DATA = {
       "name": "Peter Pan",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. If you have a Pirate or Captain Hook, level up Peter Pan for free.",
+      "base": "Dexterity 1. Ongoing: as soon as you have a Pirate or Captain Hook, Peter Pan is upgraded for free.",
       "upgrade": "Cost 4 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell you have, max 14 VP.",
       "upgraded": false
     },
@@ -1133,7 +1133,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 2 coins or 2 XP. If you have The Wolf, gain both.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each pair made of 1 Good and 1 Bad Character, max 10 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Good–Bad pair of Characters you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1163,7 +1163,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Ongoing: whenever you take a Quest, gain 1 XP.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Quest you completed, max 14 VP.",
+      "upgrade": "Cost 4 XP. Ongoing: whenever you take a Quest, gain 1 XP and 1 VP.",
       "upgraded": false
     },
     {
@@ -1213,7 +1213,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 3 coins.",
-      "upgrade": "Cost 4 XP. Ongoing: your first Item each round costs 2 less coins.",
+      "upgrade": "Cost 4 XP. Activation: steal 1 coin from the opponent with the most coins.",
       "upgraded": false
     },
     {
@@ -1222,8 +1222,8 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: level up 1 Good Character for 2 less XP. Gain 1 coin for each Mice you have, max 3 coins.",
-      "upgrade": "Cost 2 XP. Activation: level up 1 Character for 3 less XP, minimum 1 XP.",
+      "base": "Charm 1. Instant: place 2 XP on a Good Character. Gain 1 coin for each Mice you have, max 3 coins.",
+      "upgrade": "Cost 2 XP. Activation: place 2 XP on a Character.",
       "upgraded": false
     },
     {
@@ -1353,35 +1353,35 @@ window.GAME_DATA = {
       "number": 1,
       "name": "The Midnight Ball",
       "theme": "Cinderella",
-      "scoring": "2 VP for each Charm icon. Max 10 VP."
+      "scoring": "1 VP for each Charm icon. Max 10 VP."
     },
     {
       "id": "Q2",
       "number": 2,
       "name": "The Duel with Hook",
       "theme": "Peter Pan",
-      "scoring": "2 VP for each Strength icon. Max 10 VP."
+      "scoring": "1 VP for each Strength icon. Max 10 VP."
     },
     {
       "id": "Q3",
       "number": 3,
       "name": "Down the Rabbit Hole",
       "theme": "Alice",
-      "scoring": "2 VP for each Dexterity icon. Max 10 VP."
+      "scoring": "1 VP for each Dexterity icon. Max 10 VP."
     },
     {
       "id": "Q4",
       "number": 4,
       "name": "The Lost Voice",
       "theme": "The Little Mermaid",
-      "scoring": "2 VP for each Intelligence icon. Max 10 VP."
+      "scoring": "1 VP for each Intelligence icon. Max 10 VP."
     },
     {
       "id": "Q5",
       "number": 5,
       "name": "The Glass Slipper Found",
       "theme": "Cinderella",
-      "scoring": "4 VP for each complete set of 4 different icons. Max 12 VP."
+      "scoring": "4 VP for each complete set of four icons. Max 12 VP."
     },
     {
       "id": "Q6",
@@ -1395,14 +1395,14 @@ window.GAME_DATA = {
       "number": 7,
       "name": "The Apple's Bite",
       "theme": "Snow White",
-      "scoring": "3 VP for each Bad card. Max 12 VP."
+      "scoring": "2 VP for each Bad Character. Max 14 VP."
     },
     {
       "id": "Q8",
       "number": 8,
       "name": "Forest Awakening",
       "theme": "Snow White",
-      "scoring": "1 VP for each Good card. Max 10 VP."
+      "scoring": "2 VP for each Good Legendary card. Max 12 VP."
     },
     {
       "id": "Q9",
@@ -1416,7 +1416,7 @@ window.GAME_DATA = {
       "number": 10,
       "name": "The House of Seven",
       "theme": "Snow White",
-      "scoring": "1 VP for each Character. Max 10 VP."
+      "scoring": "2 VP for each Dwarf."
     },
     {
       "id": "Q11",
@@ -1444,14 +1444,14 @@ window.GAME_DATA = {
       "number": 14,
       "name": "The Pact with the Beast",
       "theme": "Beauty and the Beast",
-      "scoring": "3 VP for each upgraded Legendary card. Max 12 VP."
+      "scoring": "2 VP for each upgraded Legendary card. Max 14 VP."
     },
     {
       "id": "Q15",
       "number": 15,
       "name": "The Enchanted Rose",
       "theme": "Beauty and the Beast",
-      "scoring": "3 VP for each card that reduced an XP cost or granted a free upgrade. Max 12 VP."
+      "scoring": "3 VP for each card that reduces an XP cost or places XP for free. Max 12 VP."
     },
     {
       "id": "Q16",
@@ -1486,7 +1486,7 @@ window.GAME_DATA = {
       "number": 20,
       "name": "Once Upon a Time",
       "theme": "Ensemble Finale",
-      "scoring": "2 VP for each category in which you have at least 3 cards: Good, Bad, Character, Item, Activation. Max 10 VP."
+      "scoring": "2 VP for each category in which you have at least 3 cards: Good Characters, Bad Characters, Characters, Items, Activation cards. Max 10 VP."
     },
     {
       "id": "Q21",
@@ -1504,7 +1504,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
       "cost3": 4,
-      "level3": "2 VP for each Item. Maximum 10 VP."
+      "level3": "2 VP for each Item. Max 10 VP."
     },
     {
       "id": "W2",
@@ -1513,7 +1513,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
       "cost3": 4,
-      "level3": "2 VP for each Good–Bad pair. Maximum 12 VP."
+      "level3": "2 VP for each Good–Bad pair. Max 12 VP."
     },
     {
       "id": "W3",
@@ -1522,7 +1522,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
       "cost3": 4,
-      "level3": "3 VP for each card with a Game End effect. Maximum 15 VP."
+      "level3": "3 VP for each card with a Game End effect. Max 15 VP."
     },
     {
       "id": "W4",
@@ -1531,7 +1531,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Return a played Action card to your hand, then discard one card from your hand.",
       "cost3": 4,
-      "level3": "1 VP for every 2 coins and 1 VP for every 2 XP gained during the game. Maximum 14 VP."
+      "level3": "1 VP for every 2 coins and 1 VP for every 2 XP gained during the game. Max 14 VP."
     },
     {
       "id": "W5",
@@ -1540,7 +1540,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Immediately activate up to two different cards.",
       "cost3": 4,
-      "level3": "2 VP for each card with Activation. Maximum 14 VP."
+      "level3": "2 VP for each card with Activation. Max 14 VP."
     },
     {
       "id": "W6",
@@ -1549,7 +1549,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 4,
-      "level3": "2 VP for each Dexterity icon. Maximum 14 VP."
+      "level3": "2 VP for each Dexterity icon. Max 14 VP."
     },
     {
       "id": "W7",
@@ -1558,7 +1558,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 4,
-      "level3": "5 VP for each complete set of all four icons. Maximum 15 VP."
+      "level3": "5 VP for each complete set of all four icons. Max 15 VP."
     },
     {
       "id": "W8",
@@ -1567,7 +1567,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Upgrade one Legendary card for free.",
       "cost3": 4,
-      "level3": "3 VP for each upgraded Legendary card. Maximum 9 VP."
+      "level3": "3 VP for each upgraded Legendary card. Max 9 VP."
     }
   ],
   "board2p": [

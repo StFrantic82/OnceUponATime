@@ -124,7 +124,7 @@ const RULES = {
     toc: "Contents",
     players: "Players",
     groups: "Groups revealed each round",
-    normal: "Normal character",
+    normal: "Common character",
     legendary: "Legendary character",
     anatomy: {
       common: ["Skill tags (square, top left): Charm, Strength, Cunning, Intelligence.", "Name of the character.", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
@@ -144,7 +144,7 @@ const RULES = {
       <p><b>Story links.</b> Cards from the same tale work together: “if you have X” means X is in your tableau (Characters) or among your Items. For example, the Scarecrow gives 2 XP instead of 1 if you have Dorothy Gale, and the Cat and the Fox steal 2 coins from a player who has Pinocchio. Villains’ links often target the cards of your opponents.</p>
       <p>Effects have four types: [[icon:instant]] <b>Instant</b> (once, when you take the card), [[icon:activation]] <b>Activation</b> (each time an effect activates it), [[icon:ongoing]] <b>Ongoing</b> (always true) and [[icon:endgame]] <b>Game End</b> (scored at the end).</p>`],
       ["setup", "Setup", `<ol>
-        <li>Shuffle the Normal characters and the Legendary characters into two separate decks.</li>
+        <li>Shuffle the Common characters and the Legendary characters into two separate decks.</li>
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
         <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
@@ -152,7 +152,7 @@ const RULES = {
         <li>Put the board in the middle, on the side for your number of players. Choose a first player at random: they take the first player token.</li>
       </ol>`],
       ["round", "A round", `<h3>1. Reveal the groups</h3>
-      <p>Reveal Normal and Legendary characters under the spaces of the board to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
+      <p>Reveal Common and Legendary characters under the spaces of the board to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
       [[boards]]
       <h3>2. Play an Action card</h3>
       <p>Starting with the first player and going clockwise, everyone plays one Action card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. Some effects add to your chapter (Queen of Hearts, Carlo Collodi).</p>
@@ -194,7 +194,7 @@ const RULES = {
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Quest “The Midnight Ball” gives her 2 VP per Charm, up to 10 VP: 10 VP. Her upgraded Snow White gives 2 VP per Charm, up to 14 VP: another 14 VP.
+      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Quest “The Midnight Ball” gives her 1 VP per Charm, up to 10 VP: 7 VP. Her upgraded Snow White gives 2 VP per Charm, up to 14 VP: another 14 VP.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:Snow White]]</div></div>`],
     ],
   },
@@ -204,7 +204,7 @@ const RULES = {
     toc: "Sommaire",
     players: "Joueurs",
     groups: "Groupes révélés à chaque manche",
-    normal: "Personnage normal",
+    normal: "Personnage commun",
     legendary: "Personnage légendaire",
     anatomy: {
       common: ["Tags de compétence (carrés, en haut à gauche) : Charme, Force, Ruse, Intelligence.", "Nom du personnage.", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
@@ -224,7 +224,7 @@ const RULES = {
       <p><b>Liens entre contes.</b> Les cartes d’un même conte fonctionnent ensemble : « si vous avez X » veut dire que X est dans votre tableau (Personnages) ou parmi vos Objets. Par exemple, l’Épouvantail donne 2 XP au lieu de 1 si vous avez Dorothy Gale, et le Chat et le Renard volent 2 pièces à un joueur qui a Pinocchio. Les liens des méchants visent souvent les cartes de vos adversaires.</p>
       <p>Les effets sont de quatre types : [[icon:instant]] <b>Instantané</b> (une fois, quand vous prenez la carte), [[icon:activation]] <b>Activation</b> (chaque fois qu’un effet l’active), [[icon:ongoing]] <b>Permanent</b> (toujours valable) et [[icon:endgame]] <b>Fin de partie</b> (compté à la fin).</p>`],
       ["setup", "Mise en place", `<ol>
-        <li>Mélangez les personnages Normaux et les personnages Légendaires en deux pioches séparées.</li>
+        <li>Mélangez les personnages Communs et les personnages Légendaires en deux pioches séparées.</li>
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
@@ -232,7 +232,7 @@ const RULES = {
         <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard : il prend le jeton premier joueur.</li>
       </ol>`],
       ["round", "Une manche", `<h3>1. Révéler les groupes</h3>
-      <p>Révélez des personnages Normaux et Légendaires sous les emplacements du plateau pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
+      <p>Révélez des personnages Communs et Légendaires sous les emplacements du plateau pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
       [[boards]]
       <h3>2. Jouer une carte Action</h3>
       <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Action face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. Certains effets augmentent votre chapitre (la Reine de cœur, Carlo Collodi).</p>
@@ -274,7 +274,7 @@ const RULES = {
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Quête « Le Bal de minuit » lui donne 2 PV par Charme, jusqu’à 10 PV : 10 PV. Sa Blanche-Neige améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Quête « Le Bal de minuit » lui donne 1 PV par Charme, jusqu’à 10 PV : 7 PV. Sa Blanche-Neige améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:Snow White]]</div></div>`],
     ],
   },
@@ -284,7 +284,7 @@ const RULES = {
     toc: "Indice",
     players: "Giocatori",
     groups: "Gruppi rivelati a ogni round",
-    normal: "Personaggio normale",
+    normal: "Personaggio comune",
     legendary: "Personaggio leggendario",
     anatomy: {
       common: ["Tag di abilità (quadrati, in alto a sinistra): Fascino, Forza, Astuzia, Intelligenza.", "Nome del personaggio.", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
@@ -304,7 +304,7 @@ const RULES = {
       <p><b>Legami tra le fiabe.</b> Le carte di una stessa fiaba funzionano insieme: «se hai X» significa che X è nel tuo tableau (Personaggi) o tra i tuoi Oggetti. Per esempio, lo Spaventapasseri dà 2 XP invece di 1 se hai Dorothy Gale, e il Gatto e la Volpe rubano 2 monete a un giocatore che ha Pinocchio. I legami dei cattivi colpiscono spesso le carte degli avversari.</p>
       <p>Gli effetti sono di quattro tipi: [[icon:instant]] <b>Istantaneo</b> (una volta, quando prendi la carta), [[icon:activation]] <b>Attivazione</b> (ogni volta che un effetto la attiva), [[icon:ongoing]] <b>Permanente</b> (sempre valido) e [[icon:endgame]] <b>Fine partita</b> (contato alla fine).</p>`],
       ["setup", "Preparazione", `<ol>
-        <li>Mescola i personaggi Normali e i personaggi Leggendari in due mazzi separati.</li>
+        <li>Mescola i personaggi Comuni e i personaggi Leggendari in due mazzi separati.</li>
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
@@ -312,7 +312,7 @@ const RULES = {
         <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore: prende il segnalino primo giocatore.</li>
       </ol>`],
       ["round", "Un round", `<h3>1. Rivelare i gruppi</h3>
-      <p>Rivela personaggi Normali e Leggendari sotto gli spazi della plancia per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
+      <p>Rivela personaggi Comuni e Leggendari sotto gli spazi della plancia per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
       [[boards]]
       <h3>2. Giocare una carta Azione</h3>
       <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Azione scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). Alcuni effetti aumentano il tuo capitolo (la Regina di cuori, Carlo Collodi).</p>
@@ -354,7 +354,7 @@ const RULES = {
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Missione «Il Ballo di Mezzanotte» le dà 2 PV per Fascino, fino a 10 PV: 10 PV. La sua Biancaneve potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Missione «Il Ballo di Mezzanotte» le dà 1 PV per Fascino, fino a 10 PV: 7 PV. La sua Biancaneve potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:Snow White]]</div></div>`],
     ],
   },
