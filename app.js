@@ -1577,20 +1577,20 @@ function scoreQuest(quest) {
   const completeSets = Math.min(...ICONS.map((icon) => icons[icon]));
   const upgraded = state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length;
   const name = quest.name;
-  // Tiers: 4 / 6 / 8 icons give 3 / 6 / 9 VP; a Quest left unfulfilled costs 3 VP.
-  const tiers = (n, a = 6, b = 8, c = 10) => (n >= c ? 6 : n >= b ? 4 : n >= a ? 2 : -3);
+  // Tiers: reaching the first, second or third step gives 2 / 4 / 6 VP.
+  const tiers = (n, a = 6, b = 8, c = 10) => (n >= c ? 6 : n >= b ? 4 : n >= a ? 2 : 0);
   if (/Midnight Ball/.test(name)) return tiers(icons.Charm);
   if (/Hook/.test(name)) return tiers(icons.Strength);
   if (/Rabbit Hole/.test(name)) return tiers(icons.Dexterity);
   if (/Lost Voice/.test(name)) return tiers(icons.Intelligence);
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
-  if (/Neverland/.test(name)) return completeSets >= 6 ? 6 : completeSets >= 5 ? 3 : -3;
-  if (/Apple's Bite/.test(name)) return countAlignment("Bad") >= 4 ? countAlignment("Bad") : -3;
+  if (/Neverland/.test(name)) return completeSets >= 6 ? 6 : completeSets >= 5 ? 3 : 0;
+  if (/Apple's Bite/.test(name)) return countAlignment("Bad");
   if (/Yellow Brick Road/.test(name)) return state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length * 2;
   if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 2, 4, 6);
   if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 9).length * 2;
   if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 4, 7, 10);
-  if (/Queen's Command/.test(name)) return countTagless() >= 3 ? countTagless() : -3;
+  if (/Queen's Command/.test(name)) return countTagless();
   if (/House of Seven/.test(name)) return countByName("Dwarf") * 2;
   if (/King's Trident/.test(name)) return state.items.length;
   if (/Hatter's Tea Party/.test(name)) return countCardsWith("Ongoing");

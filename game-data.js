@@ -1353,28 +1353,28 @@ window.GAME_DATA = {
       "number": 1,
       "name": "The Midnight Ball",
       "theme": "Cinderella",
-      "scoring": "6 / 8 / 10 Charm icons: 2 / 4 / 6 VP. Fewer than 6: −3 VP."
+      "scoring": "6 / 8 / 10 Charm icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q2",
       "number": 2,
       "name": "The Duel with Hook",
       "theme": "Peter Pan",
-      "scoring": "6 / 8 / 10 Strength icons: 2 / 4 / 6 VP. Fewer than 6: −3 VP."
+      "scoring": "6 / 8 / 10 Strength icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q3",
       "number": 3,
       "name": "Down the Rabbit Hole",
       "theme": "Alice",
-      "scoring": "6 / 8 / 10 Dexterity icons: 2 / 4 / 6 VP. Fewer than 6: −3 VP."
+      "scoring": "6 / 8 / 10 Dexterity icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q4",
       "number": 4,
       "name": "The Lost Voice",
       "theme": "The Little Mermaid",
-      "scoring": "6 / 8 / 10 Intelligence icons: 2 / 4 / 6 VP. Fewer than 6: −3 VP."
+      "scoring": "6 / 8 / 10 Intelligence icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q5",
@@ -1388,14 +1388,14 @@ window.GAME_DATA = {
       "number": 6,
       "name": "Neverland",
       "theme": "Peter Pan",
-      "scoring": "5 / 6 icons of each type: 3 / 6 VP. Fewer than 5 of one type: −3 VP."
+      "scoring": "5 / 6 icons of each type: 3 / 6 VP."
     },
     {
       "id": "Q7",
       "number": 7,
       "name": "The Apple's Bite",
       "theme": "Snow White",
-      "scoring": "1 VP for each Bad card. Fewer than 4: −3 VP."
+      "scoring": "1 VP for each Bad card."
     },
     {
       "id": "Q8",
@@ -1409,7 +1409,7 @@ window.GAME_DATA = {
       "number": 9,
       "name": "The Queen's Command",
       "theme": "Alice",
-      "scoring": "1 VP for each card without tags. Fewer than 3: −3 VP."
+      "scoring": "1 VP for each card without tags."
     },
     {
       "id": "Q10",
@@ -1437,7 +1437,7 @@ window.GAME_DATA = {
       "number": 13,
       "name": "Second Star to the Right",
       "theme": "Peter Pan",
-      "scoring": "6 / 9 / 12 cards with an Activation effect: 2 / 4 / 6 VP. Fewer than 6: −3 VP."
+      "scoring": "6 / 9 / 12 cards with an Activation effect: 2 / 4 / 6 VP."
     },
     {
       "id": "Q14",
@@ -1472,7 +1472,7 @@ window.GAME_DATA = {
       "number": 18,
       "name": "Arrow on Target",
       "theme": "Robin Hood",
-      "scoring": "6 / 9 / 12 cards that grant VP directly or at Game End: 2 / 4 / 6 VP. Fewer than 6: −3 VP."
+      "scoring": "6 / 9 / 12 cards that grant VP directly or at Game End: 2 / 4 / 6 VP."
     },
     {
       "id": "Q19",
@@ -1500,7 +1500,7 @@ window.GAME_DATA = {
       "number": 22,
       "name": "Grandmother's Path",
       "theme": "Little Red Riding Hood",
-      "scoring": "2 / 4 / 6 Good–Bad pairs of cards: 2 / 4 / 6 VP. Fewer than 2: −3 VP."
+      "scoring": "2 / 4 / 6 Good–Bad pairs of cards: 2 / 4 / 6 VP."
     },
     {
       "id": "Q23",
@@ -1514,7 +1514,7 @@ window.GAME_DATA = {
       "number": 24,
       "name": "The Marquis of Carabas",
       "theme": "Puss in Boots",
-      "scoring": "4 / 7 / 10 coins left at the end: 2 / 4 / 6 VP. Fewer than 4: −3 VP."
+      "scoring": "4 / 7 / 10 coins left at the end: 2 / 4 / 6 VP."
     }
   ],
   "writers": [
