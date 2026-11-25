@@ -29,7 +29,7 @@
   let sortKey = "edge";
   let sortDir = -1;
 
-  const keyOf = () => `ouat-sim${cfg.players <= 3 ? 3 : 2}-${cfg.players}-${cfg.level}-${cfg.rounds}`;
+  const keyOf = () => `ouat-sim2-${cfg.players}-${cfg.level}-${cfg.rounds}`;
   const emptyAgg = () => ({
     games: 0, rounds: 0, winner: 0, total: 0, last: 0, seats: 0,
     src: { base: 0, quests: 0, cards: 0, writerPts: 0 },

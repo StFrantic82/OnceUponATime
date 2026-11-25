@@ -1500,15 +1500,15 @@ window.GAME_DATA = {
   ],
   "board2p": [
     {
-      "basic": 0,
-      "advanced": 1
-    },
-    {
-      "basic": 2,
+      "basic": 1,
       "advanced": 0
     },
     {
       "basic": 1,
+      "advanced": 1
+    },
+    {
+      "basic": 2,
       "advanced": 1
     }
   ]
