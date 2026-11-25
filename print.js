@@ -69,7 +69,7 @@ const P = {
     intro: "Print on A4 paper at 100 % scale (“actual size”, no “fit to page”). Cut along the dotted lines. Card sizes are those of standard sleeves.",
     backsHow: "Backs: print each “Backs” page on the reverse of the pages of the same kind (long-edge duplex), or glue it on.",
     contents: "Contents",
-    sizes: { common: "Common characters · 62 cards · 56 × 87 mm", legendary: "Legendary characters · 41 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 36 tiles · 60 × 60 mm", quests: "Quest cards · 21 cards · 87 × 56 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Chapter cards · 4 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
+    sizes: { common: "Common characters · 62 cards · 56 × 87 mm", legendary: "Legendary characters · 41 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 36 tiles · 60 × 60 mm", quests: "Quest cards · 24 cards · 87 × 56 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Chapter cards · 4 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
     backs: "Backs",
     tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
     page: "Page",
@@ -93,7 +93,7 @@ const P = {
     intro: "Imprimez sur du papier A4 à l’échelle 100 % (« taille réelle », sans « ajuster à la page »). Découpez le long des pointillés. Les formats correspondent aux protège-cartes du commerce.",
     backsHow: "Dos : imprimez chaque page « Dos » au verso des pages du même type (recto verso, bord long), ou collez-la.",
     contents: "Contenu",
-    sizes: { common: "Personnages communs · 62 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 41 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 36 tuiles · 60 × 60 mm", quests: "Cartes Quête · 21 cartes · 87 × 56 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Chapitre · 4 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
+    sizes: { common: "Personnages communs · 62 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 41 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 36 tuiles · 60 × 60 mm", quests: "Cartes Quête · 24 cartes · 87 × 56 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Chapitre · 4 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
     backs: "Dos",
     tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
     page: "Page",
@@ -117,7 +117,7 @@ const P = {
     intro: "Stampa su carta A4 in scala 100 % («dimensioni reali», senza «adatta alla pagina»). Ritaglia lungo le linee tratteggiate. I formati corrispondono alle bustine protettive in commercio.",
     backsHow: "Retri: stampa ogni pagina «Retri» sul retro delle pagine dello stesso tipo (fronte-retro, lato lungo), oppure incollala.",
     contents: "Contenuto",
-    sizes: { common: "Personaggi comuni · 62 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 41 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 36 tessere · 60 × 60 mm", quests: "Carte Missione · 21 carte · 87 × 56 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Capitolo · 4 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
+    sizes: { common: "Personaggi comuni · 62 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 41 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 36 tessere · 60 × 60 mm", quests: "Carte Missione · 24 carte · 87 × 56 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Capitolo · 4 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
     backs: "Retri",
     tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
     page: "Pagina",
@@ -243,7 +243,7 @@ function boardSection(n) {
     <div class="bslots" style="grid-template-columns:repeat(${BOARDS[n].length}, 1fr)">${groups}</div>
     <div class="bdisplays">
       <div class="bdisp">${resourceIcon("coins", "Items", true)} ${esc(L.itemsShown)} : <b>${n + 1}</b></div>
-      <div class="bdisp">${resourceIcon("endgame", "Quests", true)} ${esc(L.questsShown)} : <b>${n + 2}</b></div>
+      <div class="bdisp">${resourceIcon("endgame", "Quests", true)} ${esc(L.questsShown)} : <b>${n + 1}</b></div>
     </div>
   </div>`;
 }

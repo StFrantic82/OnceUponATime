@@ -148,7 +148,7 @@ const RULES = {
       <p>Effects have four types: [[icon:instant]] <b>Instant</b> (once, when you take the card), [[icon:activation]] <b>Activation</b> (each time an effect activates it), [[icon:ongoing]] <b>Ongoing</b> (always true) and [[icon:endgame]] <b>Game End</b> (scored at the end).</p>`],
       ["setup", "Setup", `<ol>
         <li>Shuffle the Common characters and the Legendary characters into two separate decks.</li>
-        <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
+        <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>1 + the number of players</b>.</li>
         <li>Each player takes the 12 Chapter cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Chapter deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
         <li>Place your Chapter deck to the left of your Writer, against the notch: it is the book you are writing.</li>
@@ -159,8 +159,8 @@ const RULES = {
       [[boards]]
       <h3>2. Play a Chapter card</h3>
       <p>Starting with the first player and going clockwise, everyone plays one Chapter card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. Some effects add to your chapter (Queen of Hearts, Carlo Collodi).</p>
-      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 4. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 4 gives her two free upgrades.
-      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:4:Sofia]]</div></div>
+      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 5 gives her two free upgrades.
+      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Your turn</h3>
       <ol>
         <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
@@ -169,11 +169,11 @@ const RULES = {
         <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card. [[icon:freeup]] <b>Free upgrade</b>: the next step of one of your Legendary characters or of your Writer is completed at once (cover its empty spaces with XP from the supply).</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
-      <div class="example"><b>Example of a turn.</b> Léa played chapter 3 (“Activate all + 3 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 3 coins. With her 6 coins she could buy an Item, but she keeps them.
-      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:3]]</div></div>
+      <div class="example"><b>Example of a turn.</b> Léa played chapter 4 (“Activate all + 3 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 3 coins. With her 6 coins she could buy an Item, but she keeps them.
+      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
-        <li>Discard the cards nobody took. Refill the Items to 1 + players and the Quests to 2 + players.</li>
+        <li>Discard the cards nobody took. Refill the Items to 1 + players and the Quests to 1 + players.</li>
         <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
@@ -229,7 +229,7 @@ const RULES = {
       <p>Les effets sont de quatre types : [[icon:instant]] <b>Instantané</b> (une fois, quand vous prenez la carte), [[icon:activation]] <b>Activation</b> (chaque fois qu’un effet l’active), [[icon:ongoing]] <b>Permanent</b> (toujours valable) et [[icon:endgame]] <b>Fin de partie</b> (compté à la fin).</p>`],
       ["setup", "Mise en place", `<ol>
         <li>Mélangez les personnages Communs et les personnages Légendaires en deux pioches séparées.</li>
-        <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
+        <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>1 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Chapitre d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Chapitre.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
         <li>Posez votre pioche Chapitre à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
@@ -240,8 +240,8 @@ const RULES = {
       [[boards]]
       <h3>2. Jouer une carte Chapitre</h3>
       <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Chapitre face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. Certains effets augmentent votre chapitre (la Reine de cœur, Carlo Collodi).</p>
-      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 4. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 4 lui donne deux améliorations gratuites.
-      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:4:Sofia]]</div></div>
+      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 5 lui donne deux améliorations gratuites.
+      <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Votre tour</h3>
       <ol>
         <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
@@ -250,11 +250,11 @@ const RULES = {
         <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée. [[icon:freeup]] <b>Amélioration gratuite</b> : la prochaine étape d’un de vos personnages Légendaires ou de votre Écrivain est complétée tout de suite (couvrez ses cases vides avec de l’XP de la réserve).</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
-      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 3 (« Tout activer + 3 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 3 pièces. Avec ses 6 pièces, elle pourrait acheter un Objet, mais elle les garde.
-      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:3]]</div></div>
+      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 4 (« Tout activer + 3 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 3 pièces. Avec ses 6 pièces, elle pourrait acheter un Objet, mais elle les garde.
+      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
-        <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Quêtes jusqu’à 2 + joueurs.</li>
+        <li>Défaussez les cartes que personne n’a prises. Complétez les Objets jusqu’à 1 + joueurs et les Quêtes jusqu’à 1 + joueurs.</li>
         <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
@@ -310,7 +310,7 @@ const RULES = {
       <p>Gli effetti sono di quattro tipi: [[icon:instant]] <b>Istantaneo</b> (una volta, quando prendi la carta), [[icon:activation]] <b>Attivazione</b> (ogni volta che un effetto la attiva), [[icon:ongoing]] <b>Permanente</b> (sempre valido) e [[icon:endgame]] <b>Fine partita</b> (contato alla fine).</p>`],
       ["setup", "Preparazione", `<ol>
         <li>Mescola i personaggi Comuni e i personaggi Leggendari in due mazzi separati.</li>
-        <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
+        <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>1 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Capitolo di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Capitolo.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
         <li>Metti il tuo mazzo Capitolo a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
@@ -321,8 +321,8 @@ const RULES = {
       [[boards]]
       <h3>2. Giocare una carta Capitolo</h3>
       <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Capitolo scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). Alcuni effetti aumentano il tuo capitolo (la Regina di cuori, Carlo Collodi).</p>
-      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 4. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 4 le dà due potenziamenti gratis.
-      <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:4:Sofia]]</div></div>
+      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 5 le dà due potenziamenti gratis.
+      <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:5:Sofia]]</div></div>
       <h3>3. Il tuo turno</h3>
       <ol>
         <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
@@ -331,11 +331,11 @@ const RULES = {
         <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata. [[icon:freeup]] <b>Potenziamento gratis</b>: il prossimo passaggio di uno dei tuoi personaggi Leggendari o del tuo Scrittore è completato subito (copri le caselle vuote con XP dalla riserva).</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
-      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 3 («Attiva tutto + 3 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 3 monete. Con le sue 6 monete potrebbe comprare un Oggetto, ma le tiene.
-      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:3]]</div></div>
+      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 4 («Attiva tutto + 3 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 3 monete. Con le sue 6 monete potrebbe comprare un Oggetto, ma le tiene.
+      <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
-        <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Missioni fino a 2 + giocatori.</li>
+        <li>Scarta le carte che nessuno ha preso. Completa gli Oggetti fino a 1 + giocatori e le Missioni fino a 1 + giocatori.</li>
         <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],
