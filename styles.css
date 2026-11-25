@@ -2901,3 +2901,30 @@ html {
 .xp-pips i .game-icon { width: 14px; height: 14px; opacity: .25; }
 .xp-pips i.on { border-style: solid; background: #fde7a6; }
 .xp-pips i.on .game-icon { opacity: 1; }
+
+/* ---------- XP star spaces (shared by the app and the printed cards) ---------- */
+.xp-step { display: flex; align-items: center; justify-content: center; gap: 6px; flex: 0 0 auto; margin: 2px 0; }
+.xp-arrow { color: #c58b3c; font-size: 10px; line-height: 1; }
+.xp-boxes { display: flex; gap: 3px; }
+.xp-box {
+  width: 24px; height: 24px; box-sizing: border-box; display: grid; place-items: center;
+  border: 2px dashed #c58b3c; border-radius: 6px; background: rgba(255, 248, 226, .95);
+}
+.xp-box .game-icon { width: 15px; height: 15px; opacity: .4; }
+.xp-box.on { border-style: solid; border-color: #b8862e; background: #fde7a6; }
+.xp-box.on .game-icon { opacity: 1; }
+
+/* Legendary card face: the star spaces sit on the line between the two effects */
+.fc-legendary .xp-step { height: 0; margin: 0; position: relative; z-index: 3; overflow: visible; }
+.fc-legendary .fc-base { padding-bottom: 14px; }
+.fc-legendary .fc-up { padding-top: 14px; }
+.fc-legendary .xp-box { width: 22px; height: 22px; }
+.fc-legendary .xp-box .game-icon { width: 14px; height: 14px; }
+.legendary-effects .xp-step { margin: -4px 0; position: relative; z-index: 2; }
+
+/* Writer tile: name and framed portrait, no illustration band */
+.wcard .writer-card-header { padding: 10px 12px 6px; }
+.wcard .writer-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.wcard .portrait { width: 64px; height: 64px; flex: 0 0 auto; filter: drop-shadow(0 2px 3px rgba(60, 30, 10, .35)); }
+.wcard .writer-levels { gap: 0; padding-bottom: 6px; }
+.wcard .writer-level-box strong .game-icon { width: 16px; height: 16px; vertical-align: -3px; }

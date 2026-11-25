@@ -1297,7 +1297,7 @@ function xpPips(filled, total) {
 
 function legendaryXpControls(card) {
   if (card.deck !== "legendary" || card.upgraded || G.gameOver) return "";
-  return `<div class="xp-place">${xpPips(card.xpOn || 0, upgradeCost(card))}
+  return `<div class="xp-place">
     <button type="button" ${state.xp > 0 ? "" : "disabled"} data-place-xp="${card.id}">${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button>
     ${state.freeUpgrades > 0 ? `<button type="button" data-upgrade="${card.id}">${t("freeUpBtn")}</button>` : ""}</div>`;
 }
@@ -1328,14 +1328,12 @@ function renderCard(card) {
 
 function renderLegendaryEffects(card) {
   const upgradeText = String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
+  const cost = upgradeCost(card);
   return `
     <div class="legendary-effects">
-      <div class="legendary-effect-block">
-        <strong>${t("base")}</strong>
-        <div class="effect">${formatGameText(tc(card.base))}</div>
-      </div>
+      <div class="legendary-effect-block"><div class="effect">${formatGameText(tc(card.base))}</div></div>
+      ${CardFace.xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
       <div class="legendary-effect-block upgrade-effect ${card.upgraded ? "unlocked" : ""}">
-        <div class="legendary-upgrade-heading"><span>${upgradeCost(card)} ${resourceIcon("xp", "XP")}</span><strong>${t("upgradeLabel")}</strong></div>
         <div class="legendary-upgrade-ability ${card.upgraded ? "" : "locked"}"><div class="effect">${formatGameText(tc(upgradeText))}</div></div>
       </div>
     </div>
@@ -1492,35 +1490,14 @@ function closeCatalog() {
 
 function renderWriterCard(writer, level, selectable, preview = false) {
   const own = !selectable && !preview;
-  const nextLevel = level + 1;
-  const nextCost = nextLevel === 2 ? writer.cost2 : writer.cost3;
-  const canUpgrade = own && level < 3 && state.xp > 0 && !G.gameOver;
-  const levels = [
-    { number: 1, type: "ongoing", text: writer.level1 },
-    { number: 2, type: "instant", text: writer.level2, cost: writer.cost2 },
-    { number: 3, type: "endgame", text: writer.level3, cost: writer.cost3 },
-  ];
+  const canPlace = own && level < 3 && state.xp > 0 && !G.gameOver;
   const drafts = own ? state.writerDraftChoices || [] : [];
-  return `
-    <article class="writer-card">
-      <div class="writer-art">${CardArt.art(writer.name)}</div>
-      <div class="writer-card-header">
-        <div class="writer-name">${escapeHtml(tc(writer.name))}</div>
-        <div class="writer-level">${own ? t("levelN", { n: level }) : t("writerWord")}</div>
-      </div>
-      <div class="writer-effect-icons">
-        ${levels.map((entry) => `<div class="writer-effect-icon">${resourceIcon(entry.type, effectLabel(entry.type))}<span>${t("lvN", { n: entry.number })}</span></div>`).join("")}
-      </div>
-      <div class="writer-levels">
-        ${levels.map((entry) => `<div class="writer-level-box ${own && entry.number > level ? "locked" : ""}"><strong>${t("levelN", { n: entry.number })}${entry.cost ? ` · ${entry.cost} ${resourceIcon("xp", "XP")}` : ""}</strong>${formatGameText(tc(entry.text))}</div>`).join("")}
-      </div>
-      ${drafts.length ? `<div class="writer-draft">${drafts.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : escapeHtml(tc(choice.name))}</button>`).join("")}</div>` : ""}
-      ${preview ? "" : `<div class="writer-card-actions">
-        ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 && own ? `<span class="xp-place">${t("levelN", { n: nextLevel })} ${xpPips(state.writerXp || 0, nextCost)}<button type="button" ${!canUpgrade ? "disabled" : ""} data-writer-upgrade>${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button></span>` : ""}
-        ${own && state.writerDiscardRemaining > 0 ? `<button type="button" data-finish-writer-discard>${t("finishDiscard")}</button>` : ""}
-      </div>`}
-    </article>
-  `;
+  const extra = `${drafts.length ? `<div class="writer-draft">${drafts.map((choice) => `<button type="button" data-writer-choice="${choice.id}">${choice.iconChoice ? resourceIcon(choice.iconChoice, choice.name) : escapeHtml(tc(choice.name))}</button>`).join("")}</div>` : ""}
+    ${preview ? "" : `<div class="writer-card-actions">
+      ${selectable ? `<button type="button" data-writer="${writer.id}">${t("choose")}</button>` : level < 3 && own ? `<button type="button" ${!canPlace ? "disabled" : ""} data-writer-upgrade>${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button>` : ""}
+      ${own && state.writerDiscardRemaining > 0 ? `<button type="button" data-finish-writer-discard>${t("finishDiscard")}</button>` : ""}
+    </div>`}`;
+  return CardFace.writer(writer, { level: own ? level : 0, xpPlaced: own ? state.writerXp || 0 : 0, extra });
 }
 
 function effectLabel(type) {

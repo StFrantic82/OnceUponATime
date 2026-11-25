@@ -74,10 +74,76 @@
   }
 
   // Dashed space to stack XP tokens before levelling up (printed cards and Writer tiles).
-  // One dashed star space per XP needed: the number of spaces shows the cost.
-  function xpStep(n = 1) {
-    const boxes = Array.from({ length: Math.max(1, n) }, () => `<span class="xp-box">${resourceIcon("xp", "XP")}</span>`).join("");
+  // One dashed star space per XP needed: the number of spaces shows the cost. Filled spaces hold placed XP.
+  function xpStep(n = 1, filled = 0) {
+    const boxes = Array.from({ length: Math.max(1, n) }, (_, i) => `<span class="xp-box ${i < filled ? "on" : ""}">${resourceIcon("xp", "XP")}</span>`).join("");
     return `<div class="xp-step"><span class="xp-arrow">▼</span><span class="xp-boxes">${boxes}</span><span class="xp-arrow">▼</span></div>`;
+  }
+
+
+  // Small framed portraits for the Writer tiles (a painting in a gilded frame).
+  const PORTRAITS = {
+    "Charles Perrault": { bg: "#7a3a3a", skin: "#f1c8a4", hair: "#5b3a22", wig: true, coat: "#2f4a7a", collar: "#fff" },
+    "Brothers Grimm": { bg: "#3f5a3a", skin: "#efc6a0", hair: "#4a2f1c", coat: "#2b2b3a", collar: "#fff", two: true },
+    "Hans Christian Andersen": { bg: "#2f5d8a", skin: "#f0caa6", hair: "#8a6038", side: true, coat: "#3a2c25", collar: "#fff", bow: "#1d1d1d" },
+    "Carlo Collodi": { bg: "#8a5a2a", skin: "#eec19a", hair: "#2c2420", mustache: "#2c2420", coat: "#3d3a52", collar: "#fff" },
+    "Lewis Carroll": { bg: "#6b4a8a", skin: "#f3d0b0", hair: "#3a2a20", wavy: true, coat: "#22222c", collar: "#fff", bow: "#5a1a2a" },
+    "J. M. Barrie": { bg: "#2f6a6a", skin: "#efc8a2", hair: "#3b2d22", mustache: "#3b2d22", coat: "#3a3328", collar: "#fff" },
+    "L. Frank Baum": { bg: "#3f7a32", skin: "#efc6a0", hair: "#b0b0b0", mustache: "#9a9a9a", coat: "#2a3a2a", collar: "#fff" },
+    "Leprince de Beaumont": { bg: "#9a3f5a", skin: "#f4d2b6", hair: "#6a4428", woman: true, coat: "#c07a9a", collar: "#fbe9f0" },
+  };
+
+  function bust(p, x, scale = 1) {
+    const g = (inner) => `<g transform="translate(${x} 0) scale(${scale})">${inner}</g>`;
+    const hair = p.woman
+      ? `<ellipse cx="0" cy="34" rx="17" ry="18" fill="${p.hair}"/><circle cx="0" cy="15" r="9" fill="${p.hair}"/>`
+      : p.wig
+        ? `<path d="M-19 40 Q-22 22 0 18 Q22 22 19 40 Q23 56 14 62 L-14 62 Q-23 56 -19 40Z" fill="${p.hair}"/>`
+        : p.wavy
+          ? `<path d="M-15 38 Q-17 22 0 21 Q17 22 15 38 Q18 46 12 48 L-12 48 Q-18 46 -15 38Z" fill="${p.hair}"/>`
+          : `<path d="M-14 36 Q-15 22 0 22 Q15 22 ${p.side ? 16 : 14} 36 Q8 28 -14 36Z" fill="${p.hair}"/>`;
+    const face = `<ellipse cx="0" cy="40" rx="12" ry="14" fill="${p.skin}"/>
+      <circle cx="-4.5" cy="38" r="1.4" fill="#2a1a12"/><circle cx="4.5" cy="38" r="1.4" fill="#2a1a12"/>
+      <path d="M-3.5 46 Q0 48.5 3.5 46" stroke="#8a4a3a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <circle cx="-7" cy="44" r="2" fill="#e8998a" opacity=".45"/><circle cx="7" cy="44" r="2" fill="#e8998a" opacity=".45"/>`;
+    const mustache = p.mustache ? `<path d="M-7 44.5 Q-3 42 0 44 Q3 42 7 44.5 Q3 46 0 45 Q-3 46 -7 44.5Z" fill="${p.mustache}"/>` : "";
+    const body = `<path d="M-24 80 Q-24 58 0 56 Q24 58 24 80Z" fill="${p.coat}"/>
+      <path d="M-7 57 L0 66 L7 57 Q0 55 -7 57Z" fill="${p.collar}"/>
+      ${p.bow ? `<path d="M-5 60 L0 62 L5 60 L5 65 L0 63 L-5 65Z" fill="${p.bow}"/>` : ""}`;
+    const front = p.wavy ? `<path d="M-12 32 Q-6 24 0 27 Q6 24 12 32 Q6 28 0 31 Q-6 28 -12 32Z" fill="${p.hair}"/>` : "";
+    return g(`${p.woman || p.wig ? hair : ""}${body}${face}${mustache}${p.woman || p.wig ? "" : hair}${front}`);
+  }
+
+  function writerPortrait(name) {
+    const p = PORTRAITS[name] || PORTRAITS["Charles Perrault"];
+    const figures = p.two ? bust(p, 34, 0.82) + bust({ ...p, hair: "#6a4a2c", coat: "#3a2c2c" }, 64, 0.86) : bust(p, 50);
+    return `<svg class="portrait" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d488"/><stop offset=".5" stop-color="#b8862e"/><stop offset="1" stop-color="#f0c96a"/></linearGradient></defs>
+      <rect x="2" y="2" width="96" height="96" rx="6" fill="url(#gold)" stroke="#7a5414" stroke-width="2"/>
+      <rect x="11" y="11" width="78" height="78" rx="3" fill="${p.bg}" stroke="#7a5414" stroke-width="1.5"/>
+      <svg x="11" y="11" width="78" height="78" viewBox="0 0 100 80" preserveAspectRatio="xMidYMax slice"><rect width="100" height="80" fill="${p.bg}"/><ellipse cx="50" cy="30" rx="40" ry="30" fill="#fff" opacity=".08"/>${figures}</svg>
+      <circle cx="6.5" cy="6.5" r="2" fill="#fff3c8"/><circle cx="93.5" cy="6.5" r="2" fill="#fff3c8"/><circle cx="6.5" cy="93.5" r="2" fill="#fff3c8"/><circle cx="93.5" cy="93.5" r="2" fill="#fff3c8"/>
+    </svg>`;
+  }
+
+  // Writer tile: name and framed portrait, three levels, star spaces (XP) between them.
+  // opts.level: current level (0 = just showing the card), opts.xpPlaced: XP on the next step.
+  function writer(card, opts = {}) {
+    const level = opts.level || 0;
+    const levels = [
+      { n: 1, type: "ongoing", text: card.level1 },
+      { n: 2, type: "instant", text: card.level2, cost: card.cost2 },
+      { n: 3, type: "endgame", text: card.level3, cost: card.cost3 },
+    ];
+    const filledFor = (n, cost) => (level >= n ? cost : level === n - 1 ? opts.xpPlaced || 0 : 0);
+    return `<article class="writer-card wcard ${opts.cls || ""}">
+      ${opts.notch || ""}
+      <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(card.name))}</div>${level ? `<div class="writer-level">${esc(t("levelN", { n: level }))}</div>` : ""}</div>${writerPortrait(card.name)}</div>
+      <div class="writer-levels">${levels
+        .map((l, i) => `${i ? xpStep(l.cost, filledFor(l.n, l.cost)) : ""}<div class="writer-level-box ${level && l.n > level ? "locked" : ""}"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}</strong>${formatGameText(tc(l.text))}</div>`)
+        .join("")}</div>
+      ${opts.extra || ""}
+    </article>`;
   }
 
   function legendary(card, opts = {}) {
@@ -88,8 +154,8 @@
       ${head(card, 204, 16, `<small>${esc(t("legendary"))}</small>`)}
       <div class="fc-art">${CardArt.art(card.name)}</div>
       <div class="fc-side fc-base">${formatGameText(stripIconPrefix(tc(card.base)))}</div>
-      ${opts.xpSlot ? xpStep(cost) : ""}
-      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${opts.xpSlot ? "" : `<span class="fc-cost">${cost} ${resourceIcon("xp", "XP")}</span>`}${formatGameText(tc(upgradeText))}</div>
+      ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
+      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${formatGameText(tc(upgradeText))}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }
@@ -153,5 +219,5 @@
     </div>`;
   }
 
-  window.CardFace = { common, legendary, item, quest, character, action, xpStep };
+  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait };
 })();
