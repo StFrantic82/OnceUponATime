@@ -1,0 +1,36 @@
+/* Alegreya and Alegreya Sans, by Huerta Tipográfica (SIL Open Font License 1.1). Latin subset. */
+@font-face {
+  font-family: "Alegreya";
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url("alegreya-var.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Alegreya Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("alegreya-sans-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Alegreya Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("alegreya-sans-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Alegreya Sans";
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url("alegreya-sans-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Alegreya Sans";
+  font-style: normal;
+  font-weight: 800 900;
+  font-display: swap;
+  src: url("alegreya-sans-800.woff2") format("woff2");
+}

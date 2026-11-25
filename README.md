@@ -8,6 +8,8 @@ Prototype numérique de **Once Upon a Time**, jeu de cartes où des Écrivains r
 - Jouable en anglais, français et italien (interface et cartes).
 - Choix de l’Écrivain (au hasard ou au choix), avec ses 3 niveaux.
 - Catalogue complet des cartes : Communes, Légendaires, Quêtes, Objets, Écrivains.
+- Règles illustrées en FR/EN/IT (`rules.html`), imprimables.
+- Print & Play : PDF A4 à imprimer (`pnp/`), cartes communes 56×87 mm, légendaires format tarot 61×112 mm, objets 60×60 mm, quêtes 89×63 mm, écrivains 70×120 mm, cartes Action 56×87 mm (5 couleurs), jetons Tag carrés 20 mm, jetons pièces/XP/PV et premier joueur ; dos en miroir pour le recto verso.
 
 ## Jouer
 
@@ -28,5 +30,7 @@ Le jeu en ligne utilise la Realtime Database Firebase du projet Minikin City (sa
 - `art.js` : les illustrations des cartes, dessinées en SVG ;
 - `home.js` : la page d’accueil, les statistiques (enregistrées dans le navigateur) et le tutoriel ;
 - `i18n.js` et `i18n-cards.js` : les traductions (interface et textes des cartes) ;
+- `rules.html`, `rules.js`, `rules.css` : les règles illustrées ;
+- `print.html`, `print.js`, `print.css` : la mise en page du Print & Play (le PDF est généré depuis cette page avec Chromium) ;
 - `cards.js` : la mise en page des cartes (personnages, légendaires, objets, quêtes, cartes Action) ;
 - `assets/icons/` : les icônes (icônes, ressources, types d’effet).

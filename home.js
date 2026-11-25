@@ -126,6 +126,8 @@
       else if (btn.id === "tutoBtn") return startGame(true);
       else if (btn.id === "statsBtn") return showStats();
       else if (btn.id === "createBtn") return createRoom();
+      else if (btn.id === "pnpBtn") return showPrintAndPlay();
+      else if (btn.id === "rulesBtn") return window.open(`rules.html?lang=${I18N.lang}`, "_blank", "noopener");
       else if (btn.id === "joinBtn") return joinRoom();
       else return;
       savePrefs();
@@ -269,6 +271,29 @@
       afterRender(Game.state);
     }
   });
+
+  // Print & Play: the ready-made PDFs (one per language) and the printable page.
+  const SITE = "https://stfrantic82.github.io/OnceUponATime/";
+  function showPrintAndPlay() {
+    const flags = { en: "English", fr: "Français", it: "Italiano" };
+    const box = document.createElement("div");
+    box.className = "confirm-overlay";
+    box.innerHTML = `<div class="pnp-box" role="dialog" aria-modal="true" aria-label="Print & Play">
+      <h2>Print &amp; Play</h2>
+      <p>${esc(t("pnpIntro"))}</p>
+      <ul class="pnp-sizes">${["pnpCommon", "pnpLegendary", "pnpItems", "pnpQuests", "pnpWriters", "pnpActions", "pnpTokens"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ul>
+      <div class="pnp-links">${["fr", "en", "it"]
+        .sort((a, b) => (a === I18N.lang ? -1 : b === I18N.lang ? 1 : 0))
+        .map((l) => `<a class="pnp-link ${l === I18N.lang ? "main" : ""}" href="${SITE}pnp/once-upon-a-time-print-and-play-${l}.pdf" target="_blank" rel="noopener">PDF · ${flags[l]}</a>`)
+        .join("")}</div>
+      <p class="hint">${esc(t("pnpHint"))} <a href="${SITE}print.html?lang=${I18N.lang}" target="_blank" rel="noopener">${esc(t("pnpPage"))}</a></p>
+      <div class="confirm-actions"><button type="button" class="primary" data-close>${esc(t("back"))}</button></div>
+    </div>`;
+    box.addEventListener("click", (event) => {
+      if (event.target === box || event.target.closest("[data-close]")) box.remove();
+    });
+    document.body.appendChild(box);
+  }
 
   function playerName() {
     prefs.name = $("#pname").value.trim().slice(0, 16);

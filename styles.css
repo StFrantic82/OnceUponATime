@@ -345,7 +345,7 @@ h2::after {
   aspect-ratio: 5 / 7;
   padding: 7px 7px 7px 11px;
   border-radius: 6px 10px 10px 6px;
-  background: linear-gradient(90deg, #7a3a24 0 6px, #e9d3a6 6px 8px, #f3e2bd 8px 10px, #e9d3a6 10px);
+  background: linear-gradient(90deg, var(--spine, #7a3a24) 0 6px, #e9d3a6 6px 8px, #f3e2bd 8px 10px, #e9d3a6 10px);
   box-shadow: 0 6px 14px rgba(20, 10, 4, 0.35);
   text-align: center;
   font-family: "Alegreya", Georgia, serif;
@@ -2815,4 +2815,56 @@ html {
 
 .stab tr.sep td {
   border-top: 3px double var(--line);
+}
+
+/* ---------- Print & Play dialog ---------- */
+.pnp-box {
+  width: min(520px, 100%);
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid #b08a58;
+  background: linear-gradient(var(--paper), var(--paper-2));
+  box-shadow: var(--shadow);
+}
+
+.pnp-sizes {
+  margin: 8px 0 14px;
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+.pnp-links {
+  display: grid;
+  gap: 8px;
+}
+
+.pnp-link {
+  display: block;
+  padding: 12px 16px;
+  border: 2px solid #8a5a2b;
+  border-radius: 999px;
+  background: linear-gradient(#fff6e2, #f2dcb2);
+  color: var(--ink);
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+}
+
+.pnp-link.main {
+  border-color: #8f4a12;
+  background: linear-gradient(#f6bd5a, #d98a2b);
+}
+
+.pnp-box .hint {
+  margin: 12px 0;
+}
+
+.pnp-box .hint a {
+  color: #3f6fa8;
+}
+
+.secbtns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
