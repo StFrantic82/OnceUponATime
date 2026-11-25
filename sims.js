@@ -29,14 +29,23 @@
   let sortKey = "edge";
   let sortDir = -1;
 
-  const keyOf = () => `ouat-sim12-${cfg.players}-${cfg.level}`;
+  const keyOf = () => `ouat-sim13-${cfg.players}-${cfg.level}`;
   const emptyAgg = () => ({
     games: 0, rounds: 0, winner: 0, total: 0, last: 0, seats: 0,
     src: { base: 0, quests: 0, cards: 0, writerPts: 0 },
     writers: {}, cards: {}, chapters: {}, seatWins: {}, seatN: {}, levels: {},
     res: { coins: 0, xp: 0, free: 0, upgraded: 0, legendary: 0, cards: 0, items: 0, quests: 0 },
     curveWin: [], curveAll: [], curveN: 0, pairs: {},
+    // Resources of the winner versus everyone (sums; divided by games / seats when shown).
+    cmpW: {}, cmpA: {},
   });
+
+  const CMP = [
+    ["coinsGained", "cmpCoinsGained"], ["xpGained", "cmpXpGained"], ["base", "cmpVpTokens"], ["quests", "cmpAdvPts"],
+    ["cards", "cmpCardPts"], ["writerPts", "cmpWriterPts"], ["cardCount", "simResCards"], ["legendaryCount", "simResLeg"],
+    ["upgradedCount", "simResUp"], ["itemCount", "simResItems"], ["questCount", "simResQuests"], ["writerLevel", "cmpWriterLevel"],
+    ["coinsLeft", "simResCoins"], ["xpLeft", "simResXp"],
+  ];
 
   function bump(map, name, deck, won, score, extra = 0) {
     const e = (map[name] ||= { deck, n: 0, wins: 0, score: 0, extra: 0 });
@@ -76,6 +85,10 @@
       if (won) agg.seatWins[p.seatPos] = (agg.seatWins[p.seatPos] || 0) + 1;
       const lv = (agg.levels[p.writer] ||= [0, 0, 0]);
       lv[(p.writerLevel || 1) - 1] += 1;
+      for (const [k] of CMP) {
+        agg.cmpA[k] = (agg.cmpA[k] || 0) + (p[k] || 0);
+        if (won) agg.cmpW[k] = (agg.cmpW[k] || 0) + (p[k] || 0);
+      }
       agg.res.coins += p.coinsLeft;
       agg.res.xp += p.xpLeft;
       agg.res.free += p.freeLeft;
@@ -140,7 +153,7 @@
         <div><span class="hl2">${esc(t("simGames"))}</span>${seg("games", [100, 500, 1000].map((n) => [n, n]), cfg.games)}</div>
       </div>
       <div class="sim-run">
-        <button type="button" class="bigbtn" id="simRun" ${running ? "disabled" : ""}>${esc(running ? t("simRunning") : t("simRun"))}</button>
+        <button type="button" class="primary sim-run-btn" id="simRun" ${running ? "disabled" : ""}>${esc(running ? t("simRunning") : t("simRun"))}</button>
         ${running ? `<button type="button" id="simStop">${esc(t("simStop"))}</button>` : `<button type="button" id="simClear">${esc(t("simClear"))}</button>`}
       </div>
       <progress id="simProgress" value="0" max="1" ${running ? "" : "hidden"}></progress>
@@ -239,9 +252,9 @@
 
       <h3>${esc(t("simWriters"))}</h3>
       <p class="hint">${esc(t("simEdgeHint", { n: base.toFixed(0) }))}</p>
-      <div class="scroll"><table class="stab">
+      <div class="scroll"><table class="stab sortable">
         <thead><tr><th>${esc(t("colWriter"))}</th><th>${esc(t("colGames"))}</th><th>${esc(t("simWin"))}</th><th>${esc(t("simEdge"))}</th><th>${esc(t("colAvg"))}</th><th>${esc(t("simLv2"))}</th><th>${esc(t("simLv3"))}</th><th>${esc(t("simWriterPts"))}</th></tr></thead>
-        <tbody>${writers.map((w) => { const lv = agg.levels[w.name] || [0, 0, 0]; const tot = lv[0] + lv[1] + lv[2] || 1; return `<tr><td data-card="${esc(w.name)}">${esc(tc(w.name))}</td><td>${w.n}</td><td>${w.win.toFixed(0)} %</td><td>${edgeCell(w.win, base)}</td><td>${w.avg.toFixed(0)}</td><td>${pct(lv[1] + lv[2], tot).toFixed(0)} %</td><td>${pct(lv[2], tot).toFixed(0)} %</td><td>${w.extra.toFixed(1)}</td></tr>`; }).join("")}</tbody>
+        <tbody>${writers.map((w) => { const lv = agg.levels[w.name] || [0, 0, 0]; const tot = lv[0] + lv[1] + lv[2] || 1; return `<tr><td data-card="${esc(w.name)}" data-v="${esc(tc(w.name))}">${esc(tc(w.name))}</td><td data-v="${w.n}">${w.n}</td><td data-v="${w.win}">${w.win.toFixed(0)} %</td><td data-v="${w.win}">${edgeCell(w.win, base)}</td><td data-v="${w.avg}">${w.avg.toFixed(0)}</td><td data-v="${pct(lv[1] + lv[2], tot)}">${pct(lv[1] + lv[2], tot).toFixed(0)} %</td><td data-v="${pct(lv[2], tot)}">${pct(lv[2], tot).toFixed(0)} %</td><td data-v="${w.extra}">${w.extra.toFixed(1)}</td></tr>`; }).join("")}</tbody>
       </table></div>
 
       <h3>${esc(t("simCards"))}</h3>
@@ -264,9 +277,9 @@
 
       <h3>${esc(t("simChapters"))}</h3>
       <p class="hint">${esc(t("simChaptersHint"))}</p>
-      <div class="scroll"><table class="stab">
+      <div class="scroll"><table class="stab sortable">
         <thead><tr><th>${esc(t("chapter"))}</th><th class="txt">${esc(t("simEffect"))}</th><th>${esc(t("simFirst"))}</th><th>${esc(t("simAvgPos"))}</th><th>${esc(t("simWinWith"))}</th></tr></thead>
-        <tbody>${chapters.map((c) => `<tr data-action="${c.n}"><td><b>${c.n}</b></td><td class="txt sim-action">${actionEffect(actionText[c.n])}</td><td>${c.first.toFixed(0)} %</td><td>${c.pos.toFixed(1)}</td><td>${c.win.toFixed(0)} %</td></tr>`).join("")}</tbody>
+        <tbody>${chapters.map((c) => `<tr data-action="${c.n}"><td data-v="${c.n}"><b>${c.n}</b></td><td class="txt sim-action" data-v="${c.n}">${actionEffect(actionText[c.n])}</td><td data-v="${c.first}">${c.first.toFixed(0)} %</td><td data-v="${c.pos}">${c.pos.toFixed(1)}</td><td data-v="${c.win}">${c.win.toFixed(0)} %</td></tr>`).join("")}</tbody>
       </table></div>
 
       <h3>${esc(t("simEndRes"))}</h3>
@@ -282,11 +295,23 @@
         <div class="kpi"><b>${r("free")}</b><span>${esc(t("simResFree"))}</span></div>
       </div>
 
+      <h3>${esc(t("cmpTitle"))}</h3>
+      <p class="hint">${esc(t("cmpHint"))}</p>
+      <div class="scroll"><table class="stab sortable">
+        <thead><tr><th class="txt">${esc(t("cmpRes"))}</th><th>${esc(t("cmpWinner"))}</th><th>${esc(t("cmpAll"))}</th><th>${esc(t("cmpDiff"))}</th></tr></thead>
+        <tbody>${CMP.map(([k, label]) => {
+          const w = (agg.cmpW[k] || 0) / agg.games;
+          const a = (agg.cmpA[k] || 0) / agg.seats;
+          const d = a ? Math.round((100 * (w - a)) / a) : 0;
+          return `<tr><td class="txt" data-v="${esc(t(label))}">${esc(t(label))}</td><td data-v="${w}">${w.toFixed(1)}</td><td data-v="${a}">${a.toFixed(1)}</td><td data-v="${d}"><span class="edge ${d > 10 ? "pos" : d < -10 ? "neg" : ""}">${d > 0 ? "+" : ""}${d} %</span></td></tr>`;
+        }).join("")}</tbody>
+      </table></div>
+
       <h3>${esc(t("simPairs"))}</h3>
       <p class="hint">${esc(t("simPairsHint"))}</p>
-      <div class="scroll"><table class="stab">
+      <div class="scroll"><table class="stab sortable">
         <thead><tr><th class="txt">${esc(t("simPair"))}</th><th>${esc(t("colGames"))}</th><th>${esc(t("simWin"))}</th><th>${esc(t("simEdge"))}</th></tr></thead>
-        <tbody>${[...pairs.slice(0, 8), ...(pairs.length > 12 ? pairs.slice(-4) : [])].map((x, i) => `<tr class="${i === 8 ? "sep" : ""}"><td class="txt"><span data-card="${esc(x.names[0])}">${esc(tc(x.names[0]))}</span> + <span data-card="${esc(x.names[1])}">${esc(tc(x.names[1]))}</span></td><td>${x.n}</td><td>${x.win.toFixed(0)} %</td><td>${edgeCell(x.win, base)}</td></tr>`).join("") || `<tr><td colspan="4">—</td></tr>`}</tbody>
+        <tbody>${[...pairs.slice(0, 8), ...(pairs.length > 12 ? pairs.slice(-4) : [])].map((x, i) => `<tr class="${i === 8 ? "sep" : ""}"><td class="txt" data-v="${esc(tc(x.names[0]))}"><span data-card="${esc(x.names[0])}">${esc(tc(x.names[0]))}</span> + <span data-card="${esc(x.names[1])}">${esc(tc(x.names[1]))}</span></td><td data-v="${x.n}">${x.n}</td><td data-v="${x.win}">${x.win.toFixed(0)} %</td><td data-v="${x.win}">${edgeCell(x.win, base)}</td></tr>`).join("") || `<tr><td colspan="4">—</td></tr>`}</tbody>
       </table></div>`;
   }
 
@@ -294,6 +319,32 @@
     renderControls();
     renderResults();
   }
+
+  // Any "sortable" table: click a column header to sort by it (click again to reverse).
+  document.addEventListener("click", (event) => {
+    const th = event.target.closest("#simScreen table.sortable th");
+    if (!th) return;
+    const table = th.closest("table");
+    const col = [...th.parentNode.children].indexOf(th);
+    const dir = th.dataset.dir === "desc" ? 1 : -1;
+    for (const other of th.parentNode.children) {
+      delete other.dataset.dir;
+      other.classList.remove("sorted");
+    }
+    th.dataset.dir = dir < 0 ? "desc" : "asc";
+    th.classList.add("sorted");
+    const body = table.tBodies[0];
+    const val = (row) => {
+      const v = row.children[col]?.dataset.v ?? row.children[col]?.textContent ?? "";
+      const n = Number(v);
+      return Number.isNaN(n) || v === "" ? String(v) : n;
+    };
+    [...body.rows].sort((a, b) => {
+      const x = val(a);
+      const y = val(b);
+      return (typeof x === "string" || typeof y === "string" ? String(x).localeCompare(String(y)) : x - y) * dir;
+    }).forEach((row) => body.appendChild(row));
+  });
 
   document.addEventListener("click", (event) => {
     const btn = event.target.closest("#simScreen button, #simScreen th[data-sort]");
@@ -326,5 +377,16 @@
     if (!$("#simScreen")?.hidden) show();
   });
 
-  window.Sims = { show };
+  function clearAll() {
+    if (running) stopAsked = true;
+    try {
+      for (const k of Object.keys(localStorage)) if (k.startsWith("ouat-sim1")) localStorage.removeItem(k);
+    } catch {
+      /* storage unavailable */
+    }
+    store.set(keyOf(), emptyAgg());
+    show();
+  }
+
+  window.Sims = { show, clearAll };
 })();

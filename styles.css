@@ -3144,3 +3144,10 @@ button.needs-click { outline: none; }
 
 .w-good { color: #2f5d8a; font-weight: 800; }
 .w-bad { color: #a8323a; font-weight: 800; }
+
+#simScreen table.sortable th { cursor: pointer; user-select: none; }
+#simScreen table.sortable th.sorted::after { content: " ▾"; }
+#simScreen table.sortable th.sorted[data-dir="asc"]::after { content: " ▴"; }
+
+.stats-head-btns { display: flex; gap: 8px; align-items: center; }
+.sim-run-btn { padding: 8px 18px; font-size: 15px; }

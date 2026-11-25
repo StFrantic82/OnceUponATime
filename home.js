@@ -147,6 +147,15 @@
     $("#joinCode").addEventListener("keydown", (event) => {
       if (event.key === "Enter") joinRoom();
     });
+    // "Clear" at the top of the statistics: clears the tab on screen (my games, or the simulations).
+    $("#statsClearTop").addEventListener("click", () => {
+      if (statsTab === "sims") {
+        window.Sims?.clearAll();
+      } else {
+        store.set("ouat-history", []);
+        showStats();
+      }
+    });
     $("#statsClear").addEventListener("click", () => {
       store.set("ouat-history", []);
       showStats();

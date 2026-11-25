@@ -267,7 +267,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the West",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: place XP on a Character so that it levels up.",
+      "effect": "Instant: place 2 XP on a Character.",
       "copy": 1
     },
     {
@@ -276,7 +276,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the East",
       "alignment": "Bad",
       "icons": "Dexterity 1",
-      "effect": "Instant: place XP on a Character so that it levels up.",
+      "effect": "Instant: place 2 XP on a Character.",
       "copy": 1
     },
     {
@@ -285,7 +285,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the North",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Instant: place XP on a Character so that it levels up.",
+      "effect": "Instant: place 2 XP on a Character.",
       "copy": 1
     },
     {
@@ -294,7 +294,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the South",
       "alignment": "Good",
       "icons": "Charm 1",
-      "effect": "Instant: place XP on a Character so that it levels up.",
+      "effect": "Instant: place 2 XP on a Character.",
       "copy": 1
     },
     {
@@ -564,7 +564,7 @@ window.GAME_DATA = {
       "id": "I1",
       "deck": "item",
       "name": "Enchanted Sword",
-      "cost": 3,
+      "cost": 4,
       "icons": "Strength 1",
       "effect": "Instant: gain 1 XP for each Strength icon.",
       "copy": 1
@@ -573,7 +573,7 @@ window.GAME_DATA = {
       "id": "I2",
       "deck": "item",
       "name": "Puss’s Boots",
-      "cost": 4,
+      "cost": 5,
       "icons": "Dexterity 1",
       "effect": "Activation: gain 1 coin for each Dexterity icon (2 coins more if you have Puss in Boots).",
       "copy": 1
@@ -582,7 +582,7 @@ window.GAME_DATA = {
       "id": "I3",
       "deck": "item",
       "name": "whishing ring",
-      "cost": 2,
+      "cost": 3,
       "icons": "Charm 1",
       "effect": "Ongoing: whenever you gain a Tag token, gain 1 coin and 1 VP.",
       "copy": 1
@@ -591,7 +591,7 @@ window.GAME_DATA = {
       "id": "I4",
       "deck": "item",
       "name": "Spellbook",
-      "cost": 3,
+      "cost": 4,
       "icons": "Intelligence 1",
       "effect": "Instant: gain 1 XP for each Intelligence icon.",
       "copy": 1
@@ -600,7 +600,7 @@ window.GAME_DATA = {
       "id": "I5",
       "deck": "item",
       "name": "The Dwarves House",
-      "cost": 3,
+      "cost": 4,
       "icons": "none",
       "effect": "Instant: gain 4 XP. Game End: 1 VP for each Dwarf.",
       "copy": 1
@@ -609,7 +609,7 @@ window.GAME_DATA = {
       "id": "I6",
       "deck": "item",
       "name": "The Magic Mirror",
-      "cost": 4,
+      "cost": 5,
       "icons": "Intelligence 1",
       "effect": "Activation: gain 2 XP. If you have The Evil Queen, gain 1 VP too.",
       "copy": 1
@@ -618,7 +618,7 @@ window.GAME_DATA = {
       "id": "I7",
       "deck": "item",
       "name": "Poisoned Apple",
-      "cost": 2,
+      "cost": 3,
       "icons": "Bad 1",
       "effect": "Instant: gain 1 VP (5 VP if you have The Evil Queen). You may discard 1 Good Character to gain 3 VP more.",
       "copy": 1
@@ -627,7 +627,7 @@ window.GAME_DATA = {
       "id": "I8",
       "deck": "item",
       "name": "The Glass Coffin",
-      "cost": 3,
+      "cost": 4,
       "icons": "Charm 1",
       "effect": "Instant: take 1 Character from the discard pile of your choice (resolve its Instant effect).",
       "copy": 1
@@ -636,7 +636,7 @@ window.GAME_DATA = {
       "id": "I9",
       "deck": "item",
       "name": "Hot Air Balloon",
-      "cost": 4,
+      "cost": 5,
       "icons": "Dexterity 1",
       "effect": "Activation: tuck 1 Character of your tableau face down under this Item (it loses its tags and effects). Game End: 2 VP for each tucked Character, max 8 VP.",
       "copy": 1
@@ -645,7 +645,7 @@ window.GAME_DATA = {
       "id": "I10",
       "deck": "item",
       "name": "Mad Hatter's Hat",
-      "cost": 5,
+      "cost": 6,
       "icons": "Intelligence 1",
       "effect": "Instant: pull the top card of the Legendary deck out of the hat and add it to your tableau (resolve its Instant effect).",
       "copy": 1
@@ -654,7 +654,7 @@ window.GAME_DATA = {
       "id": "I11",
       "deck": "item",
       "name": "Rabbit's Clock",
-      "cost": 3,
+      "cost": 4,
       "icons": "Dexterity 1",
       "effect": "Ongoing: whenever you play the lowest Chapter of the round, you are late: gain 2 coins and 1 XP.",
       "copy": 1
@@ -663,7 +663,7 @@ window.GAME_DATA = {
       "id": "I12",
       "deck": "item",
       "name": "Bottle \"Drink Me\"",
-      "cost": 2,
+      "cost": 3,
       "icons": "Charm 1",
       "effect": "Instant: gain 1 Tag token of your choice and 1 XP.",
       "copy": 1
@@ -672,7 +672,7 @@ window.GAME_DATA = {
       "id": "I13",
       "deck": "item",
       "name": "Long Bow",
-      "cost": 3,
+      "cost": 4,
       "icons": "Strength 1",
       "effect": "Instant: gain 1 VP for each Bad card, max 5 VP. If you have Robin Hood, gain 2 VP more.",
       "copy": 1
@@ -681,7 +681,7 @@ window.GAME_DATA = {
       "id": "I14",
       "deck": "item",
       "name": "Horn of Sherwood",
-      "cost": 3,
+      "cost": 4,
       "icons": "Intelligence 1",
       "effect": "Activation: gain 1 coin for each Good card, max 5 coins.",
       "copy": 1
@@ -690,7 +690,7 @@ window.GAME_DATA = {
       "id": "I15",
       "deck": "item",
       "name": "Pumpkin Carriage",
-      "cost": 5,
+      "cost": 6,
       "icons": "Charm 1",
       "effect": "Instant: take 1 Adventure.",
       "copy": 1
@@ -699,7 +699,7 @@ window.GAME_DATA = {
       "id": "I16",
       "deck": "item",
       "name": "Magic Wand",
-      "cost": 4,
+      "cost": 5,
       "icons": "Charm 1",
       "effect": "Activation: place 1 XP on a Good Character.",
       "copy": 1
@@ -708,7 +708,7 @@ window.GAME_DATA = {
       "id": "I17",
       "deck": "item",
       "name": "Sand Hourglass",
-      "cost": 3,
+      "cost": 4,
       "icons": "Intelligence 1",
       "effect": "Activation: activate another of your Activation cards.",
       "copy": 1
@@ -717,7 +717,7 @@ window.GAME_DATA = {
       "id": "I18",
       "deck": "item",
       "name": "Magic Carpet",
-      "cost": 4,
+      "cost": 5,
       "icons": "Dexterity 1",
       "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 3 coins.",
       "copy": 1
@@ -726,7 +726,7 @@ window.GAME_DATA = {
       "id": "I19",
       "deck": "item",
       "name": "Whispering Mirror",
-      "cost": 4,
+      "cost": 5,
       "icons": "Intelligence 1",
       "effect": "Activation: discard 1 Character to gain 3 XP. If it was Good, gain 1 XP more.",
       "copy": 1
@@ -735,7 +735,7 @@ window.GAME_DATA = {
       "id": "I20",
       "deck": "item",
       "name": "Spinning Wheel",
-      "cost": 3,
+      "cost": 4,
       "icons": "Bad 1",
       "effect": "Ongoing: whenever you take a card without tags, gain 1 VP.",
       "copy": 1
@@ -744,7 +744,7 @@ window.GAME_DATA = {
       "id": "I21",
       "deck": "item",
       "name": "Basket of Treats",
-      "cost": 2,
+      "cost": 3,
       "icons": "Charm 1",
       "effect": "Instant: gain 2 coins and 1 XP (and 1 VP if you have Little Red Riding Hood).",
       "copy": 1
@@ -753,7 +753,7 @@ window.GAME_DATA = {
       "id": "I22",
       "deck": "item",
       "name": "Fairy Dust",
-      "cost": 3,
+      "cost": 4,
       "icons": "Charm 1",
       "effect": "Instant: place 2 XP on a Good Character.",
       "copy": 1
@@ -762,7 +762,7 @@ window.GAME_DATA = {
       "id": "I23",
       "deck": "item",
       "name": "Seashell",
-      "cost": 3,
+      "cost": 4,
       "icons": "Charm 1",
       "effect": "Activation: gain 1 XP for each Charm icon, max 5 XP.",
       "copy": 1
@@ -771,7 +771,7 @@ window.GAME_DATA = {
       "id": "I24",
       "deck": "item",
       "name": "\"Eat Me\" Cake",
-      "cost": 4,
+      "cost": 5,
       "icons": "none",
       "effect": "Instant: choose one icon type. Gain 2 Tag tokens of that type.",
       "copy": 1
@@ -780,7 +780,7 @@ window.GAME_DATA = {
       "id": "I25",
       "deck": "item",
       "name": "The Crown of England",
-      "cost": 5,
+      "cost": 6,
       "icons": "none",
       "effect": "Game End: 1 VP for each complete set of four icons.",
       "copy": 1
@@ -789,7 +789,7 @@ window.GAME_DATA = {
       "id": "I26",
       "deck": "item",
       "name": "Glass Slipper",
-      "cost": 5,
+      "cost": 6,
       "icons": "Charm 1",
       "effect": "Game End: 2 VP for each Adventure you completed, max 10 VP. If you have Cinderella, gain 3 VP more.",
       "copy": 1
@@ -798,7 +798,7 @@ window.GAME_DATA = {
       "id": "I27",
       "deck": "item",
       "name": "Seven-League Boots",
-      "cost": 4,
+      "cost": 5,
       "icons": "Dexterity 1",
       "effect": "Instant: take the first player token.",
       "copy": 1
@@ -807,7 +807,7 @@ window.GAME_DATA = {
       "id": "I28",
       "deck": "item",
       "name": "Trident",
-      "cost": 5,
+      "cost": 6,
       "icons": "Strength 1",
       "effect": "Activation: gain 2 VP. If you have at least 3 Strength or King Triton, gain 1 XP too.",
       "copy": 1
@@ -816,7 +816,7 @@ window.GAME_DATA = {
       "id": "I29",
       "deck": "item",
       "name": "Magic Lamp",
-      "cost": 7,
+      "cost": 8,
       "icons": "Intelligence 1",
       "effect": "Instant: choose one: gain 5 coins, gain 4 XP, or take 1 Adventure.",
       "copy": 1
@@ -825,7 +825,7 @@ window.GAME_DATA = {
       "id": "I30",
       "deck": "item",
       "name": "Enchanted Rose",
-      "cost": 5,
+      "cost": 6,
       "icons": "Charm 1",
       "effect": "Game End: 1 VP for each upgraded Legendary card.",
       "copy": 1
@@ -834,7 +834,7 @@ window.GAME_DATA = {
       "id": "I31",
       "deck": "item",
       "name": "Ruby Slippers",
-      "cost": 4,
+      "cost": 5,
       "icons": "Dexterity 1",
       "effect": "Activation: the Chapter card you resolve this turn gives twice as many coins or XP.",
       "copy": 1
@@ -843,7 +843,7 @@ window.GAME_DATA = {
       "id": "I32",
       "deck": "item",
       "name": "Magic Contract",
-      "cost": 3,
+      "cost": 4,
       "icons": "Bad 1",
       "effect": "Instant: discard 1 Character to gain 4 coins or 3 XP.",
       "copy": 1
@@ -852,7 +852,7 @@ window.GAME_DATA = {
       "id": "I33",
       "deck": "item",
       "name": "Pirate Ship",
-      "cost": 5,
+      "cost": 6,
       "icons": "Strength 1",
       "effect": "Activation: gain 1 coin for each Pirate and each Bad card, max 7 coins.",
       "copy": 1
@@ -861,7 +861,7 @@ window.GAME_DATA = {
       "id": "I34",
       "deck": "item",
       "name": "Undersea Throne",
-      "cost": 4,
+      "cost": 5,
       "icons": "Intelligence 1",
       "effect": "Game End: 1 VP for each Item, max 8 VP.",
       "copy": 1
@@ -870,7 +870,7 @@ window.GAME_DATA = {
       "id": "I35",
       "deck": "item",
       "name": "Crocodile's Clock",
-      "cost": 3,
+      "cost": 4,
       "icons": "Dexterity 1",
       "effect": "Activation: take back 1 Chapter card with value 7 or higher from your discard.",
       "copy": 1
@@ -879,7 +879,7 @@ window.GAME_DATA = {
       "id": "I36",
       "deck": "item",
       "name": "The Whale",
-      "cost": 4,
+      "cost": 5,
       "icons": "Strength 1",
       "effect": "Game End: 1 VP for each of your cards without tags, max 8 VP.",
       "copy": 1
@@ -1524,7 +1524,7 @@ window.GAME_DATA = {
       "level1": "The first Item you buy each round costs 1 fewer coin.",
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
-      "cost3": 3,
+      "cost3": 4,
       "level3": "2 VP for each Item."
     },
     {
@@ -1533,7 +1533,7 @@ window.GAME_DATA = {
       "level1": "The first time each round you take both a Good and a Bad card, gain 1 coin.",
       "cost2": 2,
       "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
-      "cost3": 4,
+      "cost3": 5,
       "level3": "2 VP for each Good–Bad pair. Max 12 VP."
     },
     {
@@ -1542,7 +1542,7 @@ window.GAME_DATA = {
       "level1": "The first time each round you take a card with a Game End effect, gain 1 XP.",
       "cost2": 2,
       "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
-      "cost3": 5,
+      "cost3": 6,
       "level3": "3 VP for each card with a Game End effect. Max 15 VP."
     },
     {
@@ -1551,7 +1551,7 @@ window.GAME_DATA = {
       "level1": "Your Chapter cards with values 1–6 count as +2 when determining turn order.",
       "cost2": 2,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
-      "cost3": 4,
+      "cost3": 5,
       "level3": "1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP."
     },
     {
@@ -1560,7 +1560,7 @@ window.GAME_DATA = {
       "level1": "The first Activation each round produces 1 additional coin.",
       "cost2": 2,
       "level2": "Immediately activate up to two different cards.",
-      "cost3": 3,
+      "cost3": 4,
       "level3": "2 VP for each card with Activation. Max 14 VP."
     },
     {
@@ -1569,7 +1569,7 @@ window.GAME_DATA = {
       "level1": "When you play a Chapter card valued 1–7, gain 1 XP.",
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
-      "cost3": 5,
+      "cost3": 6,
       "level3": "2 VP for each Dexterity icon. Max 14 VP."
     },
     {
@@ -1587,7 +1587,7 @@ window.GAME_DATA = {
       "level1": "Your Legendary upgrades cost 1 fewer XP.",
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
-      "cost3": 5,
+      "cost3": 6,
       "level3": "3 VP for each upgraded Legendary card. Max 12 VP."
     }
   ],

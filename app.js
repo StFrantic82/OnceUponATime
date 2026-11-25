@@ -1227,6 +1227,7 @@ function instantLinks(card) {
     placeFreeXp(2, true);
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
+  if (/^Wicked Witch/.test(n)) placeFreeXp(2, false);
   if (n === "The Prince") activateOne();
   if (n === "Prince Charming") gain("vp", Math.min(4, iconCounts().Charm));
   if (n === "Snow White") gain("xp", countByName("Dwarf"));
@@ -2514,6 +2515,8 @@ async function simulateGame(opts) {
           questNames: r.questScores.map((q) => [q.quest.name, q.points]),
           endPts: withSeat(p.seat, () => [...p.tableau, ...p.items].filter((c) => /Game End/i.test(c.deck === "legendary" ? (c.upgraded ? c.upgrade : c.base) : c.effect || "")).map((c) => [c.name, scoreCards([c]), Boolean(c.upgraded)])),
           vpBy: p.vpBy || {},
+          coinsGained: p.coinsGained || 0,
+          xpGained: p.xpGained || 0,
           legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),
           writerLevel: p.writerLevel,
