@@ -310,6 +310,7 @@ function build() {
   add(L.board, boardSheets());
   add(L.scorePad, scoreSheet());
   add(L.sizes.tokens, tokenSheet());
+  add(t("icoTitle"), [`<section class="sheet"><header class="sheet-head">${esc(t("icoTitle"))}</header><div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>${esc(t("icoTitle"))}</h2></div>${CardFace.iconGuide()}</section>`]);
 
   let page = 2;
   const index = sections.map(([label, sheets]) => {

@@ -541,3 +541,18 @@ body.print-body {
 
 .fc-stash { position: absolute; bottom: 4px; right: 4px; display: inline-flex; align-items: center; gap: 2px; padding: 1px 6px; border-radius: 10px; background: #fff8e2; border: 2px solid #c9922a; font-weight: 800; z-index: 2; }
 .fc-stash .game-icon { width: 16px; height: 16px; }
+
+/* Iconography summary */
+.icon-guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 6px 0; }
+.ig-row { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255, 248, 226, .7); border: 1px solid #e2cfa8; }
+.ig-icon { display: flex; align-items: center; justify-content: center; gap: 3px; flex-wrap: wrap; min-height: 30px; }
+.ig-icon .game-icon { width: 26px; height: 26px; }
+.ig-icon .fc-skills { position: static; display: flex; gap: 3px; }
+.ig-icon .skill-tag { width: 22px; height: 22px; }
+.ig-icon .xp-box { width: 30px; height: 30px; display: grid; place-items: center; border: 2px dashed #c58b3c; border-radius: 6px; }
+.ig-icon .xp-box .game-icon { width: 18px; height: 18px; opacity: .6; }
+.ig-icon .freeup-ico { width: 30px; height: 30px; }
+.ig-icon .quest-ico { width: 40px; height: auto; }
+.ig-icon .guide-vpmark { position: static; }
+.ig-text { font-size: 13px; line-height: 1.3; }
+@media (max-width: 640px) { .icon-guide { grid-template-columns: 1fr; } }

@@ -262,5 +262,29 @@
     </div>`;
   }
 
-  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait, writerColor };
+  // Iconography summary (end of the rules, last page of the Print & Play).
+  function iconGuide() {
+    const gear = resourceIcon("activation", "Activation");
+    const rows = [
+      [skillTags(["Charm", "Strength", "Dexterity", "Intelligence"]), "ico_tags"],
+      [TAG_ICON, "ico_tagToken"],
+      [`<span class="set4 guide-set4">${skillTags(["Charm", "Strength", "Dexterity", "Intelligence"])}</span>`, "ico_set4"],
+      [resourceIcon("coins", "coins"), "ico_coin"],
+      [resourceIcon("xp", "XP"), "ico_xp"],
+      [`<span class="xp-box">${resourceIcon("xp", "XP")}</span>`, "ico_xpSpace"],
+      [FREEUP_ICON, "ico_freeUp"],
+      [resourceIcon("vp", "VP"), "ico_vp"],
+      [`<span class="fc-vpmark guide-vpmark">${resourceIcon("vp", "VP")}</span>`, "ico_vpMark"],
+      [resourceIcon("instant", "Instant"), "ico_instant"],
+      [resourceIcon("ongoing", "Ongoing"), "ico_ongoing"],
+      [gear, "ico_activation"],
+      [gear.repeat(3), "ico_activateAll"],
+      [resourceIcon("endgame", "Game End"), "ico_endgame"],
+      [QUEST_ICON, "ico_adventure"],
+      [`${resourceIcon("Good", "Good")} ${resourceIcon("Bad", "Bad")}`, "ico_goodBad"],
+    ];
+    return `<div class="icon-guide">${rows.map(([icon, key]) => `<div class="ig-row"><span class="ig-icon">${icon}</span><span class="ig-text">${esc(t(key))}</span></div>`).join("")}</div>`;
+  }
+
+  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait, writerColor, iconGuide };
 })();
