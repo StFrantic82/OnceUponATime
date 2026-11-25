@@ -380,7 +380,7 @@ window.CARD_I18N = [
   ["2 VP for each card with Activation. Max 14 VP.", "2 VP par carte à Activation. Max 14 VP.", "2 VP per ogni carta con Activation. Max 14 VP."],
   ["When you play a Chapter card valued 1–7, gain 1 XP.", "Quand vous jouez une carte Chapitre de valeur 1 à 7, gagnez 1 XP.", "Quando giochi una carta Capitolo di valore 1–7, ottieni 1 XP."],
   ["Look at the top three Common cards, take one, and discard the others.", "Regardez les trois premières cartes Communes, prenez-en une et défaussez les autres.", "Guarda le prime tre carte Comuni, prendine una e scarta le altre."],
-  ["2 VP for each Dexterity icon. Max 14 VP.", "2 VP par icône Dexterity. Max 14 VP.", "2 VP per ogni icona Dexterity. Max 14 VP."],
+  ["1 VP for each Common card.", "1 VP par carte Commune.", "1 VP per ogni carta Comune."],
   ["At the start of each round, gain 1 coin per set of 4 different icons.", "Au début de chaque manche, gagnez 1 coin par série de 4 icônes différentes.", "All’inizio di ogni round, ottieni 1 coin per ogni set di 4 icone diverse."],
   ["Choose an icon type: gain two tokens of that type.", "Choisissez un type d’icône : gagnez deux jetons de ce type.", "Scegli un tipo di icona: ottieni due segnalini di quel tipo."],
   ["3 VP per set of 4 different icons.", "3 VP par série de 4 icônes différentes.", "3 VP per ogni set di 4 icone diverse."],

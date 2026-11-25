@@ -1803,7 +1803,7 @@ function scoreWriter() {
     return Math.min(14, Math.floor((onCards + onWriter) / 2));
   }
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
-  if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
+  if (name === "J. M. Barrie") return state.tableau.filter((card) => card.deck !== "legendary").length;
   if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 3;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;

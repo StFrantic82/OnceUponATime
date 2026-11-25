@@ -1575,7 +1575,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 4,
-      "level3": "2 VP for each Dexterity icon. Max 14 VP.",
+      "level3": "1 VP for each Common card.",
       "coins": 2
     },
     {
