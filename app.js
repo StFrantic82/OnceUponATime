@@ -1257,6 +1257,27 @@ function renderStats() {
     <div class="summary-group">${[[t("items"), state.items.length], [t("upgrade"), state.tableau.filter((card) => card.upgraded).length]].map(cell).join("")}</div>`;
 }
 
+// When the row of groups leaves room on the right (2-3 players), Quests and Items move up beside it.
+function fitOfferRow() {
+  const layout = document.querySelector(".layout");
+  if (!layout) return;
+  layout.classList.remove("offer-narrow");
+  layout.style.removeProperty("--offer-zoom");
+  if (!window.matchMedia("(min-width: 1201px)").matches || !el.groups.lastElementChild) return;
+  const start = el.groups.getBoundingClientRect().left;
+  const need = el.groups.lastElementChild.getBoundingClientRect().right - start;
+  const right = layout.querySelector(".right-col");
+  const room = layout.clientWidth - (right ? right.getBoundingClientRect().width : 340) - 14 - 30;
+  const ratio = room / need;
+  if (ratio >= 0.82) {
+    layout.classList.add("offer-narrow");
+    if (ratio < 1) layout.style.setProperty("--offer-zoom", (0.56 * ratio).toFixed(3));
+  }
+}
+window.addEventListener("resize", () => {
+  if (G.started) fitOfferRow();
+});
+
 // Player colour = colour of their Writer.
 function playerColor(p) {
   return p?.writer ? CardFace.writerColor(p.writer.name) : "#9a8a70";
@@ -1395,6 +1416,7 @@ function renderGroups() {
   for (const button of el.groups.querySelectorAll("[data-group]")) {
     button.addEventListener("click", () => act("takeGroup", button.dataset.group));
   }
+  fitOfferRow();
 }
 
 function renderTableau() {

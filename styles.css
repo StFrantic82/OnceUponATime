@@ -2983,7 +2983,7 @@ button.needs-click { outline: none; }
 .offer-row h2 { margin-top: 0; }
 .offer-row .groups { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; gap: 10px; }
 .offer-row .group { flex: 0 0 auto; }
-.offer-row .group-cards .fcard { zoom: 0.56; }
+.offer-row .group-cards .fcard { zoom: var(--offer-zoom, 0.56); }
 .right-col { display: grid; gap: 14px; align-content: start; }
 .right-col .market-panel { min-height: 0; }
 .board .tableau { margin-bottom: 14px; }
@@ -3055,3 +3055,19 @@ button.needs-click { outline: none; }
 .hint-bubble .game-icon { width: 17px; height: 17px; vertical-align: -3px; }
 @keyframes hintIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
 .guide[hidden] { display: none !important; }
+
+/* Layout with named areas: the offer row on top, or beside Quests/Items when it leaves room */
+.layout { grid-template-areas: "offer offer offer" "left board right"; align-items: start; }
+.layout > .offer-row { grid-area: offer; margin: 0; }
+.layout > .left-panel { grid-area: left; }
+.layout > .board { grid-area: board; }
+.layout > .right-col { grid-area: right; }
+.layout.offer-narrow { grid-template-areas: "offer offer right" "left board right"; }
+.layout.offer-narrow > .right-col { grid-row: 1 / span 2; }
+.layout.offer-narrow > .offer-row .groups { overflow-x: visible; }
+@media (max-width: 1200px) {
+  .layout { grid-template-areas: "offer offer" "left board" "right right"; }
+}
+@media (max-width: 860px) {
+  .layout { grid-template-areas: "offer" "left" "board" "right"; }
+}
