@@ -539,7 +539,7 @@ function takeGroup(choice) {
     if (dropped) {
       group.cards = group.cards.filter((card) => card !== dropped);
       toDiscard(dropped);
-      gain("coins", 3);
+      gain("coins", 2);
       log("l_carpet", { p: state.name, c: C(dropped.name) });
     }
   }
@@ -1458,7 +1458,7 @@ async function activateCardInner(card) {
   const ownChoice = ["Hot Air Balloon", "Whispering Mirror", "The Crown of England"].includes(card.name);
   const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
-  if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
+  if (/spend 1 XP to gain 2 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
   if (/spend 3 coins to (?:level up|place XP)/i.test(text) && state.coins < 3) return;
   if (hasActivationCost) {
     const ok = await confirmCost(card);
@@ -1513,29 +1513,29 @@ async function activateCardInner(card) {
   } else if (card.name === "The Hunter" && card.upgraded) {
     if (countAlignment("Bad") > 0) gain("vp", 2);
   } else if (card.name === "Puss in Boots" && card.upgraded) {
-    gain("coins", Math.min(3, countAlignment("Bad")));
+    gain("coins", Math.floor(countAlignment("Bad") / 2));
   } else if (card.name === "The Wizard of Oz") {
     // resolved in activationLinks: spend coins, gain XP and VP
   } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
     state.coins -= 1;
     gain("xp", 1);
-  } else if (/spend 1 XP to gain 3 coins/i.test(text)) {
+  } else if (/spend 1 XP to gain 2 coins/i.test(text)) {
     // From the unplaced XP, or else from a Legendary that is not upgraded yet (never from an upgraded card).
     const from = state.xp > 0 ? null : spendableXpCard();
     if (state.xp > 0) state.xp -= 1;
     else if (from) from.xpOn -= 1;
     else return;
-    gain("coins", 3);
+    gain("coins", 2);
   } else if (/spend 3 coins to (?:level up|place XP)/i.test(text)) {
     state.coins -= 3;
     state.freeUpgrades += 1;
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
     else if (/gain 1 XP\b/i.test(text)) gain("xp", 1);
-    if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
-    if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(7, countByName("Pirate") + countAlignment("Bad")));
-    if (/gain 1 coin for each Item(?: you have)?, max 3/i.test(text)) gain("coins", Math.min(3, state.items.length));
-    if (/gain 1 coin for each Good (?:Character|card)/i.test(text)) gain("coins", Math.min(5, countAlignment("Good")));
+    if (/gain 1 coin for each pair of Dexterity/i.test(text)) gain("coins", Math.floor(countIcon("Dexterity") / 2));
+    if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(4, countByName("Pirate") + countAlignment("Bad")));
+    if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
+    if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
     if (/gain 1 XP for each Charm/i.test(text)) gain("xp", Math.min(5, countIcon("Charm")));
     if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
@@ -1596,12 +1596,12 @@ function activationLinks(card, text) {
   if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
   if (n === "Tinker Bell" && card.upgraded) gain("coins", 1);
   if (n === "Aladin" && card.upgraded) {
-    gain("coins", 2);
+    gain("coins", 1);
     gain("xp", 1);
     if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
   }
   if (n === "Trident" && (countIcon("Strength") >= 3 || hasCard("King Triton"))) gain("xp", 1);
-  if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 2);
+  if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 1);
   if (n === "The Wizard of Oz") {
     const k = Math.min(card.upgraded ? 2 : 1, state.coins);
     state.coins -= k;

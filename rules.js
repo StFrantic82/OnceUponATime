@@ -152,7 +152,7 @@ const RULES = {
       [[boards]]
       <h3>2. Play a Chapter card</h3>
       <p>Starting with the first player and going clockwise, everyone plays one Chapter card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. The Queen of Hearts adds to your chapter, lets you play the same chapter as an opponent and always wins ties.</p>
-      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 5 gives her a free upgrade and 3 coins.
+      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 5 gives her a free upgrade and 2 coins.
       <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Your turn</h3>
       <ol>
@@ -162,7 +162,7 @@ const RULES = {
         <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card. [[icon:freeup]] <b>Free upgrade</b>: one of your Legendary characters is upgraded at once (cover its empty spaces with XP from the supply). It cannot be used on your Writer.</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
-      <div class="example"><b>Example of a turn.</b> Léa played chapter 4 (“Activate all + 3 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 3 coins. With her 6 coins she could buy an Item, but she keeps them.
+      <div class="example"><b>Example of a turn.</b> Léa played chapter 4 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins. With her 5 coins she could buy an Item, but she keeps them.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
@@ -234,7 +234,7 @@ const RULES = {
       [[boards]]
       <h3>2. Jouer une carte Chapitre</h3>
       <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Chapitre face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. La Reine de cœur augmente votre chapitre, vous permet de jouer le même chapitre qu’un adversaire et gagne toujours les égalités.</p>
-      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 5 lui donne une amélioration gratuite et 3 pièces.
+      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 5 lui donne une amélioration gratuite et 2 pièces.
       <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Votre tour</h3>
       <ol>
@@ -244,7 +244,7 @@ const RULES = {
         <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée. [[icon:freeup]] <b>Amélioration gratuite</b> : un de vos personnages Légendaires est amélioré tout de suite (couvrez ses cases vides avec de l’XP de la réserve). Elle ne peut pas servir sur votre Écrivain.</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
-      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 4 (« Tout activer + 3 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 3 pièces. Avec ses 6 pièces, elle pourrait acheter un Objet, mais elle les garde.
+      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 4 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces. Avec ses 5 pièces, elle pourrait acheter un Objet, mais elle les garde.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
@@ -316,7 +316,7 @@ const RULES = {
       [[boards]]
       <h3>2. Giocare una carta Capitolo</h3>
       <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Capitolo scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). La Regina di cuori aumenta il tuo capitolo, ti permette di giocare lo stesso capitolo di un avversario e vince sempre i pareggi.</p>
-      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 5 le dà un potenziamento gratis e 3 monete.
+      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 5 le dà un potenziamento gratis e 2 monete.
       <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:5:Sofia]]</div></div>
       <h3>3. Il tuo turno</h3>
       <ol>
@@ -326,7 +326,7 @@ const RULES = {
         <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata. [[icon:freeup]] <b>Potenziamento gratis</b>: uno dei tuoi personaggi Leggendari è potenziato subito (copri le caselle vuote con XP dalla riserva). Non può essere usato sul tuo Scrittore.</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
-      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 4 («Attiva tutto + 3 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 3 monete. Con le sue 6 monete potrebbe comprare un Oggetto, ma le tiene.
+      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 4 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete. Con le sue 5 monete potrebbe comprare un Oggetto, ma le tiene.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
