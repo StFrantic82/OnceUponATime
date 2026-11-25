@@ -515,7 +515,7 @@ function itemPrice(item) {
 
 function buyItem(itemId) {
   const perraultPurchase = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0;
-  if (!perraultPurchase && (state.phase !== "buyItem" || state.writerRound.itemBought)) return;
+  if (!perraultPurchase && (state.phase !== "roundDone" || G.active !== G.cur || state.writerRound.itemBought)) return;
   const item = G.itemDisplay.find((entry) => entry.id === itemId);
   if (!item) return;
   const { price } = itemPrice(item);
@@ -1256,10 +1256,11 @@ function renderGuide() {
     bubble(el.itemDisplay, t("g_perrault"));
     mark("#itemDisplay [data-item]:not(:disabled)");
   } else if (myTurn && state.phase === "buyItem") {
-    bubble(el.itemDisplay, t("g_buyItem"));
     bubble(el.resolveActionBtn.closest(".tableau-head"), t("g_resolve"), "after");
-    mark("#itemDisplay [data-item]:not(:disabled)");
     mark("#resolveActionBtn");
+  } else if (myTurn && state.phase === "roundDone" && !state.writerRound.itemBought && el.itemDisplay.querySelector("[data-item]:not(:disabled)")) {
+    bubble(el.itemDisplay, t("g_buyItem"));
+    mark("#itemDisplay [data-item]:not(:disabled)");
   }
   if (state.activatePending > 0) {
     bubble(el.tableau, t("g_activate"));
@@ -1476,7 +1477,7 @@ function renderQuest(quest) {
 function renderItem(item) {
   const { price, discount } = itemPrice(item);
   const perraultPurchase = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0;
-  const canBuy = perraultPurchase || (state.phase === "buyItem" && !state.writerRound.itemBought);
+  const canBuy = perraultPurchase || (state.phase === "roundDone" && G.active === view.seat && !state.writerRound.itemBought);
   return `
     <div class="slot slot-item">
       ${CardFace.item(item, { price, original: discount ? item.cost : null })}

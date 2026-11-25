@@ -170,7 +170,6 @@
     if (state.phase === "chooseGroup") chooseGroup();
     settleTuck();
     if (state.phase === "buyItem") {
-      buySomething();
       await activateActionStep();
       G.cur = seat;
       while (state.activatePending > 0 && activationCandidates().length) {
@@ -178,6 +177,7 @@
         G.cur = seat;
       }
       state.activatePending = 0;
+      buySomething();
     }
     takeQuests();
     await spendXp();

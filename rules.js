@@ -159,12 +159,12 @@ const RULES = {
       <h3>3. Your turn</h3>
       <ol>
         <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
-        <li><b>Buy one Item</b> if you wish, by paying its price in coins.</li>
         <li><b>Resolve your Action card.</b> Coins, XP, Quests, activations or free upgrades.</li>
+        <li><b>Buy one Item</b> if you wish (one only), by paying its price in coins.</li>
         <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once.</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
-      <div class="example"><b>Example of a turn.</b> Léa played chapter 6 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. She buys nothing. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins.
+      <div class="example"><b>Example of a turn.</b> Léa played chapter 6 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins. With her 5 coins she could buy an Item, but she keeps them.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:6]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
@@ -237,12 +237,12 @@ const RULES = {
       <h3>3. Votre tour</h3>
       <ol>
         <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
-        <li><b>Achetez un Objet</b> si vous le souhaitez, en payant son prix en pièces.</li>
         <li><b>Résolvez votre carte Action.</b> Pièces, XP, Quêtes, activations ou améliorations gratuites.</li>
+        <li><b>Achetez un Objet</b> si vous le souhaitez (un seul), en payant son prix en pièces.</li>
         <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant.</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
-      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 6 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Elle n’achète rien. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces.
+      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 6 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces. Avec ses 5 pièces, elle pourrait acheter un Objet, mais elle les garde.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:6]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
@@ -315,12 +315,12 @@ const RULES = {
       <h3>3. Il tuo turno</h3>
       <ol>
         <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
-        <li><b>Compra un Oggetto</b> se vuoi, pagando il suo prezzo in monete.</li>
         <li><b>Risolvi la tua carta Azione.</b> Monete, XP, Missioni, attivazioni o potenziamenti gratis.</li>
+        <li><b>Compra un Oggetto</b> se vuoi (uno solo), pagando il suo prezzo in monete.</li>
         <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello.</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
-      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 6 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Non compra nulla. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete.
+      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 6 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete. Con le sue 5 monete potrebbe comprare un Oggetto, ma le tiene.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:6]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
