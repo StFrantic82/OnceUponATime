@@ -104,7 +104,7 @@
   // One dashed star space per XP needed: the number of spaces shows the cost. Filled spaces hold placed XP.
   function xpStep(n = 1, filled = 0) {
     const boxes = Array.from({ length: Math.max(1, n) }, (_, i) => `<span class="xp-box ${i < filled ? "on" : ""}">${resourceIcon("xp", "XP")}</span>`).join("");
-    return `<div class="xp-step xp-n${Math.max(1, n)}"><span class="xp-arrow">▼</span><span class="xp-boxes">${boxes}</span><span class="xp-arrow">▼</span></div>`;
+    return `<div class="xp-step xp-n${Math.max(1, n)}"><span class="xp-boxes">${boxes}</span></div>`;
   }
 
 
