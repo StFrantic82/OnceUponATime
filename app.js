@@ -360,6 +360,24 @@ function chaptersTaken(seat) {
   return new Set(G.players.filter((o) => o.seat !== seat && o.currentAction).map((o) => o.currentAction.number));
 }
 
+// Action cards are played one by one, clockwise from the first player.
+function currentChooser() {
+  const n = G.players.length;
+  for (let i = 0; i < n; i += 1) {
+    const p = G.players[(G.firstSeat + i) % n];
+    if (p.phase === "chooseAction") return p;
+  }
+  return null;
+}
+
+// Position of a player this round: choosing order (from the first player) until the cards are revealed,
+// then the order in which groups are taken.
+function turnPosition(seat) {
+  const n = G.players.length;
+  if (G.order && G.order.length) return G.order.indexOf(seat) + 1;
+  return ((seat - G.firstSeat + n) % n) + 1;
+}
+
 function canPlayChapter(p, number) {
   const taken = chaptersTaken(p.seat);
   if (!taken.has(number)) return true;
@@ -371,6 +389,7 @@ function playAction(number) {
   const action = state.hand.find((card) => card.number === Number(number));
   if (!action) return;
   const p = G.players[G.cur];
+  if (currentChooser() !== p) return;
   if (!canPlayChapter(p, action.number)) return;
   p.currentAction = action;
   p.hand = p.hand.filter((card) => card !== action);
@@ -1221,8 +1240,13 @@ function renderGuide() {
     bubble(el.actionHand.querySelector(".action-card"), t("g_tuck"));
     mark("#actionHand .action-card");
   } else if (state.phase === "chooseAction") {
-    bubble(el.actionHand.querySelector(".action-card"), t("g_chooseAction"));
-    mark("#actionHand .action-card:not(:disabled)");
+    const chooser = currentChooser();
+    if (chooser === me) {
+      bubble(el.actionHand.querySelector(".action-card"), t("g_chooseAction"));
+      mark("#actionHand .action-card:not(:disabled)");
+    } else if (chooser) {
+      bubble(el.actionHand.querySelector(".action-card"), t("g_waitChoose", { p: escapeHtml(chooser.name) }));
+    }
   }
   if (myTurn && state.phase === "chooseGroup") {
     bubble(el.groups, t("g_chooseGroup"));
@@ -1302,6 +1326,7 @@ function renderStats() {
   el.tableauSummary.innerHTML = `
     <div class="summary-group sg-main">${[
       [t("round"), `${G.round}/${roundsTotal()}`, "round-cell"],
+      [`${G.firstSeat === view.seat && !(G.order && G.order.length) ? `<span class="first-token" title="${escapeHtml(t("firstPlayer"))}">1</span>` : ""}${t("turnOrder")}`, `${turnPosition(view.seat)}/${G.players.length}`, "order-cell"],
       [resourceIcon("coins", t("coinsWord")), state.coins],
       [resourceIcon("xp", "XP"), state.xp],
       [resourceIcon("vp", t("vpWord")), liveScore(view.seat), "vp-cell"],
@@ -1366,7 +1391,7 @@ function renderPlayers() {
       const played = p.currentAction && (revealed || me) ? `<span class="pp-card" title="${escapeHtml(t("chapter"))}">${p.currentAction.number}</span>` : "";
       const canHandOver = view.role === "host" && !me && p.kind === "human" && !G.gameOver;
       return `<button type="button" class="pp ${me ? "me" : ""} ${G.active === p.seat ? "active" : ""}" data-player="${p.seat}" style="--pcol:${playerColor(p)}">
-        <span class="pp-top"><b>${escapeHtml(p.name)}${p.kind === "bot" ? ` <small>${escapeHtml(t("computer"))}</small>` : ""}</b>${played}</span>
+        <span class="pp-top"><span class="pp-pos" title="${escapeHtml(t("turnOrder"))}">${turnPosition(p.seat)}</span><b>${escapeHtml(p.name)}${p.kind === "bot" ? ` <small>${escapeHtml(t("computer"))}</small>` : ""}</b>${p.seat === G.firstSeat && !(G.order && G.order.length) ? `<span class="first-token" title="${escapeHtml(t("firstPlayer"))}">1</span>` : ""}${played}</span>
         <span class="pp-writer">${p.writer ? escapeHtml(tc(p.writer.name)) + ` · ${t("lvN", { n: p.writerLevel })}` : "…"} · <span class="pp-deck" title="${escapeHtml(t("deckLeft"))}">${p.actionDeck.length}</span></span>
         <span class="pp-res">${resourceIcon("coins", "coins")}${p.coins} ${resourceIcon("xp", "XP")}${p.xp} ${resourceIcon("vp", "VP")}${score}</span>
         <span class="pp-icons">${ICONS.map((i) => `<span class="pp-tag">${squareTag(i)}${icons[i]}</span>`).join("")}</span>
@@ -1403,7 +1428,8 @@ function showPlayerTableau(seat) {
 function renderActions() {
   const hand = [...state.hand].sort((a, b) => a.number - b.number);
   const me = G.players[view.seat];
-  const blocked = (action) => state.phase === "chooseAction" && me && !canPlayChapter(me, action.number);
+  const myChoice = state.phase === "chooseAction" && currentChooser() === me;
+  const blocked = (action) => state.phase === "chooseAction" && me && (!myChoice || !canPlayChapter(me, action.number));
   const tucking = state.tuckPending > 0;
   const deck = state.actionDeck.length;
   const deckInfo = `<div class="action-deck ${deck === 0 ? "empty" : ""}" title="${escapeHtml(t("deckHint"))}">

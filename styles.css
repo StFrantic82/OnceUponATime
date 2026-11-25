@@ -3094,3 +3094,11 @@ button.needs-click { outline: none; }
 .ac-line .quest-ico { width: 30px; height: 20px; font-size: inherit; }
 .action-hand .ac-line .quest-ico { width: 20px; height: 13px; }
 .action-card.taken-chapter { opacity: .35; filter: grayscale(.7); }
+
+/* Turn order: position badge and first player token */
+.pp-pos { display: inline-grid; place-items: center; min-width: 20px; height: 20px; border-radius: 50%; background: var(--pcol, #9a8a70); color: #fff; font: 800 12px "Alegreya Sans", sans-serif; margin-right: 4px; }
+.pp-top { justify-content: flex-start; }
+.pp-top .pp-card { margin-left: auto; }
+.first-token { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff3c8, #e0a63a); border: 2px solid #8a5a1a; color: #5a2716; font: 800 12px "Alegreya", serif; margin: 0 4px; box-shadow: 0 1px 2px rgba(0, 0, 0, .3); }
+.summary-cell.order-cell { background: #fff8e2; }
+.summary-cell.order-cell .label { gap: 4px; }
