@@ -366,7 +366,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "Charm 2",
-      "effect": "No effect. Counts as an icon-rich card.",
+      "effect": "",
       "copy": 1
     },
     {
@@ -375,7 +375,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "Charm 1, Strength 1",
-      "effect": "No effect. Counts as an icon-rich card.",
+      "effect": "",
       "copy": 2
     },
     {
@@ -384,7 +384,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "Charm 1, Dexterity 1",
-      "effect": "No effect. Counts as an icon-rich card.",
+      "effect": "",
       "copy": 3
     },
     {
@@ -393,7 +393,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "Charm 1, Intelligence 1",
-      "effect": "No effect. Counts as an icon-rich card.",
+      "effect": "",
       "copy": 4
     },
     {

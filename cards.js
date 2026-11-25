@@ -55,7 +55,7 @@
     return `<article class="fcard fc-common fc-${align} ${opts.cls || ""}">
       ${head(card, 160, 15)}
       <div class="fc-art">${CardArt.art(card.name)}</div>
-      <div class="fc-text"><p>${formatGameText(tc(card.effect))}</p></div>
+      <div class="fc-text">${card.effect ? `<p>${formatGameText(tc(card.effect))}</p>` : ""}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }
@@ -105,7 +105,7 @@
   // ---------- Action cards: a page from the storybook ----------
   function actionLines(effect) {
     const text = String(effect || "").trim();
-    if (!text) return [`<span class="ac-none">${t("noEffect")}</span>`];
+    if (!text) return [];
     return text.split("+").map((part) => {
       const p = part.trim();
       let m;

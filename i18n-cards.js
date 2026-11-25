@@ -136,7 +136,6 @@ window.CARD_I18N = [
   ["Instant: level up another Character for free.", "Instant : améliorez gratuitement un autre Personnage.", "Instant: potenzia gratis un altro Personaggio."],
   ["Instant: gain 1 XP.", "Instant : gagnez 1 XP.", "Instant: ottieni 1 XP."],
   ["Activation: spend 1 XP to gain 3 coins.", "Activation : dépensez 1 XP pour gagner 3 coins.", "Activation: spendi 1 XP per ottenere 3 coins."],
-  ["No effect. Counts as an icon-rich card.", "Aucun effet. Une carte riche en icônes.", "Nessun effetto. Una carta ricca di icone."],
   ["Instant: you may discard 1 Item to gain 3 coins.", "Instant : vous pouvez défausser 1 Objet pour gagner 3 coins.", "Instant: puoi scartare 1 Oggetto per ottenere 3 coins."],
   ["Ongoing: gain 1 coin whenever you level up a Character.", "Ongoing : gagnez 1 coin chaque fois que vous améliorez un Personnage.", "Ongoing: ottieni 1 coin ogni volta che potenzi un Personaggio."],
   ["Ongoing: Good Characters cost 1 less XP to level up, minimum 1 XP.", "Ongoing : améliorer un Personnage Gentil coûte 1 XP de moins, minimum 1 XP.", "Ongoing: potenziare un Personaggio Buono costa 1 XP in meno, minimo 1 XP."],
