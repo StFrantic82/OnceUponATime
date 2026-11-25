@@ -102,3 +102,7 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 .actions-grid .acard { width: 100%; }
 @media (max-width: 640px) { .actions-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media print { .actions-grid { break-inside: avoid; } }
+
+.freeup-ico { width: 1.5em; height: 1.5em; vertical-align: middle; display: inline-block; }
+.ac-line .freeup-ico { width: 28px; height: 28px; }
+.fc-text .freeup-ico { width: 2.3em; height: 2.3em; }

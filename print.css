@@ -508,3 +508,7 @@ body.print-body {
 .back-writers .back-frame b { font-size: 40px; }
 .back-medal { width: 170px; height: 130px; border-radius: 50% / 50%; overflow: hidden; border: 4px solid #f6d98a; box-shadow: 0 0 0 3px #4a2f63, 0 0 0 5px #c9a46b; }
 .back-medal svg { width: 100%; height: 100%; display: block; }
+
+.freeup-ico { width: 1.5em; height: 1.5em; vertical-align: middle; display: inline-block; }
+.ac-line .freeup-ico { width: 7mm; height: 7mm; }
+.fc-text .freeup-ico { width: 2.3em; height: 2.3em; }

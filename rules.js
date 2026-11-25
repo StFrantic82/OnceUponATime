@@ -110,6 +110,7 @@ function render(text, L) {
     .replace(/\[\[quest:([^\]]+)\]\]/g, (_, n) => `<figure class="fig">${CardFace.quest(find(DATA.quests, n))}</figure>`)
     .replace(/\[\[writer:([^\]]+)\]\]/g, (_, n) => `<figure class="fig fig-writer">${writerCard(find(DATA.writers, n))}</figure>`)
     .replace(/\[\[action:(\d+)(?::([^\]]+))?\]\]/g, (_, n, who) => `<figure class="fig fig-action">${CardFace.action(DATA.actions.find((a) => a.number === Number(n)))}${who ? `<figcaption>${esc(who)}</figcaption>` : ""}</figure>`)
+    .replace(/\[\[icon:freeup\]\]/g, () => window.FREEUP_ICON || "")
     .replace(/\[\[icon:(\w+)\]\]/g, (_, k) => resourceIcon(k, k))
     .replace(/\[\[tag:(\w+)\]\]/g, (_, k) => squareTag(k));
 }
@@ -164,7 +165,7 @@ const RULES = {
         <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
         <li><b>Resolve your Chapter card.</b> Coins, XP, Quests, activations or free upgrades.</li>
         <li><b>Buy one Item</b> if you wish (one only), by paying its price in coins.</li>
-        <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card.</li>
+        <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card. [[icon:freeup]] <b>Free upgrade</b>: the next step of one of your Legendary characters or of your Writer is completed at once (cover its empty spaces with XP from the supply).</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
       <div class="example"><b>Example of a turn.</b> Léa played chapter 6 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins. With her 5 coins she could buy an Item, but she keeps them.
@@ -245,7 +246,7 @@ const RULES = {
         <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
         <li><b>Résolvez votre carte Chapitre.</b> Pièces, XP, Quêtes, activations ou améliorations gratuites.</li>
         <li><b>Achetez un Objet</b> si vous le souhaitez (un seul), en payant son prix en pièces.</li>
-        <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée.</li>
+        <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée. [[icon:freeup]] <b>Amélioration gratuite</b> : la prochaine étape d’un de vos personnages Légendaires ou de votre Écrivain est complétée tout de suite (couvrez ses cases vides avec de l’XP de la réserve).</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
       <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 6 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces. Avec ses 5 pièces, elle pourrait acheter un Objet, mais elle les garde.
@@ -326,7 +327,7 @@ const RULES = {
         <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
         <li><b>Risolvi la tua carta Capitolo.</b> Monete, XP, Missioni, attivazioni o potenziamenti gratis.</li>
         <li><b>Compra un Oggetto</b> se vuoi (uno solo), pagando il suo prezzo in monete.</li>
-        <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata.</li>
+        <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata. [[icon:freeup]] <b>Potenziamento gratis</b>: il prossimo passaggio di uno dei tuoi personaggi Leggendari o del tuo Scrittore è completato subito (copri le caselle vuote con XP dalla riserva).</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
       <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 6 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete. Con le sue 5 monete potrebbe comprare un Oggetto, ma le tiene.

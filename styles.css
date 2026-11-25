@@ -3112,3 +3112,21 @@ button.needs-click { outline: none; }
 /* Cards offered in a choice (White Rabbit, Cheshire Cat) */
 .choice-btns .pick-card { display: inline-block; width: 92px; pointer-events: none; }
 .choice-btns .pick-card .fcard { transform-origin: top left; }
+
+/* Chapter cards with three effects (chapter 2): keep everything inside the page */
+.ac-page { overflow: hidden; }
+.ac-effect { min-height: 0; }
+.ac-long .ac-effect { gap: 0; line-height: 1.05; }
+.ac-long .ac-big { font-size: 18px; }
+.ac-long .ac-line .game-icon { width: 18px; height: 18px; }
+.ac-long .ac-and { line-height: 0.9; font-size: 11px; }
+.ac-long .ac-rule { margin: 0 0 2px; }
+.action-hand .ac-long .ac-big { font-size: 11px; }
+.action-hand .ac-long .ac-line .game-icon { width: 11px; height: 11px; }
+.action-hand .ac-long .ac-and { font-size: 8px; }
+.action-hand .ac-long .ac-effect { font-size: 8.5px; }
+
+.freeup-ico { width: 1.5em; height: 1.5em; vertical-align: middle; display: inline-block; }
+.ac-line .freeup-ico { width: 28px; height: 28px; }
+.action-hand .ac-line .freeup-ico { width: 16px; height: 16px; }
+.fc-text .freeup-ico { width: 2.3em; height: 2.3em; }
