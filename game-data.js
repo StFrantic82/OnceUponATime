@@ -1320,7 +1320,7 @@ window.GAME_DATA = {
     },
     {
       "number": 6,
-      "effect": "6 XP"
+      "effect": "Activate a single card + 3 Coins + 1 XP"
     },
     {
       "number": 7,
@@ -1336,7 +1336,7 @@ window.GAME_DATA = {
     },
     {
       "number": 10,
-      "effect": "3 XP"
+      "effect": "2 XP"
     },
     {
       "number": 11,
@@ -1552,7 +1552,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 4,
-      "level3": "1 VP for every 2 coins and 1 VP for every 2 XP gained during the game. Max 14 VP."
+      "level3": "1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP."
     },
     {
       "id": "W5",

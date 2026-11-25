@@ -1672,7 +1672,12 @@ function scoreWriter() {
   if (name === "Charles Perrault") return Math.min(10, state.items.length * 2);
   if (name === "Brothers Grimm") return Math.min(12, Math.min(countAlignment("Good"), countAlignment("Bad")) * 2);
   if (name === "Hans Christian Andersen") return Math.min(15, countCardsWith("Game End") * 3);
-  if (name === "Carlo Collodi") return Math.min(14, Math.floor((state.coinsGained || 0) / 2) + Math.floor((state.xpGained || 0) / 2));
+  if (name === "Carlo Collodi") {
+    // XP stays on the star spaces: count what is placed on Legendaries (filled steps included) and on the Writer.
+    const onCards = state.tableau.reduce((sum, card) => sum + (card.deck !== "legendary" ? 0 : card.upgraded ? upgradeCost(card) : card.xpOn || 0), 0);
+    const onWriter = (state.writerLevel >= 2 ? state.writer.cost2 : 0) + (state.writerLevel >= 3 ? state.writer.cost3 : 0) + (state.writerXp || 0);
+    return Math.min(14, Math.floor((onCards + onWriter) / 2));
+  }
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
   if (name === "L. Frank Baum") return Math.min(15, Math.min(...ICONS.map(countIcon)) * 5);

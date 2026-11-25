@@ -374,7 +374,7 @@ window.CARD_I18N = [
   ["3 VP for each card with a Game End effect. Max 15 VP.", "3 VP par carte à effet Game End. Max 15 VP.", "3 VP per ogni carta con effetto Game End. Max 15 VP."],
   ["Your Chapter cards with values 1–6 count as +2 when determining turn order.", "Vos cartes Chapitre de valeur 1 à 6 valent +2 pour déterminer l’ordre du tour.", "Le tue carte Capitolo di valore 1–6 valgono +2 per determinare l’ordine."],
   ["Return a played Chapter card to your hand, then discard one card from your hand.", "Reprenez en main une carte Chapitre jouée, puis défaussez une carte de votre main.", "Riprendi in mano una carta Capitolo già giocata, poi scartane una dalla mano."],
-  ["1 VP for every 2 coins and 1 VP for every 2 XP gained during the game. Max 14 VP.", "1 VP par tranche de 2 coins et 1 VP par tranche de 2 XP gagnés pendant la partie. Max 14 VP.", "1 VP ogni 2 coins e 1 VP ogni 2 XP ottenuti durante la partita. Max 14 VP."],
+  ["1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP.", "1 VP par tranche de 2 XP placés sur vos cartes et sur votre Écrivain. Max 14 VP.", "1 VP ogni 2 XP piazzati sulle tue carte e sul tuo Scrittore. Max 14 VP."],
   ["The first Activation each round produces 1 additional coin.", "La première Activation de chaque manche rapporte 1 coin de plus.", "La prima Activation del round produce 1 coin aggiuntiva."],
   ["Immediately activate up to two different cards.", "Déclenchez immédiatement jusqu’à deux cartes différentes.", "Attiva immediatamente fino a due carte differenti."],
   ["2 VP for each card with Activation. Max 14 VP.", "2 VP par carte à Activation. Max 14 VP.", "2 VP per ogni carta con Activation. Max 14 VP."],
