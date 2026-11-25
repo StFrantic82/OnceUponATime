@@ -140,6 +140,7 @@
     });
     $("#statsBack").addEventListener("click", show);
     $("#rulesBack").addEventListener("click", show);
+    bindCardPreview();
     $("#rulesPrint").addEventListener("click", () => window.print());
     window.addEventListener("langchange", () => {
       if (!$("#rulesScreen").hidden) window.Rules.render($("#rulesInApp"));
@@ -171,6 +172,64 @@
     $("#myStats").hidden = tab !== "mine";
     $("#simScreen").hidden = tab !== "sims";
     if (tab === "sims") window.Sims?.show();
+  }
+
+  // Card preview when hovering (or tapping) a card name in the statistics.
+  function cardPreviewHtml(name) {
+    const D = window.GAME_DATA;
+    const pick = (list) => list.find((c) => c.name === name);
+    let c;
+    if ((c = pick(D.legendary))) return CardFace.legendary(c);
+    if ((c = pick(D.common))) return CardFace.common(c);
+    if ((c = pick(D.items))) return CardFace.item(c);
+    if ((c = pick(D.quests))) return CardFace.quest(c);
+    if ((c = pick(D.writers)) && typeof window.renderWriterCard === "function") return window.renderWriterCard(c, 1, false, true);
+    return "";
+  }
+
+  function bindCardPreview() {
+    const tip = document.createElement("div");
+    tip.className = "card-preview";
+    tip.hidden = true;
+    document.body.appendChild(tip);
+    let current = null;
+    const place = (x, y) => {
+      const r = tip.getBoundingClientRect();
+      let left = x + 18;
+      if (left + r.width > innerWidth - 8) left = x - r.width - 18;
+      let top = y - r.height / 2;
+      top = Math.max(8, Math.min(top, innerHeight - r.height - 8));
+      tip.style.left = `${Math.max(8, left)}px`;
+      tip.style.top = `${top}px`;
+    };
+    const open = (el, x, y) => {
+      if (el !== current) {
+        current = el;
+        const html = el.dataset.card ? cardPreviewHtml(el.dataset.card) : CardFace.action(window.GAME_DATA.actions.find((a) => a.number === Number(el.dataset.action)) || {});
+        if (!html) return close();
+        tip.innerHTML = html;
+        tip.hidden = false;
+      }
+      place(x, y);
+    };
+    const close = () => {
+      current = null;
+      tip.hidden = true;
+    };
+    const screen = $("#statsScreen");
+    screen.addEventListener("pointermove", (e) => {
+      if (e.pointerType === "touch") return;
+      const el = e.target.closest("[data-card],[data-action]");
+      if (el) open(el, e.clientX, e.clientY);
+      else if (current) close();
+    });
+    screen.addEventListener("pointerleave", close);
+    screen.addEventListener("click", (e) => {
+      const el = e.target.closest("[data-card],[data-action]");
+      if (el && el !== current) open(el, e.clientX, e.clientY);
+      else close();
+    });
+    window.addEventListener("scroll", close, { passive: true });
   }
 
   function showRules() {
@@ -210,11 +269,11 @@
       </div>
       <h3>${esc(t("byWriter"))}</h3>
       <table class="stab"><thead><tr><th>${esc(t("colWriter"))}</th><th>${esc(t("colGames"))}</th><th>${esc(t("colAvg"))}</th><th>${esc(t("colBest"))}</th></tr></thead><tbody>
-        ${writers.map(([name, w]) => `<tr><td>${esc(tc(name))}</td><td>${w.games}</td><td>${(w.total / w.games).toFixed(1)}</td><td>${w.best}</td></tr>`).join("")}
+        ${writers.map(([name, w]) => `<tr><td data-card="${esc(name)}">${esc(tc(name))}</td><td>${w.games}</td><td>${(w.total / w.games).toFixed(1)}</td><td>${w.best}</td></tr>`).join("")}
       </tbody></table>
       <h3>${esc(t("lastGames"))}</h3>
       <table class="stab"><thead><tr><th>${esc(t("colDate"))}</th><th class="txt">${esc(t("colWriter"))}</th><th>${esc(t("colPlayers"))}</th><th>${esc(t("colBots"))}</th><th>${esc(t("colQuests"))}</th><th>${esc(t("colScore"))}</th></tr></thead><tbody>
-        ${recent.map((g) => `<tr><td>${new Date(g.date).toLocaleDateString(I18N.lang)}</td><td class="txt">${esc(tc(g.writer))}</td><td>${g.players}</td><td>${esc(LEVELS[g.level]?.label() || g.level)}</td><td>${g.quests}</td><td>${g.score}</td></tr>`).join("")}
+        ${recent.map((g) => `<tr><td>${new Date(g.date).toLocaleDateString(I18N.lang)}</td><td class="txt" data-card="${esc(g.writer)}">${esc(tc(g.writer))}</td><td>${g.players}</td><td>${esc(LEVELS[g.level]?.label() || g.level)}</td><td>${g.quests}</td><td>${g.score}</td></tr>`).join("")}
       </tbody></table>`;
   }
 

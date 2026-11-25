@@ -242,7 +242,7 @@
       <p class="hint">${esc(t("simEdgeHint", { n: base.toFixed(0) }))}</p>
       <div class="scroll"><table class="stab">
         <thead><tr><th>${esc(t("colWriter"))}</th><th>${esc(t("colGames"))}</th><th>${esc(t("simWin"))}</th><th>${esc(t("simEdge"))}</th><th>${esc(t("colAvg"))}</th><th>${esc(t("simLv2"))}</th><th>${esc(t("simLv3"))}</th><th>${esc(t("simWriterPts"))}</th></tr></thead>
-        <tbody>${writers.map((w) => { const lv = agg.levels[w.name] || [0, 0, 0]; const tot = lv[0] + lv[1] + lv[2] || 1; return `<tr><td>${esc(tc(w.name))}</td><td>${w.n}</td><td>${w.win.toFixed(0)} %</td><td>${edgeCell(w.win, base)}</td><td>${w.avg.toFixed(0)}</td><td>${pct(lv[1] + lv[2], tot).toFixed(0)} %</td><td>${pct(lv[2], tot).toFixed(0)} %</td><td>${w.extra.toFixed(1)}</td></tr>`; }).join("")}</tbody>
+        <tbody>${writers.map((w) => { const lv = agg.levels[w.name] || [0, 0, 0]; const tot = lv[0] + lv[1] + lv[2] || 1; return `<tr><td data-card="${esc(w.name)}">${esc(tc(w.name))}</td><td>${w.n}</td><td>${w.win.toFixed(0)} %</td><td>${edgeCell(w.win, base)}</td><td>${w.avg.toFixed(0)}</td><td>${pct(lv[1] + lv[2], tot).toFixed(0)} %</td><td>${pct(lv[2], tot).toFixed(0)} %</td><td>${w.extra.toFixed(1)}</td></tr>`; }).join("")}</tbody>
       </table></div>
 
       <h3>${esc(t("simCards"))}</h3>
@@ -251,7 +251,7 @@
       <div class="scroll"><table class="stab sim-cards">
         <thead><tr>${th("name", view === "quests" ? t("quest") : t("simCard"))}${th("share", t("simTaken"))}${th("win", t("simWin"))}${th("edge", t("simEdge"))}${th("avg", t("simAvgOwner"))}${view === "quests" ? th("extra", t("simQuestPts")) : ""}</tr></thead>
         <tbody>${rows
-          .map((r) => `<tr class="${r.n < low ? "low" : ""}"><td class="cn"><span class="owned-thumb">${CardArt.art(r.name)}</span>${esc(tc(r.name))}</td><td>${r.share.toFixed(0)} %</td><td>${r.win.toFixed(0)} %</td><td>${edgeCell(r.win, base)}</td><td>${r.avg.toFixed(0)}</td>${view === "quests" ? `<td>${r.extra.toFixed(1)}</td>` : ""}</tr>`)
+          .map((r) => `<tr class="${r.n < low ? "low" : ""}"><td class="cn" data-card="${esc(r.name)}"><span class="owned-thumb">${CardArt.art(r.name)}</span>${esc(tc(r.name))}</td><td>${r.share.toFixed(0)} %</td><td>${r.win.toFixed(0)} %</td><td>${edgeCell(r.win, base)}</td><td>${r.avg.toFixed(0)}</td>${view === "quests" ? `<td>${r.extra.toFixed(1)}</td>` : ""}</tr>`)
           .join("")}</tbody>
       </table></div>
 
@@ -267,7 +267,7 @@
       <p class="hint">${esc(t("simChaptersHint"))}</p>
       <div class="scroll"><table class="stab">
         <thead><tr><th>${esc(t("chapter"))}</th><th class="txt">${esc(t("simEffect"))}</th><th>${esc(t("simFirst"))}</th><th>${esc(t("simAvgPos"))}</th><th>${esc(t("simWinWith"))}</th></tr></thead>
-        <tbody>${chapters.map((c) => `<tr><td><b>${c.n}</b></td><td class="txt sim-action">${actionEffect(actionText[c.n])}</td><td>${c.first.toFixed(0)} %</td><td>${c.pos.toFixed(1)}</td><td>${c.win.toFixed(0)} %</td></tr>`).join("")}</tbody>
+        <tbody>${chapters.map((c) => `<tr data-action="${c.n}"><td><b>${c.n}</b></td><td class="txt sim-action">${actionEffect(actionText[c.n])}</td><td>${c.first.toFixed(0)} %</td><td>${c.pos.toFixed(1)}</td><td>${c.win.toFixed(0)} %</td></tr>`).join("")}</tbody>
       </table></div>
 
       <h3>${esc(t("simEndRes"))}</h3>
@@ -287,7 +287,7 @@
       <p class="hint">${esc(t("simPairsHint"))}</p>
       <div class="scroll"><table class="stab">
         <thead><tr><th class="txt">${esc(t("simPair"))}</th><th>${esc(t("colGames"))}</th><th>${esc(t("simWin"))}</th><th>${esc(t("simEdge"))}</th></tr></thead>
-        <tbody>${[...pairs.slice(0, 8), ...(pairs.length > 12 ? pairs.slice(-4) : [])].map((x, i) => `<tr class="${i === 8 ? "sep" : ""}"><td class="txt">${esc(tc(x.names[0]))} + ${esc(tc(x.names[1]))}</td><td>${x.n}</td><td>${x.win.toFixed(0)} %</td><td>${edgeCell(x.win, base)}</td></tr>`).join("") || `<tr><td colspan="4">—</td></tr>`}</tbody>
+        <tbody>${[...pairs.slice(0, 8), ...(pairs.length > 12 ? pairs.slice(-4) : [])].map((x, i) => `<tr class="${i === 8 ? "sep" : ""}"><td class="txt"><span data-card="${esc(x.names[0])}">${esc(tc(x.names[0]))}</span> + <span data-card="${esc(x.names[1])}">${esc(tc(x.names[1]))}</span></td><td>${x.n}</td><td>${x.win.toFixed(0)} %</td><td>${edgeCell(x.win, base)}</td></tr>`).join("") || `<tr><td colspan="4">—</td></tr>`}</tbody>
       </table></div>`;
   }
 

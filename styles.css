@@ -2868,3 +2868,13 @@ html {
 .secbtns {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+
+/* Card preview when hovering a card name in the statistics */
+.card-preview {
+  position: fixed; z-index: 200; pointer-events: none; zoom: 1.35;
+  filter: drop-shadow(0 10px 24px rgba(40, 20, 8, .45));
+}
+.card-preview > * { margin: 0 !important; }
+.card-preview .writer-card { width: 250px; }
+#statsScreen [data-card], #statsScreen [data-action] { cursor: zoom-in; }
+#statsScreen td[data-card]:hover, #statsScreen span[data-card]:hover, #statsScreen tr[data-action]:hover td { background: rgba(232, 184, 90, .18); }
