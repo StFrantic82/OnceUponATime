@@ -85,9 +85,17 @@
   }
 
   // Round VP mark (not a tag): the card grants VP during the game or at Game End.
+  // Round VP badge: only for cards that produce VP tokens during the game (Instant, Activation or
+  // Ongoing effects). Cards that only score at Game End do not get it.
+  function givesVpInPlay(card) {
+    return [card.effect, card.base, String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "")].some((text) =>
+      String(text || "")
+        .split(/(?=\b(?:Instant|Activation|Ongoing|Game End)\s*:)/i)
+        .some((part) => !/^Game End\s*:/i.test(part) && /\bVP\b/i.test(part)));
+  }
+
   function vpMark(card) {
-    const text = `${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`;
-    return /\bVP\b|Game End/i.test(text) ? `<span class="fc-vpmark" title="VP">${resourceIcon("vp", "VP")}</span>` : "";
+    return givesVpInPlay(card) ? `<span class="fc-vpmark" title="VP">${resourceIcon("vp", "VP")}</span>` : "";
   }
 
   function common(card, opts = {}) {
