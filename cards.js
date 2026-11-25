@@ -230,8 +230,9 @@
       if ((m = p.match(/^(\d+)\s*coins?$/i))) return `<span class="ac-big">${m[1]}</span>${resourceIcon("coins", "coins")}`;
       if ((m = p.match(/^(\d+)\s*XP$/i))) return `<span class="ac-big">${m[1]}</span>${resourceIcon("xp", "XP")}`;
       if (/Draft (a )?Quest/i.test(p)) return `<span class="ac-quest" title="${esc(t("takeAQuest"))}">${QUEST_ICON}</span>`;
-      if (/Activate all/i.test(p)) return `${resourceIcon("activation", "Activation")} ${esc(t("activateAll"))}`;
-      if (/Activate a single/i.test(p)) return `${resourceIcon("activation", "Activation")} ${esc(t("activateOne"))}`;
+      // Convention: 1 gear = activate 1 card, 3 gears = activate all your cards with an Activation effect.
+      if (/Activate all/i.test(p)) return `<span class="ac-gears" title="${esc(t("activateAll"))}">${resourceIcon("activation", t("activateAll")).repeat(3)}</span>`;
+      if (/Activate a single/i.test(p)) return `<span class="ac-gears" title="${esc(t("activateOne"))}">${resourceIcon("activation", t("activateOne"))}</span>`;
       if ((m = p.match(/Free level up to (\d+)/i))) return `<span class="ac-big">${m[1]}</span>${FREEUP_ICON}`;
       if (/free level up/i.test(p)) return FREEUP_ICON;
       return formatGameText(p);

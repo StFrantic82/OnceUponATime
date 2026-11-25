@@ -3133,3 +3133,5 @@ button.needs-click { outline: none; }
 
 .ac-quest .quest-ico { width: 2.6em; height: auto; }
 .action-hand .ac-quest .quest-ico { width: 2.2em; }
+
+.ac-gears { display: inline-flex; gap: 1px; }

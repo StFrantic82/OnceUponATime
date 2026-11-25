@@ -86,7 +86,7 @@ const P = {
     scoreGame: "Game",
     scoreDate: "Date",
     scoreRounds: "Rounds: 8 □  9 □",
-    scoreRows: ["Storyteller", "Writer", "VP gained during the game", "Quests", "Game End effects of characters and Items", "Writer level 3", "Total", "Rank"],
+    scoreRows: ["Storyteller", "Writer", "VP gained during the game", "Quests", "Game End effects of characters and Items", "Writer level 3", "Total"],
   },
   fr: {
     title: "Print & Play",
@@ -110,7 +110,7 @@ const P = {
     scoreGame: "Partie",
     scoreDate: "Date",
     scoreRounds: "Manches : 8 □  9 □",
-    scoreRows: ["Conteur", "Écrivain", "PV gagnés pendant la partie", "Quêtes", "Effets Fin de partie des personnages et Objets", "Écrivain niveau 3", "Total", "Classement"],
+    scoreRows: ["Conteur", "Écrivain", "PV gagnés pendant la partie", "Quêtes", "Effets Fin de partie des personnages et Objets", "Écrivain niveau 3", "Total"],
   },
   it: {
     title: "Print & Play",
@@ -134,7 +134,7 @@ const P = {
     scoreGame: "Partita",
     scoreDate: "Data",
     scoreRounds: "Round: 8 □  9 □",
-    scoreRows: ["Narratore", "Scrittore", "PV ottenuti durante la partita", "Missioni", "Effetti Fine partita di personaggi e Oggetti", "Scrittore livello 3", "Totale", "Classifica"],
+    scoreRows: ["Narratore", "Scrittore", "PV ottenuti durante la partita", "Missioni", "Effetti Fine partita di personaggi e Oggetti", "Scrittore livello 3", "Totale"],
   },
 };
 
@@ -201,8 +201,9 @@ function backsSheet(kind, set = 0, count = 0) {
 
 function tokenSheet() {
   const tags = ["Charm", "Strength", "Dexterity", "Intelligence"].flatMap((icon) => Array.from({ length: 9 }, () => `<div class="tok tag-tok sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon, true)}</div>`));
-  const round = (icon, value, n) => Array.from({ length: n }, () => `<div class="tok round-tok tok-${icon}">${resourceIcon(icon, icon, true)}<b>${value}</b></div>`);
-  const res = [...round("coins", 1, 27), ...round("coins", 3, 9), ...round("vp", 1, 18), ...round("vp", 5, 9)];
+  // A coin is a coin; a feather is 1 VP, a feather with a green 5 is 5 VP.
+  const round = (icon, value, n) => Array.from({ length: n }, () => `<div class="tok round-tok tok-${icon} ${value > 1 ? "tok-multi" : ""}">${value > 1 ? `<b class="tok-val">${value}</b>` : ""}${resourceIcon(icon, icon, true)}</div>`);
+  const res = [...round("coins", 1, 36), ...round("vp", 1, 18), ...round("vp", 5, 9)];
   const xp = Array.from({ length: 90 }, () => `<div class="tok xp-tok">${resourceIcon("xp", "XP", true)}</div>`);
   return [
     `<section class="sheet"><header class="sheet-head">${esc(L.tagsTitle)} · 20 × 20 mm</header><div class="tok-grid">${tags.join("")}</div>
@@ -257,11 +258,11 @@ function boardSheets() {
     </div></section>`);
 }
 
-// Score pad: two games per A4 page, up to 4 storytellers.
+// Score pad: six games per A4 page (9 cm wide each), up to 4 storytellers.
 function scoreTable() {
   const icons = [null, null, ["vp"], ["endgame"], ["endgame"], ["endgame"], null, null];
   const rows = L.scoreRows.map((label, i) => {
-    const cls = i === 6 ? "srow-total" : i < 2 ? "srow-name" : i === 7 ? "srow-rank" : "";
+    const cls = i === 6 ? "srow-total" : i < 2 ? "srow-name" : "";
     const ico = icons[i] ? icons[i].map((k) => resourceIcon(k, k, true)).join("") : "";
     return `<tr class="${cls}"><th>${ico}<span>${esc(label)}</span></th>${"<td></td>".repeat(4)}</tr>`;
   }).join("");
@@ -272,7 +273,7 @@ function scoreTable() {
 function scoreSheet() {
   return [`<section class="sheet score-sheet"><header class="sheet-head">${esc(L.scorePad)}</header>
     <div class="score-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time · ${esc(L.scorePad)}</h2></div>
-    ${scoreTable()}${scoreTable()}</section>`];
+    <div class="score-grid">${scoreTable().repeat(6)}</div></section>`];
 }
 
 function coverSheet(pages) {

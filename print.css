@@ -206,19 +206,9 @@ body.print-body {
   height: 13mm;
 }
 
-.round-tok b {
-  position: absolute;
-  right: 2.6mm;
-  bottom: 1.6mm;
-  display: grid;
-  place-items: center;
-  width: 7mm;
-  height: 7mm;
-  border-radius: 50%;
-  background: #3b2414;
-  color: #f6d98a;
-  font: 800 11pt "Alegreya", serif;
-}
+.round-tok.tok-multi { display: flex; justify-content: center; align-items: center; gap: 0.6mm; }
+.round-tok.tok-multi .game-icon { width: 10mm; height: 10mm; }
+.round-tok .tok-val { font: 800 21pt "Alegreya", serif; color: #3f8f4c; -webkit-text-stroke: 0.2mm #fff; }
 
 .first-tok {
   width: 30mm;
@@ -431,10 +421,10 @@ body.print-body {
 .score-title { display: flex; align-items: center; justify-content: center; gap: 4mm; margin-bottom: 4mm; }
 .score-title h2 { margin: 0; font: 700 20pt "Alegreya", serif; color: #5a2716; }
 .score-title .board-art { width: 20mm; }
-.score-block { border: 1.5mm solid #7a3a24; border-radius: 5mm; padding: 4mm; margin-bottom: 6mm; background: #fffaf0; }
+.score-block { width: 150mm; margin: 0 auto 6mm; box-sizing: border-box; border: 1.5mm solid #7a3a24; border-radius: 5mm; padding: 4mm; background: #fffaf0; }
 .score-top { display: flex; justify-content: space-between; font: 600 10pt "Alegreya Sans", sans-serif; color: #5a2716; margin-bottom: 3mm; }
 .score-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-.score-table th { width: 58mm; text-align: left; font: 600 9.5pt/1.15 "Alegreya Sans", sans-serif; color: #4a2c1a; padding: 1.5mm 2mm; background: #f3e1bd; border: .4mm solid #c9a46b; }
+.score-table th { width: 50mm; text-align: left; font: 600 9.5pt/1.15 "Alegreya Sans", sans-serif; color: #4a2c1a; padding: 1.5mm 2mm; background: #f3e1bd; border: .4mm solid #c9a46b; }
 .score-table th .game-icon { width: 5mm; height: 5mm; vertical-align: -1.3mm; margin-right: 1.5mm; }
 .score-table td { border: .4mm solid #c9a46b; height: 10.5mm; }
 .score-table .srow-name td { height: 10mm; }
@@ -515,3 +505,14 @@ body.print-body {
 
 .ac-quest .quest-ico { width: 2.6em; height: auto; }
 .action-hand .ac-quest .quest-ico { width: 2.2em; }
+
+.ac-gears { display: inline-flex; gap: 1px; }
+
+/* Score pad: 9 cm wide, four per page */
+.score-grid { display: grid; grid-template-columns: repeat(2, 90mm); gap: 4mm 8mm; justify-content: center; }
+.score-grid .score-block { width: 90mm; margin: 0; padding: 2.5mm; border-width: 1mm; border-radius: 3.5mm; }
+.score-grid .score-top { font-size: 8pt; margin-bottom: 2mm; }
+.score-grid .score-table th { width: 36mm; font-size: 7.5pt; padding: 1mm 1.2mm; }
+.score-grid .score-table th .game-icon { width: 3.8mm; height: 3.8mm; vertical-align: -1mm; margin-right: 1mm; }
+.score-grid .score-table td { height: 8mm; }
+.score-grid .score-table .srow-total th, .score-grid .score-table .srow-total td { height: 8.5mm; font-size: 9pt; }

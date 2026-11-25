@@ -109,3 +109,5 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 
 .ac-quest .quest-ico { width: 2.6em; height: auto; }
 .action-hand .ac-quest .quest-ico { width: 2.2em; }
+
+.ac-gears { display: inline-flex; gap: 1px; }
