@@ -1232,20 +1232,19 @@ function phaseMessage() {
 
 function renderStats() {
   const icons = iconCounts();
-  el.stats.innerHTML = [
-    [t("round"), `${G.round}/${roundsTotal()}`],
-    [resourceIcon("coins", "Coins"), state.coins],
-    [resourceIcon("xp", "XP"), state.xp],
-    [resourceIcon("vp", "VP"), liveScore(view.seat)],
-    [t("quest"), state.quests.length],
-    [t("freeUp"), state.freeUpgrades],
-  ]
-    .map(([label, value]) => `<div class="stat"><span>${label}</span><strong>${value}</strong></div>`)
-    .join("");
+  el.stats.innerHTML = "";
   el.phaseText.textContent = phaseMessage();
   const cell = ([label, value, cls = ""]) => `<div class="summary-cell ${cls}"><span class="label">${label}</span><strong>${value}</strong></div>`;
   const neutral = countAlignment("Neutral");
   el.tableauSummary.innerHTML = `
+    <div class="summary-group sg-main">${[
+      [t("round"), `${G.round}/${roundsTotal()}`, "round-cell"],
+      [resourceIcon("coins", t("coinsWord")), state.coins],
+      [resourceIcon("xp", "XP"), state.xp],
+      [resourceIcon("vp", t("vpWord")), liveScore(view.seat), "vp-cell"],
+      [t("quest"), state.quests.length],
+      ...(state.freeUpgrades > 0 ? [[t("freeUp"), state.freeUpgrades, "free-cell"]] : []),
+    ].map(cell).join("")}</div>
     <div class="summary-group sg-tags" title="${escapeHtml(t("tags"))}">${ICONS.map((icon) => cell([squareTag(icon), icons[icon], "tag-cell"])).join("")}</div>
     <div class="summary-group sg-align">${[
       [resourceIcon("Good", t("good")), countAlignment("Good")],
