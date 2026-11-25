@@ -34,7 +34,7 @@
     { key: "writers", icon: "vp" },
   ];
 
-  const prefs = Object.assign({ mode: "solo", name: "", players: 2, level: "normal", writerMode: "random", rounds: 9 }, store.get("ouat-prefs", {}));
+  const prefs = Object.assign({ mode: "solo", name: "", players: 2, level: "normal", writerMode: "random" }, store.get("ouat-prefs", {}));
 
   function savePrefs() {
     store.set("ouat-prefs", prefs);
@@ -65,12 +65,8 @@
     $("#lvseg").innerHTML = Object.entries(LEVELS)
       .map(([key, level], i) => `<button type="button" aria-pressed="${key === prefs.level}" data-level="${key}">${"★".repeat(i + 1)}<span>${level.label()}</span></button>`)
       .join("");
-    $("#lvhint").textContent = LEVELS[prefs.level].hint();
     $("#wseg").innerHTML = [["random", t("writerRandom")], ["choose", t("writerChoose")]]
       .map(([key, label]) => `<button type="button" aria-pressed="${key === prefs.writerMode}" data-writer-pick="${key}">${label}</button>`)
-      .join("");
-    $("#rseg").innerHTML = [8, 9]
-      .map((n) => `<button type="button" aria-pressed="${n === prefs.rounds}" data-rounds="${n}">${t("roundsN", { n })}</button>`)
       .join("");
     $("#deckBtns").innerHTML = DECKS.map((deck) => `<button type="button" data-open-deck="${deck.key}">${resourceIcon(deck.icon, t(`deck_${deck.key}`))}<b>${t(`deck_${deck.key}`)}</b><span>${(data[deck.key] || []).length}</span></button>`).join("");
   }
@@ -107,8 +103,8 @@
     tutorialState.seen = new Set();
     Game.newGame(
       tutorial
-        ? { players: 2, level: "easy", writerMode: "random", rounds: 9, name: prefs.name || t("you"), tutorial: true }
-        : { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode, rounds: prefs.rounds, name: prefs.name || t("you"), tutorial: false },
+        ? { players: 2, level: "easy", writerMode: "random", name: prefs.name || t("you"), tutorial: true }
+        : { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode, name: prefs.name || t("you"), tutorial: false },
     );
     window.scrollTo(0, 0);
   }
@@ -121,7 +117,6 @@
       else if (btn.dataset.players) prefs.players = Number(btn.dataset.players);
       else if (btn.dataset.level) prefs.level = btn.dataset.level;
       else if (btn.dataset.writerPick) prefs.writerMode = btn.dataset.writerPick;
-      else if (btn.dataset.rounds) prefs.rounds = Number(btn.dataset.rounds);
       else if (btn.dataset.openDeck) return openCatalog(btn.dataset.openDeck);
       else if (btn.id === "startBtn") return startGame(false);
       else if (btn.id === "tutoBtn") return startGame(true);
@@ -374,7 +369,7 @@
 
   function createRoom() {
     tutorialState.on = false;
-    window.Online.create(playerName(), { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode, rounds: prefs.rounds });
+    window.Online.create(playerName(), { players: prefs.players, level: prefs.level, writerMode: prefs.writerMode });
   }
 
   function joinRoom() {

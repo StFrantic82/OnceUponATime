@@ -220,7 +220,7 @@ function newPlayer(seat, info) {
     tagTokens: 0,
     freeUpgrades: 0,
     actionDeck,
-    hand: actionDeck.splice(0, 4),
+    hand: actionDeck.splice(0, 5),
     actionDiscard: [],
     tableau: [],
     items: [],
@@ -247,7 +247,7 @@ function newGame(options = {}, seats = null) {
   Object.assign(settings, options);
   const players = Math.min(5, Math.max(2, Number(settings.players) || 2));
   settings.players = players;
-  settings.rounds = Number(settings.rounds) === 8 ? 8 : 9;
+  settings.rounds = 8; // the story always lasts 8 rounds
   if (!seats) {
     const names = t("botNames");
     seats = [{ name: settings.name || t("you"), kind: "human", uid: "local" }];
@@ -394,8 +394,8 @@ function nextTurn() {
   if (p.kind === "bot" && !simMode) Bot.queueTurn(seat);
 }
 
-// The story lasts a fixed number of rounds (8 or 9). Each player draws one Action card per round:
-// with 4 cards in hand and 8 in the deck, the deck runs out at the end of round 8.
+// The story lasts 8 rounds. Each player draws one Action card at the end of each round:
+// with 5 cards in hand and 7 in the deck, the deck is empty for the last round.
 function endRoundAll() {
   G.active = null;
   if (simMode) G.curve.push(G.players.map((p) => liveScore(p.seat)));
@@ -962,7 +962,7 @@ function scoreWriter() {
 }
 
 function roundsTotal() {
-  return G.settings.rounds || 9;
+  return G.settings.rounds || 8;
 }
 
 function liveScore(seat) {
@@ -1558,7 +1558,7 @@ async function simulateGame(opts) {
   simMode = true;
   const n = Math.min(5, Math.max(2, Number(opts.players) || 4));
   try {
-    newGame({ players: n, level: opts.level || "hard", rounds: opts.rounds || 9, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
+    newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
     let guard = 400;
     while (!G.gameOver && guard > 0) {
       guard -= 1;

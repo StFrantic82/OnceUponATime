@@ -22,14 +22,14 @@
     },
   };
 
-  const cfg = Object.assign({ players: 4, level: "hard", rounds: 9, games: 200 }, store.get("ouat-sim-cfg", {}));
+  const cfg = Object.assign({ players: 4, level: "hard", games: 200 }, store.get("ouat-sim-cfg", {}), { rounds: 8 });
   let running = false;
   let stopAsked = false;
   let view = "legendary";
   let sortKey = "edge";
   let sortDir = -1;
 
-  const keyOf = () => `ouat-sim2-${cfg.players}-${cfg.level}-${cfg.rounds}`;
+  const keyOf = () => `ouat-sim5-${cfg.players}-${cfg.level}`;
   const emptyAgg = () => ({
     games: 0, rounds: 0, winner: 0, total: 0, last: 0, seats: 0,
     src: { base: 0, quests: 0, cards: 0, writerPts: 0 },
@@ -137,7 +137,6 @@
       <div class="sim-grid">
         <div><span class="hl2">${esc(t("players"))}</span>${seg("players", [2, 3, 4, 5].map((n) => [n, n]), cfg.players)}</div>
         <div><span class="hl2">${esc(t("level"))}</span>${seg("level", ["easy", "normal", "hard"].map((l) => [l, t(l)]), cfg.level)}</div>
-        <div><span class="hl2">${esc(t("length"))}</span>${seg("rounds", [8, 9].map((n) => [n, t("roundsN", { n })]), cfg.rounds)}</div>
         <div><span class="hl2">${esc(t("simGames"))}</span>${seg("games", [100, 500, 1000].map((n) => [n, n]), cfg.games)}</div>
       </div>
       <div class="sim-run">

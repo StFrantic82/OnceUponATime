@@ -124,7 +124,7 @@ const RULES = {
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
-      ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Quests. After <b>8 or 9 rounds</b> (agree on it before playing; 9 is the standard game), the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
+      ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Quests. After <b>8 rounds</b>, the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
       <p>The heart of the game is your hand of <b>Action cards</b>, numbered 1 to 12 like the chapters of a book. A high chapter lets you choose first; a low chapter gives a stronger effect. Every chapter you play is gone, so choose wisely when to spend it.</p>`],
       ["components", "The cards", `<p>Every character and Item shows the same elements:</p>
       [[anatomy:common]]
@@ -137,7 +137,7 @@ const RULES = {
       ["setup", "Setup", `<ol>
         <li>Shuffle the Normal characters and the Legendary characters into two separate decks.</li>
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
-        <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
+        <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>5</b> into their hand and places the other <b>7</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
         <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing.</li>
         <li>Put the board in the middle, on the side for your number of players. Choose a first player at random.</li>
@@ -176,7 +176,7 @@ const RULES = {
       <h3>Writers</h3>
       <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. You reach each level by filling its star spaces with XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "End of the game and scoring", `<p>The game ends after the 8th or 9th round, when the Action decks are empty. Each player adds up:</p>
+      ["end", "End of the game and scoring", `<p>The game ends after the 8th round, when the Action decks are empty. Each player adds up:</p>
       <ul>
         <li>the Victory Points [[icon:vp]] gained during the game;</li>
         <li>their Quests [[icon:endgame]];</li>
@@ -202,7 +202,7 @@ const RULES = {
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
-      ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Quêtes. Après <b>8 ou 9 manches</b> (à décider avant de jouer ; 9 pour une partie standard), le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
+      ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Quêtes. Après <b>8 manches</b>, le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
       <p>Le cœur du jeu, c’est votre main de <b>cartes Action</b>, numérotées de 1 à 12 comme les chapitres d’un livre. Un grand chapitre vous fait choisir en premier ; un petit chapitre donne un effet plus fort. Chaque chapitre joué est perdu : choisissez bien quand le dépenser.</p>`],
       ["components", "Les cartes", `<p>Chaque personnage et chaque Objet présente les mêmes éléments :</p>
       [[anatomy:common]]
@@ -215,7 +215,7 @@ const RULES = {
       ["setup", "Mise en place", `<ol>
         <li>Mélangez les personnages Normaux et les personnages Légendaires en deux pioches séparées.</li>
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
-        <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
+        <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>5</b> et pose les <b>7</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
         <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
         <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard.</li>
@@ -254,7 +254,7 @@ const RULES = {
       <h3>Écrivains</h3>
       <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. On atteint chaque niveau en remplissant ses cases étoile avec de l’XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e ou la 9e manche, quand les pioches Action sont vides. Chaque joueur additionne :</p>
+      ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e manche, quand les pioches Action sont vides. Chaque joueur additionne :</p>
       <ul>
         <li>les Points de Victoire [[icon:vp]] gagnés pendant la partie ;</li>
         <li>ses Quêtes [[icon:endgame]] ;</li>
@@ -280,7 +280,7 @@ const RULES = {
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [
-      ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Missioni. Dopo <b>8 o 9 round</b> (da decidere prima di giocare; 9 per una partita standard), vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
+      ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Missioni. Dopo <b>8 round</b>, vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
       <p>Il cuore del gioco è la tua mano di <b>carte Azione</b>, numerate da 1 a 12 come i capitoli di un libro. Un capitolo alto ti fa scegliere per primo; un capitolo basso dà un effetto più forte. Ogni capitolo giocato è perso: scegli bene quando usarlo.</p>`],
       ["components", "Le carte", `<p>Ogni personaggio e ogni Oggetto mostra gli stessi elementi:</p>
       [[anatomy:common]]
@@ -293,7 +293,7 @@ const RULES = {
       ["setup", "Preparazione", `<ol>
         <li>Mescola i personaggi Normali e i personaggi Leggendari in due mazzi separati.</li>
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
-        <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
+        <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>5</b> e mette le altre <b>7</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
         <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
         <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore.</li>
@@ -332,7 +332,7 @@ const RULES = {
       <h3>Scrittori</h3>
       <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Si raggiunge ogni livello riempiendo le sue caselle stella con XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° o il 9° round, quando i mazzi Azione sono vuoti. Ogni giocatore somma:</p>
+      ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° round, quando i mazzi Azione sono vuoti. Ogni giocatore somma:</p>
       <ul>
         <li>i Punti Vittoria [[icon:vp]] ottenuti durante la partita;</li>
         <li>le sue Missioni [[icon:endgame]];</li>

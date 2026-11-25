@@ -311,7 +311,7 @@ function scoreTable() {
     const ico = icons[i] ? icons[i].map((k) => resourceIcon(k, k, true)).join("") : "";
     return `<tr class="${cls}"><th>${ico}<span>${esc(label)}</span></th>${"<td></td>".repeat(5)}</tr>`;
   }).join("");
-  return `<div class="score-block"><div class="score-top"><span>${esc(L.scoreGame)} n° ______</span><span>${esc(L.scoreDate)} : ____ / ____ / ________</span><span>${esc(L.scoreRounds)}</span></div>
+  return `<div class="score-block"><div class="score-top"><span>${esc(L.scoreGame)} n° ______</span><span>${esc(L.scoreDate)} : ____ / ____ / ________</span></div>
     <table class="score-table"><tbody>${rows}</tbody></table></div>`;
 }
 
