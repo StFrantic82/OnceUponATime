@@ -2734,3 +2734,85 @@ html {
   font-size: 11px;
   color: var(--muted);
 }
+
+.kpis.small .kpi b {
+  font-size: 22px;
+}
+
+.curve {
+  margin: 8px 0 0;
+  padding: 10px;
+  border-radius: 14px;
+  background: #fffaf0;
+  border: 1px solid var(--line);
+}
+
+.curve svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.curve figcaption {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.curve figcaption i {
+  display: inline-block;
+  width: 14px;
+  height: 4px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+.seat-bars {
+  display: grid;
+  gap: 6px;
+}
+
+.seat-bars > div {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr) 54px 60px;
+  align-items: center;
+  gap: 8px;
+}
+
+.seat-bars i {
+  display: block;
+  height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #f0b04a, #d98a2b);
+}
+
+.sim-action .ac-page,
+.sim-action .acard {
+  display: contents;
+}
+
+.sim-action .ac-effect {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 4px 8px;
+  font-size: 13px;
+}
+
+.sim-action .ac-foot {
+  display: none;
+}
+
+.sim-action .ac-big {
+  font-size: 16px;
+}
+
+.sim-action .ac-line .game-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.stab tr.sep td {
+  border-top: 3px double var(--line);
+}

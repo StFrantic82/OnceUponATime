@@ -267,6 +267,9 @@ function newGame(options = {}, seats = null) {
   G.itemDisplay = draw("items", 1 + players);
   G.questDisplay = draw("quests", 2 + players);
   G.firstSeat = Math.floor(Math.random() * players);
+  G.startSeat = G.firstSeat;
+  G.history = [];
+  G.curve = [];
   const writers = shuffle(DATA.writers || []);
   for (const p of G.players) {
     if (p.kind === "human" && settings.writerMode === "choose") {
@@ -370,6 +373,7 @@ function beginTurns() {
     const queen = first.tableau.find((card) => card.name === "Queen of Hearts" && card.upgraded);
     if (queen) withSeat(first.seat, () => gain("vp", 1));
   }
+  G.history.push({ round: G.round, plays: G.players.filter((p) => p.currentAction).map((p) => ({ seat: p.seat, number: p.currentAction.number, first: p.seat === order[0], pos: order.indexOf(p.seat) })) });
   log("l_played", { list: G.players.filter((p) => p.currentAction).map((p) => `${p.name} ${p.currentAction.number}`).join(" · ") });
   for (const p of G.players) p.phase = "waitTurn";
   nextTurn();
@@ -393,6 +397,7 @@ function nextTurn() {
 // with 4 cards in hand and 8 in the deck, the deck runs out at the end of round 8.
 function endRoundAll() {
   G.active = null;
+  if (simMode) G.curve.push(G.players.map((p) => liveScore(p.seat)));
   if (G.round >= G.settings.rounds) {
     endGame();
     return;
@@ -1506,6 +1511,18 @@ async function simulateGame(opts) {
           items: p.items.map((c) => c.name),
           questNames: r.questScores.map((q) => [q.quest.name, q.points]),
           actions: p.actionDiscard.map((c) => c.number),
+          writerLevel: p.writerLevel,
+          coinsLeft: p.coins,
+          xpLeft: p.xp,
+          freeLeft: p.freeUpgrades,
+          upgradedCount: p.tableau.filter((c) => c.upgraded).length,
+          legendaryCount: p.tableau.filter((c) => c.deck === "legendary").length,
+          cardCount: p.tableau.length,
+          itemCount: p.items.length,
+          questCount: p.quests.length,
+          seatPos: (p.seat - G.startSeat + G.players.length) % G.players.length,
+          curve: G.curve.map((row) => row[p.seat]),
+          plays: G.history.map((h) => h.plays.find((x) => x.seat === p.seat)).filter(Boolean),
         };
       }),
     };
