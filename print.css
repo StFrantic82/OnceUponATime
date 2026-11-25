@@ -525,3 +525,13 @@ body.print-body {
 
 .w-good { color: #2f5d8a; font-weight: 800; }
 .w-bad { color: #a8323a; font-weight: 800; }
+
+/* XP spaces at the real size of the tokens: 10 x 10 mm, 2 mm apart (legendary: 3.54 px/mm, writer: 4.1 px/mm) */
+.cell .fc-legendary .xp-box { width: 35.4px; height: 35.4px; border-radius: 6px; }
+.cell .fc-legendary .xp-boxes { gap: 7.1px; }
+.cell .fc-legendary .xp-box .game-icon { width: 22px; height: 22px; }
+.cell .fc-legendary .xp-step.xp-n5 .xp-boxes { gap: 3.5px; }
+.cell .fc-legendary .xp-step.xp-n5 .xp-arrow { display: none; }
+.print-writer .xp-box { width: 41px; height: 41px; border-radius: 7px; }
+.print-writer .xp-boxes { gap: 8.2px; }
+.print-writer .xp-box .game-icon { width: 26px; height: 26px; }

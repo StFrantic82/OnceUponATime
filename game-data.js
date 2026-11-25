@@ -1524,7 +1524,7 @@ window.GAME_DATA = {
       "level1": "The first Item you buy each round costs 1 fewer coin.",
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
-      "cost3": 4,
+      "cost3": 3,
       "level3": "2 VP for each Item."
     },
     {
@@ -1542,7 +1542,7 @@ window.GAME_DATA = {
       "level1": "The first time each round you take a card with a Game End effect, gain 1 XP.",
       "cost2": 2,
       "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
-      "cost3": 4,
+      "cost3": 5,
       "level3": "3 VP for each card with a Game End effect. Max 15 VP."
     },
     {
@@ -1560,34 +1560,34 @@ window.GAME_DATA = {
       "level1": "The first Activation each round produces 1 additional coin.",
       "cost2": 2,
       "level2": "Immediately activate up to two different cards.",
-      "cost3": 4,
+      "cost3": 3,
       "level3": "2 VP for each card with Activation. Max 14 VP."
     },
     {
       "id": "W6",
       "name": "J. M. Barrie",
       "level1": "When you play a Chapter card valued 1–7, gain 1 XP.",
-      "cost2": 2,
+      "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
-      "cost3": 4,
+      "cost3": 5,
       "level3": "2 VP for each Dexterity icon. Max 14 VP."
     },
     {
       "id": "W7",
       "name": "L. Frank Baum",
       "level1": "When you complete a set of all four icons, immediately gain 1 coin. Each set can trigger this only once.",
-      "cost2": 2,
+      "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
-      "cost3": 4,
+      "cost3": 6,
       "level3": "5 VP for each complete set of all four icons. Max 15 VP."
     },
     {
       "id": "W8",
       "name": "Le Prince de Beaumont",
       "level1": "Your Legendary upgrades cost 1 fewer XP.",
-      "cost2": 2,
+      "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
-      "cost3": 4,
+      "cost3": 5,
       "level3": "3 VP for each upgraded Legendary card. Max 12 VP."
     }
   ],
