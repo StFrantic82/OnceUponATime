@@ -54,7 +54,13 @@
     if (level() === "easy" && Math.random() < 0.6) pick = rand(open);
     else if (level() === "hard") pick = [...open].sort((a, b) => b.cards.reduce((s, c) => s + cardWorth(c), 0) - a.cards.reduce((s, c) => s + cardWorth(c), 0))[0];
     else pick = [...open].sort((a, b) => groupValue(b) - groupValue(a))[0];
-    takeGroup(pick.id);
+    // Magic Carpet: drop the weakest Common card of the group when it is worth less than 2 coins.
+    let choice = pick.id;
+    if (hasCarpet()) {
+      const weakest = pick.cards.filter((c) => c.deck === "common").sort((a, b) => cardWorth(a) - cardWorth(b))[0];
+      if (weakest && cardWorth(weakest) < 4.5) choice += `|${weakest.id}`;
+    }
+    takeGroup(choice);
   }
 
   function itemWorth(item) {

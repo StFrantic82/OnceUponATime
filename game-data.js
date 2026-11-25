@@ -683,7 +683,7 @@ window.GAME_DATA = {
       "name": "Magic Carpet",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Ongoing: when choosing a group, you may discard an Item in it to gain 2 coins.",
+      "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 2 coins.",
       "copy": 1
     },
     {

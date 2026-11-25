@@ -106,6 +106,22 @@ function askConfirm(message) {
   });
 }
 
+function askChoice(message, options) {
+  return new Promise((resolve) => {
+    const box = document.createElement("div");
+    box.className = "confirm-overlay";
+    box.innerHTML = `<div class="confirm-box" role="dialog" aria-modal="true"><p></p><div class="confirm-actions choice-actions">${options.map((o, i) => `<button type="button" data-i="${i}">${escapeHtml(o.label)}</button>`).join("")}</div></div>`;
+    box.querySelector("p").textContent = message;
+    for (const btn of box.querySelectorAll("[data-i]")) {
+      btn.addEventListener("click", () => {
+        box.remove();
+        resolve(options[Number(btn.dataset.i)].value);
+      });
+    }
+    document.body.appendChild(box);
+  });
+}
+
 // Optional costs: the local player is asked; the computer and remote players accept when they can pay.
 function confirmCost(card) {
   const p = G.players[G.cur];
@@ -423,10 +439,24 @@ function groupValue(group) {
   }, 0);
 }
 
-function takeGroup(groupId) {
+// Magic Carpet: when choosing a group, its owner may discard one Common card from it to gain 2 coins.
+function hasCarpet() {
+  return (state.items || []).some((item) => item.name === "Magic Carpet");
+}
+
+function takeGroup(choice) {
   if (state.phase !== "chooseGroup" || G.active !== G.cur) return;
+  const [groupId, discardId] = String(choice).split("|");
   const group = G.groups.find((entry) => entry.id === groupId);
   if (!group || group.taken) return;
+  if (discardId && hasCarpet()) {
+    const dropped = group.cards.find((card) => card.id === discardId && card.deck === "common");
+    if (dropped) {
+      group.cards = group.cards.filter((card) => card !== dropped);
+      gain("coins", 2);
+      log("l_carpet", { p: state.name, c: C(dropped.name) });
+    }
+  }
   group.taken = true;
   group.takenBy = state.name;
   group.takenSeat = G.cur;
@@ -1414,7 +1444,16 @@ function renderGroups() {
     })
     .join("");
   for (const button of el.groups.querySelectorAll("[data-group]")) {
-    button.addEventListener("click", () => act("takeGroup", button.dataset.group));
+    button.addEventListener("click", async () => {
+      const group = G.groups.find((entry) => entry.id === button.dataset.group);
+      const commons = group && hasCarpet() ? group.cards.filter((card) => card.deck === "common") : [];
+      let choice = button.dataset.group;
+      if (commons.length) {
+        const drop = await askChoice(t("carpetAsk"), [...commons.map((card) => ({ value: card.id, label: t("carpetDiscard", { c: tc(card.name) }) })), { value: "", label: t("carpetNone") }]);
+        if (drop) choice += `|${drop}`;
+      }
+      act("takeGroup", choice);
+    });
   }
   fitOfferRow();
 }
