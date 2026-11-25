@@ -11,6 +11,8 @@
   const SET4 = "\u0001SET4\u0001";
   function tagTokens(text) {
     return String(text || "")
+      // Caps ("max 14 VP") go on their own line, in brackets (drawn at the end of formatGameText).
+      .replace(/[,.;]?\s*\b(max(?:imum)?|massimo)\s+(\d+)(\s*(?:VP|PV|XP|coins?))?\s*\.?/gi, (_, word, n, unit) => `.\u0002(${word.toLowerCase()} ${n}${unit || ""})\u0003 `)
       .replace(/\b(?:all )?(?:four|4)(?: different)? icons\b/gi, SET4)
       .replace(/\b(?:des quatre icônes|de 4 icônes différentes)/gi, `de ${SET4}`)
       .replace(/\b(?:delle quattro icone|di 4 icone diverse)/gi, `di ${SET4}`)
@@ -191,15 +193,6 @@
     </article>`;
   }
 
-  // Quest scoring: the cap ("max 14 VP") goes on its own line, in brackets, under the text.
-  const MAX_RE = /^([\s\S]*?)[,.;]?\s*\b(max(?:imum)?|massimo|maximum)\s+(\d+)\s*([A-Za-z]+)?\s*\.?\s*$/i;
-  function questScoring(text) {
-    const m = String(text || "").match(MAX_RE);
-    const main = m ? `${m[1].trim()}.` : text;
-    const note = m ? `(${m[2].toLowerCase()} ${m[3]}${m[4] ? ` ${m[4]}` : ""})` : "";
-    return `<p>${resourceIcon("endgame", "Game End")} ${formatGameText(main)}</p>${note ? `<p class="fc-max-line">${formatGameText(note)}</p>` : ""}`;
-  }
-
   function quest(card, opts = {}) {
     const name = tc(card.name);
     return `<article class="fcard fc-quest ${opts.cls || ""}">
@@ -207,7 +200,7 @@
       <div class="fc-qbody">
         <header class="fc-name" style="${nameStyle(name, 170, 0, 15)}">${esc(name)}</header>
         <div class="fc-theme">${esc(tc(card.theme))}</div>
-        <div class="fc-text">${questScoring(tc(card.scoring))}</div>
+        <div class="fc-text"><p>${resourceIcon("endgame", "Game End")} ${formatGameText(tc(card.scoring))}</p></div>
       </div>
     </article>`;
   }

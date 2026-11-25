@@ -1687,6 +1687,7 @@ function formatGameText(text) {
     .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
     .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
     .replace(/\bGoals?\b/gi, "Quest")
+    .replace(/\u0002/g, '<span class="fc-max">').replace(/\u0003/g, "</span>")
     .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence"].map(skillIcon).join("")}</span>`);
 }
 

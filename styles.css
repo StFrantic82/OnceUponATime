@@ -3080,3 +3080,4 @@ button.needs-click { outline: none; }
 .fc-quest .fc-max-line { margin-top: 4px; font-size: .92em; color: #6b5a44; }
 .fc-quest .fc-text { flex-direction: column; justify-content: center; align-items: stretch; }
 .fc-quest .fc-text p { margin: 0; }
+.fc-max { display: block; margin-top: 3px; font-size: .9em; color: #6b5a44; font-weight: 500; }
