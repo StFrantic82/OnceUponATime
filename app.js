@@ -2555,6 +2555,10 @@ async function simulateGame(opts) {
           vpBy: p.vpBy || {},
           coinsGained: p.coinsGained || 0,
           groupPicks: p.groupPicks || [],
+          ...withSeat(p.seat, () => {
+            const ic = iconCounts();
+            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence };
+          }),
           xpGained: p.xpGained || 0,
           legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),

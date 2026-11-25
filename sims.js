@@ -29,7 +29,7 @@
   let sortKey = "edge";
   let sortDir = -1;
 
-  const keyOf = () => `ouat-sim13-${cfg.players}-${cfg.level}`;
+  const keyOf = () => `ouat-sim14-${cfg.players}-${cfg.level}`;
   const emptyAgg = () => ({
     games: 0, rounds: 0, winner: 0, total: 0, last: 0, seats: 0,
     src: { base: 0, quests: 0, cards: 0, writerPts: 0 },
@@ -45,6 +45,7 @@
     ["cards", "cmpCardPts"], ["writerPts", "cmpWriterPts"], ["cardCount", "simResCards"], ["legendaryCount", "simResLeg"],
     ["upgradedCount", "simResUp"], ["itemCount", "simResItems"], ["questCount", "simResQuests"], ["writerLevel", "cmpWriterLevel"],
     ["coinsLeft", "simResCoins"], ["xpLeft", "simResXp"],
+    ["tagCharm", "cmpCharm"], ["tagStrength", "cmpStrength"], ["tagDexterity", "cmpDexterity"], ["tagIntelligence", "cmpIntelligence"],
   ];
 
   function bump(map, name, deck, won, score, extra = 0) {
