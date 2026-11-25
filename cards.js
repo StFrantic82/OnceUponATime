@@ -126,6 +126,19 @@
     </svg>`;
   }
 
+  // Each Writer is also a player colour.
+  const WRITER_COLORS = {
+    "Charles Perrault": "#b5452a",
+    "Brothers Grimm": "#3f7a32",
+    "Hans Christian Andersen": "#2f6aa8",
+    "Carlo Collodi": "#c8811e",
+    "Lewis Carroll": "#6b4a8a",
+    "J. M. Barrie": "#1f8a8a",
+    "L. Frank Baum": "#8a8a1e",
+    "Le Prince de Beaumont": "#b0477a",
+  };
+  const writerColor = (name) => WRITER_COLORS[name] || "#5a3b6e";
+
   // Writer tile: name and framed portrait, three levels, star spaces (XP) between them.
   // opts.level: current level (0 = just showing the card), opts.xpPlaced: XP on the next step.
   function writer(card, opts = {}) {
@@ -136,7 +149,7 @@
       { n: 3, type: "endgame", text: card.level3, cost: card.cost3 },
     ];
     const filledFor = (n, cost) => (level >= n ? cost : level === n - 1 ? opts.xpPlaced || 0 : 0);
-    return `<article class="writer-card wcard ${opts.cls || ""}">
+    return `<article class="writer-card wcard ${opts.cls || ""}" style="--wcol:${writerColor(card.name)}">
       ${opts.notch || ""}
       <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(card.name))}</div>${level ? `<div class="writer-level">${esc(t("levelN", { n: level }))}</div>` : ""}</div>${writerPortrait(card.name)}</div>
       <div class="writer-levels">${levels
@@ -219,5 +232,5 @@
     </div>`;
   }
 
-  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait };
+  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait, writerColor };
 })();

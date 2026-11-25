@@ -1140,39 +1140,45 @@ function markXpTargets() {
 }
 
 function renderGuide() {
-  const box = document.querySelector("#guide");
-  if (!box) return;
   document.querySelectorAll(".needs-click").forEach((node) => node.classList.remove("needs-click"));
-  const lines = [];
-  const mark = (selector) => document.querySelectorAll(selector).forEach((node) => node.classList.add("needs-click"));
+  document.querySelectorAll(".hint-bubble").forEach((node) => node.remove());
+  const guide = document.querySelector("#guide");
+  if (guide) guide.hidden = true;
   const me = G.players[view.seat];
-  if (G.gameOver || !me) {
-    box.hidden = true;
-    return;
-  }
+  if (G.gameOver || !me) return;
+  const mark = (selector) => document.querySelectorAll(selector).forEach((node) => node.classList.add("needs-click"));
+  // A speech bubble right next to the thing to click.
+  const bubble = (anchor, text, where = "before") => {
+    if (!anchor) return;
+    const node = document.createElement("div");
+    node.className = `hint-bubble hb-${where}`;
+    node.innerHTML = text;
+    if (where === "inside") anchor.prepend(node);
+    else anchor.insertAdjacentElement(where === "after" ? "afterend" : "beforebegin", node);
+  };
   const myTurn = G.active === view.seat;
-  if (state.phase === "chooseWriter") lines.push(t("g_writer"));
   if (state.tuckPending > 0) {
-    lines.push(t("g_tuck"));
+    bubble(el.actionHand.querySelector(".action-card"), t("g_tuck"));
     mark("#actionHand .action-card");
   } else if (state.phase === "chooseAction") {
-    lines.push(t("g_chooseAction"));
+    bubble(el.actionHand.querySelector(".action-card"), t("g_chooseAction"));
     mark("#actionHand .action-card:not(:disabled)");
   }
   if (myTurn && state.phase === "chooseGroup") {
-    lines.push(t("g_chooseGroup"));
+    bubble(el.groups, t("g_chooseGroup"));
     mark("#groups [data-group]:not(:disabled)");
   }
   if (state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0) {
-    lines.push(t("g_perrault"));
+    bubble(el.itemDisplay, t("g_perrault"));
     mark("#itemDisplay [data-item]:not(:disabled)");
   } else if (myTurn && state.phase === "buyItem") {
-    lines.push(t("g_buyItem"));
+    bubble(el.itemDisplay, t("g_buyItem"));
+    bubble(el.resolveActionBtn.closest(".tableau-head"), t("g_resolve"), "after");
     mark("#itemDisplay [data-item]:not(:disabled)");
     mark("#resolveActionBtn");
   }
   if (state.activatePending > 0) {
-    lines.push(t("g_activate"));
+    bubble(el.tableau, t("g_activate"));
     const ids = activationCandidates().map((card) => card.id);
     for (const wrap of el.tableau.querySelectorAll("[data-own-id]")) {
       if (!ids.includes(wrap.dataset.ownId)) continue;
@@ -1184,29 +1190,26 @@ function renderGuide() {
     }
   }
   if (state.questChoices > 0) {
-    lines.push(t("g_quest"));
+    bubble(el.questDisplay, t("g_quest"));
     mark("#questDisplay [data-quest]");
   }
   if ((state.writerDraftChoices || []).length) {
-    lines.push(t("g_draft"));
+    bubble(el.writerPanel, t("g_draft"));
     mark("[data-writer-choice]");
   }
   if (state.writerDiscardRemaining > 0) {
-    lines.push(t("g_discard"));
+    bubble(el.tableau, t("g_discard"));
     mark("[data-writer-discard], [data-finish-writer-discard]");
   }
   if (state.freeUpgrades > 0 && state.tableau.some((card) => card.deck === "legendary" && !card.upgraded)) {
-    lines.push(t("g_free", { n: state.freeUpgrades }));
+    bubble(el.tableau, t("g_free", { n: state.freeUpgrades }));
     mark("[data-upgrade]");
   }
-  if (markXpTargets().length) lines.push(t("g_xp", { n: state.xp, xp: resourceIcon("xp", "XP") }));
+  if (markXpTargets().length) bubble(el.writerPanel, t("g_xp", { n: state.xp, xp: resourceIcon("xp", "XP") }));
   if (myTurn && state.phase === "roundDone" && !state.questChoices && !state.tuckPending && !state.activatePending) {
-    lines.push(t("g_endTurn"));
+    bubble(el.endRoundBtn.closest(".tableau-head"), t("g_endTurn"), "after");
     mark("#endRoundBtn");
   }
-  if (!lines.length && G.active !== null && !myTurn && G.players[G.active]) lines.push(t("g_wait", { p: escapeHtml(G.players[G.active].name) }));
-  box.hidden = !lines.length;
-  box.innerHTML = lines.map((line) => `<p>${line}</p>`).join("");
 }
 
 function phaseMessage() {
@@ -1254,6 +1257,11 @@ function renderStats() {
     <div class="summary-group">${[[t("items"), state.items.length], [t("upgrade"), state.tableau.filter((card) => card.upgraded).length]].map(cell).join("")}</div>`;
 }
 
+// Player colour = colour of their Writer.
+function playerColor(p) {
+  return p?.writer ? CardFace.writerColor(p.writer.name) : "#9a8a70";
+}
+
 // The four skill tags are square, like on the cards.
 function squareTag(icon) {
   return `<span class="skill-tag mini-tag sk-${icon.toLowerCase()}" title="${escapeHtml(ICON_LABELS[icon] || icon)}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, ICON_LABELS[icon] || icon)}</span>`;
@@ -1276,7 +1284,7 @@ function renderPlayers() {
       const me = p.seat === view.seat;
       const played = p.currentAction && (revealed || me) ? `<span class="pp-card" title="${escapeHtml(t("chapter"))}">${p.currentAction.number}</span>` : "";
       const canHandOver = view.role === "host" && !me && p.kind === "human" && !G.gameOver;
-      return `<button type="button" class="pp ${me ? "me" : ""} ${G.active === p.seat ? "active" : ""}" data-player="${p.seat}">
+      return `<button type="button" class="pp ${me ? "me" : ""} ${G.active === p.seat ? "active" : ""}" data-player="${p.seat}" style="--pcol:${playerColor(p)}">
         <span class="pp-top"><b>${escapeHtml(p.name)}${p.kind === "bot" ? ` <small>${escapeHtml(t("computer"))}</small>` : ""}</b>${played}</span>
         <span class="pp-writer">${p.writer ? escapeHtml(tc(p.writer.name)) + ` · ${t("lvN", { n: p.writerLevel })}` : "…"} · <span class="pp-deck" title="${escapeHtml(t("deckLeft"))}">${p.actionDeck.length}</span></span>
         <span class="pp-res">${resourceIcon("coins", "coins")}${p.coins} ${resourceIcon("xp", "XP")}${p.xp} ${resourceIcon("vp", "VP")}${score}</span>
@@ -1319,6 +1327,8 @@ function renderActions() {
       <span class="deck-stack">${Array.from({ length: Math.min(deck, 9) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>
       <span><b>${deck}</b> ${escapeHtml(t("deckLeft"))}<br><small>${escapeHtml(t("roundOf", { n: G.round, total: roundsTotal() }))}</small></span>
     </div>`;
+  el.actionHand.style.setProperty("--spine", playerColor(G.players[view.seat]));
+  document.querySelector(".board")?.style.setProperty("--pcol", playerColor(G.players[view.seat]));
   el.actionHand.innerHTML = deckInfo + hand
     .map(
       (action) => `
@@ -1371,9 +1381,10 @@ function renderGroups() {
   el.groups.innerHTML = G.groups
     .map((group) => {
       const mine = group.taken && group.takenSeat === view.seat;
-      const label = group.taken ? ` · ${mine ? t("yours") : t("takenBy", { who: escapeHtml(group.takenBy || "?") })}` : "";
+      const taker = group.taken ? G.players[group.takenSeat] : null;
+      const label = group.taken ? ` <span class="taken-chip" style="--pcol:${playerColor(taker)}">${mine ? t("yours") : t("takenBy", { who: escapeHtml(group.takenBy || "?") })}</span>` : "";
       return `
-        <div class="group ${group.taken && !mine ? "removed" : ""} ${mine ? "taken" : ""}">
+        <div class="group ${group.taken && !mine ? "removed" : ""} ${mine ? "taken" : ""} ${group.taken ? "is-taken" : ""}" style="--pcol:${group.taken ? playerColor(G.players[group.takenSeat]) : "transparent"}">
           <h3>${t("group", { n: group.id.slice(1) })}${label}</h3>
           <div class="group-cards">${group.cards.map(renderCard).join("")}</div>
           <button type="button" class="${myTurn && !group.taken ? "primary" : ""}" ${!myTurn || group.taken ? "disabled" : ""} data-group="${group.id}">${t("takeGroup")}</button>
