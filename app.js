@@ -566,8 +566,8 @@ function buyItem(itemId) {
   const item = G.itemDisplay.find((entry) => entry.id === itemId);
   if (!item) return;
   const { price } = itemPrice(item);
-  if (state.coins < price) return;
-  state.coins -= price;
+  if (state.coins + crownStash() < price) return;
+  payCoins(price);
   state.writerItemDiscount = 0;
   if (!perraultPurchase) state.writerRound.itemBought = true;
   state.items.push(item);
@@ -1271,6 +1271,7 @@ function instantLinks(card) {
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
   if (n === "Cinderella") state.writerItemDiscount = 2;
   if (n === "The Glass Coffin") pickFromDiscard(n);
+  if (n === "The Crown of England") card.stash = (card.stash || 0) + 2;
   if (n === "Seven-League Boots") {
     G.firstSeat = G.cur;
     for (const p of G.players) p.playerFirst = p.seat === G.cur;
@@ -1415,7 +1416,7 @@ async function activateCardInner(card) {
   const seat = G.cur;
   const fullText = activeCardText(card);
   const text = stripLinks(fullText);
-  const ownChoice = ["Hot Air Balloon", "Whispering Mirror"].includes(card.name);
+  const ownChoice = ["Hot Air Balloon", "Whispering Mirror", "The Crown of England"].includes(card.name);
   const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
   if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
@@ -1526,8 +1527,29 @@ function spendableXpCard() {
   return state.tableau.find((card) => card.deck === "legendary" && !card.upgraded && (card.xpOn || 0) > 0);
 }
 
+// The Crown of England keeps coins on it: they can pay for Items and score at the end.
+function crownStash() {
+  return (state.items || []).reduce((sum, item) => sum + (item.stash || 0), 0);
+}
+
+function payCoins(n) {
+  const fromHand = Math.min(n, state.coins);
+  state.coins -= fromHand;
+  let left = n - fromHand;
+  for (const item of state.items || []) {
+    if (!left) break;
+    const k = Math.min(left, item.stash || 0);
+    item.stash = (item.stash || 0) - k;
+    left -= k;
+  }
+}
+
 function activationLinks(card, text) {
   const n = card.name;
+  if (n === "The Crown of England" && state.coins > 0) {
+    state.coins -= 1;
+    card.stash = (card.stash || 0) + 1;
+  }
   if (n === "Fairy Godmother" && card.upgraded) placeFreeXp(3, false);
   if (n === "The Magic Mirror" && hasCard("The Evil Queen")) gain("vp", 1);
   if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
@@ -1685,7 +1707,7 @@ function scoreCards(only = null) {
     const up = Boolean(card.upgraded);
     if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
-    else if (n === "The Crown of England") total += sets;
+    else if (n === "The Crown of England") total += card.stash || 0;
     else if (n === "Glass Slipper") total += quests * 2 + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += upgradedLeg;
     else if (n === "Undersea Throne") total += state.items.length;
@@ -2197,7 +2219,7 @@ function renderItem(item) {
   return `
     <div class="slot slot-item">
       ${CardFace.item(item, { price, original: discount ? item.cost : null })}
-      <button type="button" class="${canBuy && state.coins >= price ? "primary" : ""}" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">${t("buyFor", { n: `${price} ${resourceIcon("coins", "coins")}` })}</button>
+      <button type="button" class="${canBuy && state.coins + crownStash() >= price ? "primary" : ""}" ${!canBuy || state.coins + crownStash() < price ? "disabled" : ""} data-item="${item.id}">${t("buyFor", { n: `${price} ${resourceIcon("coins", "coins")}` })}</button>
     </div>
   `;
 }
@@ -2585,6 +2607,7 @@ async function simulateGame(opts) {
 
 window.Game = {
   simulateGame,
+  crownStash,
   newGame,
   get state() {
     return state;

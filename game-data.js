@@ -780,9 +780,9 @@ window.GAME_DATA = {
       "id": "I25",
       "deck": "item",
       "name": "The Crown of England",
-      "cost": 6,
+      "cost": 2,
       "icons": "none",
-      "effect": "Game End: 1 VP for each complete set of four icons.",
+      "effect": "Instant: place 2 coins from the supply on this Item. Activation: place 1 of your coins on it. You can spend the coins on it to buy Items. Game End: 1 VP for each coin on it.",
       "copy": 1
     },
     {

@@ -83,7 +83,7 @@
   }
 
   function buySomething() {
-    const affordable = G.itemDisplay.filter((item) => itemPrice(item).price <= state.coins);
+    const affordable = G.itemDisplay.filter((item) => itemPrice(item).price <= state.coins + (window.Game?.crownStash ? window.Game.crownStash() : 0));
     if (!affordable.length) return;
     if (level() === "easy") {
       if (Math.random() < 0.5) buyItem(rand(affordable).id);

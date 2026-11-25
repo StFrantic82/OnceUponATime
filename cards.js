@@ -206,6 +206,7 @@
     return `<article class="fcard fc-item ${opts.cls || ""}">
       ${head(card, 188, 14)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}
+        ${card.stash ? `<span class="fc-stash">${card.stash}${resourceIcon("coins", "coins")}</span>` : ""}
         <span class="fc-price">${opts.original != null && opts.original !== price ? `<s>${opts.original}</s>` : ""}${price}${resourceIcon("coins", "coins")}</span>
       </div>
       <div class="fc-text"><p>${formatGameText(tc(card.effect))}</p></div>
