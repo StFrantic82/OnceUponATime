@@ -15,4 +15,6 @@ Ouvrez la page GitHub Pages du dépôt. Le mode multijoueur est en préparation.
 - `index.html` et `styles.css` : l’interface ;
 - `app.js` : les règles et le déroulement d’une partie ;
 - `game-data.js` : toutes les cartes (généré depuis le tableur des cartes) ;
+- `art.js` : les illustrations des cartes, dessinées en SVG ;
+- `cards.js` : la mise en page des cartes (personnages, légendaires, objets, quêtes, cartes Action) ;
 - `assets/icons/` : les icônes (icônes, ressources, types d’effet).

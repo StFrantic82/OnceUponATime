@@ -761,9 +761,8 @@ function renderActions() {
     .sort((a, b) => a.number - b.number)
     .map(
       (action) => `
-        <button class="action-card" type="button" ${state.phase !== "chooseAction" ? "disabled" : ""} data-action="${action.number}">
-          <span class="action-number">${action.number}</span>
-          <span>${formatGameText(action.effect)}</span>
+        <button class="action-card" type="button" ${state.phase !== "chooseAction" ? "disabled" : ""} data-action="${action.number}" aria-label="Play Action card ${action.number}">
+          ${CardFace.action(action)}
         </button>
       `,
     )
@@ -789,11 +788,9 @@ function renderDisplays() {
 
 function renderQuest(quest) {
   return `
-    <div class="card">
-      <div class="card-title">${quest.name}</div>
-      <div class="meta">${quest.theme}</div>
-      <div class="effect">${formatGameText(quest.scoring)}</div>
-      <button type="button" ${state.questChoices <= 0 ? "disabled" : ""} data-quest="${quest.id}">${state.questChoices > 0 ? "Choose Quest" : "Requires a Quest effect"}</button>
+    <div class="slot slot-quest ${state.questChoices > 0 ? "can-pick" : ""}">
+      ${CardFace.quest(quest)}
+      ${state.questChoices > 0 ? `<button type="button" class="primary" data-quest="${quest.id}">Take this Quest</button>` : ""}
     </div>
   `;
 }
@@ -805,12 +802,9 @@ function renderItem(item) {
   const perraultPurchase = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0;
   const canBuy = perraultPurchase || (state.phase === "buyItem" && !state.writerRound.itemBought);
   return `
-    <div class="card">
-      <div class="item-heading"><span class="item-cost">${price} ${resourceIcon("coins", "coins")}</span><div class="card-title">${item.name}</div></div>
-      ${renderTags(item)}
-      ${discount ? `<div class="meta item-original-cost"><s>${item.cost}</s> coins</div>` : ""}
-      <div class="effect">${formatGameText(item.effect)}</div>
-      <button type="button" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">Buy</button>
+    <div class="slot slot-item">
+      ${CardFace.item(item, { price, original: discount ? item.cost : null })}
+      <button type="button" class="${canBuy && state.coins >= price ? "primary" : ""}" ${!canBuy || state.coins < price ? "disabled" : ""} data-item="${item.id}">Buy for ${price} ${resourceIcon("coins", "coins")}</button>
     </div>
   `;
 }
@@ -819,10 +813,10 @@ function renderGroups() {
   el.groups.innerHTML = state.groups
     .map(
       (group) => `
-        <div class="group ${group.removedByBot ? "removed" : ""}" style="--group-width: ${group.cards.length === 1 ? 179 : group.cards.length === 2 ? 260 : 550}px">
-          <h3>${group.id}${group.removedByBot ? " - taken by opponent" : group.taken ? " - taken" : ""}</h3>
+        <div class="group ${group.removedByBot ? "removed" : ""} ${group.taken ? "taken" : ""}">
+          <h3>Group ${group.id.slice(1)}${group.removedByBot ? " · taken by opponent" : group.taken ? " · yours" : ""}</h3>
           <div class="group-cards">${group.cards.map(renderCard).join("")}</div>
-          <button type="button" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">Take group</button>
+          <button type="button" class="${state.phase === "chooseGroup" && !group.taken && !group.removedByBot ? "primary" : ""}" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">Take this group</button>
         </div>
       `,
     )
@@ -860,7 +854,7 @@ function activeCardText(card) {
 function renderCompactOwnedCard(card) {
   const canUpgrade = card.deck === "legendary" && !card.upgraded && (state.xp >= upgradeCost(card) || state.freeUpgrades > 0);
   return `<div class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
-    <strong>${card.name}${card.upgraded ? " +" : ""}</strong>${renderTags(card)}
+    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><strong>${card.name}${card.upgraded ? " +" : ""}</strong>${renderTags(card)}</div></div>
     ${card.deck === "legendary" ? `<details><summary>Effects and upgrade</summary>${renderLegendaryEffects(card)}</details><button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
     ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">Discard: +2 ${resourceIcon("coins", "coins")} +2 ${resourceIcon("xp", "XP")}</button>` : ""}
   </div>`;
@@ -868,13 +862,12 @@ function renderCompactOwnedCard(card) {
 
 function renderOwnedCard(card) {
   if (card.zone === "Quest") {
-    return `<div class="card"><div class="card-title">${card.name}</div><div class="effect">${formatGameText(card.scoring)}</div></div>`;
+    return CardFace.quest(card, { cls: "fc-small" });
   }
   const canUpgrade = card.deck === "legendary" && !card.upgraded && (state.xp >= upgradeCost(card) || state.freeUpgrades > 0);
   return `
-    <div class="card ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
-      <div class="card-title">${card.name}${card.upgraded ? " + " : ""}</div>
-      ${renderTags(card)}
+    <div class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
+      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><div class="card-title">${card.name}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
       <div class="meta">${card.alignment || card.rank || card.zone}</div>
       ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(card.effect)}</div>`}
       ${card.deck === "legendary" ? `<button type="button" ${!canUpgrade ? "disabled" : ""} data-upgrade="${card.id}">Upgrade (${upgradeCost(card)} ${resourceIcon("xp", "XP")})</button>` : ""}
@@ -884,13 +877,7 @@ function renderOwnedCard(card) {
 }
 
 function renderCard(card) {
-  return `
-    <div class="card ${card.deck === "legendary" ? "legendary-card" : "common-card"}">
-      <div class="card-title">${card.name}</div>
-      ${renderTags(card)}
-      ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(card.effect)}</div>`}
-    </div>
-  `;
+  return CardFace.character(card, card.deck === "legendary" ? { cost: upgradeCost(card) } : {});
 }
 
 function renderLegendaryEffects(card) {
@@ -1023,6 +1010,7 @@ function renderWriter() {
 }
 
 const DECK_CATALOG = [
+  { key: "actions", label: "Actions" },
   { key: "common", label: "Common" },
   { key: "legendary", label: "Legendary" },
   { key: "quests", label: "Quest" },
@@ -1037,11 +1025,13 @@ function openCatalog(key) {
   el.deckCatalogTabs.innerHTML = DECK_CATALOG.map((entry) =>
     `<button type="button" class="${entry.key === key ? "selected" : ""}" data-catalog-tab="${entry.key}" aria-current="${entry.key === key ? "true" : "false"}">${entry.label}</button>`,
   ).join("");
+  el.deckCatalogCards.className = `deck-catalog-cards catalog-${key}`;
   el.deckCatalogCards.innerHTML = DATA[key].map((card) => {
     if (key === "writers") return renderWriterCard(card, 1, false, true);
-    if (key === "quests") return `<article class="card"><div class="card-title">${card.name}</div><div class="meta">${card.theme}</div><div class="effect">${formatGameText(card.scoring)}</div></article>`;
-    if (key === "items") return `<article class="card"><div class="item-heading"><span class="item-cost">${card.cost} ${resourceIcon("coins", "coins")}</span><div class="card-title">${card.name}</div></div>${renderTags(card)}<div class="effect">${formatGameText(card.effect)}</div></article>`;
-    return renderCard(card);
+    if (key === "actions") return CardFace.action(card);
+    if (key === "quests") return CardFace.quest(card);
+    if (key === "items") return CardFace.item(card);
+    return CardFace.character(card);
   }).join("");
   el.deckCatalog.classList.remove("hidden");
   for (const button of el.deckCatalogTabs.querySelectorAll("[data-catalog-tab]")) {
@@ -1065,6 +1055,7 @@ function renderWriterCard(writer, level, selectable, preview = false) {
   ];
   return `
     <article class="writer-card">
+      <div class="writer-art">${CardArt.art(writer.name)}</div>
       <div class="writer-card-header">
         <div class="writer-name">${writer.name}</div>
         <div class="writer-level">${selectable || preview ? "Writer" : `Level ${level}`}</div>
