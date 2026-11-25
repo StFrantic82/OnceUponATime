@@ -209,9 +209,9 @@ function writerCard(writer) {
 }
 
 function backFace(kind, set = 0) {
-  const label = { common: t("deck_common"), legendary: t("deck_legendary"), items: t("deck_items"), quests: t("deck_quests"), writers: t("deck_writers"), actions: t("deck_actions") }[kind];
+  const label = { common: t("deck_common"), legendary: t("deck_legendary"), items: t("deck_items"), quests: t("deck_quests"), writers: "", actions: t("deck_actions") }[kind];
   return `<div class="card-back back-${kind}" style="--spine:${SET_COLORS[set] || "#7a3a24"}">
-    <div class="back-frame"><span class="back-star">✦</span><b>Once Upon<br>a Time</b><small>${esc(label)}</small><span class="back-star">✦</span></div>
+    <div class="back-frame">${kind === "writers" ? `<div class="back-medal">${CardArt.art("Once Upon a Time")}</div>` : `<span class="back-star">✦</span>`}<b>Once Upon<br>a Time</b>${label ? `<small>${esc(label)}</small>` : ""}<span class="back-star">✦</span></div>
   </div>`;
 }
 
@@ -346,6 +346,7 @@ function build() {
   add(L.sizes.quests, sheetsFor("quests", DATA.quests, L.sizes.quests));
   add(`${L.backs} · ${L.sizes.quests.split(" · ")[0]}`, backsSheet("quests"));
   add(L.sizes.writers, sheetsFor("writers", DATA.writers, L.sizes.writers));
+  add(`${L.backs} · ${L.sizes.writers.split(" · ")[0]}`, backsSheet("writers"));
   // One page per Action set (12 cards), each followed by its own coloured backs: ready for duplex.
   add(L.sizes.actions, [0, 1, 2, 3, 4].flatMap((set) => [
     ...sheetsFor("actions", DATA.actions.map((a) => ({ ...a, set })), `${L.sizes.actions} · ${L.set} ${set + 1}`),
