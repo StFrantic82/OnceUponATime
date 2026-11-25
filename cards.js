@@ -20,6 +20,9 @@
     return String(text || "")
       // Caps ("max 14 VP") go on their own line, in brackets (drawn at the end of formatGameText).
       .replace(/[,.;]?\s*\b(max(?:imum)?|massimo)\s+(\d+)(\s*(?:VP|PV|XP|coins?))?\s*\.?/gi, (_, word, n, unit) => `.\u0002(${word.toLowerCase()} ${n}${unit || ""})\u0003 `)
+      // Good / Bad in the text: the word in bold blue / red, like the bands at the bottom of the cards.
+      .replace(/\b(Good|Gentil(?:le)?s?|Buon[oaei])\b/g, '<b class="w-good">$1</b>')
+      .replace(/\b(Bad|Méchant(?:e)?s?|Cattiv[oaei])\b(?!\s+(?:Reine|Sorcière))/g, '<b class="w-bad">$1</b>')
       .replace(/\bplace XP on a Character so that it levels up\b/gi, FREEUP_ICON)
       .replace(/\bplac(?:ez|er) de l[’']XP sur un Personnage de manière à l[’']améliorer\b/gi, FREEUP_ICON)
       .replace(/\bpiazza(?:re)? XP su un Personaggio in modo da potenziarlo\b/gi, FREEUP_ICON)
