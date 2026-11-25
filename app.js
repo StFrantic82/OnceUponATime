@@ -540,7 +540,7 @@ function takeGroup(choice) {
     applyInstant(card);
   }
   if (wendy) {
-    const good = group.cards.filter((card) => card.alignment === "Good").length;
+    const good = group.cards.some((card) => card.alignment === "Good") ? 1 : 0;
     vpSource = "Wendy";
     gain("coins", good);
     if (wendy.upgraded) gain("xp", good);
@@ -1264,7 +1264,7 @@ function instantLinks(card) {
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (/^Wicked Witch/.test(n)) placeFreeXp(2, false);
   if (n === "The Prince") activateOne();
-  if (n === "Prince Charming") gain("vp", Math.min(4, iconCounts().Charm));
+  if (n === "Prince Charming") gain("vp", Math.floor(iconCounts().Charm / 2));
   if (n === "Snow White") gain("xp", countByName("Dwarf"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
@@ -1354,7 +1354,7 @@ function hasCard(name) {
 function onPlayChapter(number) {
   vpSource = "The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "Pinocchio");
-  if (pino && !pino.upgraded && number >= 9) {
+  if (pino && !pino.upgraded && number >= 10) {
     gainTagToken(1, "Pinocchio");
     log("l_nose", { p: state.name });
   }
@@ -1712,23 +1712,23 @@ function scoreCards(only = null) {
     else if (n === "Enchanted Rose") total += upgradedLeg;
     else if (n === "Undersea Throne") total += state.items.length;
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
-    else if (n === "Grandmother") total += Math.min(8, countAlignment("Bad") * 2);
+    else if (n === "Grandmother") total += countAlignment("Bad");
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
-    else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
+    else if (n === "Prince Charming") total += icons.Charm;
     else if (n === "Evil Sorcerer") total += sets;
     else if (n === "The Evil Queen") total += up ? icons.Charm : Math.floor(icons.Charm / 2);
     else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
-    else if (n === "Dorothy Gale") total += Math.min(12, sets * 3);
+    else if (n === "Dorothy Gale") total += sets * 2;
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
-    else if (n === "Captain Hook") total += up ? Math.min(10, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);
-    else if (n === "Little Red Riding Hood") total += Math.min(10, goodBadPairs * 2);
+    else if (n === "Captain Hook") total += up ? icons.Dexterity : Math.floor(icons.Dexterity / 2);
+    else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2) + countByName("The Merry Men");
     else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
     else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 3 : 0);
-    else if (n === "Pinocchio") total += Math.min(12, countAlignment("Good") * 2);
+    else if (n === "Pinocchio") total += state.tableau.filter((c) => c.deck === "legendary" && c.alignment === "Good").length * 2;
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
     else if (n === "The Whale") total += countTagless();
     else if (n === "Beast") total += up ? icons.Strength + (hasCard("Belle") ? 3 : 0) : Math.floor(icons.Strength / 2);

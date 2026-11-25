@@ -602,7 +602,7 @@ window.GAME_DATA = {
       "name": "The Dwarves House",
       "cost": 4,
       "icons": "none",
-      "effect": "Instant: gain 4 XP. Game End: 1 VP for each Dwarf.",
+      "effect": "Instant: gain 3 XP. Game End: 1 VP for each Dwarf.",
       "copy": 1
     },
     {
@@ -825,7 +825,7 @@ window.GAME_DATA = {
       "id": "I30",
       "deck": "item",
       "name": "Enchanted Rose",
-      "cost": 6,
+      "cost": 7,
       "icons": "Charm 1",
       "effect": "Game End: 1 VP for each upgraded Legendary card.",
       "copy": 1
@@ -942,8 +942,8 @@ window.GAME_DATA = {
       "name": "Wendy",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: whenever you take a Good card, gain 1 coin.",
-      "upgrade": "Cost 1 XP. Ongoing: whenever you take a Good card, gain 1 coin and 1 XP.",
+      "base": "Charm 1. Ongoing: the first time each round you take a Good card, gain 1 coin.",
+      "upgrade": "Cost 1 XP. Ongoing: the first time each round you take a Good card, gain 1 coin and 1 XP.",
       "upgraded": false
     },
     {
@@ -963,7 +963,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Instant: gain 2 XP if you have a Bad card.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Bad card, max 8 VP.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
     {
@@ -1012,8 +1012,8 @@ window.GAME_DATA = {
       "name": "Prince Charming",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 VP for each Charm icon, max 4 VP.",
-      "upgrade": "Cost 3 XP. Gains Charm. Game End: 1 VP for each Charm icon, max 8 VP.",
+      "base": "Charm 1. Instant: gain 1 VP for each pair of Charm icons.",
+      "upgrade": "Cost 3 XP. Gains Charm. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -1073,7 +1073,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 1 Tag token of your choice.",
-      "upgrade": "Cost 5 XP. Game End: 3 VP for each complete set of four icons, max 12 VP.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each complete set of four icons.",
       "upgraded": false
     },
     {
@@ -1123,7 +1123,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Dexterity 1. Game End: 1 VP for each pair of Dexterity icons.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Dexterity icon, max 10 VP.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Dexterity icon.",
       "upgraded": false
     },
     {
@@ -1133,7 +1133,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 2 coins or 2 XP. If you have The Wolf, gain both.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Good–Bad pair of cards, max 10 VP.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each Good–Bad pair of cards.",
       "upgraded": false
     },
     {
@@ -1282,8 +1282,8 @@ window.GAME_DATA = {
       "name": "Pinocchio",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: whenever you play a Chapter card with value 9 or higher, his nose grows: gain 1 Tag token.",
-      "upgrade": "Cost 5 XP. Game End: he becomes a real boy: 2 VP for each Good card, max 12 VP.",
+      "base": "Dexterity 1. Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each Good Legendary card.",
       "upgraded": false
     },
     {
