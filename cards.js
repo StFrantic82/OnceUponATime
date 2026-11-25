@@ -7,8 +7,13 @@
 
   // "Tag token" in card texts becomes a small square token icon with the four skill colours.
   const TAG_ICON = `<span class="tagtok-ico" role="img" aria-label="Tag"><i></i><i></i><i></i><i></i></span>`;
+  // "set of four icons" becomes the four square tags in a row (a placeholder, drawn at the end of formatGameText).
+  const SET4 = "\u0001SET4\u0001";
   function tagTokens(text) {
     return String(text || "")
+      .replace(/\b(?:all )?(?:four|4)(?: different)? icons\b/gi, SET4)
+      .replace(/\b(?:des quatre icônes|de 4 icônes différentes)/gi, `de ${SET4}`)
+      .replace(/\b(?:delle quattro icone|di 4 icone diverse)/gi, `di ${SET4}`)
       .replace(/\b(\d+|a|one|two)\s+Tag tokens?/gi, (_, n) => `${/^\d$/.test(n) ? n : { a: "1", one: "1", two: "2" }[n.toLowerCase()]} ${TAG_ICON}`)
       .replace(/\btwo tokens\b/gi, `2 ${TAG_ICON}`)
       .replace(/\b(\d+|un|deux)\s+jetons?\s+d[’']ic[ôo]ne/gi, (_, n) => `${({ un: "1", deux: "2" })[n.toLowerCase()] || n} ${TAG_ICON}`)
@@ -186,6 +191,15 @@
     </article>`;
   }
 
+  // Quest scoring: the cap ("max 14 VP") goes on its own line, in brackets, under the text.
+  const MAX_RE = /^([\s\S]*?)[,.;]?\s*\b(max(?:imum)?|massimo|maximum)\s+(\d+)\s*([A-Za-z]+)?\s*\.?\s*$/i;
+  function questScoring(text) {
+    const m = String(text || "").match(MAX_RE);
+    const main = m ? `${m[1].trim()}.` : text;
+    const note = m ? `(${m[2].toLowerCase()} ${m[3]}${m[4] ? ` ${m[4]}` : ""})` : "";
+    return `<p>${resourceIcon("endgame", "Game End")} ${formatGameText(main)}</p>${note ? `<p class="fc-max-line">${formatGameText(note)}</p>` : ""}`;
+  }
+
   function quest(card, opts = {}) {
     const name = tc(card.name);
     return `<article class="fcard fc-quest ${opts.cls || ""}">
@@ -193,7 +207,7 @@
       <div class="fc-qbody">
         <header class="fc-name" style="${nameStyle(name, 170, 0, 15)}">${esc(name)}</header>
         <div class="fc-theme">${esc(tc(card.theme))}</div>
-        <div class="fc-text"><p>${resourceIcon("endgame", "Game End")} ${formatGameText(tc(card.scoring))}</p></div>
+        <div class="fc-text">${questScoring(tc(card.scoring))}</div>
       </div>
     </article>`;
   }

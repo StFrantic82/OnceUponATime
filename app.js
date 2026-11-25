@@ -1668,20 +1668,26 @@ function resourceIcon(kind, label) {
   return `<img class="game-icon" src="${ICON_FILES[kind]}" alt="${escapeHtml(label)}" title="${escapeHtml(label)}">`;
 }
 
+// Skill icons in card texts are square, like the tags on the cards.
+function skillIcon(icon) {
+  return `<span class="skill-tag txt-tag sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon)}</span>`;
+}
+
 function formatGameText(text) {
   return (window.tagTokens ? window.tagTokens(text) : String(text || ""))
     .replace(/\bGame End\b/gi, resourceIcon("endgame", "Game End"))
     .replace(/\bOngoing\b/gi, resourceIcon("ongoing", "Ongoing"))
     .replace(/\bInstant\b/gi, resourceIcon("instant", "Instant"))
     .replace(/\bActivation\b/gi, resourceIcon("activation", "Activation"))
-    .replace(/\bStrength\b/gi, resourceIcon("Strength", "Strength"))
-    .replace(/\b(?:Dexterity|Ruse)\b/gi, resourceIcon("Dexterity", "Dexterity"))
-    .replace(/\bIntelligence\b/gi, resourceIcon("Intelligence", "Intelligence"))
-    .replace(/\bCharm\b/gi, resourceIcon("Charm", "Charm"))
+    .replace(/\bStrength\b/gi, skillIcon("Strength"))
+    .replace(/\b(?:Dexterity|Ruse)\b/gi, skillIcon("Dexterity"))
+    .replace(/\bIntelligence\b/gi, skillIcon("Intelligence"))
+    .replace(/\bCharm\b/gi, skillIcon("Charm"))
     .replace(/\bVP\b/g, resourceIcon("vp", "VP"))
     .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
     .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
-    .replace(/\bGoals?\b/gi, "Quest");
+    .replace(/\bGoals?\b/gi, "Quest")
+    .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence"].map(skillIcon).join("")}</span>`);
 }
 
 el.newGameBtn.addEventListener("click", () => window.Home?.show());
