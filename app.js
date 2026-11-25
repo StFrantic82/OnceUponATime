@@ -1207,6 +1207,7 @@ function instantLinks(card) {
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (n === "The Prince") activateOne();
   if (n === "Prince Charming") gain("vp", Math.min(4, iconCounts().Charm));
+  if (n === "Snow White") gain("xp", countByName("Dwarf"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard");
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
@@ -1432,7 +1433,7 @@ async function activateCardInner(card) {
     else if (/gain 1 XP\b/i.test(text)) gain("xp", 1);
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(7, countByName("Pirate") + countAlignment("Bad")));
-    if (/gain 1 coin for each Item you have, max 3/i.test(text)) gain("coins", Math.min(3, state.items.length));
+    if (/gain 1 coin for each Item(?: you have)?, max 3/i.test(text)) gain("coins", Math.min(3, state.items.length));
     if (/gain 1 coin for each Good (?:Character|card)/i.test(text)) gain("coins", Math.min(5, countAlignment("Good")));
     if (/gain 1 XP for each Charm/i.test(text)) gain("xp", Math.min(5, countIcon("Charm")));
     if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
@@ -1626,8 +1627,8 @@ function scoreCards(only = null) {
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
     else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
     else if (n === "Evil Sorcerer") total += sets * 2;
-    else if (n === "The Evil Queen") total += up ? Math.min(10, icons.Charm * 2) : Math.min(6, maxCharmAtTable());
-    else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.floor(icons.Charm / 2) + countByName("Dwarf");
+    else if (n === "The Evil Queen") total += up ? Math.min(14, icons.Charm * 2) : icons.Charm;
+    else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
     else if (n === "Dorothy Gale") total += Math.min(12, sets * 3);
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
     else if (n === "Captain Hook") total += up ? Math.min(10, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);

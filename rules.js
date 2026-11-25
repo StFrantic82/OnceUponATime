@@ -196,8 +196,8 @@ const RULES = {
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Quest “The Midnight Ball” gives her 1 VP per Charm, up to 10 VP: 7 VP. Her upgraded Snow White gives 2 VP per Charm, up to 14 VP: another 14 VP.
-      <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:Snow White]]</div></div>`],
+      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Quest “The Midnight Ball” gives her 1 VP per Charm, up to 10 VP: 7 VP. Her upgraded Evil Queen gives 2 VP per Charm, up to 14 VP: another 14 VP.
+      <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
   fr: {
@@ -277,8 +277,8 @@ const RULES = {
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Quête « Le Bal de minuit » lui donne 1 PV par Charme, jusqu’à 10 PV : 7 PV. Sa Blanche-Neige améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
-      <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:Snow White]]</div></div>`],
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Quête « Le Bal de minuit » lui donne 1 PV par Charme, jusqu’à 10 PV : 7 PV. Sa Méchante Reine améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
+      <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
   it: {
@@ -358,8 +358,8 @@ const RULES = {
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Missione «Il Ballo di Mezzanotte» le dà 1 PV per Fascino, fino a 10 PV: 7 PV. La sua Biancaneve potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
-      <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:Snow White]]</div></div>`],
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Missione «Il Ballo di Mezzanotte» le dà 1 PV per Fascino, fino a 10 PV: 7 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
+      <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
 };
