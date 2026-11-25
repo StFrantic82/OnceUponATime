@@ -354,11 +354,24 @@ function actionBonus(p, number) {
   return writerBonus + queenBonus;
 }
 
+// A chapter already played this round by another player cannot be played again
+// (unless every card in hand is already taken).
+function chaptersTaken(seat) {
+  return new Set(G.players.filter((o) => o.seat !== seat && o.currentAction).map((o) => o.currentAction.number));
+}
+
+function canPlayChapter(p, number) {
+  const taken = chaptersTaken(p.seat);
+  if (!taken.has(number)) return true;
+  return p.hand.every((card) => taken.has(card.number));
+}
+
 function playAction(number) {
   if (state.phase !== "chooseAction") return;
   const action = state.hand.find((card) => card.number === Number(number));
   if (!action) return;
   const p = G.players[G.cur];
+  if (!canPlayChapter(p, action.number)) return;
   p.currentAction = action;
   p.hand = p.hand.filter((card) => card !== action);
   p.actionDiscard.push(action);
@@ -367,11 +380,16 @@ function playAction(number) {
   maybeBotsChoose();
 }
 
+// Action cards are played from the first player, clockwise: the computer players seated before
+// a human who has not chosen yet play first; the others wait for that human.
 function maybeBotsChoose() {
-  const humansWaiting = G.players.some((p) => p.kind === "human" && (p.phase === "chooseAction" || p.phase === "chooseWriter"));
-  if (humansWaiting) return;
-  for (const p of G.players) {
-    if (p.kind === "bot" && p.phase === "chooseAction") withSeat(p.seat, () => Bot.chooseAction(p));
+  if (G.players.some((p) => p.phase === "chooseWriter")) return;
+  const n = G.players.length;
+  for (let i = 0; i < n; i += 1) {
+    const p = G.players[(G.firstSeat + i) % n];
+    if (p.phase !== "chooseAction") continue;
+    if (p.kind === "human") break;
+    withSeat(p.seat, () => Bot.chooseAction(p));
   }
   if (G.players.every((p) => p.phase === "waitAction")) beginTurns();
 }
@@ -1384,6 +1402,8 @@ function showPlayerTableau(seat) {
 
 function renderActions() {
   const hand = [...state.hand].sort((a, b) => a.number - b.number);
+  const me = G.players[view.seat];
+  const blocked = (action) => state.phase === "chooseAction" && me && !canPlayChapter(me, action.number);
   const tucking = state.tuckPending > 0;
   const deck = state.actionDeck.length;
   const deckInfo = `<div class="action-deck ${deck === 0 ? "empty" : ""}" title="${escapeHtml(t("deckHint"))}">
@@ -1395,7 +1415,7 @@ function renderActions() {
   el.actionHand.innerHTML = deckInfo + hand
     .map(
       (action) => `
-        <button class="action-card ${tucking ? "tucking" : ""}" type="button" ${state.phase !== "chooseAction" && !tucking ? "disabled" : ""} data-action="${action.number}" aria-label="${escapeHtml(t("chapter"))} ${action.number}">
+        <button class="action-card ${tucking ? "tucking" : ""} ${blocked(action) ? "taken-chapter" : ""}" type="button" ${(state.phase !== "chooseAction" || blocked(action)) && !tucking ? "disabled" : ""} data-action="${action.number}" aria-label="${escapeHtml(t("chapter"))} ${action.number}" title="${blocked(action) ? escapeHtml(t("chapterTaken")) : ""}">
           ${CardFace.action(action)}
           ${tucking ? `<span class="tuck-label">${escapeHtml(t("tuckBtn"))}</span>` : ""}
         </button>

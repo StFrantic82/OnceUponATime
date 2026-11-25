@@ -3093,3 +3093,4 @@ button.needs-click { outline: none; }
 .quest-ico { display: inline-block; width: 1.75em; height: 1.17em; vertical-align: -0.25em; margin: 0 1px; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .25)); }
 .ac-line .quest-ico { width: 30px; height: 20px; font-size: inherit; }
 .action-hand .ac-line .quest-ico { width: 20px; height: 13px; }
+.action-card.taken-chapter { opacity: .35; filter: grayscale(.7); }
