@@ -1119,7 +1119,7 @@ async function activateCard(card) {
   const text = stripLinks(fullText);
   const hasActivationCost = /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
-  if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1) return;
+  if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
   if (/spend 3 coins to (?:level up|place XP)/i.test(text) && state.coins < 3) return;
   if (hasActivationCost) {
     const ok = await confirmCost(card);
@@ -1157,7 +1157,9 @@ async function activateCard(card) {
     state.coins -= 1;
     gain("xp", 1);
   } else if (/spend 1 XP to gain 3 coins/i.test(text)) {
-    state.xp -= 1;
+    // From the unplaced XP, or else from a Legendary that is not upgraded yet (never from an upgraded card).
+    if (state.xp > 0) state.xp -= 1;
+    else spendableXpCard().xpOn -= 1;
     gain("coins", 3);
   } else if (/spend 3 coins to (?:level up|place XP)/i.test(text)) {
     state.coins -= 3;
@@ -1193,6 +1195,10 @@ function placeFreeXp(n, goodOnly) {
   if (!target) return;
   target.xpOn = (target.xpOn || 0) + n;
   if (target.xpOn >= upgradeCost(target)) completeUpgrade(target);
+}
+
+function spendableXpCard() {
+  return state.tableau.find((card) => card.deck === "legendary" && !card.upgraded && (card.xpOn || 0) > 0);
 }
 
 function activationLinks(card, text) {
