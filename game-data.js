@@ -521,6 +521,42 @@ window.GAME_DATA = {
       "icons": "none",
       "effect": "Ongoing: gain 1 VP whenever you take an Item.",
       "copy": 3
+    },
+    {
+      "id": "C59",
+      "deck": "common",
+      "name": "The Cat and the Fox",
+      "alignment": "Bad",
+      "icons": "Dexterity 1",
+      "effect": "Instant: steal 1 coin from each opponent (2 coins from an opponent who has Pinocchio).",
+      "copy": 1
+    },
+    {
+      "id": "C60",
+      "deck": "common",
+      "name": "The Cat and the Fox",
+      "alignment": "Bad",
+      "icons": "Intelligence 1",
+      "effect": "Instant: steal 1 coin from each opponent (2 coins from an opponent who has Pinocchio).",
+      "copy": 2
+    },
+    {
+      "id": "C61",
+      "deck": "common",
+      "name": "The Talking Cricket",
+      "alignment": "Good",
+      "icons": "none",
+      "effect": "Ongoing: whenever you play an Action card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
+      "copy": 1
+    },
+    {
+      "id": "C62",
+      "deck": "common",
+      "name": "The Talking Cricket",
+      "alignment": "Good",
+      "icons": "none",
+      "effect": "Ongoing: whenever you play an Action card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
+      "copy": 2
     }
   ],
   "items": [
@@ -837,6 +873,15 @@ window.GAME_DATA = {
       "cost": 3,
       "icons": "Dexterity 1",
       "effect": "Activation: recover one used Action card with value exactly 10 or higher, then discard this Item.",
+      "copy": 1
+    },
+    {
+      "id": "I36",
+      "deck": "item",
+      "name": "The Whale",
+      "cost": 4,
+      "icons": "Strength 1",
+      "effect": "Game End: 1 VP for each of your cards without tags, max 8 VP.",
       "copy": 1
     }
   ],
@@ -1230,6 +1275,26 @@ window.GAME_DATA = {
       "base": "Charm 1. Instant: recover one used Action card with value 7 or lower.",
       "upgrade": "Cost 2 XP. Ongoing: the first time each round you play an Action card value 7 or lower, gain 1 XP.",
       "upgraded": false
+    },
+    {
+      "id": "L40",
+      "deck": "legendary",
+      "name": "Pinocchio",
+      "rank": null,
+      "alignment": "Good",
+      "base": "Dexterity 1. Ongoing: whenever you play an Action card with value 9 or higher, his nose grows: gain 1 Tag token.",
+      "upgrade": "Cost 4 XP. Game End: he becomes a real boy: 2 VP for each Good Character you have, max 12 VP.",
+      "upgraded": false
+    },
+    {
+      "id": "L41",
+      "deck": "legendary",
+      "name": "Geppetto",
+      "rank": null,
+      "alignment": "Good",
+      "base": "Intelligence 1. Activation: gain 1 coin for each Item you have, max 3 coins.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Item you have, +4 VP if you have Pinocchio, max 12 VP.",
+      "upgraded": false
     }
   ],
   "actions": [
@@ -1422,6 +1487,13 @@ window.GAME_DATA = {
       "name": "Once Upon a Time",
       "theme": "Ensemble Finale",
       "scoring": "2 VP for each category in which you have at least 3 cards: Good, Bad, Character, Item, Activation. Max 10 VP."
+    },
+    {
+      "id": "Q21",
+      "number": 21,
+      "name": "A Real Boy",
+      "theme": "Pinocchio",
+      "scoring": "3 VP for each upgraded Good Legendary card. Max 12 VP."
     }
   ],
   "writers": [

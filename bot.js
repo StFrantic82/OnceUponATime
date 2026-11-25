@@ -39,6 +39,10 @@
     const text = `${card.effect || ""} ${card.base || ""}`;
     if (/Game End/i.test(text)) value += 2;
     if (/Activation/i.test(text)) value += 1;
+    // Story sets: cards of the same tale work together (Pinocchio set).
+    const PINO = ["Pinocchio", "Geppetto", "The Talking Cricket", "The Cat and the Fox"];
+    if (PINO.includes(card.name) && state.tableau.some((c) => PINO.includes(c.name) && c.alignment === "Good")) value += 2;
+    if (card.alignment === "Good" && state.tableau.some((c) => c.name === "Pinocchio")) value += 0.5;
     for (const quest of state.quests) {
       for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence"]) {
         if (new RegExp(icon).test(quest.scoring)) value += iconAmount(card, icon) * 1.5;
@@ -70,6 +74,7 @@
     if (state.strategy === "tagless" && (isTagless(item) || /without tags/.test(item.effect))) value += 4;
     if (/VP/.test(item.effect)) value += 2;
     if (/Quest/.test(item.effect)) value += 1.5;
+    if (/Geppetto/.test(state.tableau.map((c) => c.name).join())) value += 1;
     value += totalIcons(item);
     return value;
   }

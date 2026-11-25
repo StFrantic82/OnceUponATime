@@ -431,6 +431,7 @@ function beginTurns() {
     const queen = first.tableau.find((card) => card.name === "Queen of Hearts" && card.upgraded);
     if (queen) withSeat(first.seat, () => gain("vp", 1));
   }
+  for (const p of G.players) if (p.currentAction) withSeat(p.seat, () => onPlayChapter(p.currentAction.number));
   G.history.push({ round: G.round, plays: G.players.filter((p) => p.currentAction).map((p) => ({ seat: p.seat, number: p.currentAction.number, first: p.seat === order[0], pos: order.indexOf(p.seat) })) });
   log("l_played", { list: G.players.filter((p) => p.currentAction).map((p) => `${p.name} ${p.currentAction.number}`).join(" · ") });
   for (const p of G.players) p.phase = "waitTurn";
@@ -854,9 +855,11 @@ function applyMean(text, source) {
   const me = G.players[G.cur];
   if ((m = text.match(/steal (\d+) coins? from each opponent( who has more coins than you)?/i))) {
     const n = Number(m[1]);
+    const pinoBonus = /2 coins from an opponent who has Pinocchio/i.test(text);
     for (const o of opponents()) {
       if (m[2] && o.coins <= me.coins) continue;
-      const k = Math.min(n, o.coins);
+      const want = pinoBonus && o.tableau.some((card) => card.name === "Pinocchio") ? 2 : n;
+      const k = Math.min(want, o.coins);
       if (!k) continue;
       o.coins -= k;
       gain("coins", k);
@@ -952,6 +955,21 @@ function onTakeTagless(cards) {
   if (n) gain("vp", n);
 }
 
+// Pinocchio set: chapter-based Ongoing effects, resolved once everybody has played.
+function hasCard(name) {
+  return state.tableau.some((card) => card.name === name);
+}
+
+function onPlayChapter(number) {
+  const pino = state.tableau.find((card) => card.name === "Pinocchio");
+  if (pino && !pino.upgraded && number >= 9) {
+    state.tagTokens += 1;
+    log("l_nose", { p: state.name });
+  }
+  const crickets = state.tableau.filter((card) => card.name === "The Talking Cricket").length;
+  if (crickets && number <= 4) gain("vp", crickets * (pino ? 2 : 1));
+}
+
 function triggerOnTakeItem() {
   const munchkins = state.tableau.filter((card) => /The Munchkins/i.test(card.name)).length;
   if (munchkins) gain("vp", munchkins);
@@ -1025,6 +1043,7 @@ async function activateCard(card) {
     else if (/gain 1 XP\b/i.test(text)) gain("xp", 1);
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(7, countByName("Pirate") + countAlignment("Bad")));
+    if (/gain 1 coin for each Item you have, max 3/i.test(text)) gain("coins", Math.min(3, state.items.length));
     if (/gain 1 coin for each Good Character/i.test(text)) gain("coins", Math.min(5, countAlignment("Good")));
     if (/gain 1 XP for each Charm/i.test(text)) gain("xp", Math.min(5, countIcon("Charm")));
     if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
@@ -1144,6 +1163,7 @@ function scoreQuest(quest) {
   if (/Rob the Rich/.test(name)) return Math.min(10, Math.floor((state.coinsGained || 0) / 3));
   if (/Rubbed Lamp/.test(name)) return Math.min(10, Math.floor((state.xpGained || 0) / 2));
   if (/Arrow on Target/.test(name)) return Math.min(10, countCardsWith("VP|Game End") * 2);
+  if (/A Real Boy/.test(name)) return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded && card.alignment === "Good").length * 3);
   if (/Final Wish/.test(name)) return Math.min(12, Math.max(0, state.quests.length - 1) * 4);
   if (/Once Upon a Time/.test(name)) {
     const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 3).length;
@@ -1189,6 +1209,9 @@ function scoreCards() {
     else if (n === "Cinderella") total += Math.min(14, state.items.length * 2);
     else if (n === "Rumpelstiltskin") total += up ? Math.min(14, countAlignment("Bad") * 2) : Math.min(8, countAlignment("Bad"));
     else if (n === "Belle") total += Math.min(14, upgradedLeg * 2);
+    else if (n === "Pinocchio") total += Math.min(12, countAlignment("Good") * 2);
+    else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
+    else if (n === "The Whale") total += Math.min(8, countTagless());
     else if (n === "Beast") total += up ? Math.min(10, icons.Strength * 2) : Math.floor(icons.Strength / 2);
   }
   return total;

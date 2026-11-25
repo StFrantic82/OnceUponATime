@@ -22,6 +22,8 @@ window.CARD_I18N = [
   ["The Fairies", "Les Fées", "Le Fate"],
   ["The Forest Animals", "Les Animaux de la forêt", "Gli Animali del bosco"],
   ["The Munchkins", "Les Munchkins", "I Mastichini"],
+  ["The Cat and the Fox", "Le Chat et le Renard", "Il Gatto e la Volpe"],
+  ["The Talking Cricket", "Le Grillon-Parlant", "Il Grillo Parlante"],
   // ---- Names: Items ----
   ["Enchanted Sword", "Épée enchantée", "Spada incantata"],
   ["Puss’s Boots", "Les Bottes du Chat", "Gli Stivali del Gatto"],
@@ -58,6 +60,7 @@ window.CARD_I18N = [
   ["Pirate Ship", "Navire pirate", "Nave pirata"],
   ["Undersea Throne", "Trône sous-marin", "Trono sottomarino"],
   ["Crocodile's Clock", "L’Horloge du Crocodile", "L’Orologio del Coccodrillo"],
+  ["The Whale", "La Baleine", "La Balena"],
   // ---- Names: Legendary characters ----
   ["The Prince", "Le Prince", "Il Principe"],
   ["The White Rabbit", "Le Lapin blanc", "Il Bianconiglio"],
@@ -98,6 +101,8 @@ window.CARD_I18N = [
   ["Belle", "Belle", "Belle"],
   ["Beast", "La Bête", "La Bestia"],
   ["Princess Briar Rose", "La Princesse Fleur-d’Épine", "La Principessa Rosaspina"],
+  ["Pinocchio", "Pinocchio", "Pinocchio"],
+  ["Geppetto", "Geppetto", "Geppetto"],
   // ---- Names: Quests ----
   ["The Midnight Ball", "Le Bal de minuit", "Il Ballo di Mezzanotte"],
   ["The Duel with Hook", "Le Duel avec Crochet", "Il Duello con Uncino"],
@@ -119,6 +124,7 @@ window.CARD_I18N = [
   ["Arrow on Target", "En plein dans le mille", "Freccia nel Bersaglio"],
   ["The Final Wish", "Le Dernier Vœu", "Il Desiderio Finale"],
   ["Once Upon a Time", "Il était une fois", "C’era una Volta"],
+  ["A Real Boy", "Un vrai petit garçon", "Un bambino vero"],
   // ---- Quest themes ----
   ["The Little Mermaid", "La Petite Sirène", "La Sirenetta"],
   ["Beauty and the Beast", "La Belle et la Bête", "La Bella e la Bestia"],
@@ -141,6 +147,8 @@ window.CARD_I18N = [
   ["Ongoing: Good Characters cost 1 less XP to level up, minimum 1 XP.", "Ongoing : améliorer un Personnage Gentil coûte 1 XP de moins, minimum 1 XP.", "Ongoing: potenziare un Personaggio Buono costa 1 XP in meno, minimo 1 XP."],
   ["Activation: spend 3 coins to level up a Character for free.", "Activation : dépensez 3 coins pour améliorer un Personnage sans payer d’XP.", "Activation: spendi 3 coins per potenziare un Personaggio senza pagare XP."],
   ["Ongoing: gain 1 VP whenever you take an Item.", "Ongoing : gagnez 1 VP chaque fois que vous prenez un Objet.", "Ongoing: ottieni 1 VP ogni volta che prendi un Oggetto."],
+  ["Instant: steal 1 coin from each opponent (2 coins from an opponent who has Pinocchio).", "Instant : volez 1 coin à chaque adversaire (2 coins à un adversaire qui a Pinocchio).", "Instant: ruba 1 coin a ogni avversario (2 coins a un avversario che ha Pinocchio)."],
+  ["Ongoing: whenever you play an Action card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).", "Ongoing : chaque fois que vous jouez une carte Action de valeur 4 ou moins, gagnez 1 VP (2 VP si vous avez Pinocchio).", "Ongoing: ogni volta che giochi una carta Azione di valore 4 o inferiore, ottieni 1 VP (2 VP se hai Pinocchio)."],
 
   // ---- Item effects ----
   ["Instant: gain 1 XP for each Strength you have.", "Instant : gagnez 1 XP par Strength que vous avez.", "Instant: ottieni 1 XP per ogni Strength che hai."],
@@ -178,6 +186,7 @@ window.CARD_I18N = [
   ["Activation: gain 1 coin for each Pirate and each Bad Character you have, max 7 coins.", "Activation : gagnez 1 coin par Pirate et par Personnage Méchant que vous avez, max 7 coins.", "Activation: ottieni 1 coin per ogni Pirata e ogni Personaggio Cattivo che hai, max 7 coins."],
   ["Game End: 1 VP for each Item you have, max 8 VP.", "Game End : 1 VP par Objet que vous avez, max 8 VP.", "Game End: 1 VP per ogni Oggetto che hai, max 8 VP."],
   ["Activation: recover one used Action card with value exactly 10 or higher, then discard this Item.", "Activation : reprenez une carte Action jouée de valeur 10 ou plus, puis défaussez cet Objet.", "Activation: recupera una carta Azione giocata di valore 10 o superiore, poi scarta questo Oggetto."],
+  ["Game End: 1 VP for each of your cards without tags, max 8 VP.", "Game End : 1 VP par carte sans tag, max 8 VP.", "Game End: 1 VP per ogni tua carta senza icone, max 8 VP."],
 
   // ---- Legendary effects ----
   ["Instant: activate 1 of your cards.", "Instant : déclenchez 1 de vos cartes.", "Instant: attiva 1 delle tue carte."],
@@ -258,6 +267,10 @@ window.CARD_I18N = [
   ["Game End: 2 VP for each Strength icon you have, max 10 VP.", "Game End : 2 VP par icône Strength, max 10 VP.", "Game End: 2 VP per ogni icona Strength, max 10 VP."],
   ["Charm 1. Instant: recover one used Action card with value 7 or lower.", "Charm 1. Instant : reprenez une carte Action jouée de valeur 7 ou moins.", "Charm 1. Instant: recupera una carta Azione giocata di valore 7 o inferiore."],
   ["Ongoing: the first time each round you play an Action card value 7 or lower, gain 1 XP.", "Ongoing : la première fois de chaque manche que vous jouez une carte Action de valeur 7 ou moins, gagnez 1 XP.", "Ongoing: la prima volta in ogni round che giochi una carta Azione di valore 7 o inferiore, ottieni 1 XP."],
+  ["Dexterity 1. Ongoing: whenever you play an Action card with value 9 or higher, his nose grows: gain 1 Tag token.", "Dexterity 1. Ongoing : chaque fois que vous jouez une carte Action de valeur 9 ou plus, son nez s’allonge : gagnez 1 jeton d’icône.", "Dexterity 1. Ongoing: ogni volta che giochi una carta Azione di valore 9 o superiore, il suo naso si allunga: ottieni 1 segnalino icona."],
+  ["Game End: he becomes a real boy: 2 VP for each Good Character you have, max 12 VP.", "Game End : il devient un vrai petit garçon : 2 VP par Personnage Gentil que vous avez, max 12 VP.", "Game End: diventa un bambino vero: 2 VP per ogni Personaggio Buono che hai, max 12 VP."],
+  ["Intelligence 1. Activation: gain 1 coin for each Item you have, max 3 coins.", "Intelligence 1. Activation : gagnez 1 coin par Objet que vous avez, max 3 coins.", "Intelligence 1. Activation: ottieni 1 coin per ogni Oggetto che hai, max 3 coins."],
+  ["Game End: 2 VP for each Item you have, +4 VP if you have Pinocchio, max 12 VP.", "Game End : 2 VP par Objet que vous avez, +4 VP si vous avez Pinocchio, max 12 VP.", "Game End: 2 VP per ogni Oggetto che hai, +4 VP se hai Pinocchio, max 12 VP."],
 
   // ---- Quest scoring ----
   ["2 VP for each Charm icon. Max 10 VP.", "2 VP par icône Charm. Max 10 VP.", "2 VP per ogni icona Charm. Max 10 VP."],
@@ -280,6 +293,7 @@ window.CARD_I18N = [
   ["2 VP for each card that grants VP directly or at Game End. Max 10 VP.", "2 VP par carte qui rapporte des VP directement ou en Game End. Max 10 VP.", "2 VP per ogni carta che dà VP direttamente o a Game End. Max 10 VP."],
   ["4 VP for each other completed Quest. Max 12 VP.", "4 VP par autre Quête accomplie. Max 12 VP.", "4 VP per ogni altra Missione completata. Max 12 VP."],
   ["2 VP for each category in which you have at least 3 cards: Good, Bad, Character, Item, Activation. Max 10 VP.", "2 VP par catégorie où vous avez au moins 3 cartes : Gentil, Méchant, Personnage, Objet, Activation. Max 10 VP.", "2 VP per ogni categoria in cui hai almeno 3 carte: Buono, Cattivo, Personaggio, Oggetto, Activation. Max 10 VP."],
+  ["3 VP for each upgraded Good Legendary card. Max 12 VP.", "3 VP par carte Légendaire Gentille améliorée. Max 12 VP.", "3 VP per ogni carta Leggendaria Buona potenziata. Max 12 VP."],
 
   // ---- Writers ----
   ["The first Item you buy each round costs 1 fewer coin.", "Le premier Objet que vous achetez à chaque manche coûte 1 coin de moins.", "Il primo Oggetto acquistato nel round costa 1 coin in meno."],

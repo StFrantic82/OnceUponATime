@@ -143,6 +143,10 @@
     flag: (o = {}) => `<path d="M-20 34V-34" stroke-width="3.5"/><path d="M-20-34c14-6 24 6 40 0v24c-16 6-26-6-40 0z" fill="${o.c || "#c8312b"}"/>`,
     footprints: () => `<ellipse cx="-14" cy="10" rx="5" ry="8" fill="${INK}" opacity=".35" stroke="none"/><ellipse cx="2" cy="-4" rx="5" ry="8" fill="${INK}" opacity=".35" stroke="none"/><ellipse cx="16" cy="-20" rx="5" ry="8" fill="${INK}" opacity=".35" stroke="none"/>`,
     road: (o = {}) => `<path d="M-14 40C-6 20 20 10 10-10S-10-30 0-40h8C-2-30 22-12 18 8S2 30 10 40z" fill="${o.c || "#f3c64a"}"/><path d="M-12 30h20M-2 18h20M4 4h16M0-14h16M2-28h10" stroke="#c9922a" stroke-width="1.5"/>`,
+    puppet: (o = {}) => `<path d="M-26 44c0-20 10-28 26-28s26 8 26 28z" fill="#c8312b"/><path d="M-8 16 0 26 8 16" fill="#f3c64a"/><rect x="-5" y="4" width="10" height="12" fill="#e0b07a"/><ellipse cx="0" cy="-16" rx="16" ry="18" fill="#e0b07a"/><path d="M6-12h${o.nose || 22}l-${o.nose || 22} 5z" fill="#d49a5e"/><circle cx="-5" cy="-18" r="2.2" fill="${INK}" stroke="none"/><circle cx="7" cy="-18" r="2.2" fill="${INK}" stroke="none"/><path d="M-6-4c3 2 6 2 9 0" fill="none" stroke-width="1.6"/><path d="M-18-24c4-20 32-20 36 0-10-6-26-6-36 0z" fill="#3a8a4a"/><path d="M14-30l8-14" stroke-width="2"/><circle cx="22" cy="-45" r="3" fill="#c8312b"/><path d="M-18-34v-20M18-34v-20" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>`,
+    cricket: () => `<ellipse cx="0" cy="6" rx="22" ry="12" fill="#5d9a3c"/><circle cx="-24" cy="-2" r="10" fill="#6fae4a"/><circle cx="-27" cy="-4" r="2.4" fill="${INK}" stroke="none"/><path d="M-30-10c-8-16-2-24 6-28M-22-10c0-14 10-20 18-20" fill="none" stroke-width="1.6"/><path d="M6 14 20 34M14 10l18 4 4 20M-8 16l-6 16" fill="none" stroke-width="2.4"/><path d="M-30-14h12v-4h-12z" fill="${INK}"/><rect x="-28" y="-24" width="8" height="10" fill="${INK}"/><path d="M-4-4c8-10 20-8 26 4" fill="#8cc063" opacity=".8"/>`,
+    whale: () => `<path d="M-50 10c0-26 30-38 60-30 22 6 32 22 32 34-4 8-14 12-26 12H-36c-8 0-14-8-14-16z" fill="#3f6f9a"/><path d="M-44 18c20 8 50 8 74 0" fill="none" stroke="#bcd6e8" stroke-width="3"/><path d="M40 10l22-16-4 18 6 16z" fill="#3f6f9a"/><circle cx="-26" cy="-2" r="3.5" fill="${INK}" stroke="none"/><path d="M-40 12c6 4 14 4 20 0" fill="#2b2b2b"/><path d="M-10-26c-4-10-10-14-16-14M-10-26c4-10 10-12 16-12M-10-26v-14" fill="none" stroke="#bfe3f2" stroke-width="2.5"/>`,
+    fox: () => `<path d="M-26-8-30-38-10-22C-4-26 4-26 10-22L30-38 26-8c2 16-10 30-26 34C-16 22-28 8-26-8z" fill="#e0742a"/><path d="M-14 4c6 14 22 14 28 0-6 10-22 10-28 0z" fill="#fbf4e2"/><path d="M-4 16h8l-4 5z" fill="${INK}"/><ellipse cx="-11" cy="-6" rx="3" ry="4" fill="${INK}" stroke="none"/><ellipse cx="11" cy="-6" rx="3" ry="4" fill="${INK}" stroke="none"/>`,
   };
 
   function M_shellMini(x, y) {
@@ -222,6 +226,11 @@
     "Mad Hatter": { bg: "wonder", m: [F({ style: "curly", hair: "#5e3618", coat: "#8a3b3b", collar: "#e7b43a" }), ["tophat", 100, 50, 0.75, -8, { tag: true }], ["teacup", 156, 110, 0.6, 0]] },
     "Tinker Bell": { bg: "night", m: [["fairy", 100, 78, 1.7, 0, { c: "#f3c64a", glow: 30 }], ["sparkles", 100, 80, 1.8, 0]] },
     "Wendy": { bg: "night", m: [F({ style: "long", hair: "#6b3f1f", coat: "#a9c9e8", collar: "#fbf4e2" }), ["bowtie", 100, 50, 0.8, 0, { c: "#3f6fa8" }], ["star", 160, 40, 0.5, 0], ["candle", 46, 104, 0.6, 0]] },
+    "Pinocchio": { bg: "village", m: [["puppet", 100, 92, 0.95, 0, { nose: 34 }], ["leaf", 152, 52, 0.45, 20]] },
+    "Geppetto": { bg: "study", m: [["figure", 84, 96, 0.9, 0, { style: "whitebeard", hair: "#e8e2d4", coat: "#7a5a3a" }], ["puppet", 148, 112, 0.5, 0, { nose: 10 }], ["axe", 40, 116, 0.4, -20]] },
+    "The Cat and the Fox": { bg: "dusk", m: [["fox", 70, 92, 0.8, -6], ["cathead", 134, 98, 0.65, 6, { c: "#4a4a52", s: "#2b2b2b" }], ["coins", 102, 132, 0.4, 0]] },
+    "The Talking Cricket": { bg: "meadow", m: [["cricket", 104, 104, 1.1, 0], ["candle", 156, 70, 0.45, 0]] },
+    "The Whale": { bg: "sea", m: [["whale", 100, 102, 1.25, 0]] },
     "Crocodile": { bg: "sea", m: [["croc", 104, 104, 1.25, 0], ["watch", 150, 52, 0.45, 18]] },
     "Grandmother": { bg: "forest", m: [["cottage", 154, 86, 0.6, 0], F({ style: "bun", hair: "#e9e2d0", coat: "#8f5bb5", collar: "#fbf4e2" }), ["basket", 46, 118, 0.45, 0]] },
     "The Hunter": { bg: "forest", m: [F({ style: "beard", hair: "#6b3f1f", coat: "#4f7a3a" }), ["featherCap", 100, 60, 0.7, 0], ["axe", 154, 100, 0.7, 0]] },
@@ -313,6 +322,7 @@
     "The Rubbed Lamp": { bg: "desert", m: [["lamp", 100, 100, 1.1, 0], ["smoke", 110, 58, 0.7, 0], ["sparkles", 110, 50, 1, 0]] },
     "Arrow on Target": { bg: "meadow", m: [["bow", 60, 80, 0.8, 0], ["flag", 150, 90, 0.7, 0]] },
     "The Final Wish": { bg: "night", m: [["lamp", 80, 104, 0.7, 0], ["star", 140, 50, 0.9, 0], ["sparkles", 120, 70, 1.3, 0]] },
+    "A Real Boy": { bg: "village", m: [["figure", 84, 104, 0.7, 0, { style: "short", hair: "#6b3f1f", coat: "#c8312b" }], ["puppet", 126, 118, 0.42, 0, { nose: 8 }], ["heart", 128, 52, 0.4, 0]] },
     "Once Upon a Time": { bg: "study", m: [["book", 100, 90, 1.3, 0, { c: "#8a3b3b" }], ["sparkles", 100, 56, 1.3, 0], ["castle", 100, 46, 0.35, 0]] },
 
     // Writers (emblems only)
