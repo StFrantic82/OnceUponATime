@@ -27,7 +27,7 @@ function resourceIcon(kind, label, full = false) {
   return `<img class="game-icon" src="${src}" alt="${esc(label)}">`;
 }
 function formatGameText(text) {
-  return String(text || "")
+  return (window.tagTokens ? window.tagTokens(text) : String(text || ""))
     .replace(/\bGame End\b/gi, resourceIcon("endgame", "Game End"))
     .replace(/\bOngoing\b/gi, resourceIcon("ongoing", "Ongoing"))
     .replace(/\bInstant\b/gi, resourceIcon("instant", "Instant"))

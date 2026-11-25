@@ -5,6 +5,19 @@
   const ICONS = ["Charm", "Strength", "Dexterity", "Intelligence"];
   const TAG = 26; // px, size of a square skill tag
 
+  // "Tag token" in card texts becomes a small square token icon with the four skill colours.
+  const TAG_ICON = `<span class="tagtok-ico" role="img" aria-label="Tag"><i></i><i></i><i></i><i></i></span>`;
+  function tagTokens(text) {
+    return String(text || "")
+      .replace(/\b(\d+|a|one|two)\s+Tag tokens?/gi, (_, n) => `${/^\d$/.test(n) ? n : { a: "1", one: "1", two: "2" }[n.toLowerCase()]} ${TAG_ICON}`)
+      .replace(/\btwo tokens\b/gi, `2 ${TAG_ICON}`)
+      .replace(/\b(\d+|un|deux)\s+jetons?\s+d[’']ic[ôo]ne/gi, (_, n) => `${({ un: "1", deux: "2" })[n.toLowerCase()] || n} ${TAG_ICON}`)
+      .replace(/\b(\d+|deux)\s+jetons\b/gi, (_, n) => `${n === "deux" ? "2" : n} ${TAG_ICON}`)
+      .replace(/\b(\d+|un|due)\s+segnalin[oi]\s+icona/gi, (_, n) => `${({ un: "1", due: "2" })[n.toLowerCase()] || n} ${TAG_ICON}`)
+      .replace(/\b(\d+|due)\s+segnalini\b/gi, (_, n) => `${n === "due" ? "2" : n} ${TAG_ICON}`);
+  }
+  window.tagTokens = tagTokens;
+
   function skillList(card) {
     const out = [];
     for (const icon of ICONS) {
