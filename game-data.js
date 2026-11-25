@@ -1525,7 +1525,8 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
       "cost3": 4,
-      "level3": "2 VP for each Item."
+      "level3": "2 VP for each Item.",
+      "coins": 3
     },
     {
       "id": "W2",
@@ -1534,7 +1535,8 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
       "cost3": 5,
-      "level3": "2 VP for each Good–Bad pair. Max 12 VP."
+      "level3": "2 VP for each Good–Bad pair. Max 12 VP.",
+      "coins": 3
     },
     {
       "id": "W3",
@@ -1543,7 +1545,8 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
       "cost3": 6,
-      "level3": "3 VP for each card with a Game End effect. Max 15 VP."
+      "level3": "3 VP for each card with a Game End effect. Max 15 VP.",
+      "coins": 4
     },
     {
       "id": "W4",
@@ -1552,7 +1555,8 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 5,
-      "level3": "1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP."
+      "level3": "1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP.",
+      "coins": 2
     },
     {
       "id": "W5",
@@ -1561,7 +1565,8 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Immediately activate up to two different cards.",
       "cost3": 4,
-      "level3": "2 VP for each card with Activation. Max 14 VP."
+      "level3": "2 VP for each card with Activation. Max 14 VP.",
+      "coins": 2
     },
     {
       "id": "W6",
@@ -1570,7 +1575,8 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 6,
-      "level3": "2 VP for each Dexterity icon. Max 14 VP."
+      "level3": "2 VP for each Dexterity icon. Max 14 VP.",
+      "coins": 2
     },
     {
       "id": "W7",
@@ -1579,7 +1585,8 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 6,
-      "level3": "5 VP for each complete set of all four icons. Max 15 VP."
+      "level3": "5 VP for each complete set of all four icons. Max 15 VP.",
+      "coins": 2
     },
     {
       "id": "W8",
@@ -1588,7 +1595,8 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
       "cost3": 6,
-      "level3": "3 VP for each upgraded Legendary card. Max 12 VP."
+      "level3": "3 VP for each upgraded Legendary card. Max 12 VP.",
+      "coins": 2
     }
   ],
   "board2p": [

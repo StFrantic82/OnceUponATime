@@ -535,3 +535,6 @@ body.print-body {
 .print-writer .xp-box { width: 41px; height: 41px; border-radius: 7px; }
 .print-writer .xp-boxes { gap: 8.2px; }
 .print-writer .xp-box .game-icon { width: 26px; height: 26px; }
+
+.writer-coins { display: inline-flex; align-items: center; gap: 3px; font: 800 1.05em "Alegreya", serif; color: #6b3a12; }
+.writer-coins .game-icon { width: 1.3em; height: 1.3em; }

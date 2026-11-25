@@ -239,7 +239,7 @@ function newPlayer(seat, info) {
     name: info.name,
     kind: info.kind, // human | bot
     uid: info.uid || null,
-    coins: 2,
+    coins: 0,
     xp: 0,
     writerXp: 0,
     activatePending: 0,
@@ -301,16 +301,13 @@ function newGame(options = {}, seats = null) {
   G.startSeat = G.firstSeat;
   G.history = [];
   G.curve = [];
-  const writers = shuffle(DATA.writers || []);
-  for (const p of G.players) {
-    if (p.kind === "human" && settings.writerMode === "choose") {
-      p.phase = "chooseWriter";
-    } else {
-      p.writer = writers.pop() || null;
-      if (p.writer) log("l_isWriterOf", { p: p.name, w: C(p.writer.name) });
-    }
-  }
+  // Writers draft: 1 + players Writers face up; in reverse turn order each player picks one; the last one is discarded.
+  const n = G.players.length;
+  G.writerPool = shuffle(DATA.writers || []).slice(0, n + 1);
+  G.writerDraft = Array.from({ length: n }, (_, i) => (G.firstSeat + n - 1 - i) % n);
+  for (const p of G.players) p.phase = "chooseWriter";
   startRound();
+  draftWritersForBots();
   afterChange();
 }
 
@@ -768,11 +765,34 @@ function completeUpgrade(card) {
 }
 
 function chooseWriter(writerId) {
-  const writer = DATA.writers.find((entry) => entry.id === writerId);
-  if (!writer || state.writer || state.phase !== "chooseWriter") return;
+  if (state.writer || state.phase !== "chooseWriter" || (G.writerDraft || [])[0] !== G.cur) return;
+  const writer = (G.writerPool || []).find((entry) => entry.id === writerId);
+  if (!writer) return;
+  takeWriter(writer);
+  draftWritersForBots();
+}
+
+function takeWriter(writer) {
   state.writer = clone(writer);
+  state.coins = writer.coins ?? 2;
+  G.writerPool = G.writerPool.filter((entry) => entry !== writer);
+  G.writerDraft = G.writerDraft.slice(1);
   state.phase = state.hand.length ? "chooseAction" : "waitAction";
   log("l_isWriterOf", { p: state.name, w: C(writer.name) });
+}
+
+// Computer players pick when their turn in the draft comes; once everybody has a Writer, the round starts.
+function draftWritersForBots() {
+  while ((G.writerDraft || []).length) {
+    const seat = G.writerDraft[0];
+    const p = G.players[seat];
+    if (p.kind === "human" && !simMode) break;
+    withSeat(seat, () => takeWriter(G.writerPool[Math.floor(Math.random() * G.writerPool.length)]));
+  }
+  if (!(G.writerDraft || []).length && G.writerPool?.length) {
+    log("l_writerDiscarded", { w: C(G.writerPool[0].name) });
+    G.writerPool = [];
+  }
   maybeBotsChoose();
 }
 
@@ -2374,9 +2394,11 @@ function renderWriter() {
   const writers = DATA.writers || [];
   const setupOpen = state.phase === "chooseWriter";
   el.writerSetup.classList.toggle("hidden", !setupOpen);
-  el.writerSetupTitle.textContent = t("chooseYourWriter");
   el.writerChoices.className = "writer-choice-grid";
-  el.writerChoices.innerHTML = setupOpen ? writers.map((writer) => renderWriterCard(writer, 1, true)).join("") : "";
+  const myPick = setupOpen && (G.writerDraft || [])[0] === view.seat;
+  const picker = G.players[(G.writerDraft || [])[0]];
+  el.writerSetupTitle.textContent = myPick ? t("chooseYourWriter") : t("writerWait", { p: picker ? picker.name : "" });
+  el.writerChoices.innerHTML = setupOpen ? (G.writerPool || writers).map((writer) => renderWriterCard(writer, 1, myPick, !myPick)).join("") : "";
   for (const button of el.writerChoices.querySelectorAll("[data-writer]")) {
     button.addEventListener("click", () => act("chooseWriter", button.dataset.writer));
   }

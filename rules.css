@@ -120,3 +120,6 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 
 .w-good { color: #2f5d8a; font-weight: 800; }
 .w-bad { color: #a8323a; font-weight: 800; }
+
+.writer-coins { display: inline-flex; align-items: center; gap: 3px; font: 800 1.05em "Alegreya", serif; color: #6b3a12; }
+.writer-coins .game-icon { width: 1.3em; height: 1.3em; }

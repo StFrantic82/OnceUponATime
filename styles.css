@@ -3151,3 +3151,6 @@ button.needs-click { outline: none; }
 
 .stats-head-btns { display: flex; gap: 8px; align-items: center; }
 .sim-run-btn { padding: 8px 18px; font-size: 15px; }
+
+.writer-coins { display: inline-flex; align-items: center; gap: 3px; font: 800 1.05em "Alegreya", serif; color: #6b3a12; }
+.writer-coins .game-icon { width: 1.3em; height: 1.3em; }

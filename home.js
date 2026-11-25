@@ -66,9 +66,6 @@
     $("#lvseg").innerHTML = Object.entries(LEVELS)
       .map(([key, level], i) => `<button type="button" aria-pressed="${key === prefs.level}" data-level="${key}">${"★".repeat(i + 1)}<span>${level.label()}</span></button>`)
       .join("");
-    $("#wseg").innerHTML = [["random", t("writerRandom")], ["choose", t("writerChoose")]]
-      .map(([key, label]) => `<button type="button" aria-pressed="${key === prefs.writerMode}" data-writer-pick="${key}">${label}</button>`)
-      .join("");
     $("#deckBtns").innerHTML = DECKS.map((deck) => `<button type="button" data-open-deck="${deck.key}">${resourceIcon(deck.icon, t(`deck_${deck.key}`))}<b>${t(`deck_${deck.key}`)}</b><span>${(data[deck.key] || []).length}</span></button>`).join("");
   }
 
