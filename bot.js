@@ -33,6 +33,8 @@
   // How much a card is worth to this bot right now (rough, but aware of its Quests).
   function cardWorth(card) {
     let value = card.deck === "legendary" ? 6 : 3;
+    // A computer storyteller may follow the "no tag" plan: cards without tags and VP during the game.
+    if (state.strategy === "tagless" && isTagless(card)) value += 5;
     value += totalIcons(card) * 1.2;
     const text = `${card.effect || ""} ${card.base || ""}`;
     if (/Game End/i.test(text)) value += 2;
@@ -65,6 +67,7 @@
 
   function itemWorth(item) {
     let value = item.cost;
+    if (state.strategy === "tagless" && (isTagless(item) || /without tags/.test(item.effect))) value += 4;
     if (/VP/.test(item.effect)) value += 2;
     if (/Quest/.test(item.effect)) value += 1.5;
     value += totalIcons(item);
@@ -84,11 +87,15 @@
     buyItem(pick.id);
   }
 
+  function questPlan(quest) {
+    return scoreQuest(quest) + (state.strategy === "tagless" && /Queen's Command/.test(quest.name) ? 8 : 0);
+  }
+
   function takeQuests() {
     let guard = 6;
     while (state.questChoices > 0 && G.questDisplay.length && guard > 0) {
       guard -= 1;
-      const pick = level() === "easy" ? rand(G.questDisplay) : [...G.questDisplay].sort((a, b) => scoreQuest(b) - scoreQuest(a))[0];
+      const pick = level() === "easy" ? rand(G.questDisplay) : [...G.questDisplay].sort((a, b) => questPlan(b) - questPlan(a))[0];
       takeQuest(pick.id);
     }
     state.questChoices = 0;

@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "activatePending", "choices", "coinsGained", "xpGained", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -1978,6 +1978,9 @@ async function simulateGame(opts) {
   const n = Math.min(5, Math.max(2, Number(opts.players) || 4));
   try {
     newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
+    (opts.strategies || []).forEach((strategy, seat) => {
+      if (G.players[seat] && strategy) G.players[seat].strategy = strategy;
+    });
     let guard = 400;
     while (!G.gameOver && guard > 0) {
       guard -= 1;
