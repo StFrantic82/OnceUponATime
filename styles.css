@@ -3016,3 +3016,5 @@ button.needs-click { outline: none; }
 .summary-cell.vp-cell strong { color: #6b2a1a; font-size: 18px; }
 .summary-cell.free-cell { background: #fff1c4; border-color: #e0a63a; }
 .stats:empty { display: none; }
+.app > .topbar[hidden] { display: none; }
+.app > .offer-row:first-of-type { margin-top: 0; }
