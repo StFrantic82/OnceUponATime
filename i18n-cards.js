@@ -175,7 +175,7 @@ window.CARD_I18N = [
   ["Instant: place 2 XP on a Good Character.", "Instant : placez 2 XP sur un Personnage Gentil.", "Instant: piazza 2 XP su un Personaggio Buono."],
   ["Activation: gain 1 XP for each Charm icon, max 5 XP.", "Activation : gagnez 1 XP par icône Charm, max 5 XP.", "Activation: ottieni 1 XP per ogni icona Charm, max 5 XP."],
   ["Instant: choose one icon type. Gain 2 Tag tokens of that type.", "Instant : choisissez un type d’icône. Gagnez 2 jetons de ce type.", "Instant: scegli un tipo di icona. Ottieni 2 segnalini di quel tipo."],
-  ["Game End: 3 VP for each complete set of four icons.", "Game End : 3 VP par série complète des quatre icônes.", "Game End: 3 VP per ogni serie completa delle quattro icone."],
+  ["Game End: 2 VP for each complete set of four icons, max 12 VP.", "Game End : 2 VP par série complète des quatre icônes, max 12 VP.", "Game End: 2 VP per ogni serie completa delle quattro icone, max 12 VP."],
   ["Game End: 2 VP for each Quest you completed, max 10 VP.", "Game End : 2 VP par Quête accomplie, max 10 VP.", "Game End: 2 VP per ogni Missione completata, max 10 VP."],
   ["Instant: take the first player token.", "Instant : prenez le jeton premier joueur.", "Instant: prendi il segnalino primo giocatore."],
   ["Activation: gain 2 VP. If you have at least 3 Strength, gain 1 XP too.", "Activation : gagnez 2 VP. Si vous avez au moins 3 Strength, gagnez aussi 1 XP.", "Activation: ottieni 2 VP. Se hai almeno 3 Strength, ottieni anche 1 XP."],

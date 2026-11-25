@@ -106,3 +106,6 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 .freeup-ico { width: 1.5em; height: 1.5em; vertical-align: middle; display: inline-block; }
 .ac-line .freeup-ico { width: 28px; height: 28px; }
 .fc-text .freeup-ico { width: 2.3em; height: 2.3em; }
+
+.ac-quest .quest-ico { width: 2.6em; height: auto; }
+.action-hand .ac-quest .quest-ico { width: 2.2em; }

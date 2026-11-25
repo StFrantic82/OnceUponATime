@@ -1618,7 +1618,7 @@ function scoreCards(only = null) {
     const up = Boolean(card.upgraded);
     if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
-    else if (n === "The Crown of England") total += sets * 3;
+    else if (n === "The Crown of England") total += Math.min(12, sets * 2);
     else if (n === "Glass Slipper") total += Math.min(10, quests * 2) + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += Math.min(8, upgradedLeg * 2);
     else if (n === "Undersea Throne") total += Math.min(8, state.items.length);

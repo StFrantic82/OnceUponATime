@@ -3130,3 +3130,6 @@ button.needs-click { outline: none; }
 .ac-line .freeup-ico { width: 28px; height: 28px; }
 .action-hand .ac-line .freeup-ico { width: 16px; height: 16px; }
 .fc-text .freeup-ico { width: 2.3em; height: 2.3em; }
+
+.ac-quest .quest-ico { width: 2.6em; height: auto; }
+.action-hand .ac-quest .quest-ico { width: 2.2em; }

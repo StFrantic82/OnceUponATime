@@ -229,7 +229,7 @@
       let m;
       if ((m = p.match(/^(\d+)\s*coins?$/i))) return `<span class="ac-big">${m[1]}</span>${resourceIcon("coins", "coins")}`;
       if ((m = p.match(/^(\d+)\s*XP$/i))) return `<span class="ac-big">${m[1]}</span>${resourceIcon("xp", "XP")}`;
-      if (/Draft (a )?Quest/i.test(p)) return `${QUEST_ICON}${esc(t("takeAQuest"))}`;
+      if (/Draft (a )?Quest/i.test(p)) return `<span class="ac-quest" title="${esc(t("takeAQuest"))}">${QUEST_ICON}</span>`;
       if (/Activate all/i.test(p)) return `${resourceIcon("activation", "Activation")} ${esc(t("activateAll"))}`;
       if (/Activate a single/i.test(p)) return `${resourceIcon("activation", "Activation")} ${esc(t("activateOne"))}`;
       if ((m = p.match(/Free level up to (\d+)/i))) return `<span class="ac-big">${m[1]}</span>${FREEUP_ICON}`;

@@ -782,7 +782,7 @@ window.GAME_DATA = {
       "name": "The Crown of England",
       "cost": 5,
       "icons": "none",
-      "effect": "Game End: 3 VP for each complete set of four icons.",
+      "effect": "Game End: 2 VP for each complete set of four icons, max 12 VP.",
       "copy": 1
     },
     {
