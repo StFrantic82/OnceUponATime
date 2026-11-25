@@ -518,7 +518,7 @@ function takeGroup(choice) {
     if (dropped) {
       group.cards = group.cards.filter((card) => card !== dropped);
       toDiscard(dropped);
-      gain("coins", 2);
+      gain("coins", 3);
       log("l_carpet", { p: state.name, c: C(dropped.name) });
     }
   }
@@ -614,7 +614,7 @@ function takeQuest(questId) {
   const mermaid = state.tableau.find((card) => card.name === "Little Mermaid" && card.upgraded);
   if (mermaid) {
     vpSource = "Little Mermaid";
-    gain("vp", 1);
+    gain("vp", 2);
   }
   log("l_takesQuest", { p: state.name, q: C(quest.name) });
 }
@@ -1183,6 +1183,7 @@ function applyInstantInner(card) {
   else if (/gain 1 coin\b/i.test(text)) gain("coins", 1);
   if (/gain 3 VP/i.test(text)) gain("vp", 3);
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
+  if (/coins? and 1 XP|Tag token of your choice and 1 XP/i.test(text)) gain("xp", 1);
   if (/Gain 2 Tag tokens/i.test(text)) gainTagToken(2, card.name);
   else if (/Tag token/i.test(text)) gainTagToken(1, card.name);
   if (/take 1 Quest|Take 1 Quest/i.test(text)) grantQuestChoice(card.name);
@@ -1194,7 +1195,7 @@ function instantLinks(card) {
   const n = card.name;
   if (["Scarecrow", "The Tin Woodman", "The Cowardly Lion"].includes(n) && hasCard("Dorothy Gale")) gain("xp", 1);
   if (n === "Poisoned Apple") {
-    if (hasCard("The Evil Queen")) gain("vp", 3);
+    if (hasCard("The Evil Queen")) gain("vp", 4);
     const good = state.tableau.filter((c) => c.alignment === "Good").sort((a, b) => (a.deck === "common" ? 0 : 1) - (b.deck === "common" ? 0 : 1))[0];
     if (good) offerChoice("Poisoned Apple", [`discard ${good.id} gain 3 VP`], "optional");
   }
@@ -1302,7 +1303,10 @@ function onPlayChapter(number) {
     log("l_nose", { p: state.name });
   }
   const briar = state.tableau.find((card) => card.name === "Princess Briar Rose" && card.upgraded);
-  if (briar && number <= 6) gain("xp", 1);
+  if (briar && number <= 6) {
+    gain("xp", 1);
+    gain("vp", 1);
+  }
   const crickets = state.tableau.filter((card) => card.name === "The Talking Cricket").length;
   if (crickets && number <= 4) gain("vp", crickets * (pino ? 2 : 1));
 }
@@ -1388,7 +1392,7 @@ async function activateCardInner(card) {
   } else if (card.name === "Crocodile" && card.upgraded) {
     gain("coins", state.actionDiscard.filter((c) => c.number >= 10).length);
   } else if (card.name === "Robin Hood" && card.upgraded) {
-    const k = Math.min(3, state.coins);
+    const k = Math.min(4, state.coins);
     state.coins -= k;
     gain("vp", k);
   } else if (card.name === "Cheshire Cat" && card.upgraded) {
@@ -1469,12 +1473,13 @@ function spendableXpCard() {
 
 function activationLinks(card, text) {
   const n = card.name;
-  if (n === "Fairy Godmother" && card.upgraded) placeFreeXp(2, false);
+  if (n === "Fairy Godmother" && card.upgraded) placeFreeXp(3, false);
   if (n === "The Magic Mirror" && hasCard("The Evil Queen")) gain("vp", 1);
   if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
   if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
+  if (n === "Tinker Bell" && card.upgraded) gain("coins", 1);
   if (n === "Aladin" && card.upgraded) {
-    gain("coins", 1);
+    gain("coins", 2);
     gain("xp", 1);
     if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
   }
@@ -1586,12 +1591,12 @@ function scoreQuest(quest) {
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
   if (/Neverland/.test(name)) return completeSets >= 6 ? 6 : completeSets >= 5 ? 3 : 0;
   if (/Apple's Bite/.test(name)) return countAlignment("Bad");
-  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 3, 5, 7);
-  if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 2, 4, 6);
+  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 2, 4, 6);
+  if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 3, 5, 7);
   if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 9).length * 2;
   if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 4, 7, 10);
   if (/Queen's Command/.test(name)) return countTagless();
-  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 2, 4, 6);
+  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 1, 3, 5);
   if (/King's Trident/.test(name)) return state.items.length;
   if (/Hatter's Tea Party/.test(name)) return countCardsWith("Ongoing");
   if (/Second Star/.test(name)) return tiers(countCardsWith("Activation"), 6, 9, 12);
@@ -1603,7 +1608,7 @@ function scoreQuest(quest) {
   if (/Final Wish/.test(name)) return state.quests.length * 2;
   if (/A Real Boy/.test(name)) return state.actionDiscard.filter((c) => c.number <= 4).length * 2;
   if (/Once Upon a Time/.test(name)) {
-    const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 6).length;
+    const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 7).length;
     return categories * 2;
   }
   return 0;
@@ -1625,16 +1630,16 @@ function scoreCards(only = null) {
     const up = Boolean(card.upgraded);
     if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
-    else if (n === "The Crown of England") total += Math.min(12, sets * 2);
+    else if (n === "The Crown of England") total += sets;
     else if (n === "Glass Slipper") total += Math.min(10, quests * 2) + (hasCard("Cinderella") ? 3 : 0);
-    else if (n === "Enchanted Rose") total += Math.min(8, upgradedLeg * 2);
+    else if (n === "Enchanted Rose") total += upgradedLeg;
     else if (n === "Undersea Throne") total += Math.min(8, state.items.length);
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
     else if (n === "Grandmother") total += Math.min(8, countAlignment("Bad") * 2);
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
     else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
-    else if (n === "Evil Sorcerer") total += sets * 2;
-    else if (n === "The Evil Queen") total += up ? Math.min(14, icons.Charm * 2) : icons.Charm;
+    else if (n === "Evil Sorcerer") total += sets;
+    else if (n === "The Evil Queen") total += up ? icons.Charm : Math.floor(icons.Charm / 2);
     else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
     else if (n === "Dorothy Gale") total += Math.min(12, sets * 3);
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
@@ -1643,13 +1648,13 @@ function scoreCards(only = null) {
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2) + countByName("The Merry Men");
     else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
-    else if (n === "Cinderella") total += Math.min(14, state.items.length * 2);
-    else if (n === "Rumpelstiltskin") total += up ? Math.min(14, countAlignment("Bad") * 2) : Math.min(8, countAlignment("Bad"));
-    else if (n === "Belle") total += Math.min(14, upgradedLeg * 2);
+    else if (n === "Cinderella") total += state.items.length;
+    else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
+    else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 3 : 0);
     else if (n === "Pinocchio") total += Math.min(12, countAlignment("Good") * 2);
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
     else if (n === "The Whale") total += Math.min(8, countTagless());
-    else if (n === "Beast") total += up ? Math.min(10, icons.Strength * 2) + (hasCard("Belle") ? 3 : 0) : Math.floor(icons.Strength / 2);
+    else if (n === "Beast") total += up ? icons.Strength + (hasCard("Belle") ? 3 : 0) : Math.floor(icons.Strength / 2);
   }
   return total;
 }
@@ -1669,7 +1674,7 @@ function finalScore() {
 function scoreWriter() {
   if (!state.writer || state.writerLevel < 3) return 0;
   const name = state.writer.name;
-  if (name === "Charles Perrault") return Math.min(10, state.items.length * 2);
+  if (name === "Charles Perrault") return state.items.length * 2;
   if (name === "Brothers Grimm") return Math.min(12, Math.min(countAlignment("Good"), countAlignment("Bad")) * 2);
   if (name === "Hans Christian Andersen") return Math.min(15, countCardsWith("Game End") * 3);
   if (name === "Carlo Collodi") {

@@ -602,7 +602,7 @@ window.GAME_DATA = {
       "name": "The Dwarves House",
       "cost": 3,
       "icons": "none",
-      "effect": "Instant: gain 5 XP. Game End: 1 VP for each Dwarf.",
+      "effect": "Instant: gain 4 XP. Game End: 1 VP for each Dwarf.",
       "copy": 1
     },
     {
@@ -620,7 +620,7 @@ window.GAME_DATA = {
       "name": "Poisoned Apple",
       "cost": 2,
       "icons": "Bad 1",
-      "effect": "Instant: gain 2 VP (5 VP if you have The Evil Queen). You may discard 1 Good Character to gain 3 VP more.",
+      "effect": "Instant: gain 1 VP (5 VP if you have The Evil Queen). You may discard 1 Good Character to gain 3 VP more.",
       "copy": 1
     },
     {
@@ -665,7 +665,7 @@ window.GAME_DATA = {
       "name": "Bottle \"Drink Me\"",
       "cost": 2,
       "icons": "Charm 1",
-      "effect": "Instant: gain 1 Tag token of your choice.",
+      "effect": "Instant: gain 1 Tag token of your choice and 1 XP.",
       "copy": 1
     },
     {
@@ -719,7 +719,7 @@ window.GAME_DATA = {
       "name": "Magic Carpet",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 2 coins.",
+      "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 3 coins.",
       "copy": 1
     },
     {
@@ -782,7 +782,7 @@ window.GAME_DATA = {
       "name": "The Crown of England",
       "cost": 5,
       "icons": "none",
-      "effect": "Game End: 2 VP for each complete set of four icons, max 12 VP.",
+      "effect": "Game End: 1 VP for each complete set of four icons.",
       "copy": 1
     },
     {
@@ -827,7 +827,7 @@ window.GAME_DATA = {
       "name": "Enchanted Rose",
       "cost": 5,
       "icons": "Charm 1",
-      "effect": "Game End: 2 VP for each upgraded Legendary Character, max 8 VP.",
+      "effect": "Game End: 1 VP for each upgraded Legendary card.",
       "copy": 1
     },
     {
@@ -932,8 +932,8 @@ window.GAME_DATA = {
       "name": "Tinker Bell",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 Tag token.",
-      "upgrade": "Cost 1 XP. Activation: gain 1 Tag token.",
+      "base": "Charm 1. Instant: gain 2 Tag tokens of your choice.",
+      "upgrade": "Cost 1 XP. Activation: gain 1 Tag token and 1 coin.",
       "upgraded": false
     },
     {
@@ -1033,7 +1033,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm, Strength, Dexterity, Intelligence. Instant: gain 1 Tag token.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each complete set of four icons.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each complete set of four icons.",
       "upgraded": false
     },
     {
@@ -1052,8 +1052,8 @@ window.GAME_DATA = {
       "name": "The Evil Queen",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1. Game End: 1 VP for each Charm icon.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Charm icon, max 14 VP.",
+      "base": "Charm 1. Game End: 1 VP for each pair of Charm icons.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -1163,7 +1163,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Ongoing: whenever you take a Quest, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you take a Quest, gain 1 XP and 1 VP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you take a Quest, gain 1 XP and 2 VP.",
       "upgraded": false
     },
     {
@@ -1173,7 +1173,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons, plus 1 VP for each Merry Men.",
-      "upgrade": "Cost 2 XP. Activation: spend up to 3 coins to gain that many VP.",
+      "upgrade": "Cost 2 XP. Activation: spend up to 4 coins to gain that many VP.",
       "upgraded": false
     },
     {
@@ -1193,7 +1193,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: buy 1 Item for 2 coins less.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Item, max 14 VP.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each Item.",
       "upgraded": false
     },
     {
@@ -1202,8 +1202,8 @@ window.GAME_DATA = {
       "name": "Rumpelstiltskin",
       "rank": null,
       "alignment": "Bad",
-      "base": "Intelligence 1. Game End: 1 VP for each Bad card, max 8 VP.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Bad card, max 14 VP.",
+      "base": "Intelligence 1. Game End: 1 VP for each pair of Bad cards.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
     {
@@ -1212,7 +1212,7 @@ window.GAME_DATA = {
       "name": "Puss in Boots",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: gain 3 coins.",
+      "base": "Dexterity 1. Instant: gain 4 coins.",
       "upgrade": "Cost 3 XP. Activation: gain 1 coin for each Bad card, max 3 coins.",
       "upgraded": false
     },
@@ -1223,7 +1223,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: place 2 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.",
-      "upgrade": "Cost 2 XP. Activation: place 2 XP on a Character.",
+      "upgrade": "Cost 2 XP. Activation: place 3 XP on a Character.",
       "upgraded": false
     },
     {
@@ -1232,8 +1232,8 @@ window.GAME_DATA = {
       "name": "Aladin",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: gain 2 coins and 1 XP.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 coin and 1 XP. If you have Magic Lamp, gain 1 VP too.",
+      "base": "Dexterity 1. Instant: gain 3 coins and 1 XP.",
+      "upgrade": "Cost 3 XP. Activation: gain 2 coins and 1 XP. If you have Magic Lamp, gain 1 VP too.",
       "upgraded": false
     },
     {
@@ -1253,7 +1253,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: whenever you gain XP from a card, gain 1 XP more.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each upgraded Legendary Character, max 14 VP.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each upgraded Legendary card. If you have Beast, gain 3 VP more.",
       "upgraded": false
     },
     {
@@ -1263,7 +1263,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Game End: 1 VP for each pair of Strength icons.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon, max 10 VP. If you have Belle, gain 3 VP more.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each Strength icon. If you have Belle, gain 3 VP more.",
       "upgraded": false
     },
     {
@@ -1273,7 +1273,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: take back 1 Chapter card with value 6 or lower from your discard. If you have The Fairies, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP and 1 VP.",
       "upgraded": false
     },
     {
@@ -1308,7 +1308,7 @@ window.GAME_DATA = {
     },
     {
       "number": 3,
-      "effect": "Draft Quest"
+      "effect": "Draft Quest + Activate a single card"
     },
     {
       "number": 4,
@@ -1332,7 +1332,7 @@ window.GAME_DATA = {
     },
     {
       "number": 9,
-      "effect": "4 Coins"
+      "effect": "3 Coins"
     },
     {
       "number": 10,
@@ -1402,7 +1402,7 @@ window.GAME_DATA = {
       "number": 8,
       "name": "The Yellow Brick Road",
       "theme": "The Wizard of Oz",
-      "scoring": "3 / 5 / 7 Characters from Oz: 2 / 4 / 6 VP."
+      "scoring": "2 / 4 / 6 Characters from Oz: 2 / 4 / 6 VP."
     },
     {
       "id": "Q9",
@@ -1416,7 +1416,7 @@ window.GAME_DATA = {
       "number": 10,
       "name": "The House of Seven",
       "theme": "Snow White",
-      "scoring": "2 / 4 / 6 Dwarves: 2 / 4 / 6 VP."
+      "scoring": "1 / 3 / 5 Dwarves: 2 / 4 / 6 VP."
     },
     {
       "id": "Q11",
@@ -1486,7 +1486,7 @@ window.GAME_DATA = {
       "number": 20,
       "name": "Once Upon a Time",
       "theme": "Ensemble Finale",
-      "scoring": "2 VP for each category in which you have at least 6 cards: Good cards, Bad cards, Characters, Items, Activation cards."
+      "scoring": "2 VP for each category in which you have at least 7 cards: Good cards, Bad cards, Characters, Items, Activation cards."
     },
     {
       "id": "Q21",
@@ -1500,7 +1500,7 @@ window.GAME_DATA = {
       "number": 22,
       "name": "Grandmother's Path",
       "theme": "Little Red Riding Hood",
-      "scoring": "2 / 4 / 6 Good–Bad pairs of cards: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 Good–Bad pairs of cards: 2 / 4 / 6 VP."
     },
     {
       "id": "Q23",
@@ -1525,7 +1525,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Immediately buy an Item for 2 fewer coins.",
       "cost3": 4,
-      "level3": "2 VP for each Item. Max 10 VP."
+      "level3": "2 VP for each Item."
     },
     {
       "id": "W2",
