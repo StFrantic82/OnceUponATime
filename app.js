@@ -624,7 +624,7 @@ async function resolveWriterInstant() {
     state.writerDraftChoices = draw("common", 3);
   } else if (name === "L. Frank Baum") {
     state.writerDraftChoices = ICONS.map((icon) => ({ id: icon, name: ICON_LABELS[icon], iconChoice: icon }));
-  } else if (name === "Leprince de Beaumont") {
+  } else if (name === "Le Prince de Beaumont") {
     state.freeUpgrades += 1;
   }
 }
@@ -800,7 +800,7 @@ function gain(kind, amount) {
 function upgradeCost(card) {
   const match = (card.upgrade || "").match(/Cost (\d+) XP/i);
   const base = match ? Number(match[1]) : 4;
-  return Math.max(0, base - (state.writer?.name === "Leprince de Beaumont" ? 1 : 0));
+  return Math.max(0, base - (state.writer?.name === "Le Prince de Beaumont" ? 1 : 0));
 }
 
 // ---------------------------------------------------------------------------
@@ -958,7 +958,7 @@ function scoreWriter() {
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
   if (name === "L. Frank Baum") return Math.min(15, Math.min(...ICONS.map(countIcon)) * 5);
-  if (name === "Leprince de Beaumont") return Math.min(16, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 4);
+  if (name === "Le Prince de Beaumont") return Math.min(16, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 4);
   return 0;
 }
 

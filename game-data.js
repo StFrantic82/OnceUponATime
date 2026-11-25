@@ -1490,7 +1490,7 @@ window.GAME_DATA = {
     },
     {
       "id": "W8",
-      "name": "Leprince de Beaumont",
+      "name": "Le Prince de Beaumont",
       "level1": "Your Legendary upgrades cost 1 fewer XP.",
       "cost2": 2,
       "level2": "Upgrade one Legendary card for free.",
