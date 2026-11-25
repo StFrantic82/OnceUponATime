@@ -136,6 +136,9 @@
       savePrefs();
     });
     $("#statsBack").addEventListener("click", show);
+    for (const tab of document.querySelectorAll("[data-stats-tab]")) {
+      tab.addEventListener("click", () => setStatsTab(tab.dataset.statsTab));
+    }
     $("#joinCode").addEventListener("keydown", (event) => {
       if (event.key === "Enter") joinRoom();
     });
@@ -153,8 +156,18 @@
     store.set("ouat-history", history.slice(-200));
   }
 
+  let statsTab = "mine";
+  function setStatsTab(tab) {
+    statsTab = tab;
+    for (const btn of document.querySelectorAll("[data-stats-tab]")) btn.setAttribute("aria-pressed", String(btn.dataset.statsTab === tab));
+    $("#myStats").hidden = tab !== "mine";
+    $("#simScreen").hidden = tab !== "sims";
+    if (tab === "sims") window.Sims?.show();
+  }
+
   function showStats() {
     showScreen("stats");
+    setStatsTab(statsTab);
     const history = store.get("ouat-history", []);
     const body = $("#statsBody");
     if (!history.length) {

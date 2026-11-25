@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:wght@400;500;700;800&display=swap" />
-    <link rel="stylesheet" href="styles.css?v=11" />
+    <link rel="stylesheet" href="styles.css?v=12" />
   </head>
   <body>
     <section id="home" class="home-screen" hidden>
@@ -67,9 +67,17 @@
 
     <section id="statsScreen" class="stats-screen" hidden>
       <div class="stats-card">
-        <div class="stats-head"><h2 data-i18n="statsTitle"></h2><button type="button" id="statsBack" data-i18n="home"></button></div>
-        <div id="statsBody"></div>
-        <div class="stats-foot"><button type="button" id="statsClear" data-i18n="clearStats"></button></div>
+        <div class="stats-head"><h2 data-i18n="statsTitle"></h2><button type="button" id="statsBack" class="primary">← <span data-i18n="home"></span></button></div>
+        <div class="filters stats-tabs"><button type="button" data-stats-tab="mine" aria-pressed="true" data-i18n="tabMine"></button><button type="button" data-stats-tab="sims" aria-pressed="false" data-i18n="tabSims"></button></div>
+        <div id="myStats">
+          <div id="statsBody"></div>
+          <div class="stats-foot"><button type="button" id="statsClear" data-i18n="clearStats"></button></div>
+        </div>
+        <div id="simScreen" hidden>
+          <p class="hint" data-i18n="simIntro"></p>
+          <div id="simControls"></div>
+          <div id="simResults"></div>
+        </div>
       </div>
     </section>
 
@@ -155,14 +163,15 @@
       </section>
     <div id="coach" class="coach" hidden role="status"></div>
 
-    <script src="game-data.js?v=11"></script>
-    <script src="i18n-cards.js?v=11"></script>
-    <script src="i18n.js?v=11"></script>
-    <script src="art.js?v=11"></script>
-    <script src="cards.js?v=11"></script>
-    <script src="app.js?v=11"></script>
-    <script src="bot.js?v=11"></script>
-    <script src="online.js?v=11"></script>
-    <script src="home.js?v=11"></script>
+    <script src="game-data.js?v=12"></script>
+    <script src="i18n-cards.js?v=12"></script>
+    <script src="i18n.js?v=12"></script>
+    <script src="art.js?v=12"></script>
+    <script src="cards.js?v=12"></script>
+    <script src="app.js?v=12"></script>
+    <script src="bot.js?v=12"></script>
+    <script src="online.js?v=12"></script>
+    <script src="sims.js?v=12"></script>
+    <script src="home.js?v=12"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@
 
 Prototype numérique de **Once Upon a Time**, jeu de cartes où des Écrivains rassemblent personnages et objets des contes classiques pour accomplir des Quêtes. Jouable dans le navigateur.
 
-- Page d’accueil : nombre de joueurs (2 à 5), niveau de l’ordinateur, choix de l’Écrivain, tutoriel, statistiques, catalogue des cartes.
+- Page d’accueil : nombre de joueurs (2 à 5), niveau de l’ordinateur, choix de l’Écrivain, tutoriel, statistiques, simulations IA pour l’équilibrage, catalogue des cartes.
 - Mode solo contre 1 à 4 conteurs automatiques, qui jouent vraiment (tableau, objets, quêtes, améliorations) et sont classés en fin de partie.
 - Jeu en ligne entre amis : on crée une salle, on envoie le code ou le lien, les places libres sont jouées par l’ordinateur.
 - Jouable en anglais, français et italien (interface et cartes).
@@ -22,6 +22,7 @@ Le jeu en ligne utilise la Realtime Database Firebase du projet Minikin City (sa
 - `index.html` et `styles.css` : l’interface ;
 - `app.js` : le moteur (état de chaque joueur, ordre du tour, effets, décompte) et l’affichage de la table ;
 - `bot.js` : l’ordinateur (choix des cartes Action, groupes, objets, quêtes, améliorations) ;
+- `sims.js` : les simulations IA (l’ordinateur contre lui-même) pour l’équilibrage ;
 - `online.js` : les salles en ligne (Firebase, ou mode local pour tester) ;
 - `game-data.js` : toutes les cartes (généré depuis le tableur des cartes) ;
 - `art.js` : les illustrations des cartes, dessinées en SVG ;

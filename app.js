@@ -30,6 +30,7 @@ const PERSONAL = new Set([
 ]);
 
 let G = emptyGame();
+let simMode = false; // AI simulations: no drawing, no waiting, no network
 const view = { seat: 0, role: "solo" }; // role: solo | host | guest
 const state = new Proxy(
   {},
@@ -385,7 +386,7 @@ function nextTurn() {
   const anyGroup = G.groups.some((group) => !group.taken);
   p.phase = anyGroup ? "chooseGroup" : "buyItem";
   log(anyGroup ? "l_turnOf" : "l_noGroupFor", { p: p.name });
-  if (p.kind === "bot") Bot.queueTurn(seat);
+  if (p.kind === "bot" && !simMode) Bot.queueTurn(seat);
 }
 
 // The story lasts a fixed number of rounds (8 or 9). Each player draws one Action card per round:
@@ -969,6 +970,7 @@ function act(type, payload) {
 }
 
 function afterChange() {
+  if (simMode) return;
   if (G.gameOver && !G.scoreShown) {
     G.scoreShown = true;
     setTimeout(showScore, 50);
@@ -1471,7 +1473,50 @@ el.resolveActionBtn.addEventListener("click", () => act("resolve"));
 el.endRoundBtn.addEventListener("click", () => act("endTurn"));
 el.closeCatalogBtn.addEventListener("click", closeCatalog);
 
+// ---------------------------------------------------------------------------
+// AI simulations: whole games between computer players, as fast as possible.
+// ---------------------------------------------------------------------------
+async function simulateGame(opts) {
+  simMode = true;
+  const n = Math.min(5, Math.max(2, Number(opts.players) || 4));
+  try {
+    newGame({ players: n, level: opts.level || "hard", rounds: opts.rounds || 9, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
+    let guard = 400;
+    while (!G.gameOver && guard > 0) {
+      guard -= 1;
+      if (G.active === null) break;
+      G.cur = G.active;
+      await Bot.playTurn();
+    }
+    return {
+      rounds: G.round,
+      players: G.players.map((p) => {
+        const r = G.results.find((x) => x.seat === p.seat);
+        return {
+          rank: G.results.indexOf(r) + 1,
+          total: r.total,
+          base: r.base,
+          quests: r.questTotal,
+          cards: r.cardTotal,
+          writerPts: r.writerTotal,
+          writer: p.writer?.name || "-",
+          legendary: p.tableau.filter((c) => c.deck === "legendary").map((c) => c.name),
+          upgraded: p.tableau.filter((c) => c.upgraded).length,
+          common: p.tableau.filter((c) => c.deck === "common").map((c) => c.name),
+          items: p.items.map((c) => c.name),
+          questNames: r.questScores.map((q) => [q.quest.name, q.points]),
+          actions: p.actionDiscard.map((c) => c.number),
+        };
+      }),
+    };
+  } finally {
+    simMode = false;
+    G = emptyGame();
+  }
+}
+
 window.Game = {
+  simulateGame,
   newGame,
   get state() {
     return state;
