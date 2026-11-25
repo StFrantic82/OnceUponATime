@@ -309,6 +309,7 @@
   // Tutorial: a short explanation the first time each situation comes up, pointing at what to use.
   const STEPS = {
     intro: { target: ".offer-row" },
+    chooseWriter: { target: "#writerChoices" },
     chooseAction: { target: "#actionHand" },
     waitChoose: { target: "#playersPanel" },
     chooseGroup: { target: ".offer-row" },
@@ -326,7 +327,8 @@
     const G = Game.G;
     const me = G.players[Game.view.seat];
     const keys = [];
-    if (state.phase === "chooseWriter" || G.gameOver) return keys;
+    if (G.gameOver) return keys;
+    if (state.phase === "chooseWriter") return ["chooseWriter"];
     keys.push("intro");
     if (state.activatePending > 0) keys.push("activatePick");
     if (state.questChoices > 0) keys.push("questPick");

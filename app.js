@@ -1668,10 +1668,10 @@ function scoreQuest(quest) {
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
   if (/Neverland/.test(name)) return completeSets >= 6 ? 6 : completeSets >= 5 ? 3 : 0;
   if (/Apple's Bite/.test(name)) return countAlignment("Bad");
-  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 2, 4, 6);
+  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 1, 3, 5);
   if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 3, 5, 7);
   if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 9).length * 2;
-  if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 4, 7, 10);
+  if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 3, 5, 7);
   if (/Queen's Command/.test(name)) return countTagless();
   if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 1, 3, 5);
   if (/King's Trident/.test(name)) return state.items.length;
@@ -1723,15 +1723,15 @@ function scoreCards(only = null) {
     else if (n === "Captain Hook") total += up ? icons.Dexterity : Math.floor(icons.Dexterity / 2);
     else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
-    else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2) + countByName("The Merry Men");
+    else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2) + countByName("The Merry Men") * 2;
     else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
-    else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 3 : 0);
+    else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 2 : 0);
     else if (n === "Pinocchio") total += state.tableau.filter((c) => c.deck === "legendary" && c.alignment === "Good").length * 2;
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
     else if (n === "The Whale") total += countTagless();
-    else if (n === "Beast") total += up ? icons.Strength + (hasCard("Belle") ? 3 : 0) : Math.floor(icons.Strength / 2);
+    else if (n === "Beast") total += up ? icons.Strength + (hasCard("Belle") ? 2 : 0) : Math.floor(icons.Strength / 2);
   }
   return total;
 }

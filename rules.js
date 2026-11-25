@@ -197,7 +197,7 @@ const RULES = {
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 7 Charm icons. Her Adventure “The Midnight Ball” gives her 1 VP per Charm, up to 10 VP: 7 VP. Her upgraded Evil Queen gives 2 VP per Charm, up to 14 VP: another 14 VP.
+      <div class="example"><b>Example.</b> At the end, Sofia has 8 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 6 / 8 / 10 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 1 VP per Charm: another 8 VP.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
@@ -223,7 +223,7 @@ const RULES = {
       [[anatomy:item]]
       <p>Les <b>cartes Aventure</b> rapportent des points en fin de partie ; certaines ont des paliers (2 / 4 / 6 PV). Les <b>cartes Écrivain</b> donnent à chaque joueur un pouvoir personnel qui grandit sur trois niveaux. Les <b>cartes Chapitre</b> sont des pages de livre : leur numéro de chapitre fixe l’ordre du tour, leur effet se résout pendant votre tour.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup de Aventures et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type : quand vous en gagnez un, vous choisissez son type. Un badge rond vert avec une plume signale les cartes qui rapportent des PV ; ce n’est <b>pas un tag</b>. Certaines cartes n’ont <b>aucun tag</b> : elles sont récompensées autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…).</p>
+      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup d’Aventures et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type : quand vous en gagnez un, vous choisissez son type. Un badge rond vert avec une plume signale les cartes qui rapportent des PV ; ce n’est <b>pas un tag</b>. Certaines cartes n’ont <b>aucun tag</b> : elles sont récompensées autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…).</p>
       <p><b>Liens entre contes.</b> Les cartes d’un même conte fonctionnent ensemble : « si vous avez X » veut dire que X est dans votre tableau (Personnages) ou parmi vos Objets. Par exemple, l’Épouvantail donne 2 XP au lieu de 1 si vous avez Dorothy Gale, et le Chat et le Renard volent 2 pièces à un joueur qui a Pinocchio. Les liens des méchants visent souvent les cartes de vos adversaires.</p>
       <p><b>Cartes Gentilles et Méchantes.</b> Une « carte Gentille » ou « carte Méchante » est toute carte qui porte cette icône : les Personnages, mais aussi certains Objets (la Pomme empoisonnée, le Rouet et le Contrat magique sont Méchants). Seules les cartes Méchantes ont des effets contre les autres joueurs.</p>
       <p>Les effets sont de quatre types : [[icon:instant]] <b>Instantané</b> (une fois, quand vous prenez la carte), [[icon:activation]] <b>Activation</b> (chaque fois qu’un effet l’active), [[icon:ongoing]] <b>Permanent</b> (toujours valable) et [[icon:endgame]] <b>Fin de partie</b> (compté à la fin).</p>`],
@@ -278,7 +278,7 @@ const RULES = {
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 7 icônes Charme. Sa Aventure « Le Bal de minuit » lui donne 1 PV par Charme, jusqu’à 10 PV : 7 PV. Sa Méchante Reine améliorée donne 2 PV par Charme, jusqu’à 14 PV : encore 14 PV.
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 8 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 6 / 8 / 10 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 1 PV par Charme : encore 8 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },
@@ -359,7 +359,7 @@ const RULES = {
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 7 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» le dà 1 PV per Fascino, fino a 10 PV: 7 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino, fino a 14 PV: altri 14 PV.
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 8 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 6 / 8 / 10 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 1 PV per Fascino: altri 8 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
     ],
   },

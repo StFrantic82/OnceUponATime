@@ -564,7 +564,7 @@ window.GAME_DATA = {
       "id": "I1",
       "deck": "item",
       "name": "Enchanted Sword",
-      "cost": 4,
+      "cost": 3,
       "icons": "Strength 1",
       "effect": "Instant: gain 1 XP for each Strength icon.",
       "copy": 1
@@ -1013,7 +1013,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 1 VP for each pair of Charm icons.",
-      "upgrade": "Cost 3 XP. Gains Charm. Game End: 1 VP for each Charm icon.",
+      "upgrade": "Cost 4 XP. Gains Charm. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -1172,7 +1172,7 @@ window.GAME_DATA = {
       "name": "Robin Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons, plus 1 VP for each Merry Men.",
+      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons, plus 2 VP for each Merry Men.",
       "upgrade": "Cost 2 XP. Activation: spend up to 4 coins to gain that many VP.",
       "upgraded": false
     },
@@ -1253,7 +1253,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: whenever you gain XP from a card, gain 1 XP more.",
-      "upgrade": "Cost 5 XP. Game End: 1 VP for each upgraded Legendary card. If you have Beast, gain 3 VP more.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each upgraded Legendary card. If you have Beast, gain 2 VP more.",
       "upgraded": false
     },
     {
@@ -1263,7 +1263,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Game End: 1 VP for each pair of Strength icons.",
-      "upgrade": "Cost 5 XP. Game End: 1 VP for each Strength icon. If you have Belle, gain 3 VP more.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each Strength icon. If you have Belle, gain 2 VP more.",
       "upgraded": false
     },
     {
@@ -1283,7 +1283,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Good Legendary card.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Good Legendary card.",
       "upgraded": false
     },
     {
@@ -1402,7 +1402,7 @@ window.GAME_DATA = {
       "number": 8,
       "name": "The Yellow Brick Road",
       "theme": "The Wizard of Oz",
-      "scoring": "2 / 4 / 6 Characters from Oz: 2 / 4 / 6 VP."
+      "scoring": "1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP."
     },
     {
       "id": "Q9",
@@ -1514,7 +1514,7 @@ window.GAME_DATA = {
       "number": 24,
       "name": "The Marquis of Carabas",
       "theme": "Puss in Boots",
-      "scoring": "4 / 7 / 10 coins left at the end: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 coins left at the end: 2 / 4 / 6 VP."
     }
   ],
   "writers": [
@@ -1536,7 +1536,7 @@ window.GAME_DATA = {
       "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
       "cost3": 5,
       "level3": "2 VP for each Good–Bad pair. Max 12 VP.",
-      "coins": 3
+      "coins": 4
     },
     {
       "id": "W3",
