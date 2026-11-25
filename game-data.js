@@ -267,7 +267,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the West",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: place 2 XP on a Character.",
+      "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
     {
@@ -276,7 +276,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the East",
       "alignment": "Bad",
       "icons": "Dexterity 1",
-      "effect": "Instant: place 2 XP on a Character.",
+      "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
     {
@@ -285,7 +285,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the North",
       "alignment": "Good",
       "icons": "Intelligence 1",
-      "effect": "Instant: place 2 XP on a Character.",
+      "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
     {
@@ -294,7 +294,7 @@ window.GAME_DATA = {
       "name": "Wicked Witch of the South",
       "alignment": "Good",
       "icons": "Charm 1",
-      "effect": "Instant: place 2 XP on a Character.",
+      "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
     {

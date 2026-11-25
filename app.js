@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "writerOnlyXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "vpBy", "groupPicks", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -246,6 +246,7 @@ function newPlayer(seat, info) {
     choices: [],
     coinsGained: 0,
     xpGained: 0,
+    writerOnlyXp: 0,
     vp: 0,
     tagTokens: 0,
     freeUpgrades: 0,
@@ -600,10 +601,10 @@ async function endTurn() {
   if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0 || state.activatePending > 0 || (state.choices || []).length || G.active !== G.cur) return;
   const seat = G.cur;
   for (const p of G.players) {
-    if (p.xp > 0) {
-      G.cur = p.seat;
-      await autoPlaceXp();
-    }
+    G.cur = p.seat;
+    await settleWriterXp();
+    G.cur = p.seat;
+    if (p.xp > 0) await autoPlaceXp();
   }
   G.cur = seat;
   if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0) return;
@@ -814,9 +815,39 @@ function xpTargets() {
   return out;
 }
 
+// XP that can only go on the Writer (Wicked Witches): lost once the Writer is at level 3.
+// Spaces are filled at once; a completed level is resolved at the next step of the turn (settleWriterXp).
+function placeWriterXp(n) {
+  if (!state.writer || state.writerLevel >= 3) return;
+  noteXp(n);
+  state.writerOnlyXp = (state.writerOnlyXp || 0) + n;
+  while (state.writerOnlyXp > 0 && state.writerXp + 1 < writerNextCost()) {
+    state.writerOnlyXp -= 1;
+    state.writerXp += 1;
+  }
+}
+
+async function settleWriterXp() {
+  const seat = G.cur;
+  let guard = 12;
+  while ((state.writerOnlyXp || 0) > 0 && guard-- > 0) {
+    if (!state.writer || state.writerLevel >= 3) break;
+    state.writerOnlyXp -= 1;
+    state.writerXp += 1;
+    if (state.writerXp >= writerNextCost()) {
+      state.writerXp = 0;
+      await levelUpWriter();
+      G.cur = seat;
+    }
+  }
+  state.writerOnlyXp = 0;
+}
+
 async function placeXp(target = "writer", count = 1) {
   if (G.gameOver) return;
   const seat = G.cur;
+  await settleWriterXp();
+  G.cur = seat;
   for (let i = 0; i < count && state.xp > 0; i += 1) {
     if (target === "writer") {
       if (!state.writer || state.writerLevel >= 3) return;
@@ -1259,7 +1290,7 @@ function instantLinks(card) {
     placeFreeXp(2, true);
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
-  if (/^Wicked Witch/.test(n)) placeFreeXp(2, false);
+  if (/^Wicked Witch/.test(n)) placeWriterXp(2);
   if (n === "The Prince") activateOne();
   if (n === "Prince Charming") gain("vp", Math.floor(iconCounts().Charm / 2));
   if (n === "Snow White") gain("xp", countByName("Dwarf"));

@@ -127,6 +127,8 @@
   // weighing a Legendary's upgrade against the Writer's next level.
   async function spendXp() {
     const seat = G.cur;
+    await settleWriterXp();
+    G.cur = seat;
     let guard = 40;
     while (guard-- > 0) {
       const legends = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded);

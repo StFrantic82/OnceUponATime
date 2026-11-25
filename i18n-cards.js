@@ -144,7 +144,7 @@ window.CARD_I18N = [
   ["Instant: steal 1 coin from each opponent who has more coins than you.", "Instant : volez 1 coin à chaque adversaire qui a plus de coins que vous.", "Instant: ruba 1 coin a ogni avversario che ha più coins di te."],
   ["Activation: spend 1 coin to gain 1 XP.", "Activation : dépensez 1 coin pour gagner 1 XP.", "Activation: spendi 1 coin per ottenere 1 XP."],
   ["Instant: gain 1 Tag token.", "Instant : gagnez 1 jeton d’icône.", "Instant: ottieni 1 segnalino icona."],
-  ["Instant: place 2 XP on a Character.", "Instant : placez 2 XP sur un Personnage.", "Instant: piazza 2 XP su un Personaggio."],
+  ["Instant: place 2 XP on your Writer.", "Instant : placez 2 XP sur votre Écrivain.", "Instant: piazza 2 XP sul tuo Scrittore."],
   ["Instant: gain 1 XP.", "Instant : gagnez 1 XP.", "Instant: ottieni 1 XP."],
   ["Activation: spend 1 XP to gain 3 coins.", "Activation : dépensez 1 XP pour gagner 3 coins.", "Activation: spendi 1 XP per ottenere 3 coins."],
   ["Instant: each opponent loses 1 coin.", "Instant : chaque adversaire perd 1 coin.", "Instant: ogni avversario perde 1 coin."],
