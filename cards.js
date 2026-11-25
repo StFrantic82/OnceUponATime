@@ -294,5 +294,5 @@
     return `<div class="icon-guide">${rows.map(([icon, key]) => `<div class="ig-row"><span class="ig-icon">${icon}</span><span class="ig-text">${esc(t(key))}</span></div>`).join("")}</div>`;
   }
 
-  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait, writerColor, iconGuide };
+  window.CardFace = { common, legendary, item, quest, character, action, xpStep, writer, writerPortrait, writerColor, iconGuide, givesVpInPlay };
 })();

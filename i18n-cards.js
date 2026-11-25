@@ -328,7 +328,7 @@ window.CARD_I18N = [
   ["2 VP for each card that reduces an XP cost or places XP for free.", "2 VP par carte qui réduit un coût en XP ou place de l’XP gratuitement.", "2 VP per ogni carta che riduce un costo in XP o piazza XP gratuitamente."],
   ["1 VP for every 3 VP in tokens.", "1 VP par tranche de 3 VP en jetons.", "1 VP ogni 3 VP in segnalini."],
   ["1 VP for every 4 XP gained during the game.", "1 VP par tranche de 4 XP gagnés pendant la partie.", "1 VP ogni 4 XP ottenuti durante la partita."],
-  ["6 / 9 / 12 cards that grant VP directly or at Game End: 2 / 4 / 6 VP.", "6 / 9 / 12 cartes qui rapportent des VP directement ou en Game End : 2 / 4 / 6 VP.", "6 / 9 / 12 carte che danno VP direttamente o in Game End: 2 / 4 / 6 VP."],
+  ["3 / 5 / 7 cards with the VP badge: 2 / 4 / 6 VP.", "3 / 5 / 7 cartes avec le badge VP : 2 / 4 / 6 VP.", "3 / 5 / 7 carte con il distintivo VP: 2 / 4 / 6 VP."],
   ["2 VP for each Adventure.", "2 VP par Aventure.", "2 VP per ogni Avventura."],
   ["2 VP for each category in which you have at least 7 cards: Good cards, Bad cards, Characters, Items, Activation cards.", "2 VP par catégorie où vous avez au moins 7 cartes : cartes Gentilles, cartes Méchantes, Personnages, Objets, cartes Activation.", "2 VP per ogni categoria in cui hai almeno 7 carte: carte Buone, carte Cattive, Personaggi, Oggetti, carte Activation."],
   ["1 VP for each upgraded Good Legendary card.", "1 VP par carte Légendaire Gentille améliorée.", "1 VP per ogni carta Leggendaria Buona potenziata."],

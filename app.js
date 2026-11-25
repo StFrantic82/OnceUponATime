@@ -609,6 +609,7 @@ async function endTurn() {
   if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0) return;
   state.writerDiscardRemaining = 0;
   state.writerItemDiscount = 0;
+  state.freeUpgrades = 0; // a free upgrade that was not used this turn is lost
   state.phase = "waitRound";
   nextTurn();
 }
@@ -1654,6 +1655,11 @@ function countByName(name) {
   return (state.tableau || []).filter((card) => card.name.includes(name)).length;
 }
 
+// Cards with the round VP badge: they give VP tokens during the game.
+function countVpBadges() {
+  return [...(state.tableau || []), ...(state.items || [])].filter((card) => CardFace.givesVpInPlay(card)).length;
+}
+
 function countCardsWith(pattern) {
   const regex = new RegExp(pattern, "i");
   return [...(state.tableau || []), ...(state.items || [])].filter((card) => regex.test(`${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`)).length;
@@ -1686,7 +1692,7 @@ function scoreQuest(quest) {
   if (/Enchanted Rose/.test(name)) return countCardsWith("less XP|free|place (?:\\d+ )?XP on") * 2;
   if (/Rob the Rich/.test(name)) return Math.floor((state.vp || 0) / 3);
   if (/Rubbed Lamp/.test(name)) return Math.floor((state.xpGained || 0) / 4);
-  if (/Arrow on Target/.test(name)) return tiers(countCardsWith("VP|Game End"), 6, 9, 12);
+  if (/Arrow on Target/.test(name)) return tiers(countVpBadges(), 3, 5, 7);
   if (/Final Wish/.test(name)) return state.quests.length * 2;
   if (/A Real Boy/.test(name)) return state.actionDiscard.filter((c) => c.number <= 4).length * 2;
   if (/Once Upon a Time/.test(name)) {
@@ -2585,6 +2591,7 @@ async function simulateGame(opts) {
           }),
           xpGained: p.xpGained || 0,
           xpBy: p.xpBy || {},
+          vpBadges: withSeat(p.seat, countVpBadges),
           legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),
           writerLevel: p.writerLevel,

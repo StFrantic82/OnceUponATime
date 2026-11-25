@@ -1472,7 +1472,7 @@ window.GAME_DATA = {
       "number": 18,
       "name": "Arrow on Target",
       "theme": "Robin Hood",
-      "scoring": "6 / 9 / 12 cards that grant VP directly or at Game End: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 cards with the VP badge: 2 / 4 / 6 VP."
     },
     {
       "id": "Q19",
@@ -1544,7 +1544,7 @@ window.GAME_DATA = {
       "level1": "The first time each round you take a card with a Game End effect, gain 1 XP.",
       "cost2": 2,
       "level2": "You may discard up to two of your cards: gain 2 coins and 2 XP for each.",
-      "cost3": 5,
+      "cost3": 4,
       "level3": "3 VP for each card with a Game End effect. Max 15 VP.",
       "coins": 4
     },
@@ -1574,7 +1574,7 @@ window.GAME_DATA = {
       "level1": "When you play a Chapter card valued 1–7, gain 1 XP.",
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
-      "cost3": 5,
+      "cost3": 4,
       "level3": "2 VP for each Dexterity icon. Max 14 VP.",
       "coins": 2
     },
@@ -1582,9 +1582,9 @@ window.GAME_DATA = {
       "id": "W7",
       "name": "L. Frank Baum",
       "level1": "At the start of each round, gain 1 coin per set of 4 different icons.",
-      "cost2": 3,
+      "cost2": 2,
       "level2": "Choose an icon type: gain two tokens of that type.",
-      "cost3": 5,
+      "cost3": 4,
       "level3": "3 VP per set of 4 different icons.",
       "coins": 0
     },
@@ -1592,9 +1592,9 @@ window.GAME_DATA = {
       "id": "W8",
       "name": "Le Prince de Beaumont",
       "level1": "Your Legendary upgrades cost 1 fewer XP.",
-      "cost2": 3,
+      "cost2": 2,
       "level2": "Upgrade one Legendary card for free.",
-      "cost3": 5,
+      "cost3": 4,
       "level3": "3 VP for each upgraded Legendary card. Max 12 VP.",
       "coins": 2
     }
