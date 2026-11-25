@@ -9,7 +9,7 @@ Prototype numérique de **Once Upon a Time**, jeu de cartes où des Écrivains r
 - Choix de l’Écrivain (au hasard ou au choix), avec ses 3 niveaux.
 - Catalogue complet des cartes : Communes, Légendaires, Quêtes, Objets, Écrivains.
 - Règles illustrées en FR/EN/IT (`rules.html`), imprimables.
-- Print & Play : PDF A4 à imprimer (`pnp/`), cartes communes 56×87 mm, légendaires format tarot 61×112 mm, objets 60×60 mm, quêtes 87×56 mm, écrivains 70×120 mm, cartes Action 41×63 mm (5 couleurs), jetons Tag carrés 20 mm, jetons pièces/XP/PV et premier joueur ; dos en miroir pour le recto verso.
+- Print & Play : PDF A4 à imprimer (`pnp/`), cartes communes 56×87 mm, légendaires format tarot 61×112 mm, objets 60×60 mm, quêtes 87×56 mm, écrivains 70×120 mm, cartes Action 41×63 mm (5 couleurs), jetons Tag carrés 20 mm, jetons pièces/XP/PV et premier joueur, plateau des lots (recto 2–3 joueurs, verso 4–5 joueurs), carnet de score, encoche sur les Écrivains pour la pioche Action ; dos en miroir pour le recto verso.
 
 ## Jouer
 

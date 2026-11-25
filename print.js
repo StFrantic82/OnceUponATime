@@ -67,6 +67,19 @@ const P = {
     tagsTitle: "Tag tokens", resTitle: "Coins, XP and VP", firstPlayer: "First player",
     page: "Page",
     set: "Set",
+    board: "Board · group spaces · front: 2–3 players, back: 4–5 players",
+    boardSide: "Board",
+    boardPlayers: "{n} players",
+    boardHow: "Each round, deal the revealed characters below their space: one group per space. Use the side that matches your number of players.",
+    normal: "common", normals: "common", legendary: "Legendary", legendaries: "Legendary",
+    itemsShown: "Items revealed", questsShown: "Quests revealed",
+    yourBook: "Your book",
+    yourBookHint: "Action deck",
+    scorePad: "Score pad",
+    scoreGame: "Game",
+    scoreDate: "Date",
+    scoreRounds: "Rounds: 8 □  9 □",
+    scoreRows: ["Storyteller", "Writer", "VP gained during the game", "Quests", "Game End effects of characters and Items", "Writer level 3", "Total", "Rank"],
   },
   fr: {
     title: "Print & Play",
@@ -78,6 +91,19 @@ const P = {
     tagsTitle: "Jetons Tag", resTitle: "Pièces, XP et PV", firstPlayer: "Premier joueur",
     page: "Page",
     set: "Jeu",
+    board: "Plateau · emplacements des lots · recto : 2–3 joueurs, verso : 4–5 joueurs",
+    boardSide: "Plateau",
+    boardPlayers: "{n} joueurs",
+    boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement. Utilisez la face qui correspond à votre nombre de joueurs.",
+    normal: "commune", normals: "communes", legendary: "Légendaire", legendaries: "Légendaires",
+    itemsShown: "Objets révélés", questsShown: "Quêtes révélées",
+    yourBook: "Votre livre",
+    yourBookHint: "Pioche Action",
+    scorePad: "Carnet de score",
+    scoreGame: "Partie",
+    scoreDate: "Date",
+    scoreRounds: "Manches : 8 □  9 □",
+    scoreRows: ["Conteur", "Écrivain", "PV gagnés pendant la partie", "Quêtes", "Effets Fin de partie des personnages et Objets", "Écrivain niveau 3", "Total", "Classement"],
   },
   it: {
     title: "Print & Play",
@@ -89,6 +115,19 @@ const P = {
     tagsTitle: "Segnalini Tag", resTitle: "Monete, XP e PV", firstPlayer: "Primo giocatore",
     page: "Pagina",
     set: "Mazzo",
+    board: "Plancia · spazi dei gruppi · fronte: 2–3 giocatori, retro: 4–5 giocatori",
+    boardSide: "Plancia",
+    boardPlayers: "{n} giocatori",
+    boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio. Usa il lato adatto al vostro numero di giocatori.",
+    normal: "comune", normals: "comuni", legendary: "Leggendaria", legendaries: "Leggendarie",
+    itemsShown: "Oggetti rivelati", questsShown: "Missioni rivelate",
+    yourBook: "Il tuo libro",
+    yourBookHint: "Mazzo Azione",
+    scorePad: "Blocco segnapunti",
+    scoreGame: "Partita",
+    scoreDate: "Data",
+    scoreRounds: "Round: 8 □  9 □",
+    scoreRows: ["Narratore", "Scrittore", "PV ottenuti durante la partita", "Missioni", "Effetti Fine partita di personaggi e Oggetti", "Scrittore livello 3", "Totale", "Classifica"],
   },
 };
 
@@ -115,6 +154,7 @@ function writerCard(writer) {
     { n: 3, type: "endgame", text: writer.level3, cost: writer.cost3 },
   ];
   return `<article class="writer-card print-writer">
+    <div class="book-notch" title="${esc(L.yourBookHint)}"><span class="notch-cut"></span><span class="notch-label"><b>${esc(L.yourBook)}</b>${esc(L.yourBookHint)}</span></div>
     <div class="writer-art">${CardArt.art(writer.name)}</div>
     <div class="writer-card-header"><div class="writer-name">${esc(tc(writer.name))}</div><div class="writer-level">${esc(t("writerWord"))}</div></div>
     <div class="writer-levels">${levels
@@ -171,6 +211,53 @@ function tokenSheet() {
   ];
 }
 
+// Board: one space per group of characters. Front 2–3 players, back 4–5 players.
+const BOARDS = { 2: [[1, 0], [1, 1], [2, 1]], 3: [[1, 0], [2, 0], [1, 1], [2, 1]], 4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]], 5: [[1, 0], [2, 0], [1, 1], [2, 1], [0, 2], [1, 2]] };
+
+function boardSection(n) {
+  const groups = BOARDS[n].map(([c, l], i) => {
+    const minis = `${'<i class="mini mini-c"></i>'.repeat(c)}${'<i class="mini mini-l"></i>'.repeat(l)}`;
+    const text = [c ? `${c} ${c > 1 ? L.normals : L.normal}` : "", l ? `${l} ${l > 1 ? L.legendaries : L.legendary}` : ""].filter(Boolean).join(" + ");
+    return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${esc(text)}</div><div class="barrow">▼</div></div>`;
+  }).join("");
+  return `<div class="bsection">
+    <div class="bhead"><span class="bstar">✦</span>${esc(L.boardPlayers.replace("{n}", n))}<span class="bstar">✦</span></div>
+    <div class="bslots" style="grid-template-columns:repeat(${BOARDS[n].length}, 1fr)">${groups}</div>
+    <div class="bdisplays">
+      <div class="bdisp">${resourceIcon("coins", "Items", true)} ${esc(L.itemsShown)} : <b>${n + 1}</b></div>
+      <div class="bdisp">${resourceIcon("endgame", "Quests", true)} ${esc(L.questsShown)} : <b>${n + 2}</b></div>
+    </div>
+  </div>`;
+}
+
+function boardSheets() {
+  return [[2, 3], [4, 5]].map(([a, b]) => `<section class="sheet board-sheet"><header class="sheet-head">${esc(L.boardSide)} · ${esc(L.boardPlayers.replace("{n}", `${a}–${b}`))}</header>
+    <div class="board">
+      <div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time</h2></div>
+      ${boardSection(a)}
+      ${boardSection(b)}
+      <p class="board-how">${esc(L.boardHow)}</p>
+    </div></section>`);
+}
+
+// Score pad: two games per A4 page, up to 5 storytellers.
+function scoreTable() {
+  const icons = [null, null, ["vp"], ["endgame"], ["endgame"], ["endgame"], null, null];
+  const rows = L.scoreRows.map((label, i) => {
+    const cls = i === 6 ? "srow-total" : i < 2 ? "srow-name" : i === 7 ? "srow-rank" : "";
+    const ico = icons[i] ? icons[i].map((k) => resourceIcon(k, k, true)).join("") : "";
+    return `<tr class="${cls}"><th>${ico}<span>${esc(label)}</span></th>${"<td></td>".repeat(5)}</tr>`;
+  }).join("");
+  return `<div class="score-block"><div class="score-top"><span>${esc(L.scoreGame)} n° ______</span><span>${esc(L.scoreDate)} : ____ / ____ / ________</span><span>${esc(L.scoreRounds)}</span></div>
+    <table class="score-table"><tbody>${rows}</tbody></table></div>`;
+}
+
+function scoreSheet() {
+  return [`<section class="sheet score-sheet"><header class="sheet-head">${esc(L.scorePad)}</header>
+    <div class="score-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time · ${esc(L.scorePad)}</h2></div>
+    ${scoreTable()}${scoreTable()}</section>`];
+}
+
 function coverSheet(pages) {
   return `<section class="sheet cover">
     <div class="cover-art">${CardArt.art("Once Upon a Time")}</div>
@@ -201,6 +288,8 @@ function build() {
     ...sheetsFor("actions", DATA.actions.map((a) => ({ ...a, set })), `${L.sizes.actions} · ${L.set} ${set + 1}`),
     ...backsSheet("actions", set, DATA.actions.length),
   ]));
+  add(L.board, boardSheets());
+  add(L.scorePad, scoreSheet());
   add(L.sizes.tokens, tokenSheet());
 
   let page = 2;

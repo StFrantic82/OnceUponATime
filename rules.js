@@ -139,10 +139,11 @@ const RULES = {
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Quests and reveal <b>2 + the number of players</b>.</li>
         <li>Each player takes the 12 Action cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Action deck.</li>
         <li>Each player takes <b>2 coins</b> [[icon:coins]] and a Writer (dealt at random, or chosen), at level 1.</li>
-        <li>Choose a first player at random.</li>
+        <li>Place your Action deck to the left of your Writer, against the notch: it is the book you are writing.</li>
+        <li>Put the board in the middle, on the side for your number of players. Choose a first player at random.</li>
       </ol>`],
       ["round", "A round", `<h3>1. Reveal the groups</h3>
-      <p>Reveal Normal and Legendary characters to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
+      <p>Reveal Normal and Legendary characters under the spaces of the board to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
       [[boards]]
       <h3>2. Play an Action card</h3>
       <p>Starting with the first player and going clockwise, everyone plays one Action card face up. The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. Some effects add to your chapter (Queen of Hearts, Carlo Collodi).</p>
@@ -215,10 +216,11 @@ const RULES = {
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Quêtes et révélez-en <b>2 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Action d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Action.</li>
         <li>Chaque joueur prend <b>2 pièces</b> [[icon:coins]] et un Écrivain (distribué au hasard ou choisi), au niveau 1.</li>
-        <li>Désignez un premier joueur au hasard.</li>
+        <li>Posez votre pioche Action à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
+        <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard.</li>
       </ol>`],
       ["round", "Une manche", `<h3>1. Révéler les groupes</h3>
-      <p>Révélez des personnages Normaux et Légendaires pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
+      <p>Révélez des personnages Normaux et Légendaires sous les emplacements du plateau pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
       [[boards]]
       <h3>2. Jouer une carte Action</h3>
       <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Action face visible. Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. Certains effets augmentent votre chapitre (la Reine de cœur, Carlo Collodi).</p>
@@ -291,10 +293,11 @@ const RULES = {
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Missioni e rivelane <b>2 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Azione di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Azione.</li>
         <li>Ogni giocatore prende <b>2 monete</b> [[icon:coins]] e uno Scrittore (a caso o scelto), al livello 1.</li>
-        <li>Scegliete a caso il primo giocatore.</li>
+        <li>Metti il tuo mazzo Azione a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
+        <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore.</li>
       </ol>`],
       ["round", "Un round", `<h3>1. Rivelare i gruppi</h3>
-      <p>Rivela personaggi Normali e Leggendari per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
+      <p>Rivela personaggi Normali e Leggendari sotto gli spazi della plancia per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
       [[boards]]
       <h3>2. Giocare una carta Azione</h3>
       <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Azione scoperta. Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). Alcuni effetti aumentano il tuo capitolo (la Regina di cuori, Carlo Collodi).</p>

@@ -352,7 +352,7 @@
     box.innerHTML = `<div class="pnp-box" role="dialog" aria-modal="true" aria-label="Print & Play">
       <h2>Print &amp; Play</h2>
       <p>${esc(t("pnpIntro"))}</p>
-      <ul class="pnp-sizes">${["pnpCommon", "pnpLegendary", "pnpItems", "pnpQuests", "pnpWriters", "pnpActions", "pnpTokens"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ul>
+      <ul class="pnp-sizes">${["pnpCommon", "pnpLegendary", "pnpItems", "pnpQuests", "pnpWriters", "pnpActions", "pnpBoard", "pnpTokens"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ul>
       <div class="pnp-links">${["fr", "en", "it"]
         .sort((a, b) => (a === I18N.lang ? -1 : b === I18N.lang ? 1 : 0))
         .map((l) => `<a class="pnp-link ${l === I18N.lang ? "main" : ""}" href="${SITE}pnp/once-upon-a-time-print-and-play-${l}.pdf" target="_blank" rel="noopener">PDF · ${flags[l]}</a>`)
