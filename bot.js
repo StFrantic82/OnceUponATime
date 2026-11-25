@@ -9,7 +9,7 @@
     return { best: values[0] || 0, second: values[1] || 0 };
   }
 
-  // Pick an Action card. Numbers already played this round by others are avoided when possible.
+  // Pick a Chapter card. Numbers already played this round by others are avoided when possible.
   function chooseAction(p) {
     const taken = new Set(G.players.filter((o) => o !== p && o.currentAction).map((o) => o.currentAction.number));
     const options = p.hand.filter((card) => !taken.has(card.number));
@@ -159,7 +159,7 @@
     }
   }
 
-  // After "draw 1 Action card", put back the card the bot needs least (a middle chapter).
+  // After "draw 1 Chapter card", put back the card the bot needs least (a middle chapter).
   function settleTuck() {
     let guard = 4;
     while (state.tuckPending > 0 && state.hand.length && guard > 0) {
@@ -209,6 +209,7 @@
 
   const Bot = {
     delay: 650,
+    cardWorth,
     chooseAction,
     playTurn,
     queueTurn(seat) {

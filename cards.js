@@ -214,7 +214,7 @@
     return card.deck === "legendary" ? legendary(card, opts) : common(card, opts);
   }
 
-  // ---------- Action cards: a page from the storybook ----------
+  // ---------- Chapter cards: a page from the storybook ----------
   function actionLines(effect) {
     const text = String(effect || "").trim();
     if (!text) return [];

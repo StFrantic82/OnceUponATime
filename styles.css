@@ -3104,3 +3104,11 @@ button.needs-click { outline: none; }
 .summary-cell.order-cell .label { gap: 4px; }
 .choice-btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .choice-btns button { font-size: 13px; padding: 5px 10px; }
+
+/* Chapter discard pile, next to the deck */
+.action-discard { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 11px; color: var(--muted, #7a6a58); }
+.action-discard span { display: flex; flex-wrap: wrap; gap: 2px; max-width: 70px; justify-content: center; }
+.action-discard i { font-style: normal; font-weight: 700; font-size: 11px; min-width: 16px; padding: 1px 3px; border-radius: 4px; background: #fff8ec; border: 1.5px solid var(--spine, #7a3a24); color: #3a2a1a; text-align: center; }
+/* Cards offered in a choice (White Rabbit, Cheshire Cat) */
+.choice-btns .pick-card { display: inline-block; width: 92px; pointer-events: none; }
+.choice-btns .pick-card .fcard { transform-origin: top left; }

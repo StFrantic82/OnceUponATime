@@ -9,7 +9,7 @@ Prototype numérique de **Once Upon a Time**, jeu de cartes où des Écrivains r
 - Choix de l’Écrivain (au hasard ou au choix), avec ses 3 niveaux.
 - Catalogue complet des cartes : Communes, Légendaires, Quêtes, Objets, Écrivains.
 - Règles illustrées en FR/EN/IT (`rules.html`), imprimables.
-- Print & Play : PDF A4 à imprimer (`pnp/`), cartes communes 56×87 mm, légendaires format tarot 61×112 mm, objets 60×60 mm, quêtes 87×56 mm, tuiles Écrivain 100×100 mm, cartes Action 41×63 mm (4 couleurs), jetons Tag carrés 20 mm, jetons pièces/XP/PV et premier joueur, plateau des lots (recto 2–3 joueurs, verso 4–5 joueurs), carnet de score, tuiles Écrivain 100×100 mm avec encoche de 63 mm pour la pioche Action et cases XP en pointillés entre les niveaux (aussi sur les Légendaires) ; dos en miroir pour le recto verso.
+- Print & Play : PDF A4 à imprimer (`pnp/`), cartes communes 56×87 mm, légendaires format tarot 61×112 mm, objets 60×60 mm, quêtes 87×56 mm, tuiles Écrivain 100×100 mm, cartes Chapitre 41×63 mm (4 couleurs), jetons Tag carrés 20 mm, jetons pièces/XP/PV et premier joueur, plateau des lots (recto 2–3 joueurs, verso 4–5 joueurs), carnet de score, tuiles Écrivain 100×100 mm avec encoche de 63 mm pour la pioche Chapitre et cases XP en pointillés entre les niveaux (aussi sur les Légendaires) ; dos en miroir pour le recto verso.
 
 ## Jouer
 
@@ -23,7 +23,7 @@ Le jeu en ligne utilise la Realtime Database Firebase du projet Minikin City (sa
 
 - `index.html` et `styles.css` : l’interface ;
 - `app.js` : le moteur (état de chaque joueur, ordre du tour, effets, décompte) et l’affichage de la table ;
-- `bot.js` : l’ordinateur (choix des cartes Action, groupes, objets, quêtes, améliorations) ;
+- `bot.js` : l’ordinateur (choix des cartes Chapitre, groupes, objets, quêtes, améliorations) ;
 - `sims.js` : les simulations IA (l’ordinateur contre lui-même) pour l’équilibrage ;
 - `online.js` : les salles en ligne (Firebase, ou mode local pour tester) ;
 - `game-data.js` : toutes les cartes (généré depuis le tableur des cartes) ;
@@ -32,5 +32,5 @@ Le jeu en ligne utilise la Realtime Database Firebase du projet Minikin City (sa
 - `i18n.js` et `i18n-cards.js` : les traductions (interface et textes des cartes) ;
 - `rules.html`, `rules.js`, `rules.css` : les règles illustrées ;
 - `print.html`, `print.js`, `print.css` : la mise en page du Print & Play (le PDF est généré depuis cette page avec Chromium) ;
-- `cards.js` : la mise en page des cartes (personnages, légendaires, objets, quêtes, cartes Action) ;
+- `cards.js` : la mise en page des cartes (personnages, légendaires, objets, quêtes, cartes Chapitre) ;
 - `assets/icons/` : les icônes (icônes, ressources, types d’effet).

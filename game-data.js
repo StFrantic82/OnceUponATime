@@ -69,7 +69,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 1
     },
     {
@@ -78,7 +78,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 2
     },
     {
@@ -87,7 +87,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 3
     },
     {
@@ -96,7 +96,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 4
     },
     {
@@ -105,7 +105,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 5
     },
     {
@@ -114,7 +114,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "Strength 1",
-      "effect": "Instant: draw 1 Action card, then put 1 Action card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 6
     },
     {
@@ -456,7 +456,7 @@ window.GAME_DATA = {
       "name": "The Fairies",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: Good Characters cost 1 less XP to level up, minimum 1 XP.",
+      "effect": "Activation: gain 2 XP that you can only place on Good Characters (any XP that does not fit is lost).",
       "copy": 1
     },
     {
@@ -465,7 +465,7 @@ window.GAME_DATA = {
       "name": "The Fairies",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: Good Characters cost 1 less XP to level up, minimum 1 XP.",
+      "effect": "Activation: gain 2 XP that you can only place on Good Characters (any XP that does not fit is lost).",
       "copy": 2
     },
     {
@@ -474,7 +474,7 @@ window.GAME_DATA = {
       "name": "The Fairies",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: Good Characters cost 1 less XP to level up, minimum 1 XP.",
+      "effect": "Activation: gain 2 XP that you can only place on Good Characters (any XP that does not fit is lost).",
       "copy": 3
     },
     {
@@ -501,7 +501,7 @@ window.GAME_DATA = {
       "name": "The Munchkins",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: gain 1 VP whenever you take an Item.",
+      "effect": "Ongoing: gain 1 VP whenever you buy an Item.",
       "copy": 1
     },
     {
@@ -510,7 +510,7 @@ window.GAME_DATA = {
       "name": "The Munchkins",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: gain 1 VP whenever you take an Item.",
+      "effect": "Ongoing: gain 1 VP whenever you buy an Item.",
       "copy": 2
     },
     {
@@ -519,7 +519,7 @@ window.GAME_DATA = {
       "name": "The Munchkins",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: gain 1 VP whenever you take an Item.",
+      "effect": "Ongoing: gain 1 VP whenever you buy an Item.",
       "copy": 3
     },
     {
@@ -546,7 +546,7 @@ window.GAME_DATA = {
       "name": "The Talking Cricket",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: whenever you play an Action card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
+      "effect": "Ongoing: whenever you play a Chapter card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
       "copy": 1
     },
     {
@@ -555,7 +555,7 @@ window.GAME_DATA = {
       "name": "The Talking Cricket",
       "alignment": "Good",
       "icons": "none",
-      "effect": "Ongoing: whenever you play an Action card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
+      "effect": "Ongoing: whenever you play a Chapter card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
       "copy": 2
     }
   ],
@@ -584,7 +584,7 @@ window.GAME_DATA = {
       "name": "whishing ring",
       "cost": 2,
       "icons": "Charm 1",
-      "effect": "Ongoing: whenever you gain a Tag token, gain 1 coin.",
+      "effect": "Ongoing: whenever you gain a Tag token, gain 1 coin and 1 VP.",
       "copy": 1
     },
     {
@@ -629,7 +629,7 @@ window.GAME_DATA = {
       "name": "The Glass Coffin",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Instant: take back 1 Character you discarded during the game.",
+      "effect": "Instant: take 1 Character from the discard pile of your choice (resolve its Instant effect).",
       "copy": 1
     },
     {
@@ -638,16 +638,16 @@ window.GAME_DATA = {
       "name": "Hot Air Balloon",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: tuck 1 Character under this Item. Game End: 2 VP for each tucked Character, max 8 VP.",
+      "effect": "Activation: tuck 1 Character of your tableau face down under this Item (it loses its tags and effects). Game End: 2 VP for each tucked Character, max 8 VP.",
       "copy": 1
     },
     {
       "id": "I10",
       "deck": "item",
       "name": "Mad Hatter's Hat",
-      "cost": 3,
+      "cost": 5,
       "icons": "Intelligence 1",
-      "effect": "Ongoing: one of your Characters costs 2 less XP to level up, minimum 1 XP.",
+      "effect": "Instant: pull the top card of the Legendary deck out of the hat and add it to your tableau (resolve its Instant effect).",
       "copy": 1
     },
     {
@@ -656,7 +656,7 @@ window.GAME_DATA = {
       "name": "Rabbit's Clock",
       "cost": 3,
       "icons": "Dexterity 1",
-      "effect": "Activation: recover one used Action card with value 8 or lower.",
+      "effect": "Activation: take back 1 Chapter card with value 8 or lower from your discard.",
       "copy": 1
     },
     {
@@ -665,7 +665,7 @@ window.GAME_DATA = {
       "name": "Bottle \"Drink Me\"",
       "cost": 2,
       "icons": "Charm 1",
-      "effect": "Instant: choose one of your Characters. It gains 1 Tag token.",
+      "effect": "Instant: gain 1 Tag token of your choice.",
       "copy": 1
     },
     {
@@ -836,7 +836,7 @@ window.GAME_DATA = {
       "name": "Ruby Slippers",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: the next card you activate this turn gives double coins or XP.",
+      "effect": "Activation: the Chapter card you resolve this turn gives twice as many coins or XP.",
       "copy": 1
     },
     {
@@ -872,7 +872,7 @@ window.GAME_DATA = {
       "name": "Crocodile's Clock",
       "cost": 3,
       "icons": "Dexterity 1",
-      "effect": "Activation: recover one used Action card with value exactly 10 or higher, then discard this Item.",
+      "effect": "Activation: take back 1 Chapter card with value 8 or higher from your discard.",
       "copy": 1
     },
     {
@@ -902,8 +902,8 @@ window.GAME_DATA = {
       "name": "The White Rabbit",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: look at the top 3 Common cards, keep 1 and discard the rest.",
-      "upgrade": "Cost 4 XP. Instant: take 1 Quest and gain 1 XP.",
+      "base": "Dexterity 1. Instant: look at the top 3 cards of the Common deck, keep 1 and put the other 2 under the deck.",
+      "upgrade": "Cost 5 XP. Instant: take 1 Quest and gain 1 XP.",
       "upgraded": false
     },
     {
@@ -913,7 +913,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1, Intelligence 1. Game End: 1 VP for each Quest you completed.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Quest you completed, max 12 VP.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Quest you completed, max 12 VP.",
       "upgraded": false
     },
     {
@@ -942,8 +942,8 @@ window.GAME_DATA = {
       "name": "Wendy",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: when you take a Good Character, gain 1 coin.",
-      "upgrade": "Cost 1 XP. Ongoing: when you take a Good Character, gain 1 coin and 1 XP.",
+      "base": "Charm 1. Ongoing: whenever you take a Good card, gain 1 coin.",
+      "upgrade": "Cost 1 XP. Ongoing: whenever you take a Good card, gain 1 coin and 1 XP.",
       "upgraded": false
     },
     {
@@ -953,7 +953,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. You gain 1 coin. If an opponent has Captain Hook, gain 2 VP.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each used Action card with value 10 or higher in your discard, max 4 coins.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 coin for each Chapter card with value 10 or higher in your discard.",
       "upgraded": false
     },
     {
@@ -963,7 +963,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Instant: gain 2 XP if you have a Bad card.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Bad card you have, max 8 VP.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Bad card you have, max 8 VP.",
       "upgraded": false
     },
     {
@@ -973,7 +973,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 4 VP (6 VP if it is The Wolf or The Evil Queen).",
-      "upgrade": "Cost 3 XP. Activation: gain 2 VP if you have at least one Bad card.",
+      "upgrade": "Cost 2 XP. Activation: gain 2 VP if you have at least one Bad card.",
       "upgraded": false
     },
     {
@@ -983,7 +983,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 2 coins.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 VP and 1 coin (2 VP if you have Little Mermaid).",
+      "upgrade": "Cost 2 XP. Activation: gain 1 VP and 1 coin (2 VP if you have Little Mermaid).",
       "upgraded": false
     },
     {
@@ -1003,7 +1003,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Game End: 1 VP for each of your non-upgraded Legendary Characters, max 6 VP.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each of your non-upgraded Legendary Characters, max 10 VP.",
+      "upgrade": "Cost 1 XP. Game End: 2 VP for each of your non-upgraded Legendary Characters, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1043,7 +1043,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Intelligence 1. Instant: choose an opponent. They discard 1 coin or 1 XP. You gain the chosen resource.",
-      "upgrade": "Cost 4 XP. Activation: gain 1 VP for each Bad card you have, max 5 VP.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each Bad card you have, max 5 VP.",
       "upgraded": false
     },
     {
@@ -1053,7 +1053,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1. Game End: score the Charm icons of the player with the most Charm: gain 1 VP for each of those icons, max 6 VP.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon you have, max 10 VP.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Charm icon you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1063,7 +1063,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Game End: 1 VP for each pair of Charm icons you have, plus 1 VP for each Dwarf you have.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon you have, max 14 VP.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each Charm icon you have, max 14 VP.",
       "upgraded": false
     },
     {
@@ -1072,7 +1072,7 @@ window.GAME_DATA = {
       "name": "Dorothy Gale",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: gain 1 Tag token of a type you do not have.",
+      "base": "Dexterity 1. Instant: gain 1 Tag token of your choice.",
       "upgrade": "Cost 5 XP. Game End: 3 VP for each complete set of four icons, max 12 VP.",
       "upgraded": false
     },
@@ -1092,8 +1092,8 @@ window.GAME_DATA = {
       "name": "Queen of Hearts",
       "rank": null,
       "alignment": "Bad",
-      "base": "Ongoing: your Action cards count as +1 value when determining turn order.",
-      "upgrade": "Cost 5 XP. Ongoing: your Action cards count as +2 value. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
+      "base": "Ongoing: your Chapter cards count as +1 value when determining turn order.",
+      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
     {
@@ -1102,8 +1102,8 @@ window.GAME_DATA = {
       "name": "Cheshire Cat",
       "rank": null,
       "alignment": "Neutral",
-      "base": "Dexterity 1. Instant: draw 3 Common cards, play 1 and discard the others. If you have Alice, gain 2 XP.",
-      "upgrade": "Cost 3 XP. Activation: draw 2 Common cards, play 1 and discard the other.",
+      "base": "Dexterity 1. Instant: draw 3 cards from the Common deck, play 1 and discard the others. If you have Alice, gain 2 XP.",
+      "upgrade": "Cost 3 XP. Activation: draw 2 cards from the Common deck, play 1 and discard the other.",
       "upgraded": false
     },
     {
@@ -1123,7 +1123,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Dexterity 1. Game End: 1 VP for each pair of Dexterity icons you have.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Dexterity icon you have, max 10 VP.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Dexterity icon you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1133,7 +1133,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 2 coins or 2 XP. If you have The Wolf, gain both.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Good–Bad pair of cards you have, max 10 VP.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each Good–Bad pair of cards you have, max 10 VP.",
       "upgraded": false
     },
     {
@@ -1143,7 +1143,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Instant: steal 2 VP from the opponent with the most VP.",
-      "upgrade": "Cost 4 XP. Activation: steal 1 coin from each opponent.",
+      "upgrade": "Cost 3 XP. Activation: steal 1 coin from each opponent.",
       "upgraded": false
     },
     {
@@ -1153,7 +1153,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Strength 1. Activation: gain 1 XP for each Item you have, max 4 XP.",
-      "upgrade": "Cost 5 XP. Gains Strength. Activation: gain 1 VP for each Item you have, max 6 VP.",
+      "upgrade": "Cost 3 XP. Gains Strength. Activation: gain 1 VP for each Item you have, max 6 VP.",
       "upgraded": false
     },
     {
@@ -1163,7 +1163,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Ongoing: whenever you take a Quest, gain 1 XP.",
-      "upgrade": "Cost 4 XP. Ongoing: whenever you take a Quest, gain 1 XP and 1 VP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you take a Quest, gain 1 XP and 1 VP.",
       "upgraded": false
     },
     {
@@ -1173,7 +1173,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons you have, plus 1 VP for each Merry Men you have.",
-      "upgrade": "Cost 3 XP. Activation: spend up to 3 coins to gain that many VP.",
+      "upgrade": "Cost 2 XP. Activation: spend up to 3 coins to gain that many VP.",
       "upgraded": false
     },
     {
@@ -1183,7 +1183,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1. Instant: steal 1 coin from each opponent.",
-      "upgrade": "Cost 4 XP. Game End: 1 VP for every 2 coins you have, max 8 VP.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for every 2 coins you have, max 8 VP.",
       "upgraded": false
     },
     {
@@ -1192,8 +1192,8 @@ window.GAME_DATA = {
       "name": "Cinderella",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: take 1 Item and reduce its cost by 2 coins this turn.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Item you have, max 14 VP.",
+      "base": "Charm 1. Instant: buy 1 Item for 2 coins less.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Item you have, max 14 VP.",
       "upgraded": false
     },
     {
@@ -1203,7 +1203,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Intelligence 1. Game End: 1 VP for each Bad card you have, max 8 VP.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Bad card you have, max 14 VP.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Bad card you have, max 14 VP.",
       "upgraded": false
     },
     {
@@ -1213,7 +1213,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 3 coins.",
-      "upgrade": "Cost 4 XP. Activation: gain 1 coin for each Bad card you have, max 3 coins.",
+      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each Bad card you have, max 3 coins.",
       "upgraded": false
     },
     {
@@ -1233,7 +1233,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 2 coins and 1 XP.",
-      "upgrade": "Cost 4 XP. Activation: gain 1 coin and 1 XP. If you have Magic Lamp, gain 1 VP too.",
+      "upgrade": "Cost 3 XP. Activation: gain 1 coin and 1 XP. If you have Magic Lamp, gain 1 VP too.",
       "upgraded": false
     },
     {
@@ -1243,7 +1243,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Instant: choose one: gain 4 coins or gain 3 XP.",
-      "upgrade": "Cost 5 XP. Activation: choose one of those effects.",
+      "upgrade": "Cost 4 XP. Activation: choose one of those effects.",
       "upgraded": false
     },
     {
@@ -1253,7 +1253,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: whenever you gain XP from a card, gain 1 XP more.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each upgraded Legendary Character you have, max 14 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each upgraded Legendary Character you have, max 14 VP.",
       "upgraded": false
     },
     {
@@ -1272,8 +1272,8 @@ window.GAME_DATA = {
       "name": "Princess Briar Rose",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: recover one used Action card with value 7 or lower. If you have The Fairies, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: the first time each round you play an Action card value 7 or lower, gain 1 XP.",
+      "base": "Charm 1. Instant: take back 1 Chapter card with value 7 or lower from your discard. If you have The Fairies, gain 1 XP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you play a Chapter card with value 7 or lower, gain 1 XP.",
       "upgraded": false
     },
     {
@@ -1282,8 +1282,8 @@ window.GAME_DATA = {
       "name": "Pinocchio",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: whenever you play an Action card with value 9 or higher, his nose grows: gain 1 Tag token.",
-      "upgrade": "Cost 4 XP. Game End: he becomes a real boy: 2 VP for each Good card you have, max 12 VP.",
+      "base": "Dexterity 1. Ongoing: whenever you play a Chapter card with value 9 or higher, his nose grows: gain 1 Tag token.",
+      "upgrade": "Cost 5 XP. Game End: he becomes a real boy: 2 VP for each Good card you have, max 12 VP.",
       "upgraded": false
     },
     {
@@ -1293,7 +1293,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: gain 1 coin for each Item you have, max 3 coins.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Item you have, and 4 VP if you have Pinocchio, max 12 VP.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Item you have, and 4 VP if you have Pinocchio, max 12 VP.",
       "upgraded": false
     }
   ],
@@ -1527,9 +1527,9 @@ window.GAME_DATA = {
     {
       "id": "W4",
       "name": "Carlo Collodi",
-      "level1": "Your Action cards with values 1–6 count as +2 when determining turn order.",
+      "level1": "Your Chapter cards with values 1–6 count as +2 when determining turn order.",
       "cost2": 2,
-      "level2": "Return a played Action card to your hand, then discard one card from your hand.",
+      "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 4,
       "level3": "1 VP for every 2 coins and 1 VP for every 2 XP gained during the game. Max 14 VP."
     },
@@ -1545,7 +1545,7 @@ window.GAME_DATA = {
     {
       "id": "W6",
       "name": "J. M. Barrie",
-      "level1": "When you play an Action card valued 1–7, gain 1 XP.",
+      "level1": "When you play a Chapter card valued 1–7, gain 1 XP.",
       "cost2": 2,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 4,

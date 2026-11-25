@@ -52,7 +52,7 @@ const state = new Proxy(
 );
 
 function emptyGame() {
-  return { players: [], cur: 0, round: 0, decks: {}, groups: [], itemDisplay: [], questDisplay: [], order: [], active: null, firstSeat: 0, gameOver: false, log: [], settings: {}, started: false };
+  return { players: [], cur: 0, round: 0, decks: {}, groups: [], itemDisplay: [], questDisplay: [], order: [], active: null, firstSeat: 0, gameOver: false, log: [], settings: {}, started: false, discards: { common: [], legendary: [], items: [] }, limbo: {} };
 }
 
 const el = {
@@ -145,6 +145,16 @@ function shuffle(cards) {
   return deck;
 }
 
+// Discarded Characters and Items go to the discard pile of their own deck (Common, Legendary, Item).
+function toDiscard(card) {
+  if (!card) return;
+  const pile = card.deck === "legendary" ? "legendary" : card.deck === "item" ? "items" : "common";
+  const { source: _s, xpOn: _x, upgraded: _u, tucked: _t, busy: _b, ...clean } = card;
+  if (pile === "legendary") clean.upgraded = false;
+  G.discards = G.discards || { common: [], legendary: [], items: [] };
+  G.discards[pile].push(clean);
+}
+
 function draw(deckName, count) {
   const cards = [];
   for (let i = 0; i < count; i += 1) {
@@ -154,12 +164,12 @@ function draw(deckName, count) {
   return cards;
 }
 
-// One Action card is drawn at the end of every round, so the Action deck counts the rounds left.
+// One Chapter card is drawn at the end of every round, so the Chapter deck counts the rounds left.
 function drawActionCard() {
   if (state.actionDeck.length) state.hand.push(state.actionDeck.shift());
 }
 
-// "Draw an Action card": draw 1, then put 1 card from your hand under your deck.
+// "Draw a Chapter card": draw 1, then put 1 card from your hand under your deck.
 // The deck size does not change; with an empty deck the effect does nothing.
 function drawAndTuck() {
   if (!state.actionDeck.length) return;
@@ -312,6 +322,7 @@ function startRound() {
   G.round += 1;
   G.order = [];
   G.active = null;
+  for (const group of G.groups || []) if (!group.taken) group.cards.forEach(toDiscard);
   G.groups = (BOARDS[G.players.length] || BOARDS[2])
     .map(([basic, advanced], index) => ({
       id: `G${index + 1}`,
@@ -333,7 +344,7 @@ function startRound() {
   }
   log("l_round", { n: G.round });
   if (G.round === G.settings.rounds) log("l_lastRound");
-  // The computer picks its Action card once humans are done (they may react to what is played).
+  // The computer picks its Chapter card once humans are done (they may react to what is played).
   maybeBotsChoose();
 }
 
@@ -348,7 +359,7 @@ function endGame() {
 }
 
 // ---------------------------------------------------------------------------
-// Action cards and turn order
+// Chapter cards and turn order
 // ---------------------------------------------------------------------------
 function actionBonus(p, number) {
   const writerBonus = p.writer?.name === "Carlo Collodi" && number <= 6 ? 2 : 0;
@@ -363,7 +374,7 @@ function chaptersTaken(seat) {
   return new Set(G.players.filter((o) => o.seat !== seat && o.currentAction).map((o) => o.currentAction.number));
 }
 
-// Action cards are played one by one, clockwise from the first player.
+// Chapter cards are played one by one, clockwise from the first player.
 function currentChooser() {
   const n = G.players.length;
   for (let i = 0; i < n; i += 1) {
@@ -402,7 +413,7 @@ function playAction(number) {
   maybeBotsChoose();
 }
 
-// Action cards are played from the first player, clockwise: the computer players seated before
+// Chapter cards are played from the first player, clockwise: the computer players seated before
 // a human who has not chosen yet play first; the others wait for that human.
 function maybeBotsChoose() {
   if (G.players.some((p) => p.phase === "chooseWriter")) return;
@@ -453,9 +464,9 @@ function nextTurn() {
   if (p.kind === "bot" && !simMode) Bot.queueTurn(seat);
 }
 
-// The story lasts 8 rounds. Each player draws one Action card at the end of each round:
+// The story lasts 8 rounds. Each player draws one Chapter card at the end of each round:
 // with 4 cards in hand and 8 in the deck, 1 card is left in the deck during the last round,
-// so "draw 1 Action card, then put 1 under your deck" effects still work until the end.
+// so "draw 1 Chapter card, then put 1 under your deck" effects still work until the end.
 function endRoundAll() {
   G.active = null;
   if (simMode) G.curve.push(G.players.map((p) => liveScore(p.seat)));
@@ -495,6 +506,7 @@ function takeGroup(choice) {
     const dropped = group.cards.find((card) => card.id === discardId && card.deck === "common");
     if (dropped) {
       group.cards = group.cards.filter((card) => card !== dropped);
+      toDiscard(dropped);
       gain("coins", 2);
       log("l_carpet", { p: state.name, c: C(dropped.name) });
     }
@@ -502,9 +514,16 @@ function takeGroup(choice) {
   group.taken = true;
   group.takenBy = state.name;
   group.takenSeat = G.cur;
+  const wendy = state.tableau.find((card) => card.name === "Wendy");
   for (const card of group.cards) {
     state.tableau.push(card);
     applyInstant(card);
+  }
+  if (wendy) {
+    const good = group.cards.filter((card) => card.alignment === "Good").length;
+    vpSource = "Wendy";
+    gain("coins", good);
+    if (wendy.upgraded) gain("xp", good);
   }
   checkPeterPan();
   applyWriterAfterGroup(group.cards);
@@ -522,7 +541,7 @@ function itemPrice(item) {
 }
 
 function buyItem(itemId) {
-  const perraultPurchase = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0;
+  const perraultPurchase = state.writerItemDiscount > 0;
   if (!perraultPurchase && (state.phase !== "roundDone" || G.active !== G.cur || state.writerRound.itemBought)) return;
   const item = G.itemDisplay.find((entry) => entry.id === itemId);
   if (!item) return;
@@ -530,7 +549,7 @@ function buyItem(itemId) {
   if (state.coins < price) return;
   state.coins -= price;
   state.writerItemDiscount = 0;
-  state.writerRound.itemBought = true;
+  if (!perraultPurchase) state.writerRound.itemBought = true;
   state.items.push(item);
   onTakeTagless([item]);
   G.itemDisplay = G.itemDisplay.filter((entry) => entry.id !== itemId);
@@ -562,6 +581,7 @@ async function endTurn() {
   G.cur = seat;
   if (state.phase !== "roundDone" || state.questChoices > 0 || state.tuckPending > 0) return;
   state.writerDiscardRemaining = 0;
+  state.writerItemDiscount = 0;
   state.phase = "waitRound";
   nextTurn();
 }
@@ -603,6 +623,106 @@ async function freeUpgradeWriter() {
   state.writerXp = 0;
   await levelUpWriter();
   G.cur = seat;
+}
+
+// Tag tokens: the player chooses the type (a computer player takes what its Quests or sets need).
+function gainTagToken(n, source) {
+  const options = ICONS.map((icon) => `token ${icon} ${n}`);
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source, options, cost: null }];
+    return;
+  }
+  applyOption(options[botTokenIcon()], source);
+}
+
+function botTokenIcon() {
+  const counts = iconCounts();
+  const wanted = ICONS.map((icon, i) => ({ i, score: state.quests.filter((q) => new RegExp(icon).test(q.scoring)).length * 10 - counts[icon] }));
+  return wanted.sort((a, b) => b.score - a.score)[0].i;
+}
+
+// Common deck effects (White Rabbit, Cheshire Cat): look at / draw N cards, keep or play one.
+function commonPick(n, source, rest) {
+  const cards = draw("common", n).map((card) => ({ ...card, source: "Normal" }));
+  if (!cards.length) return;
+  G.limbo = { ...(G.limbo || {}), [source]: { cards, rest } };
+  const options = cards.map((card) => `pick ${card.id}`);
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source, options, cost: null }];
+    return;
+  }
+  const worth = (card) => (window.Bot?.cardWorth ? window.Bot.cardWorth(card) : 0);
+  const best = [...cards].sort((a, b) => worth(b) - worth(a))[0];
+  applyOption(`pick ${best.id}`, source);
+}
+
+// Chapter cards taken back from the discard into the hand.
+function takeBackChapter(test) {
+  const card = [...state.actionDiscard].filter((c) => test(c.number)).sort((a, b) => b.number - a.number)[0];
+  if (!card) return false;
+  state.actionDiscard = state.actionDiscard.filter((c) => c !== card);
+  state.hand.push(card);
+  log("l_takeBack", { p: state.name, n: card.number });
+  return true;
+}
+
+// The Fairies: XP that can only go on Good Characters; what does not fit is lost.
+function placeXpOnGood(n) {
+  let left = n;
+  const targets = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded && c.alignment === "Good").sort((a, b) => upgradeCost(a) - (a.xpOn || 0) - (upgradeCost(b) - (b.xpOn || 0)));
+  for (const card of targets) {
+    if (!left) break;
+    const room = upgradeCost(card) - (card.xpOn || 0);
+    const k = Math.min(room, left);
+    card.xpOn = (card.xpOn || 0) + k;
+    left -= k;
+    if (card.xpOn >= upgradeCost(card)) completeUpgrade(card);
+  }
+}
+
+// Glass Coffin: take 1 Character from the Common or Legendary discard pile and resolve its Instant effect.
+function pickFromDiscard(source) {
+  const cards = [...((G.discards || {}).common || []), ...((G.discards || {}).legendary || [])];
+  if (!cards.length) return;
+  G.limbo = { ...(G.limbo || {}), [source]: { cards, rest: "fromDiscard" } };
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source, options: cards.map((c) => `pick ${c.id}`), cost: null }];
+    return;
+  }
+  const worth = (card) => (window.Bot?.cardWorth ? window.Bot.cardWorth(card) : 0);
+  applyOption(`pick ${[...cards].sort((a, b) => worth(b) - worth(a))[0].id}`, source);
+}
+
+// Hot Air Balloon: a Character of your tableau is tucked face down under it (its tags and effects are lost).
+function offerTuck(balloon) {
+  const options = state.tableau.map((c) => `tuck ${c.id} ${balloon.id}`);
+  if (!options.length) return;
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source: balloon.name, options, cost: "optional" }];
+    return;
+  }
+  if ((balloon.tucked || 0) >= 4) return;
+  const worth = (id) => (window.Bot?.cardWorth ? window.Bot.cardWorth(state.tableau.find((c) => c.id === id)) : 0);
+  const pick = [...options].sort((a, b) => worth(a.split(" ")[1]) - worth(b.split(" ")[1]))[0];
+  if (worth(pick.split(" ")[1]) < 5) applyOption(pick, balloon.name);
+}
+
+// Whispering Mirror: discard 1 Character for 3 XP, 4 XP if it was Good.
+function offerMirror() {
+  const options = state.tableau.map((c) => `mirror ${c.id}`);
+  if (!options.length) return;
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source: "Whispering Mirror", options, cost: "optional" }];
+    return;
+  }
+  const worth = (id) => (window.Bot?.cardWorth ? window.Bot.cardWorth(state.tableau.find((c) => c.id === id)) : 0);
+  const pick = [...options].sort((a, b) => worth(a.split(" ")[1]) - worth(b.split(" ")[1]))[0];
+  if (worth(pick.split(" ")[1]) < 4.5) applyOption(pick, "Whispering Mirror");
 }
 
 function checkPeterPan() {
@@ -746,6 +866,7 @@ function discardForWriter(cardId) {
     const index = zone.findIndex((card) => card.id === cardId);
     if (index >= 0) {
       const [card] = zone.splice(index, 1);
+      toDiscard(card);
       state.writerDiscardRemaining -= 1;
       gain("coins", 2);
       gain("xp", 2);
@@ -814,10 +935,60 @@ function choiceOptions(text) {
 function applyOption(option, source) {
   vpSource = source;
   let m;
+  if ((m = option.match(/^token (\w+) (\d+)/))) {
+    state.iconTokens[m[1]] += Number(m[2]);
+    const rings = state.items.filter((item) => /Tag token, gain 1 coin/i.test(item.effect || "")).length;
+    if (rings) {
+      gain("coins", rings);
+      gain("vp", rings);
+    }
+    log("l_token", { p: state.name, n: Number(m[2]), icon: { icon: m[1] } });
+    checkBaumSets();
+    return;
+  }
+  if ((m = option.match(/^tuck (\S+) (\S+)/))) {
+    const card = state.tableau.find((c) => c.id === m[1]);
+    const balloon = state.items.find((c) => c.id === m[2]);
+    if (!card || !balloon) return;
+    state.tableau = state.tableau.filter((c) => c !== card);
+    balloon.tucked = (balloon.tucked || 0) + 1;
+    log("l_tucks", { p: state.name, c: C(card.name) });
+    return;
+  }
+  if ((m = option.match(/^mirror (\S+)/))) {
+    const card = state.tableau.find((c) => c.id === m[1]);
+    if (!card) return;
+    state.tableau = state.tableau.filter((c) => c !== card);
+    toDiscard(card);
+    log("l_discards", { p: state.name, c: C(card.name) });
+    gain("xp", card.alignment === "Good" ? 4 : 3);
+    return;
+  }
+  if ((m = option.match(/^pick (\S+)/))) {
+    const pending = (G.limbo || {})[source];
+    if (!pending) return;
+    delete G.limbo[source];
+    const card = pending.cards.find((c) => c.id === m[1]);
+    const others = pending.cards.filter((c) => c !== card);
+    if (pending.rest === "bottom") G.decks.common.push(...others.map(({ source: _s, ...c }) => c));
+    else if (pending.rest === "discard") others.forEach(toDiscard);
+    if (pending.rest === "fromDiscard" && card) {
+      for (const pile of ["common", "legendary"]) G.discards[pile] = G.discards[pile].filter((c) => c.id !== card.id);
+    }
+    if (card) {
+      state.tableau.push(card);
+      log("l_takes", { p: state.name, cards: { cs: [card.name] } });
+      applyInstant(card);
+      checkPeterPan();
+      onTakeTagless([card]);
+    }
+    return;
+  }
   if ((m = option.match(/^discard (\S+) gain (\d+) VP/))) {
     const card = state.tableau.find((c) => c.id === m[1]);
     if (!card) return;
     state.tableau = state.tableau.filter((c) => c !== card);
+    toDiscard(card);
     log("l_discards", { p: state.name, c: C(card.name) });
     gain("vp", Number(m[2]));
     return;
@@ -841,6 +1012,7 @@ function offerChoice(source, options, cost = null) {
 }
 
 function botOption(options) {
+  if (options.every((o) => /^token /.test(o))) return botTokenIcon();
   const hunt = options.map((o) => Number((o.match(/^discard \S+ gain (\d+) VP/) || [])[1] || 0));
   if (hunt.some(Boolean)) {
     // Keep an upgraded villain; otherwise take the bigger reward.
@@ -863,6 +1035,7 @@ function discardWeakestCommon() {
   if (!commons.length) return false;
   const weakest = commons.sort((a, b) => iconAmount(a, "Charm") + iconAmount(a, "Strength") + iconAmount(a, "Dexterity") + iconAmount(a, "Intelligence") - (iconAmount(b, "Charm") + iconAmount(b, "Strength") + iconAmount(b, "Dexterity") + iconAmount(b, "Intelligence")))[0];
   state.tableau = state.tableau.filter((card) => card !== weakest);
+  toDiscard(weakest);
   log("l_discards", { p: state.name, c: C(weakest.name) });
   return true;
 }
@@ -941,7 +1114,31 @@ function applyMean(text, source) {
   }
 }
 
+// Sheriff (upgraded) and Belle: one more coin / XP whenever a card effect gives you some.
+function withGainBonus(fn) {
+  const coins = state.coinsGained || 0;
+  const xp = state.xpGained || 0;
+  const result = fn();
+  const after = () => {
+    if ((state.coinsGained || 0) > coins && state.tableau.some((c) => c.name === "Sheriff of Nottingham" && c.upgraded)) {
+      state.coins += 1;
+      state.coinsGained += 1;
+    }
+    if ((state.xpGained || 0) > xp && state.tableau.some((c) => c.name === "Belle" && !c.upgraded)) {
+      state.xp += 1;
+      state.xpGained += 1;
+    }
+  };
+  if (result && typeof result.then === "function") return result.then((v) => (after(), v));
+  after();
+  return result;
+}
+
 function applyInstant(card) {
+  return withGainBonus(() => applyInstantInner(card));
+}
+
+function applyInstantInner(card) {
   vpSource = card.name;
   const full = `${card.effect || ""} ${card.base || ""}`;
   if (!/Instant/i.test(full)) return;
@@ -973,10 +1170,11 @@ function applyInstant(card) {
   else if (/gain 1 coin\b/i.test(text)) gain("coins", 1);
   if (/gain 3 VP/i.test(text)) gain("vp", 3);
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
-  if (/Tag token/i.test(text)) state.tagTokens += 1;
+  if (/Gain 2 Tag tokens/i.test(text)) gainTagToken(2, card.name);
+  else if (/Tag token/i.test(text)) gainTagToken(1, card.name);
   if (/take 1 Quest|Take 1 Quest/i.test(text)) grantQuestChoice(card.name);
   if (/level up .*free|place XP on a Character so that it levels up/i.test(text)) state.freeUpgrades += 1;
-  if (/draw 1 Action card, then put/i.test(text)) drawAndTuck();
+  if (/draw 1 (?:Chapter|Action) card, then put/i.test(text)) drawAndTuck();
 }
 
 function instantLinks(card) {
@@ -997,6 +1195,22 @@ function instantLinks(card) {
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (n === "The Prince") activateOne();
+  if (n === "Prince Charming") gain("vp", Math.min(4, iconCounts().Charm));
+  if (n === "The White Rabbit") commonPick(3, n, "bottom");
+  if (n === "Cheshire Cat") commonPick(3, n, "discard");
+  if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 7);
+  if (n === "Cinderella") state.writerItemDiscount = 2;
+  if (n === "The Glass Coffin") pickFromDiscard(n);
+  if (n === "Mad Hatter's Hat") {
+    const [legend] = draw("legendary", 1);
+    if (legend) {
+      const card = { ...legend, source: "Legendary" };
+      state.tableau.push(card);
+      log("l_takes", { p: state.name, cards: { cs: [card.name] } });
+      applyInstant(card);
+      checkPeterPan();
+    }
+  }
   if (n === "Long Bow") gain("vp", Math.min(5, countAlignment("Bad")) + (hasCard("Robin Hood") ? 2 : 0));
 }
 
@@ -1065,9 +1279,11 @@ function onPlayChapter(number) {
   vpSource = "The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "Pinocchio");
   if (pino && !pino.upgraded && number >= 9) {
-    state.tagTokens += 1;
+    gainTagToken(1, "Pinocchio");
     log("l_nose", { p: state.name });
   }
+  const briar = state.tableau.find((card) => card.name === "Princess Briar Rose" && card.upgraded);
+  if (briar && number <= 7) gain("xp", 1);
   const crickets = state.tableau.filter((card) => card.name === "The Talking Cricket").length;
   if (crickets && number <= 4) gain("vp", crickets * (pino ? 2 : 1));
 }
@@ -1112,12 +1328,17 @@ async function activatePick(cardId) {
   await activateCard(card);
 }
 
-async function activateCard(card) {
+function activateCard(card) {
+  return withGainBonus(() => activateCardInner(card));
+}
+
+async function activateCardInner(card) {
   vpSource = card.name;
   const seat = G.cur;
   const fullText = activeCardText(card);
   const text = stripLinks(fullText);
-  const hasActivationCost = /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
+  const ownChoice = ["Hot Air Balloon", "Whispering Mirror"].includes(card.name);
+  const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
   if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
   if (/spend 3 coins to (?:level up|place XP)/i.test(text) && state.coins < 3) return;
@@ -1145,6 +1366,30 @@ async function activateCard(card) {
   } else if (/choose one of those effects/i.test(text)) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
+  } else if (card.name === "Crocodile" && card.upgraded) {
+    gain("coins", state.actionDiscard.filter((c) => c.number >= 10).length);
+  } else if (card.name === "Robin Hood" && card.upgraded) {
+    const k = Math.min(3, state.coins);
+    state.coins -= k;
+    gain("vp", k);
+  } else if (card.name === "Cheshire Cat" && card.upgraded) {
+    commonPick(2, card.name, "discard");
+  } else if (card.name === "Rabbit's Clock") {
+    takeBackChapter((v) => v <= 8);
+  } else if (card.name === "Crocodile's Clock") {
+    takeBackChapter((v) => v >= 8);
+  } else if (card.name === "The Fairies") {
+    placeXpOnGood(2);
+  } else if (card.name === "Hot Air Balloon") {
+    offerTuck(card);
+  } else if (card.name === "Whispering Mirror") {
+    offerMirror();
+  } else if (card.name === "Ruby Slippers") {
+    const chapter = state.currentAction?.effect || "";
+    const coins = Number((chapter.match(/(\d+) Coins?/i) || [])[1] || 0);
+    const xp = Number((chapter.match(/(\d+) XP/i) || [])[1] || 0);
+    if (coins) gain("coins", coins);
+    else if (xp) gain("xp", xp);
   } else if (card.name === "The Evil Fairy" && card.upgraded) {
     gain("vp", Math.min(5, countAlignment("Bad")));
   } else if (card.name === "The Hunter" && card.upgraded) {
@@ -1158,8 +1403,10 @@ async function activateCard(card) {
     gain("xp", 1);
   } else if (/spend 1 XP to gain 3 coins/i.test(text)) {
     // From the unplaced XP, or else from a Legendary that is not upgraded yet (never from an upgraded card).
+    const from = state.xp > 0 ? null : spendableXpCard();
     if (state.xp > 0) state.xp -= 1;
-    else spendableXpCard().xpOn -= 1;
+    else if (from) from.xpOn -= 1;
+    else return;
     gain("coins", 3);
   } else if (/spend 3 coins to (?:level up|place XP)/i.test(text)) {
     state.coins -= 3;
@@ -1178,7 +1425,7 @@ async function activateCard(card) {
       gain("vp", 1);
       gain("coins", 1);
     } else if (/gain 1 VP\b/i.test(text)) gain("vp", 1);
-    if (/Tag token/i.test(text)) state.tagTokens += 1;
+    if (/Tag token/i.test(text)) gainTagToken(1, card.name);
     if (/Activation: gain 1 coin\./i.test(text)) gain("coins", 1);
   }
   if (state.writer?.name === "Lewis Carroll" && !state.writerRound.activationRewarded) {
@@ -1602,7 +1849,7 @@ function renderGuide() {
     bubble(el.groups, t("g_chooseGroup"));
     mark("#groups [data-group]:not(:disabled)");
   }
-  if (state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0) {
+  if (state.writerItemDiscount > 0) {
     bubble(el.itemDisplay, t("g_perrault"));
     mark("#itemDisplay [data-item]:not(:disabled)");
   } else if (myTurn && state.phase === "buyItem") {
@@ -1631,6 +1878,15 @@ function renderGuide() {
       if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
       if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
       if (/take 1 Quest/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
+      if ((m = o.match(/^token (\w+) (\d+)/))) return `+${m[2]} ${squareTag(m[1])}`;
+      if ((m = o.match(/^(?:tuck|mirror) (\S+)/))) {
+        const card = state.tableau.find((c) => c.id === m[1]);
+        return card ? escapeHtml(tc(card.name)) : "?";
+      }
+      if ((m = o.match(/^pick (\S+)/))) {
+        const card = ((G.limbo || {})[choice.source]?.cards || []).find((c) => c.id === m[1]);
+        return card ? `<span class="pick-card">${CardFace.common ? CardFace.common(card) : escapeHtml(tc(card.name))}</span>` : "?";
+      }
       if ((m = o.match(/^discard (\S+) gain (\d+) VP/))) {
         const card = state.tableau.find((c) => c.id === m[1]);
         return `− ${escapeHtml(tc(card ? card.name : ""))} → +${m[2]} ${resourceIcon("vp", "VP")}`;
@@ -1668,7 +1924,7 @@ function phaseMessage() {
   if (G.gameOver) return t("ph_gameOver");
   if (state.tuckPending > 0) return t("ph_tuck");
   if (G.round === G.settings.rounds && state.phase === "chooseAction") return `${t("lastRoundTag")} ${t("ph_chooseAction")}`;
-  if (state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0) return t("ph_perrault");
+  if (state.writerItemDiscount > 0) return t("ph_perrault");
   if (state.questChoices > 0) return t("ph_quest", { n: state.questChoices });
   const active = G.active !== null ? G.players[G.active] : null;
   switch (state.phase) {
@@ -1803,7 +2059,11 @@ function renderActions() {
   const deckInfo = `<div class="action-deck ${deck === 0 ? "empty" : ""}" title="${escapeHtml(t("deckHint"))}">
       <span class="deck-stack">${Array.from({ length: Math.min(deck, 9) }, (_, i) => `<i style="--i:${i}"></i>`).join("")}</span>
       <span><b>${deck}</b> ${escapeHtml(t("deckLeft"))}<br><small>${escapeHtml(t("roundOf", { n: G.round, total: roundsTotal() }))}</small></span>
-    </div>`;
+    </div>
+    <div class="action-discard" title="${escapeHtml(t("discardHint"))}"><small>${escapeHtml(t("discardPile"))}</small><span>${[...state.actionDiscard]
+      .sort((a, b) => a.number - b.number)
+      .map((c) => `<i style="--spine:${playerColor(G.players[view.seat])}">${c.number}</i>`)
+      .join("") || "–"}</span></div>`;
   el.actionHand.style.setProperty("--spine", playerColor(G.players[view.seat]));
   document.querySelector(".board")?.style.setProperty("--pcol", playerColor(G.players[view.seat]));
   el.actionHand.innerHTML = deckInfo + hand
@@ -1843,7 +2103,7 @@ function renderQuest(quest) {
 
 function renderItem(item) {
   const { price, discount } = itemPrice(item);
-  const perraultPurchase = state.writer?.name === "Charles Perrault" && state.writerItemDiscount > 0;
+  const perraultPurchase = state.writerItemDiscount > 0;
   const canBuy = perraultPurchase || (state.phase === "roundDone" && G.active === view.seat && !state.writerRound.itemBought);
   return `
     <div class="slot slot-item">
@@ -2200,6 +2460,7 @@ async function simulateGame(opts) {
           questNames: r.questScores.map((q) => [q.quest.name, q.points]),
           endPts: withSeat(p.seat, () => [...p.tableau, ...p.items].filter((c) => /Game End/i.test(c.deck === "legendary" ? (c.upgraded ? c.upgrade : c.base) : c.effect || "")).map((c) => [c.name, scoreCards([c]), Boolean(c.upgraded)])),
           vpBy: p.vpBy || {},
+          legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),
           writerLevel: p.writerLevel,
           coinsLeft: p.coins,
