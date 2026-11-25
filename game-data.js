@@ -1567,7 +1567,7 @@ window.GAME_DATA = {
       "cost2": 2,
       "level2": "Upgrade one Legendary card for free.",
       "cost3": 4,
-      "level3": "3 VP for each upgraded Legendary card. Max 9 VP."
+      "level3": "3 VP for each upgraded Legendary card. Max 12 VP."
     }
   ],
   "board2p": [

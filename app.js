@@ -1399,7 +1399,7 @@ function scoreWriter() {
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") return Math.min(14, countIcon("Dexterity") * 2);
   if (name === "L. Frank Baum") return Math.min(15, Math.min(...ICONS.map(countIcon)) * 5);
-  if (name === "Le Prince de Beaumont") return Math.min(9, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
+  if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
 }
 

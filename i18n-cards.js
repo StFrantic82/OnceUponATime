@@ -350,5 +350,5 @@ window.CARD_I18N = [
   ["5 VP for each complete set of all four icons. Max 15 VP.", "5 VP par série complète des quatre icônes. Max 15 VP.", "5 VP per ogni set completo delle quattro icone. Max 15 VP."],
   ["Your Legendary upgrades cost 1 fewer XP.", "Vos améliorations de Légendaires coûtent 1 XP de moins.", "I tuoi potenziamenti Leggendari costano 1 XP in meno."],
   ["Upgrade one Legendary card for free.", "Améliorez gratuitement une carte Légendaire.", "Potenzia gratuitamente una carta Leggendaria."],
-  ["3 VP for each upgraded Legendary card. Max 9 VP.", "3 VP par carte Légendaire améliorée. Max 9 VP.", "3 VP per ogni carta Leggendaria potenziata. Max 9 VP."],
+  ["3 VP for each upgraded Legendary card. Max 12 VP.", "3 VP par carte Légendaire améliorée. Max 12 VP.", "3 VP per ogni carta Leggendaria potenziata. Max 12 VP."],
 ];
