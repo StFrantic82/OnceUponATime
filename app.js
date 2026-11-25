@@ -127,7 +127,21 @@ function log(message) {
   state.log = state.log.slice(0, 40);
 }
 
-function newGame() {
+// Board layout per player count (groups of Normal + Legendary cards), from the Board sheet.
+const BOARDS = {
+  2: [[1, 0], [1, 1], [2, 1]],
+  3: [[1, 0], [2, 0], [1, 1], [2, 1]],
+  4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]],
+  5: [[1, 0], [2, 0], [1, 1], [2, 1], [0, 2], [1, 2]],
+};
+const BOT_NAMES = ["Mother Goose", "The Narrator", "Old Bard", "Aesop"];
+
+const settings = { players: 2, level: "normal", name: "You", writerMode: "random", tutorial: false };
+
+function newGame(options = {}) {
+  Object.assign(settings, options);
+  const players = Math.min(5, Math.max(2, Number(settings.players) || 2));
+  settings.players = players;
   state.round = 0;
   state.phase = "chooseAction";
   state.coins = 2;
@@ -145,8 +159,8 @@ function newGame() {
   state.hand = [];
   state.actionDiscard = [];
   state.groups = [];
-  state.itemDisplay = draw("items", 3);
-  state.questDisplay = draw("quests", 4);
+  state.itemDisplay = draw("items", 1 + players);
+  state.questDisplay = draw("quests", 2 + players);
   state.tableau = [];
   state.items = [];
   state.quests = [];
@@ -160,14 +174,24 @@ function newGame() {
   state.writerRound = {};
   state.rewardedIconSets = 0;
   state.currentAction = null;
-  state.botNumber = null;
+  state.bots = BOT_NAMES.slice(0, players - 1).map((name) => ({ name, deck: shuffle(DATA.actions), hand: [], played: null, cards: 0 }));
+  for (const bot of state.bots) bot.hand = bot.deck.splice(0, 4);
+  state.order = [];
   state.playerFirst = false;
   state.gameOver = false;
+  state.scoreSaved = false;
   state.log = [];
   refillActionHand();
   startRound();
-  state.phase = "writerMode";
-  log("Choose how to assign your Writer.");
+  if (settings.writerMode === "choose") {
+    state.phase = "chooseWriter";
+    log("Choose your Writer.");
+  } else {
+    const writers = DATA.writers || [];
+    state.writer = writers.length ? clone(writers[Math.floor(Math.random() * writers.length)]) : null;
+    if (state.writer) log(`${state.writer.name} is your Writer.`);
+    log("Choose an Action card from your hand.");
+  }
   render();
 }
 
@@ -175,24 +199,54 @@ function startRound() {
   if (!state.hand.length) {
     state.gameOver = true;
     state.phase = "gameOver";
-    log("Non hai piu Carte Azione disponibili. Calcola il punteggio finale.");
+    log("No Action cards left: the story is over. Calculate your final score.");
     return;
   }
   state.round += 1;
   state.currentAction = null;
-  state.botNumber = null;
+  state.order = [];
   state.playerFirst = false;
+  for (const bot of state.bots) bot.played = null;
   state.writerRound = { alignmentRewarded: false, activationRewarded: false };
-  state.groups = DATA.board2p.map((slot, index) => ({
-    id: `G${index + 1}`,
-    taken: false,
-    removedByBot: false,
-    cards: [
-      ...draw("common", slot.basic).map((card) => ({ ...card, source: "Normal" })),
-      ...draw("legendary", slot.advanced).map((card) => ({ ...card, source: "Legendary" })),
-    ],
-  }));
+  state.groups = (BOARDS[settings.players] || BOARDS[2])
+    .map(([basic, advanced], index) => ({
+      id: `G${index + 1}`,
+      taken: false,
+      removedByBot: false,
+      takenBy: null,
+      cards: [
+        ...draw("common", basic).map((card) => ({ ...card, source: "Normal" })),
+        ...draw("legendary", advanced).map((card) => ({ ...card, source: "Legendary" })),
+      ],
+    }))
+    .filter((group) => group.cards.length);
   state.phase = "chooseAction";
+}
+
+function bestGroupValue() {
+  const values = state.groups.map(groupValue).sort((a, b) => b - a);
+  return { best: values[0] || 0, second: values[1] || 0 };
+}
+
+// Bots pick an Action card. Numbers already played this round are avoided when possible.
+function botChooseAction(bot, taken) {
+  const options = bot.hand.filter((card) => !taken.has(card.number));
+  const pool = options.length ? options : bot.hand;
+  if (!pool.length) return null;
+  const sorted = [...pool].sort((a, b) => a.number - b.number);
+  let pick;
+  if (settings.level === "easy") {
+    pick = pool[Math.floor(Math.random() * pool.length)];
+  } else if (settings.level === "hard") {
+    const { best, second } = bestGroupValue();
+    const keenness = best - second;
+    pick = keenness > 4 ? sorted[sorted.length - 1] : keenness > 2 ? sorted[Math.floor(sorted.length / 2)] : sorted[0];
+  } else {
+    pick = Math.random() < 0.5 ? sorted[sorted.length - 1] : pool[Math.floor(Math.random() * pool.length)];
+  }
+  bot.hand = bot.hand.filter((card) => card !== pick);
+  if (bot.deck.length) bot.hand.push(bot.deck.shift());
+  return pick;
 }
 
 function playAction(action) {
@@ -200,19 +254,45 @@ function playAction(action) {
   state.currentAction = action;
   state.hand = state.hand.filter((card) => card.number !== action.number);
   state.actionDiscard.push(action);
-  state.botNumber = 1 + Math.floor(Math.random() * 15);
   const writerBonus = state.writer?.name === "Carlo Collodi" && action.number <= 5 ? 1 : 0;
-  const actionValue = action.number + writerBonus;
-  state.playerFirst = actionValue >= state.botNumber;
-  if (!state.playerFirst) {
-    botTakeBestGroup();
-    log(`The opponent played ${state.botNumber}, acts first, and takes the best group.`);
-  } else {
-    log(`The opponent played ${state.botNumber}. You choose first.`);
+  const queen = state.tableau.find((card) => card.name === "Queen of Hearts");
+  const queenBonus = queen ? (queen.upgraded ? 2 : 1) : 0;
+  const actionValue = action.number + writerBonus + queenBonus;
+  const taken = new Set([action.number]);
+  for (const bot of state.bots) {
+    const card = botChooseAction(bot, taken);
+    bot.played = card ? card.number : 0;
+    taken.add(bot.played);
+  }
+  state.order = [
+    { who: "you", value: actionValue },
+    ...state.bots.map((bot) => ({ who: bot.name, value: bot.played })),
+  ].sort((a, b) => b.value - a.value || (a.who === "you" ? -1 : b.who === "you" ? 1 : 0));
+  state.playerFirst = state.order[0].who === "you";
+  if (queen?.upgraded && state.playerFirst) gain("vp", 1);
+  log(`You play ${action.number}${writerBonus || queenBonus ? ` (counts as ${actionValue})` : ""}. ${state.bots.map((bot) => `${bot.name}: ${bot.played}`).join(", ")}.`);
+  runBotsUntilPlayer();
+  if (!state.groups.some((group) => !group.taken && !group.removedByBot)) {
+    runRemainingBots();
+    state.phase = "buyItem";
+    log("No group is left for you this round (the decks are running out). You may still buy an Item, then resolve your Action card.");
+    render();
+    return;
   }
   state.phase = "chooseGroup";
-  log(`You play ${action.number}${writerBonus ? " (+1 Collodi)" : ""}. Now choose and take a group.`);
+  log(state.playerFirst ? "You choose first. Take a group." : "Your turn: take one of the remaining groups.");
   render();
+}
+
+function runBotsUntilPlayer() {
+  while (state.order.length && state.order[0].who !== "you") {
+    botTakeGroup(state.order.shift().who);
+  }
+  if (state.order[0]?.who === "you") state.order.shift();
+}
+
+function runRemainingBots() {
+  while (state.order.length) botTakeGroup(state.order.shift().who);
 }
 
 async function activateActionStep() {
@@ -236,11 +316,21 @@ function groupValue(group) {
   }, 0);
 }
 
-function botTakeBestGroup() {
+function botTakeGroup(botName) {
   const available = state.groups.filter((group) => !group.taken && !group.removedByBot);
   if (!available.length) return;
-  available.sort((a, b) => groupValue(b) - groupValue(a));
-  available[0].removedByBot = true;
+  let choice;
+  if (settings.level === "easy" && Math.random() < 0.6) {
+    choice = available[Math.floor(Math.random() * available.length)];
+  } else {
+    available.sort((a, b) => groupValue(b) - groupValue(a));
+    choice = available[0];
+  }
+  choice.removedByBot = true;
+  choice.takenBy = botName;
+  const bot = state.bots.find((entry) => entry.name === botName);
+  if (bot) bot.cards += choice.cards.length;
+  log(`${botName} takes ${choice.cards.map((card) => card.name).join(", ")}.`);
 }
 
 function takeGroup(groupId) {
@@ -255,7 +345,7 @@ function takeGroup(groupId) {
   applyWriterAfterGroup(group.cards);
   checkBaumSets();
   log(`You take ${group.cards.map((card) => card.name).join(", ")}.`);
-  if (state.playerFirst) botTakeBestGroup();
+  runRemainingBots();
   state.phase = "buyItem";
   log("You may now buy up to 1 Item, then resolve the Action card effect.");
   render();
@@ -264,10 +354,10 @@ function takeGroup(groupId) {
 function endRound() {
   if (state.phase !== "roundDone" || state.questChoices > 0) return;
   refillActionHand();
-  while (state.itemDisplay.length < 3 && state.decks.items.length) {
+  while (state.itemDisplay.length < 1 + settings.players && state.decks.items.length) {
     state.itemDisplay.push(...draw("items", 1));
   }
-  while (state.questDisplay.length < 4 && state.decks.quests.length) {
+  while (state.questDisplay.length < 2 + settings.players && state.decks.quests.length) {
     state.questDisplay.push(...draw("quests", 1));
   }
   el.endRoundBtn.disabled = true;
@@ -714,6 +804,7 @@ function render() {
   renderTableau();
   renderRound();
   renderLog();
+  window.Home?.afterRender(state);
 }
 
 function renderStats() {
@@ -737,7 +828,7 @@ function renderStats() {
       : state.phase === "chooseWriter"
       ? "Choose a Writer to start the game."
       : state.phase === "chooseAction"
-      ? "Choose an Action card. The opponent will roll a number from 1 to 15."
+      ? "Choose an Action card. Highest chapter picks a group first."
       : state.phase === "buyItem"
         ? "You may buy up to 1 Item, then resolve the Action card effect."
       : state.phase === "chooseGroup"
@@ -814,7 +905,7 @@ function renderGroups() {
     .map(
       (group) => `
         <div class="group ${group.removedByBot ? "removed" : ""} ${group.taken ? "taken" : ""}">
-          <h3>Group ${group.id.slice(1)}${group.removedByBot ? " · taken by opponent" : group.taken ? " · yours" : ""}</h3>
+          <h3>Group ${group.id.slice(1)}${group.removedByBot ? ` · taken by ${group.takenBy || "an opponent"}` : group.taken ? " · yours" : ""}</h3>
           <div class="group-cards">${group.cards.map(renderCard).join("")}</div>
           <button type="button" class="${state.phase === "chooseGroup" && !group.taken && !group.removedByBot ? "primary" : ""}" ${state.phase !== "chooseGroup" || group.taken || group.removedByBot ? "disabled" : ""} data-group="${group.id}">Take this group</button>
         </div>
@@ -912,7 +1003,7 @@ function renderTags(card) {
 
 function renderRound() {
   el.playerAction.textContent = state.currentAction ? state.currentAction.number : "-";
-  el.botAction.textContent = state.botNumber || "-";
+  el.botAction.textContent = state.bots?.some((bot) => bot.played) ? state.bots.map((bot) => bot.played).join(" · ") : "-";
   el.roundState.textContent =
     state.phase === "writerMode"
       ? "Start game"
@@ -944,6 +1035,10 @@ function renderLog() {
 
 function showScore() {
   const score = finalScore();
+  if (state.gameOver && !state.scoreSaved) {
+    state.scoreSaved = true;
+    window.Home?.recordGame({ score: score.total, writer: state.writer?.name || "-", players: settings.players, level: settings.level, quests: state.quests.length, cards: state.tableau.length, items: state.items.length, tutorial: settings.tutorial });
+  }
   el.scorePanel.classList.remove("hidden");
   el.scorePanel.innerHTML = `
     <h2>Final Score</h2>
@@ -1099,10 +1194,10 @@ function formatGameText(text) {
     .replace(/\bGoals?\b/gi, "Quest");
 }
 
-el.newGameBtn.addEventListener("click", newGame);
+el.newGameBtn.addEventListener("click", () => window.Home?.show());
 el.resolveActionBtn.addEventListener("click", activateActionStep);
 el.endRoundBtn.addEventListener("click", endRound);
 el.scoreBtn.addEventListener("click", showScore);
 el.closeCatalogBtn.addEventListener("click", closeCatalog);
 
-newGame();
+window.Game = { newGame, state, settings, finalScore, showScore };

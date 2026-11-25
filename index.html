@@ -7,10 +7,55 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700;800&family=Alegreya+Sans:wght@400;500;700;800&display=swap" />
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=4" />
   </head>
   <body>
-    <main class="app">
+    <section id="home" class="home-screen" hidden>
+      <div class="hero">
+        <p class="hero-kicker">A fairy-tale card game</p>
+        <h1 class="biglogo">Once Upon a Time</h1>
+        <p class="tagline">Gather the heroes, villains and treasures of the classic tales, and write the story worth the most Victory Points.</p>
+        <div class="hero-cards" id="heroCards"></div>
+      </div>
+      <div class="setupcard">
+        <div class="modetabs" role="group" aria-label="Game mode">
+          <button type="button" data-mode="solo">Solo</button>
+          <button type="button" data-mode="online">Online</button>
+        </div>
+        <div class="hpanel">
+          <div class="hrow"><span class="hl2">Your name</span><label class="namebox"><input id="pname" type="text" maxlength="16" placeholder="Storyteller" aria-label="Your name" /></label></div>
+          <div class="hrow"><span class="hl2">Players</span><div class="dots" id="nseg"></div></div>
+          <p class="hint" id="nhint"></p>
+          <div class="hrow col"><span class="hl2">Computer level</span><div class="lvls" id="lvseg"></div></div>
+          <p class="hint" id="lvhint"></p>
+          <div class="hrow col"><span class="hl2">Your Writer</span><div class="lvls two" id="wseg"></div></div>
+        </div>
+        <div id="soloBox" class="playbox"><button type="button" id="startBtn" class="bigbtn">Start the story</button></div>
+        <div id="onlineBox" class="playbox" hidden>
+          <p class="online-note">Online play with friends is being written: rooms will open here soon. In the meantime, play solo against the computer.</p>
+          <button type="button" class="bigbtn" disabled>Create a room</button>
+          <div class="joinrow"><input type="text" maxlength="5" placeholder="Room code" aria-label="Room code" disabled /><button type="button" disabled>Join</button></div>
+        </div>
+        <div class="secbtns">
+          <button type="button" id="tutoBtn"><img class="game-icon" src="assets/icons/tag-intelligence.png" alt="" />Tutorial</button>
+          <button type="button" id="statsBtn"><img class="game-icon" src="assets/icons/vp.png" alt="" />Statistics</button>
+        </div>
+        <div class="decklinks">
+          <span class="hl2">The cards</span>
+          <div class="deck-btns" id="deckBtns"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="statsScreen" class="stats-screen" hidden>
+      <div class="stats-card">
+        <div class="stats-head"><h2>Your statistics</h2><button type="button" id="statsBack">Home</button></div>
+        <div id="statsBody"></div>
+        <div class="stats-foot"><button type="button" id="statsClear">Clear statistics</button></div>
+      </div>
+    </section>
+
+    <main class="app" hidden>
       <header class="topbar">
         <div>
           <h1>Once Upon a Time</h1>
@@ -21,7 +66,7 @@
 
       <section class="player-bar">
         <div class="controls">
-          <button id="newGameBtn" type="button">New game</button>
+          <button id="newGameBtn" type="button">Home</button>
           <button id="resolveActionBtn" class="hidden" type="button" disabled>4. Resolve Action card effect</button>
           <button id="endRoundBtn" type="button" disabled>End round</button>
           <button id="scoreBtn" type="button">Calculate score</button>
@@ -46,7 +91,7 @@
               <strong id="playerAction">-</strong>
             </div>
             <div>
-              <span class="label">Opponent</span>
+              <span class="label">Opponents</span>
               <strong id="botAction">-</strong>
             </div>
             <div>
@@ -89,10 +134,12 @@
         </div>
       </section>
     </main>
+    <div id="coach" class="coach" hidden role="status"></div>
 
-    <script src="game-data.js?v=3"></script>
-    <script src="art.js?v=3"></script>
-    <script src="cards.js?v=3"></script>
-    <script src="app.js?v=3"></script>
+    <script src="game-data.js?v=4"></script>
+    <script src="art.js?v=4"></script>
+    <script src="cards.js?v=4"></script>
+    <script src="app.js?v=4"></script>
+    <script src="home.js?v=4"></script>
   </body>
 </html>
