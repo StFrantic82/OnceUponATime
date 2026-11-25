@@ -69,12 +69,12 @@ const P = {
     intro: "Print on A4 paper at 100 % scale (“actual size”, no “fit to page”). Cut along the dotted lines. Card sizes are those of standard sleeves.",
     backsHow: "Backs: print each “Backs” page on the reverse of the pages of the same kind (long-edge duplex), or glue it on.",
     contents: "Contents",
-    sizes: { common: "Common characters · 62 cards · 56 × 87 mm", legendary: "Legendary characters · 41 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 36 tiles · 60 × 60 mm", quests: "Quest cards · 21 cards · 87 × 56 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Action cards · 5 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
+    sizes: { common: "Common characters · 62 cards · 56 × 87 mm", legendary: "Legendary characters · 41 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 36 tiles · 60 × 60 mm", quests: "Quest cards · 21 cards · 87 × 56 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Action cards · 4 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
     backs: "Backs",
     tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
     page: "Page",
     set: "Set",
-    board: "Board · group spaces · front: 2–3 players, back: 4–5 players",
+    board: "Board · group spaces · front: 2–3 players, back: 4 players",
     boardSide: "Board",
     boardPlayers: "{n} players",
     boardHow: "Each round, deal the revealed characters below their space: one group per space. Use the side that matches your number of players.",
@@ -93,12 +93,12 @@ const P = {
     intro: "Imprimez sur du papier A4 à l’échelle 100 % (« taille réelle », sans « ajuster à la page »). Découpez le long des pointillés. Les formats correspondent aux protège-cartes du commerce.",
     backsHow: "Dos : imprimez chaque page « Dos » au verso des pages du même type (recto verso, bord long), ou collez-la.",
     contents: "Contenu",
-    sizes: { common: "Personnages communs · 62 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 41 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 36 tuiles · 60 × 60 mm", quests: "Cartes Quête · 21 cartes · 87 × 56 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Action · 5 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
+    sizes: { common: "Personnages communs · 62 cartes · 56 × 87 mm", legendary: "Personnages légendaires · 41 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 36 tuiles · 60 × 60 mm", quests: "Cartes Quête · 21 cartes · 87 × 56 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Action · 4 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
     backs: "Dos",
     tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
     page: "Page",
     set: "Jeu",
-    board: "Plateau · emplacements des lots · recto : 2–3 joueurs, verso : 4–5 joueurs",
+    board: "Plateau · emplacements des lots · recto : 2–3 joueurs, verso : 4 joueurs",
     boardSide: "Plateau",
     boardPlayers: "{n} joueurs",
     boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement. Utilisez la face qui correspond à votre nombre de joueurs.",
@@ -117,12 +117,12 @@ const P = {
     intro: "Stampa su carta A4 in scala 100 % («dimensioni reali», senza «adatta alla pagina»). Ritaglia lungo le linee tratteggiate. I formati corrispondono alle bustine protettive in commercio.",
     backsHow: "Retri: stampa ogni pagina «Retri» sul retro delle pagine dello stesso tipo (fronte-retro, lato lungo), oppure incollala.",
     contents: "Contenuto",
-    sizes: { common: "Personaggi comuni · 62 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 41 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 36 tessere · 60 × 60 mm", quests: "Carte Missione · 21 carte · 87 × 56 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Azione · 5 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
+    sizes: { common: "Personaggi comuni · 62 carte · 56 × 87 mm", legendary: "Personaggi leggendari · 41 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 36 tessere · 60 × 60 mm", quests: "Carte Missione · 21 carte · 87 × 56 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Azione · 4 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
     backs: "Retri",
     tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
     page: "Pagina",
     set: "Mazzo",
-    board: "Plancia · spazi dei gruppi · fronte: 2–3 giocatori, retro: 4–5 giocatori",
+    board: "Plancia · spazi dei gruppi · fronte: 2–3 giocatori, retro: 4 giocatori",
     boardSide: "Plancia",
     boardPlayers: "{n} giocatori",
     boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio. Usa il lato adatto al vostro numero di giocatori.",
@@ -228,8 +228,8 @@ function fitFace(face) {
   }
 }
 
-// Board: one space per group of characters. Front 2–3 players, back 4–5 players.
-const BOARDS = { 2: [[1, 0], [1, 1], [2, 1]], 3: [[1, 0], [2, 0], [1, 1], [2, 1]], 4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]], 5: [[1, 0], [2, 0], [1, 1], [2, 1], [0, 2], [1, 2]] };
+// Board: one space per group of characters. Front 2–3 players, back 4 players.
+const BOARDS = { 2: [[1, 0], [1, 1], [2, 1]], 3: [[1, 0], [2, 0], [1, 1], [2, 1]], 4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]] };
 
 function boardSection(n) {
   const groups = BOARDS[n].map(([c, l], i) => {
@@ -248,22 +248,22 @@ function boardSection(n) {
 }
 
 function boardSheets() {
-  return [[2, 3], [4, 5]].map(([a, b]) => `<section class="sheet board-sheet"><header class="sheet-head">${esc(L.boardSide)} · ${esc(L.boardPlayers.replace("{n}", `${a}–${b}`))}</header>
+  return [[2, 3], [4]].map(([a, b]) => `<section class="sheet board-sheet"><header class="sheet-head">${esc(L.boardSide)} · ${esc(L.boardPlayers.replace("{n}", b ? `${a}–${b}` : `${a}`))}</header>
     <div class="board">
       <div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time</h2></div>
       ${boardSection(a)}
-      ${boardSection(b)}
+      ${b ? boardSection(b) : ""}
       <p class="board-how">${esc(L.boardHow)}</p>
     </div></section>`);
 }
 
-// Score pad: two games per A4 page, up to 5 storytellers.
+// Score pad: two games per A4 page, up to 4 storytellers.
 function scoreTable() {
   const icons = [null, null, ["vp"], ["endgame"], ["endgame"], ["endgame"], null, null];
   const rows = L.scoreRows.map((label, i) => {
     const cls = i === 6 ? "srow-total" : i < 2 ? "srow-name" : i === 7 ? "srow-rank" : "";
     const ico = icons[i] ? icons[i].map((k) => resourceIcon(k, k, true)).join("") : "";
-    return `<tr class="${cls}"><th>${ico}<span>${esc(label)}</span></th>${"<td></td>".repeat(5)}</tr>`;
+    return `<tr class="${cls}"><th>${ico}<span>${esc(label)}</span></th>${"<td></td>".repeat(4)}</tr>`;
   }).join("");
   return `<div class="score-block"><div class="score-top"><span>${esc(L.scoreGame)} n° ______</span><span>${esc(L.scoreDate)} : ____ / ____ / ________</span></div>
     <table class="score-table"><tbody>${rows}</tbody></table></div>`;
@@ -302,7 +302,7 @@ function build() {
   add(L.sizes.writers, sheetsFor("writers", DATA.writers, L.sizes.writers));
   add(`${L.backs} · ${L.sizes.writers.split(" · ")[0]}`, backsSheet("writers"));
   // One page per Action set (12 cards), each followed by its own coloured backs: ready for duplex.
-  add(L.sizes.actions, [0, 1, 2, 3, 4].flatMap((set) => [
+  add(L.sizes.actions, [0, 1, 2, 3].flatMap((set) => [
     ...sheetsFor("actions", DATA.actions.map((a) => ({ ...a, set })), `${L.sizes.actions} · ${L.set} ${set + 1}`),
     ...backsSheet("actions", set, DATA.actions.length),
   ]));

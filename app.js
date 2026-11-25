@@ -217,7 +217,6 @@ const BOARDS = {
   2: [[1, 0], [1, 1], [2, 1]],
   3: [[1, 0], [2, 0], [1, 1], [2, 1]],
   4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]],
-  5: [[1, 0], [2, 0], [1, 1], [2, 1], [0, 2], [1, 2]],
 };
 
 const settings = { players: 2, level: "normal", name: "You", writerMode: "random", tutorial: false };
@@ -265,7 +264,7 @@ function newPlayer(seat, info) {
 // seats: [{ name, kind: "human"|"bot", uid }]. Solo play passes nothing and gets one human + bots.
 function newGame(options = {}, seats = null) {
   Object.assign(settings, options);
-  const players = Math.min(5, Math.max(2, Number(settings.players) || 2));
+  const players = Math.min(4, Math.max(2, Number(settings.players) || 2));
   settings.players = players;
   settings.rounds = 8; // the story always lasts 8 rounds
   if (!seats) {
@@ -831,7 +830,8 @@ function botOption(options) {
     // Keep an upgraded villain; otherwise take the bigger reward.
     const best = hunt.indexOf(Math.max(...hunt));
     const card = state.tableau.find((c) => c.id === options[best].split(" ")[1]);
-    if (card && card.upgraded && hunt.length > 1) return hunt.indexOf(Math.min(...hunt));
+    if (card && card.upgraded) return hunt.length > 1 ? hunt.indexOf(Math.min(...hunt)) : null;
+    if (card && card.deck === "legendary" && hunt[best] < 6) return null;
     return best;
   }
   const quest = options.findIndex((o) => /take 1 Quest/i.test(o));
@@ -956,7 +956,11 @@ function applyInstant(card) {
 function instantLinks(card) {
   const n = card.name;
   if (["Scarecrow", "The Tin Woodman", "The Cowardly Lion"].includes(n) && hasCard("Dorothy Gale")) gain("xp", 1);
-  if (n === "Poisoned Apple" && hasCard("The Evil Queen")) gain("vp", 1);
+  if (n === "Poisoned Apple") {
+    if (hasCard("The Evil Queen")) gain("vp", 3);
+    const good = state.tableau.filter((c) => c.alignment === "Good").sort((a, b) => (a.deck === "common" ? 0 : 1) - (b.deck === "common" ? 0 : 1))[0];
+    if (good) offerChoice("Poisoned Apple", [`discard ${good.id} gain 3 VP`], "optional");
+  }
   if (n === "Basket of Treats" && hasCard("Little Red Riding Hood")) gain("vp", 1);
   if (n === "Crocodile" && opponentHas("Captain Hook")) gain("vp", 2);
   if (n === "Cheshire Cat" && hasCard("Alice")) gain("xp", 2);
@@ -1010,6 +1014,8 @@ function stripLinks(text) {
     .replace(/\s*\([^)]*\bif (?:you have|they have|it is)\b[^)]*\)/gi, "")
     .replace(/\s*If (?:you have|an opponent has) [^.]*\./gi, "")
     .replace(/\s*Gain 1 coin for each Mice[^.]*\./gi, "")
+    .replace(/\s*You may discard 1 Good Character[^.]*\./gi, "")
+    .replace(/\s*If it was Good[^.]*\./gi, "")
     .replace(/, then gain 1 VP for each Scarecrow[^.]*\./gi, ".");
 }
 
@@ -1129,6 +1135,11 @@ function activationLinks(card, text) {
   const n = card.name;
   if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
   if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
+  if (n === "Aladin" && card.upgraded) {
+    gain("coins", 1);
+    gain("xp", 1);
+    if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
+  }
   if (n === "Trident" && (countIcon("Strength") >= 3 || hasCard("King Triton"))) gain("xp", 1);
   if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 2);
   if (n === "The Wizard of Oz") {
@@ -1276,13 +1287,13 @@ function scoreCards() {
     else if (n === "Prince Charming") total += Math.min(8, icons.Charm);
     else if (n === "Evil Sorcerer") total += sets * 2;
     else if (n === "The Evil Queen") total += up ? Math.min(10, icons.Charm * 2) : Math.min(6, maxCharmAtTable());
-    else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.min(8, Math.floor(icons.Charm / 2) + countByName("Dwarf"));
+    else if (n === "Snow White") total += up ? Math.min(14, icons.Charm * 2) : Math.floor(icons.Charm / 2) + countByName("Dwarf");
     else if (n === "Dorothy Gale") total += Math.min(12, sets * 3);
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
     else if (n === "Captain Hook") total += up ? Math.min(10, icons.Dexterity * 2) : Math.floor(icons.Dexterity / 2);
     else if (n === "Little Red Riding Hood") total += Math.min(10, goodBadPairs * 2);
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
-    else if (n === "Robin Hood") total += Math.min(8, Math.floor(icons.Intelligence / 2) + countByName("The Merry Men"));
+    else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2) + countByName("The Merry Men");
     else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
     else if (n === "Cinderella") total += Math.min(14, state.items.length * 2);
     else if (n === "Rumpelstiltskin") total += up ? Math.min(14, countAlignment("Bad") * 2) : Math.min(8, countAlignment("Bad"));

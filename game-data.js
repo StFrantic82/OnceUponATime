@@ -575,7 +575,7 @@ window.GAME_DATA = {
       "name": "Puss’s Boots",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: gain 1 coin for each Dexterity you have (+2 coins if you have Puss in Boots).",
+      "effect": "Activation: gain 1 coin for each Dexterity you have (2 coins more if you have Puss in Boots).",
       "copy": 1
     },
     {
@@ -620,7 +620,7 @@ window.GAME_DATA = {
       "name": "Poisoned Apple",
       "cost": 2,
       "icons": "Bad 1",
-      "effect": "Instant: gain 2 VP (3 VP if you have The Evil Queen). You may discard 1 Good Character to gain +3 VP.",
+      "effect": "Instant: gain 2 VP (5 VP if you have The Evil Queen). You may discard 1 Good Character to gain 3 VP more.",
       "copy": 1
     },
     {
@@ -728,7 +728,7 @@ window.GAME_DATA = {
       "name": "Whispering Mirror",
       "cost": 4,
       "icons": "Intelligence 1",
-      "effect": "Activation: discard 1 Character to gain 3 XP. If it was Good, gain +1 XP.",
+      "effect": "Activation: discard 1 Character to gain 3 XP. If it was Good, gain 1 XP more.",
       "copy": 1
     },
     {
@@ -746,7 +746,7 @@ window.GAME_DATA = {
       "name": "Basket of Treats",
       "cost": 2,
       "icons": "Charm 1",
-      "effect": "Instant: gain 2 coins and 1 XP (+1 VP if you have Little Red Riding Hood).",
+      "effect": "Instant: gain 2 coins and 1 XP (and 1 VP if you have Little Red Riding Hood).",
       "copy": 1
     },
     {
@@ -993,7 +993,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Instant: each opponent loses 1 coin and you gain 2 coins.",
-      "upgrade": "Cost 3 XP. Ongoing: whenever you gain coins from a card effect, gain +1 coin.",
+      "upgrade": "Cost 3 XP. Ongoing: whenever you gain coins from a card effect, gain 1 coin more.",
       "upgraded": false
     },
     {
@@ -1062,7 +1062,7 @@ window.GAME_DATA = {
       "name": "Snow White",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Game End: 1 VP for each pair of Charm icons and 1 VP for each Dwarf you have, max 8 VP.",
+      "base": "Charm 1. Game End: 1 VP for each pair of Charm icons you have, plus 1 VP for each Dwarf you have.",
       "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon you have, max 14 VP.",
       "upgraded": false
     },
@@ -1172,7 +1172,7 @@ window.GAME_DATA = {
       "name": "Robin Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons and 1 VP for each Merry Men you have, max 8 VP.",
+      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons you have, plus 1 VP for each Merry Men you have.",
       "upgrade": "Cost 3 XP. Activation: spend up to 3 coins to gain that many VP.",
       "upgraded": false
     },
@@ -1233,7 +1233,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 2 coins and 1 XP.",
-      "upgrade": "Cost 4 XP. Activation: gain 1 coin and 1 XP. If you have Magic Lamp, gain +1 VP.",
+      "upgrade": "Cost 4 XP. Activation: gain 1 coin and 1 XP. If you have Magic Lamp, gain 1 VP too.",
       "upgraded": false
     },
     {
@@ -1252,7 +1252,7 @@ window.GAME_DATA = {
       "name": "Belle",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Ongoing: whenever you gain XP from a card, gain +1 XP.",
+      "base": "Intelligence 1. Ongoing: whenever you gain XP from a card, gain 1 XP more.",
       "upgrade": "Cost 4 XP. Game End: 2 VP for each upgraded Legendary Character you have, max 14 VP.",
       "upgraded": false
     },
@@ -1293,7 +1293,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: gain 1 coin for each Item you have, max 3 coins.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Item you have, +4 VP if you have Pinocchio, max 12 VP.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Item you have, and 4 VP if you have Pinocchio, max 12 VP.",
       "upgraded": false
     }
   ],

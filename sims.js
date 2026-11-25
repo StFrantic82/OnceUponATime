@@ -135,7 +135,7 @@
   function renderControls() {
     $("#simControls").innerHTML = `
       <div class="sim-grid">
-        <div><span class="hl2">${esc(t("players"))}</span>${seg("players", [2, 3, 4, 5].map((n) => [n, n]), cfg.players)}</div>
+        <div><span class="hl2">${esc(t("players"))}</span>${seg("players", [2, 3, 4].map((n) => [n, n]), cfg.players)}</div>
         <div><span class="hl2">${esc(t("level"))}</span>${seg("level", ["easy", "normal", "hard"].map((l) => [l, t(l)]), cfg.level)}</div>
         <div><span class="hl2">${esc(t("simGames"))}</span>${seg("games", [100, 500, 1000].map((n) => [n, n]), cfg.games)}</div>
       </div>

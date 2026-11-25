@@ -59,7 +59,7 @@ function iconAmount(card, icon) {
 }
 
 const find = (list, name) => list.find((c) => c.name === name) || list[0];
-const BOARDS = { 2: [[1, 0], [1, 1], [2, 1]], 3: [[1, 0], [2, 0], [1, 1], [2, 1]], 4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]], 5: [[1, 0], [2, 0], [1, 1], [2, 1], [0, 2], [1, 2]] };
+const BOARDS = { 2: [[1, 0], [1, 1], [2, 1]], 3: [[1, 0], [2, 0], [1, 1], [2, 1]], 4: [[1, 0], [2, 0], [1, 1], [2, 1], [1, 2]] };
 
 function writerCard(writer) {
   const levels = [
@@ -120,7 +120,7 @@ function render(text, L) {
 const RULES = {
   en: {
     title: "Rules of the game",
-    kicker: "Once Upon a Time · 2 to 5 players",
+    kicker: "Once Upon a Time · 2 to 4 players",
     toc: "Contents",
     players: "Players",
     groups: "Groups revealed each round",
@@ -200,7 +200,7 @@ const RULES = {
   },
   fr: {
     title: "Règles du jeu",
-    kicker: "Once Upon a Time · 2 à 5 joueurs",
+    kicker: "Once Upon a Time · 2 à 4 joueurs",
     toc: "Sommaire",
     players: "Joueurs",
     groups: "Groupes révélés à chaque manche",
@@ -280,7 +280,7 @@ const RULES = {
   },
   it: {
     title: "Regole del gioco",
-    kicker: "Once Upon a Time · da 2 a 5 giocatori",
+    kicker: "Once Upon a Time · da 2 a 4 giocatori",
     toc: "Indice",
     players: "Giocatori",
     groups: "Gruppi rivelati a ogni round",

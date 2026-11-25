@@ -203,7 +203,7 @@
       room = null;
       return;
     }
-    if (!members[pid] && Object.keys(members).length >= 5) {
+    if (!members[pid] && Object.keys(members).length >= 4) {
       showError(t("errFull"));
       room = null;
       return;
@@ -255,7 +255,7 @@
       .join("") + Array.from({ length: bots }, () => `<li class="bot">${esc(t("computer"))}</li>`).join("");
     $("#lobbyInfo").textContent = s.players ? `${t("players")} ${total} · ${t("level")} ${t(s.level || "normal")} · ${t("roundsN", { n: s.rounds || 9 })}` : "";
     $("#lobbyStart").hidden = !isHost;
-    $("#lobbyStart").disabled = list.length > 5;
+    $("#lobbyStart").disabled = list.length > 4;
     $("#lobbyWait").hidden = isHost;
   }
 
@@ -263,7 +263,7 @@
     if (!isHost) return;
     const meta = await Net.get(path("meta"));
     const members = Object.entries((await Net.get(path("members"))) || {}).sort((a, b) => a[1].joined - b[1].joined);
-    const players = Math.min(5, Math.max(members.length, Number(meta.settings.players) || 2));
+    const players = Math.min(4, Math.max(members.length, Number(meta.settings.players) || 2));
     const botNames = t("botNames");
     const seats = members.map(([id, m]) => ({ name: m.name, kind: "human", uid: id }));
     while (seats.length < players) seats.push({ name: botNames[seats.length - members.length] || t("computer"), kind: "bot" });

@@ -58,7 +58,8 @@
     $("#onlineBox").hidden = prefs.mode !== "online";
 
     $("#pname").value = prefs.name;
-    $("#nseg").innerHTML = [2, 3, 4, 5]
+    if (!(prefs.players >= 2 && prefs.players <= 4)) prefs.players = Math.min(4, Math.max(2, Number(prefs.players) || 2));
+    $("#nseg").innerHTML = [2, 3, 4]
       .map((n) => `<button type="button" aria-pressed="${n === prefs.players}" data-players="${n}" aria-label="${n} players">${n}</button>`)
       .join("");
     $("#nhint").textContent = prefs.players === 2 ? t("hintOne") : t("hintMany", { n: prefs.players - 1 });
