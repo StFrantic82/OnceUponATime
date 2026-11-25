@@ -24,7 +24,7 @@ const ICON_FILES = {
 const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
 
 const PERSONAL = new Set([
-  "coins", "xp", "writerXp", "ai", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "writerOnlyXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
+  "coins", "xp", "writerXp", "ai", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "coinsBy", "writerOnlyXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
   "writerRound", "rewardedIconSets", "vpBy", "groupPicks", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
@@ -1615,6 +1615,10 @@ function gain(kind, amount) {
   if (kind === "coins") {
     state.coins += amount;
     state.coinsGained = (state.coinsGained || 0) + amount;
+    if (simMode) {
+      const k = vpSource || "other";
+      state.coinsBy = { ...(state.coinsBy || {}), [k]: ((state.coinsBy || {})[k] || 0) + amount };
+    }
   }
   if (kind === "xp") {
     state.xp += amount;
@@ -1805,7 +1809,7 @@ function scoreWriter() {
   const name = state.writer.name;
   if (name === "Charles Perrault") return state.items.length * 2;
   if (name === "Brothers Grimm") return Math.min(12, Math.min(countAlignment("Good"), countAlignment("Bad")) * 2);
-  if (name === "Hans Christian Andersen") return Math.min(15, countCardsWith("Game End") * 3);
+  if (name === "Hans Christian Andersen") return countCardsWith("Game End") * 2;
   if (name === "Carlo Collodi") {
     // XP stays on the star spaces: count what is placed on Legendaries (filled steps included) and on the Writer.
     const onCards = state.tableau.reduce((sum, card) => sum + (card.deck !== "legendary" ? 0 : card.upgraded ? upgradeCost(card) : card.xpOn || 0), 0);
@@ -1816,7 +1820,7 @@ function scoreWriter() {
   if (name === "J. M. Barrie") {
     const counts = {};
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
-    return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 3;
+    return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 4;
   }
   if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 3;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
@@ -2640,6 +2644,8 @@ async function simulateGame(opts) {
           }),
           xpGained: p.xpGained || 0,
           xpBy: p.xpBy || {},
+          coinsBy: p.coinsBy || {},
+          coinsSpent: (p.coinsGained || 0) + (p.writer?.coins ?? 2) - p.coins,
           vpBadges: withSeat(p.seat, countVpBadges),
           legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),
