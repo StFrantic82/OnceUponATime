@@ -26,7 +26,7 @@ const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterit
 const PERSONAL = new Set([
   "coins", "xp", "writerXp", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
   "questChoices", "writer", "writerLevel", "writerItemDiscount", "writerDraftChoices", "writerDiscardRemaining", "iconTokens",
-  "writerRound", "rewardedIconSets", "vpBy", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
+  "writerRound", "rewardedIconSets", "vpBy", "groupPicks", "currentAction", "actionValue", "playerFirst", "phase", "name", "kind", "uid", "seat", "tuckPending",
 ]);
 
 let G = emptyGame();
@@ -225,9 +225,9 @@ function withSeat(seat, fn) {
 // ---------------------------------------------------------------------------
 // Board layout per player count (groups of Normal + Legendary cards), from the Board sheet.
 const BOARDS = {
-  2: [[0, 1], [1, 1], [3, 0]],
-  3: [[0, 1], [1, 1], [3, 0], [2, 1]],
-  4: [[0, 1], [2, 0], [3, 0], [2, 1], [0, 2]],
+  2: [[0, 1], [2, 1], [2, 0]],
+  3: [[0, 1], [2, 1], [2, 0], [1, 1]],
+  4: [[0, 1], [1, 1], [2, 0], [2, 1], [1, 1]],
 };
 
 const settings = { players: 2, level: "normal", name: "You", writerMode: "random", tutorial: false };
@@ -320,7 +320,7 @@ function startRound() {
   G.order = [];
   G.active = null;
   for (const group of G.groups || []) if (!group.taken) group.cards.forEach(toDiscard);
-  G.groups = (BOARDS[G.players.length] || BOARDS[2])
+  G.groups = ((simMode && G.simBoards) || BOARDS[G.players.length] || BOARDS[2])
     .map(([basic, advanced], index) => ({
       id: `G${index + 1}`,
       taken: false,
@@ -364,7 +364,7 @@ function endGame() {
 // Chapter cards and turn order
 // ---------------------------------------------------------------------------
 function actionBonus(p, number) {
-  const writerBonus = p.writer?.name === "Carlo Collodi" && number <= 6 ? 2 : 0;
+  const writerBonus = 0;
   const queen = p.tableau.find((card) => card.name === "Queen of Hearts");
   const queenBonus = queen ? (queen.upgraded ? 2 : 1) : 0;
   return writerBonus + queenBonus;
@@ -515,6 +515,13 @@ function takeGroup(choice) {
   const [groupId, discardId] = String(choice).split("|");
   const group = G.groups.find((entry) => entry.id === groupId);
   if (!group || group.taken) return;
+  if (state.writer?.name === "Carlo Collodi" && !G.groups.some((g) => g.taken)) gain("coins", 2);
+  if (simMode) {
+    // Simulations: which kind of group was taken, and in which order.
+    const comp = `${group.cards.filter((c) => c.deck === "common").length}c${group.cards.filter((c) => c.deck === "legendary").length}l`;
+    const order = G.groups.filter((g) => g.taken).length + 1;
+    state.groupPicks = [...(state.groupPicks || []), [comp, order]];
+  }
   if (discardId && hasCarpet()) {
     const dropped = group.cards.find((card) => card.id === discardId && card.deck === "common");
     if (dropped) {
@@ -962,6 +969,14 @@ async function resolveAction(effect) {
   if (/Activate a single/i.test(text)) await activateOne();
   G.cur = seat;
   if (/Draw 1 Chapter/i.test(text)) drawAndTuck();
+  // Simulations only (value of a card): "SimGain N common/legendary".
+  if ((m = text.match(/SimGain (\d) (common|legendary)/))) {
+    for (const card of draw(m[2], Number(m[1]))) {
+      state.tableau.push({ ...card, source: m[2] === "common" ? "Normal" : "Legendary" });
+      applyInstant(card);
+      checkPeterPan();
+    }
+  }
   if ((m = text.match(/Free level up (?:to )?(\d+)/i))) state.freeUpgrades += Number(m[1]);
   else if (/free level up/i.test(text)) state.freeUpgrades += 1;
 }
@@ -2507,6 +2522,7 @@ async function simulateGame(opts) {
   const n = Math.min(4, Math.max(2, Number(opts.players) || 4));
   try {
     newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
+    if (opts.boards) G.simBoards = opts.boards;
     if (opts.bonus) G.simBonus = { seat: 0, round: 1 + Math.floor(Math.random() * 8), effect: opts.bonus };
     (opts.strategies || []).forEach((strategy, seat) => {
       if (G.players[seat] && strategy) G.players[seat].strategy = strategy;
@@ -2538,6 +2554,7 @@ async function simulateGame(opts) {
           endPts: withSeat(p.seat, () => [...p.tableau, ...p.items].filter((c) => /Game End/i.test(c.deck === "legendary" ? (c.upgraded ? c.upgrade : c.base) : c.effect || "")).map((c) => [c.name, scoreCards([c]), Boolean(c.upgraded)])),
           vpBy: p.vpBy || {},
           coinsGained: p.coinsGained || 0,
+          groupPicks: p.groupPicks || [],
           xpGained: p.xpGained || 0,
           legUp: p.tableau.filter((c) => c.deck === "legendary").map((c) => [c.name, Boolean(c.upgraded)]),
           actions: p.actionDiscard.map((c) => c.number),
