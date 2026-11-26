@@ -969,7 +969,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Sorcery 1. Instant: gain 2 Tag tokens of your choice.",
-      "upgrade": "Cost 1 XP. Activation: gain 1 VP for each set of 5 different icons, then gain 1 Tag token.",
+      "upgrade": "Cost 1 XP. Activation: gain 1 VP for each set of 5 different icons.",
       "upgraded": false
     },
     {
@@ -1198,7 +1198,7 @@ window.GAME_DATA = {
       "name": "Little Mermaid",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: whenever you take an Adventure, gain 1 XP and 1 Tag token.",
+      "base": "Charm 1. Ongoing: whenever you take an Adventure, gain 1 XP and 1 coin.",
       "upgrade": "Cost 2 XP. Ongoing: whenever you take an Adventure, gain 2 VP.",
       "upgraded": false
     },

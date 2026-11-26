@@ -160,6 +160,7 @@ function toDiscard(card) {
   if (!card) return;
   dropTokens(card);
   const pile = card.deck === "legendary" ? "legendary" : card.deck === "item" ? "items" : "common";
+  checkBaumSets();
   const { source: _s, xpOn: _x, upgraded: _u, tucked: _t, busy: _b, tokens: _k, ...clean } = card;
   if (pile === "legendary") clean.upgraded = false;
   G.discards = G.discards || { common: [], legendary: [], items: [] };
@@ -640,7 +641,7 @@ function takeQuest(questId) {
   vpSource = "Little Mermaid";
   const questRewardCards = state.tableau.filter((card) => /whenever you take an? (?:Quest|Adventure), gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
-  if (state.tableau.some((card) => card.name === "Little Mermaid")) gainTagToken(1, "Little Mermaid");
+  if (state.tableau.some((card) => card.name === "Little Mermaid")) gain("coins", 1);
   const mermaid = state.tableau.find((card) => card.name === "Little Mermaid" && card.upgraded);
   if (mermaid) {
     vpSource = "Little Mermaid";
@@ -1008,14 +1009,15 @@ function applyWriterAfterGroup(cards) {
 
 // L. Frank Baum, level 1: at the start of each round, 1 coin per set of the 4 different icons.
 // Wishing Ring: 2 coins and 2 VP each time its owner completes one more set of 5 different icons.
-// Sets completed before the Ring was bought do not count.
+// Sets completed before the Ring was bought do not count; a set broken and completed again pays again.
 function checkBaumSets() {
   const rings = (state.items || []).filter((item) => item.name === "Wishing Ring").length;
   if (!rings) return;
   const sets = liveSets();
   const fresh = sets - (state.rewardedIconSets || 0);
-  if (fresh <= 0) return;
+  // A set that was broken (a card left the tableau) pays again when it is completed again: nothing to remember.
   state.rewardedIconSets = sets;
+  if (fresh <= 0) return;
   const source = vpSource;
   vpSource = "Wishing Ring";
   gain("coins", 2 * fresh * rings);
@@ -1086,6 +1088,7 @@ function applyOption(option, source) {
     if (!card || !balloon) return;
     state.tableau = state.tableau.filter((c) => c !== card);
     dropTokens(card);
+    checkBaumSets();
     balloon.tucked = (balloon.tucked || 0) + 1;
     log("l_tucks", { p: state.name, c: C(card.name) });
     return;
@@ -1538,7 +1541,8 @@ async function activateCardInner(card) {
   vpSource = card.name;
   const seat = G.cur;
   const fullText = activeCardText(card);
-  const text = stripLinks(fullText);
+  // Only the Activation effects: an upgraded Legendary keeps its base text, whose Instant part must not fire again.
+  const text = stripLinks(fullText).split(/(?=\b(?:Instant|Activation|Ongoing|Game End):)/).filter((part) => /^Activation:/.test(part)).join(" ");
   const ownChoice = ["Hot Air Balloon", "Whispering Mirror", "The Crown of England", "The Ogre"].includes(card.name);
   const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
@@ -1697,7 +1701,6 @@ function activationLinks(card, text) {
     gain("xp", 1);
     if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
   }
-  if (n === "Tinker Bell" && card.upgraded) gain("vp", 1);
   if (n === "Trident" && hasCard("King Triton")) gain("xp", 1);
   if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 1);
   if (n === "The Wizard of Oz") {
