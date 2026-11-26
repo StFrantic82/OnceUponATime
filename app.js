@@ -148,10 +148,19 @@ function shuffle(cards) {
 }
 
 // Discarded Characters and Items go to the discard pile of their own deck (Common, Legendary, Item).
+// A Tag token sits on the card that gave it: when that card leaves the tableau, the token is lost.
+function dropTokens(card) {
+  if (!card || !card.tokens) return;
+  for (const [icon, n] of Object.entries(card.tokens)) state.iconTokens[icon] = Math.max(0, (state.iconTokens[icon] || 0) - n);
+  log("l_tokenLost", { p: state.name, c: C(card.name) });
+  delete card.tokens;
+}
+
 function toDiscard(card) {
   if (!card) return;
+  dropTokens(card);
   const pile = card.deck === "legendary" ? "legendary" : card.deck === "item" ? "items" : "common";
-  const { source: _s, xpOn: _x, upgraded: _u, tucked: _t, busy: _b, ...clean } = card;
+  const { source: _s, xpOn: _x, upgraded: _u, tucked: _t, busy: _b, tokens: _k, ...clean } = card;
   if (pile === "legendary") clean.upgraded = false;
   G.discards = G.discards || { common: [], legendary: [], items: [] };
   G.discards[pile].push(clean);
@@ -1043,6 +1052,13 @@ function applyOption(option, source) {
   let m;
   if ((m = option.match(/^token (\w+) (\d+)/))) {
     state.iconTokens[m[1]] += Number(m[2]);
+    // The token is placed on the card that gave it (the newest copy that holds none yet); a Writer keeps its own.
+    const givers = [...state.tableau, ...state.items].filter((c) => c.name === source);
+    const giver = [...givers].reverse().find((c) => !c.tokens) || givers[givers.length - 1];
+    if (giver) {
+      giver.tokens = giver.tokens || {};
+      giver.tokens[m[1]] = (giver.tokens[m[1]] || 0) + Number(m[2]);
+    }
     const rings = state.items.filter((item) => /Tag token, gain 1 coin/i.test(item.effect || "")).length;
     if (rings) {
       gain("coins", rings);
@@ -1057,6 +1073,7 @@ function applyOption(option, source) {
     const balloon = state.items.find((c) => c.id === m[2]);
     if (!card || !balloon) return;
     state.tableau = state.tableau.filter((c) => c !== card);
+    dropTokens(card);
     balloon.tucked = (balloon.tucked || 0) + 1;
     log("l_tucks", { p: state.name, c: C(card.name) });
     return;
@@ -1343,6 +1360,7 @@ function instantLinks(card) {
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
+  if (n === "Aladin") gain("coins", ICONS.filter((icon) => iconCounts()[icon] > 0).length);
   if (n === "Robin Hood") state.writerItemDiscount = 3;
   if (n === "Cinderella") gain("xp", Math.floor(countAlignment("Good") / 2));
   if (n === "The Prince (Mermaid)") gain("coins", Math.floor(countAlignment("Good") / 2));
@@ -1581,6 +1599,8 @@ async function activateCardInner(card) {
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
     if (/gain 1 XP for each pair of Charm/i.test(text)) gain("xp", Math.floor(countIcon("Charm") / 2));
+    if (/gain 1 XP for each pair of Sorcery/i.test(text)) gain("xp", Math.floor(countIcon("Sorcery") / 2));
+    if (/gain 1 coin for each icon type of which you have 3 or more/i.test(text)) gain("coins", ICONS.filter((icon) => iconCounts()[icon] >= 3).length);
     if (/gain 1 XP for each pair of Items/i.test(text)) gain("xp", Math.floor(state.items.length / 2));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
     else if (/gain 1 VP and 1 coin/i.test(text)) {
@@ -2480,6 +2500,9 @@ function renderTags(card) {
     const count = iconAmount(card, icon);
     for (let i = 0; i < count; i += 1) tags.push(`<span class="skill-tag sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, ICON_LABELS[icon])}</span>`);
   }
+  for (const icon of ICONS) {
+    for (let i = 0; i < (card.tokens?.[icon] || 0); i += 1) tags.push(`<span class="skill-tag held-token sk-${icon.toLowerCase()}" title="${escapeHtml(t("tokenOnCard"))}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, ICON_LABELS[icon])}</span>`);
+  }
   if (card.alignment === "Good" || card.alignment === "Bad") {
     tags.push(`<span class="tag icon-tag alignment-icon">${resourceIcon(card.alignment, t(card.alignment.toLowerCase()))}</span>`);
   } else if (card.alignment) {
@@ -2720,7 +2743,9 @@ async function simulateGame(opts) {
           groupPicks: p.groupPicks || [],
           ...withSeat(p.seat, () => {
             const ic = iconCounts();
-            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence, tagSorcery: ic.Sorcery };
+            const tokensHeld = [...(state.tableau || []), ...(state.items || [])].reduce((sum, c) => sum + Object.values(c.tokens || {}).reduce((x, y) => x + y, 0), 0);
+            const tokensTotal = Object.values(state.iconTokens || {}).reduce((x, y) => x + y, 0);
+            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence, tagSorcery: ic.Sorcery, tokensHeld, tokensTotal };
           }),
           xpGained: p.xpGained || 0,
           xpBy: p.xpBy || {},

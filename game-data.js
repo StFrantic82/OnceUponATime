@@ -611,7 +611,7 @@ window.GAME_DATA = {
       "name": "The Magic Mirror",
       "cost": 4,
       "icons": "Sorcery 1",
-      "effect": "Activation: gain 2 XP. If you have The Evil Queen, gain 1 VP too.",
+      "effect": "Activation: gain 1 XP for each pair of Sorcery icons. If you have The Evil Queen, gain 1 VP too.",
       "copy": 1
     },
     {
@@ -908,7 +908,7 @@ window.GAME_DATA = {
       "name": "Puppet Strings",
       "cost": 3,
       "icons": "Dexterity 1",
-      "effect": "Activation: gain 1 VP and 1 coin.",
+      "effect": "Activation: gain 1 coin for each icon type of which you have 3 or more.",
       "copy": 1
     },
     {
@@ -1268,7 +1268,7 @@ window.GAME_DATA = {
       "name": "Aladin",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: gain 2 coins and 1 XP.",
+      "base": "Dexterity 1. Instant: gain 1 coin for each different icon.",
       "upgrade": "Cost 3 XP. Activation: gain 1 coin and 1 XP. If you have Magic Lamp, gain 1 VP too.",
       "upgraded": false
     },

@@ -3249,3 +3249,6 @@ button.needs-click { outline: none; }
 .layout > .left-col { grid-area: left; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .left-col > .panel { min-height: 0; max-height: none; overflow: visible; }
 .left-col .action-hand { margin-bottom: 0; }
+
+/* A Tag token placed on the card that gave it */
+.skill-tag.held-token { border-radius: 50%; box-shadow: 0 0 0 2px #fff7df, 0 0 0 3.5px #c58b3c; margin-left: 4px; }

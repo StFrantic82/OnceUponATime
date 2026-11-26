@@ -188,7 +188,13 @@
   }
 
   // How much a card is worth to this bot right now (rough, but aware of its Quests).
+  // A card that holds Tag tokens is worth more: discarding it loses them.
   function cardWorth(card) {
+    const held = card && card.tokens ? Object.values(card.tokens).reduce((s, n) => s + n, 0) : 0;
+    return cardWorthBase(card) + held * 2.5;
+  }
+
+  function cardWorthBase(card) {
     if (smart()) return smartCardWorth(card);
     let value = card.deck === "legendary" ? 6 : 3;
     // A computer storyteller may follow the "no tag" plan: cards without tags and VP during the game.
