@@ -861,9 +861,9 @@ window.GAME_DATA = {
       "id": "I34",
       "deck": "item",
       "name": "Undersea Throne",
-      "cost": 6,
+      "cost": 4,
       "icons": "Strength 1",
-      "effect": "Game End: 1 VP for each Item.",
+      "effect": "Game End: 1 VP for each pair of Items.",
       "copy": 1
     },
     {

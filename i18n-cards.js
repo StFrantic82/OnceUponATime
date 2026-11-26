@@ -387,6 +387,7 @@ window.CARD_I18N = [
   ["Activation: gain 1 Tag token and 1 VP.", "Activation : gagnez 1 jeton d’icône et 1 VP.", "Activation: ottieni 1 segnalino icona e 1 VP."],
   ["Instant: take the first player token and gain 1 VP.", "Instant : prenez le jeton premier joueur et gagnez 1 VP.", "Instant: prendi il segnalino primo giocatore e ottieni 1 VP."],
   ["Instant: choose one: gain 3 coins, gain 3 XP, or gain 1 Tag token.", "Instant : au choix : gagnez 3 coins, gagnez 3 XP, ou gagnez 1 jeton d’icône.", "Instant: scegli: ottieni 3 coins, ottieni 3 XP, oppure ottieni 1 segnalino icona."],
+  ["Game End: 1 VP for each pair of Items.", "Game End : 1 VP par paire d’Objets.", "Game End: 1 VP per ogni coppia di Oggetti."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],

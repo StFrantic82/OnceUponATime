@@ -1783,7 +1783,7 @@ function scoreCards(only = null) {
     else if (n === "The Crown of England") total += card.stash || 0;
     else if (n === "Glass Slipper") total += quests + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += upgradedLeg;
-    else if (n === "Undersea Throne") total += state.items.length;
+    else if (n === "Undersea Throne") total += Math.floor(state.items.length / 2);
     else if (n === "Alice") total += up ? quests * 2 : quests;
     else if (n === "Grandmother") total += countAlignment("Bad");
     else if (n === "Stepmother") total += plainLeg * (up ? 3 : 2);
