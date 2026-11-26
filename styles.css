@@ -3250,3 +3250,7 @@ button.needs-click { outline: none; }
 
 /* A Tag token placed on the card that gave it */
 .skill-tag.held-token { border-radius: 50%; box-shadow: 0 0 0 2px #fff7df, 0 0 0 3.5px #c58b3c; margin-left: 4px; }
+
+/* Joker tag (the Sirens): the five colours in one square tag */
+.skill-tag.sk-wild { padding: 0; overflow: hidden; background: #2a190f; }
+.skill-tag.sk-wild .tagtok-ico { display: block; width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; vertical-align: 0; }

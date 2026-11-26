@@ -58,7 +58,7 @@ const SLIDES = {
         "Items carry tags and effects, like characters.",
         "Some work better with the characters of their own tale."], "[[item:Seven-League Boots]][[item:Enchanted Candelabra]][[item:Trident]]"],
       ["The five tags", "Charm, Strength, Cunning, Intelligence, Magic", [
-        "[[tag:Charm]] [[tag:Strength]] [[tag:Dexterity]] [[tag:Intelligence]] [[tag:Sorcery]] Only Legendary characters and Items carry tags.",
+        "[[tag:Charm]] [[tag:Strength]] [[tag:Dexterity]] [[tag:Intelligence]] [[tag:Sorcery]] Only Legendary characters and Items carry tags (plus the Sirens, with their joker tag).",
         "Many Adventures and effects count your tags: identical ones, or sets of different ones.",
         "A <b>Tag token</b> counts as one tag of the type you choose. Place it on the card that gave it.",
         "If that card leaves your tableau, its tokens are lost."], "[[legendary:Tinker Bell]][[legendary:Captain Hook]][[quest:Neverland]]"],
@@ -138,7 +138,7 @@ const SLIDES = {
         "Les Objets portent des tags et des effets, comme les personnages.",
         "Certains fonctionnent mieux avec les personnages de leur conte."], "[[item:Seven-League Boots]][[item:Enchanted Candelabra]][[item:Trident]]"],
       ["Les cinq tags", "Charme, Force, Ruse, Intelligence, Magie", [
-        "[[tag:Charm]] [[tag:Strength]] [[tag:Dexterity]] [[tag:Intelligence]] [[tag:Sorcery]] Seuls les personnages Légendaires et les Objets portent des tags.",
+        "[[tag:Charm]] [[tag:Strength]] [[tag:Dexterity]] [[tag:Intelligence]] [[tag:Sorcery]] Seuls les personnages Légendaires et les Objets portent des tags (plus les Sirènes, avec leur tag joker).",
         "Beaucoup d’Aventures et d’effets comptent vos tags : identiques, ou en séries de tags différents.",
         "Un <b>jeton Tag</b> compte comme un tag du type de votre choix. Placez-le sur la carte qui vous l’a fait gagner.",
         "Si cette carte quitte votre tableau, ses jetons sont perdus."], "[[legendary:Tinker Bell]][[legendary:Captain Hook]][[quest:Neverland]]"],
@@ -218,7 +218,7 @@ const SLIDES = {
         "Gli Oggetti hanno tag ed effetti, come i personaggi.",
         "Alcuni funzionano meglio con i personaggi della loro fiaba."], "[[item:Seven-League Boots]][[item:Enchanted Candelabra]][[item:Trident]]"],
       ["I cinque tag", "Fascino, Forza, Astuzia, Intelligenza, Magia", [
-        "[[tag:Charm]] [[tag:Strength]] [[tag:Dexterity]] [[tag:Intelligence]] [[tag:Sorcery]] Solo i personaggi Leggendari e gli Oggetti hanno tag.",
+        "[[tag:Charm]] [[tag:Strength]] [[tag:Dexterity]] [[tag:Intelligence]] [[tag:Sorcery]] Solo i personaggi Leggendari e gli Oggetti hanno tag (più le Sirene, con il loro tag jolly).",
         "Molte Avventure e molti effetti contano i tuoi tag: identici, o in serie di tag diversi.",
         "Un <b>segnalino Tag</b> conta come un tag del tipo che scegli. Mettilo sulla carta che te l’ha fatto ottenere.",
         "Se quella carta lascia il tuo tableau, i suoi segnalini sono persi."], "[[legendary:Tinker Bell]][[legendary:Captain Hook]][[quest:Neverland]]"],

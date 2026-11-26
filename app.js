@@ -1008,7 +1008,7 @@ function applyWriterAfterGroup(cards) {
 function checkBaumSets() {}
 function baumRoundIncome() {
   if (state.writer?.name !== "L. Frank Baum") return;
-  gain("coins", Math.min(...ICONS.map((icon) => iconCounts()[icon])));
+  gain("coins", liveSets());
 }
 
 // ---------------------------------------------------------------------------
@@ -1138,6 +1138,8 @@ function applyOption(option, source) {
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
   else if (/take 1 (?:Quest|Adventure)/i.test(option)) grantQuestChoice(source);
+  else if (/take back 1 Chapter card/i.test(option)) takeBackChapter(() => true);
+  else if (/place XP on a Character so that it levels up/i.test(option)) state.freeUpgrades += 1;
   else if (/gain 2 Tag tokens/i.test(option)) gainTagToken(2, source);
   else if (/gain 1 Tag token/i.test(option)) gainTagToken(1, source);
 }
@@ -1166,8 +1168,13 @@ function botOption(options) {
     if (card && card.deck === "legendary" && hunt[best] < 6) return null;
     return best;
   }
+  // The Genie's wishes: a free upgrade when there is a Legendary to upgrade, else an Adventure, else a Chapter card.
+  const freeUp = options.findIndex((o) => /place XP on a Character so that it levels up/i.test(o));
+  if (freeUp >= 0 && state.tableau.some((c) => c.deck === "legendary" && !c.upgraded && upgradeCost(c) - (c.xpOn || 0) >= 2)) return freeUp;
   const quest = options.findIndex((o) => /take 1 (?:Quest|Adventure)/i.test(o));
   if (quest >= 0 && G.questDisplay.length && state.quests.length < 4) return quest;
+  const chapter = options.findIndex((o) => /take back 1 Chapter card/i.test(o));
+  if (chapter >= 0 && state.actionDiscard.length) return chapter;
   const xp = options.findIndex((o) => /XP/i.test(o));
   const coins = options.findIndex((o) => /coin/i.test(o));
   if (xp >= 0 && xpTargets().length && (coins < 0 || state.coins >= 4)) return xp;
@@ -1309,7 +1316,7 @@ function applyInstantInner(card) {
   const text = stripLinks(full);
   const options = choiceOptions(text);
   if (options) {
-    const both = card.name === "Little Red Riding Hood" && countByName("The Wolf") > 0;
+    const both = (card.name === "Little Red Riding Hood" && countByName("The Wolf") > 0) || (card.name === "Genie" && hasCard("Aladin"));
     if (both) options.forEach((o) => applyOption(o, card.name));
     else offerChoice(card.name, options, /discard 1 Character to gain/i.test(text) ? "discardCommon" : null);
     return;
@@ -1323,7 +1330,7 @@ function applyInstantInner(card) {
   else if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
   const xpPerIcon = text.match(/gain 1 XP for each (Charm|Strength|Dexterity|Intelligence|Sorcery) icon/i);
   if (xpPerIcon) gain("xp", countIcon(ICONS.find((icon) => icon.toLowerCase() === xpPerIcon[1].toLowerCase())));
-  if (/gain 1 XP for each different icon/i.test(text)) gain("xp", ICONS.filter((icon) => iconCounts()[icon] > 0).length);
+  if (/gain 1 XP for each different icon/i.test(text)) gain("xp", liveDifferent());
   if (/gain 5 coins/i.test(text)) gain("coins", 5);
   else if (/gain 4 coins/i.test(text)) gain("coins", 4);
   else if (/gain 3 coins/i.test(text)) gain("coins", 3);
@@ -1360,12 +1367,12 @@ function instantLinks(card) {
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (/^Wicked Witch/.test(n)) placeWriterXp(2);
   if (n === "The Prince") activateOne();
-  if (n === "Prince Charming") gain("vp", iconCounts().Charm);
+  if (n === "Prince Charming") gain("vp", countIcon("Charm"));
   if (n === "Snow White") gain("xp", countByName("Dwarf") + countIcon("Charm"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
-  if (n === "Aladin") gain("coins", ICONS.filter((icon) => iconCounts()[icon] > 0).length);
+  if (n === "Aladin") gain("coins", liveDifferent());
   if (n === "Robin Hood") state.writerItemDiscount = 3;
   if (n === "Cinderella") gain("xp", Math.floor(countAlignment("Good") / 2));
   if (n === "The Prince (Mermaid)") gain("coins", Math.floor(countAlignment("Good") / 2));
@@ -1546,6 +1553,10 @@ async function activateCardInner(card) {
     if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
   } else if (/Activation:[^.]*\bsteal\b/i.test(text)) {
     applyMean(text.slice(text.search(/Activation:/i)), card.name);
+  } else if (card.name === "Genie" && card.upgraded) {
+    const wishes = ["gain 2 coins", "gain 2 XP"];
+    if (hasCard("Aladin")) wishes.forEach((o) => applyOption(o, card.name));
+    else offerChoice(card.name, wishes);
   } else if (/choose one of those effects/i.test(text)) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
@@ -1599,7 +1610,7 @@ async function activateCardInner(card) {
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
     else if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
-    if (/gain 1 VP for each set of 5 different icons/i.test(text)) gain("vp", Math.min(...ICONS.map((icon) => iconCounts()[icon])));
+    if (/gain 1 VP for each set of 5 different icons/i.test(text)) gain("vp", liveSets());
     if (/gain 1 VP for each Item\./i.test(text)) gain("vp", state.items.length);
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/plus 1 coin for each Pirate/i.test(text)) gain("coins", 2 + countByName("Pirate"));
@@ -1607,7 +1618,7 @@ async function activateCardInner(card) {
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
     if (/gain 1 XP for each pair of Charm/i.test(text)) gain("xp", Math.floor(countIcon("Charm") / 2));
     if (/gain 1 XP for each pair of Sorcery/i.test(text)) gain("xp", Math.floor(countIcon("Sorcery") / 2));
-    if (/gain 1 coin for each icon type of which you have 3 or more/i.test(text)) gain("coins", ICONS.filter((icon) => iconCounts()[icon] >= 3).length);
+    if (/gain 1 coin for each icon type of which you have 3 or more/i.test(text)) gain("coins", liveTypesWith(3));
     if (/gain 1 XP for each pair of Items/i.test(text)) gain("xp", Math.floor(state.items.length / 2));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
     else if (/gain 1 VP and 1 coin/i.test(text)) {
@@ -1718,7 +1729,8 @@ function upgradeCost(card) {
 // ---------------------------------------------------------------------------
 // Counting and scoring (for the player in G.cur)
 // ---------------------------------------------------------------------------
-function iconCounts() {
+// Icons without the joker tags: printed tags (base and upgrade) and Tag tokens.
+function rawIconCounts() {
   const counts = Object.fromEntries(ICONS.map((icon) => [icon, state.iconTokens?.[icon] || 0]));
   for (const card of [...(state.tableau || []), ...(state.items || [])]) {
     for (const icon of ICONS) counts[icon] += iconAmount(card, icon);
@@ -1727,6 +1739,52 @@ function iconCounts() {
     }
   }
   return counts;
+}
+
+// Joker tags (the Sirens). During the game a joker counts as whichever tag an effect is looking at
+// (countIcon, liveSets, liveDifferent, liveTypesWith). At Game End each joker is fixed to one single
+// tag type for every scoring: finalScore() picks the best types and sets wildAssign meanwhile.
+let wildAssign = null;
+function isWild(card) {
+  return /\bWild\b/.test(card.icons || "");
+}
+function wildCount() {
+  return (state.tableau || []).filter(isWild).length;
+}
+function iconCounts() {
+  const counts = rawIconCounts();
+  const w = wildCount();
+  for (let i = 0; i < w; i += 1) {
+    // Not chosen yet: a joker goes with the most numerous tag (a fair guess for projections).
+    const icon = (wildAssign && wildAssign[i]) || ICONS.reduce((best, x) => (counts[x] > counts[best] ? x : best), ICONS[0]);
+    counts[icon] += 1;
+  }
+  return counts;
+}
+function liveSets() {
+  const c = Object.values(rawIconCounts());
+  for (let w = wildCount(); w > 0; w -= 1) {
+    c.sort((x, y) => x - y);
+    c[0] += 1;
+  }
+  return Math.min(...c);
+}
+function liveDifferent() {
+  const c = rawIconCounts();
+  return Math.min(ICONS.length, ICONS.filter((icon) => c[icon] > 0).length + wildCount());
+}
+function liveTypesWith(n) {
+  const c = Object.values(rawIconCounts()).sort((x, y) => y - x);
+  let w = wildCount();
+  let k = 0;
+  for (const x of c) {
+    if (x >= n) k += 1;
+    else if (n - x <= w) {
+      w -= n - x;
+      k += 1;
+    }
+  }
+  return k;
 }
 
 // Icons printed on a card: the "icons" field, or the icon list that opens a Legendary's base text
@@ -1747,7 +1805,7 @@ function upgradeIcons(card) {
 }
 
 function totalIcons(card) {
-  return ICONS.reduce((sum, icon) => sum + iconAmount(card, icon), 0);
+  return ICONS.reduce((sum, icon) => sum + iconAmount(card, icon), 0) + (isWild(card) ? 1 : 0);
 }
 
 function textIconAmount(text, icon) {
@@ -1758,8 +1816,9 @@ function textIconAmount(text, icon) {
   return total;
 }
 
+// During the game: every joker counts as the tag being looked at.
 function countIcon(icon) {
-  return iconCounts()[icon] || 0;
+  return (rawIconCounts()[icon] || 0) + wildCount();
 }
 
 // Good / Bad cards: Characters by their alignment, Items (and any other card) by their Good / Bad icon.
@@ -1871,7 +1930,31 @@ function maxCharmAtTable() {
   return Math.max(...G.players.map((p) => withSeat(p.seat, () => iconCounts().Charm)));
 }
 
+// Game End: each joker tag is fixed to the single type that scores best (chosen one joker at a time).
 function finalScore() {
+  const w = wildCount();
+  if (!w || wildAssign) return computeFinalScore();
+  const chosen = [];
+  for (let i = 0; i < w; i += 1) {
+    let best = ICONS[0];
+    let bestTotal = -1;
+    for (const icon of ICONS) {
+      wildAssign = [...chosen, icon];
+      const total = computeFinalScore().total;
+      if (total > bestTotal) {
+        bestTotal = total;
+        best = icon;
+      }
+    }
+    chosen.push(best);
+  }
+  wildAssign = chosen;
+  const result = { ...computeFinalScore(), wilds: chosen };
+  wildAssign = null;
+  return result;
+}
+
+function computeFinalScore() {
   const questScores = state.quests.map((quest) => ({ quest, points: scoreQuest(quest) }));
   const questTotal = questScores.reduce((sum, entry) => sum + entry.points, 0);
   const writerTotal = scoreWriter();
@@ -1900,7 +1983,7 @@ function scoreWriter() {
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
     return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 5;
   }
-  if (name === "L. Frank Baum") return ICONS.filter((icon) => countIcon(icon) >= 3).length * 3;
+  if (name === "L. Frank Baum") return ICONS.filter((icon) => iconCounts()[icon] >= 3).length * 3;
   if (name === "Le Prince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 2;
   return 0;
 }
@@ -2127,6 +2210,8 @@ function renderGuide() {
       if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
       if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
       if (/take 1 (?:Quest|Adventure)/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
+      if (/take back 1 Chapter card/i.test(o)) return escapeHtml(t("wishChapter"));
+      if (/place XP on a Character so that it levels up/i.test(o)) return `${window.FREEUP_ICON || ""} ${escapeHtml(t("freeUpBtn"))}`;
       if ((m = o.match(/^token (\w+) (\d+)/))) return `+${m[2]} ${squareTag(m[1])}`;
       if ((m = o.match(/^(?:tuck|mirror) (\S+)/))) {
         const card = state.tableau.find((c) => c.id === m[1]);
@@ -2508,6 +2593,7 @@ function renderTags(card) {
     const count = iconAmount(card, icon);
     for (let i = 0; i < count; i += 1) tags.push(`<span class="skill-tag sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, ICON_LABELS[icon])}</span>`);
   }
+  if (isWild(card)) tags.push(`<span class="skill-tag sk-wild" title="${escapeHtml(t("ico_wild"))}">${window.TAG_ICON || ""}</span>`);
   for (const icon of ICONS) {
     for (let i = 0; i < (card.tokens?.[icon] || 0); i += 1) tags.push(`<span class="skill-tag held-token sk-${icon.toLowerCase()}" title="${escapeHtml(t("tokenOnCard"))}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, ICON_LABELS[icon])}</span>`);
   }
@@ -2753,7 +2839,7 @@ async function simulateGame(opts) {
             const ic = iconCounts();
             const tokensHeld = [...(state.tableau || []), ...(state.items || [])].reduce((sum, c) => sum + Object.values(c.tokens || {}).reduce((x, y) => x + y, 0), 0);
             const tokensTotal = Object.values(state.iconTokens || {}).reduce((x, y) => x + y, 0);
-            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence, tagSorcery: ic.Sorcery, tokensHeld, tokensTotal };
+            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence, tagSorcery: ic.Sorcery, tokensHeld, tokensTotal, tokensBy: Object.fromEntries([...(state.tableau || []), ...(state.items || [])].filter((c) => c.tokens).map((c) => [c.name + "#" + c.id, Object.values(c.tokens).reduce((x, y) => x + y, 0)])) };
           }),
           xpGained: p.xpGained || 0,
           xpBy: p.xpBy || {},

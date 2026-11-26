@@ -365,8 +365,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "icons": "Wild 1",
+      "effect": "",
       "copy": 1
     },
     {
@@ -374,8 +374,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "icons": "Wild 1",
+      "effect": "",
       "copy": 2
     },
     {
@@ -383,8 +383,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "icons": "Wild 1",
+      "effect": "",
       "copy": 3
     },
     {
@@ -392,8 +392,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "icons": "Wild 1",
+      "effect": "",
       "copy": 4
     },
     {
@@ -1278,8 +1278,8 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 3 XP, or gain 2 Tag tokens.",
-      "upgrade": "Cost 2 XP. Activation: choose one of those effects.",
+      "base": "Sorcery 1. Instant: choose one: take 1 Adventure, take back 1 Chapter card from your discard, or place XP on a Character so that it levels up. If you have Aladin, do all three.",
+      "upgrade": "Cost 2 XP. Activation: gain 2 coins or 2 XP. If you have Aladin, gain both.",
       "upgraded": false
     },
     {
