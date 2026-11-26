@@ -153,7 +153,8 @@
     // French punctuation: no line break before ":" ";" "!" "?" nor inside « ».
     return formatGameText(marked.replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0"))
       .replace(/\u0004(\d+)\u0004/g, (_, i) => held[Number(i)])
-      .replace(GLUE_NUM, (_, n, icon, p) => `<span class="nb">${n}&nbsp;${icon}${(p || "").trim()}</span>`)
+      // The VP feather has air around it: its number sits closer to it.
+      .replace(GLUE_NUM, (_, n, icon, p) => (/alt="VP"/.test(icon) ? `<span class="nb vpn">${n}${icon}${(p || "").trim()}</span>` : `<span class="nb">${n}&nbsp;${icon}${(p || "").trim()}</span>`))
       .replace(GLUE_PUNCT, (m, icon, p) => (m.includes('class="nb"') ? m : `<span class="nb">${icon}${p}</span>`));
   }
 
@@ -164,8 +165,13 @@
     if (!m) return `<p>${hourglass} ${gtext(scoring)}</p>`;
     const [, tiers, what, gains, , rest] = m;
     const cells = (list) => list.split("/").map((x) => `<b>${x.trim()}</b>`).join("");
-    return `<div class="q-tiers"><div class="q-what">${hourglass} ${gtext(what)}</div>
-      <div class="q-grid" style="--n:${tiers.split("/").length}"><div class="q-row">${cells(tiers)}</div><div class="q-row q-gain">${cells(gains)}<span class="q-vp">${resourceIcon("vp", "VP")}</span></div></div></div>${rest ? `<p class="q-rest">${gtext(rest)}</p>` : ""}`;
+    // The thing counted goes at the left of its row: "Charm icons" is just the Charm tag.
+    const label = String(what).replace(/^(?:icônes?|icone|icons?)\s+(?=(?:Charm|Strength|Dexterity|Intelligence|Sorcery)\b)/i, "").replace(/\b(Charm|Strength|Dexterity|Intelligence|Sorcery)\s+icons?$/i, "$1");
+    // An effect type or the VP badge is shown by its icon alone.
+    const effectWord = (label.match(/\b(Activation|Ongoing|Instant|Game End)\b/) || [])[1];
+    const labelHtml = effectWord ? gtext(effectWord) : /\bbadge\b|distintivo/i.test(label) ? `<span class="fc-vpmark guide-vpmark">${resourceIcon("vp", "VP")}</span>` : gtext(label);
+    return `<div class="q-tiers"><span class="q-hg">${hourglass}</span>
+      <div class="q-grid" style="--n:${tiers.split("/").length}"><span class="q-label">${labelHtml}</span>${cells(tiers)}<span class="q-label q-gain">${resourceIcon("vp", "VP")}</span>${cells(gains).replace(/<b>/g, '<b class="q-gain">')}</div></div>${rest ? `<p class="q-rest">${gtext(rest)}</p>` : ""}`;
   }
 
   function common(card, opts = {}) {

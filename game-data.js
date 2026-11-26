@@ -1424,7 +1424,7 @@ window.GAME_DATA = {
       "number": 6,
       "name": "Neverland",
       "theme": "Peter Pan",
-      "scoring": "2 / 3 icons of each type: 3 / 6 VP."
+      "scoring": "2 / 3 sets of 5 different icons: 3 / 6 VP."
     },
     {
       "id": "Q7",

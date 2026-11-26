@@ -334,7 +334,7 @@ window.CARD_I18N = [
   ["3 / 4 / 6 Dexterity icons: 2 / 4 / 6 VP.", "3 / 4 / 6 icônes Dexterity : 2 / 4 / 6 VP.", "3 / 4 / 6 icone Dexterity: 2 / 4 / 6 VP."],
   ["3 / 4 / 6 Intelligence icons: 2 / 4 / 6 VP.", "3 / 4 / 6 icônes Intelligence : 2 / 4 / 6 VP.", "3 / 4 / 6 icone Intelligence: 2 / 4 / 6 VP."],
   ["3 / 4 / 6 Sorcery icons: 2 / 4 / 6 VP.", "3 / 4 / 6 icônes Sorcery : 2 / 4 / 6 VP.", "3 / 4 / 6 icone Sorcery: 2 / 4 / 6 VP."],
-  ["2 / 3 icons of each type: 3 / 6 VP.", "2 / 3 icônes de chaque type : 3 / 6 VP.", "2 / 3 icone di ogni tipo: 3 / 6 VP."],
+  ["2 / 3 sets of 5 different icons: 3 / 6 VP.", "2 / 3 séries de 5 icônes différentes : 3 / 6 VP.", "2 / 3 set di 5 icone diverse: 3 / 6 VP."],
   ["1 VP for each Legendary card and Item without tags.", "1 VP par carte Légendaire et par Objet sans tag.", "1 VP per ogni carta Leggendaria e ogni Oggetto senza tag."],
   ["The Fairies’ Gift", "Le Don des fées", "Il Dono delle fate"],
   ["Game End: 1 VP for each Adventure you completed. If you have Cinderella, gain 3 VP more.", "Game End : 1 VP par Aventure accomplie. Si vous avez Cendrillon, gagnez 3 VP de plus.", "Game End: 1 VP per ogni Avventura completata. Se hai Cenerentola, ottieni 3 VP in più."],

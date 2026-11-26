@@ -3185,15 +3185,20 @@ button.needs-click { outline: none; }
 .nb { white-space: nowrap; }
 .fc-text p, .fc-side, .writer-level-box { text-wrap: pretty; }
 .fc-item .fc-text p, .fc-common .fc-text p, .fc-quest .fc-text p { text-wrap: balance; }
-/* Tiered Adventures: what is counted, then thresholds above their rewards */
-.q-tiers { display: flex; flex-direction: column; gap: 5px; }
-.q-what { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; line-height: 1.25; }
-.q-grid { display: inline-grid; align-self: flex-start; grid-template-columns: 1fr; border: 1.5px solid #b79a66; border-radius: 7px; overflow: hidden; background: rgba(255, 255, 255, .5); }
-.q-row { display: grid; grid-template-columns: repeat(var(--n, 3), 2.2em) 1.9em; align-items: center; text-align: center; }
-.q-row b { padding: 2px 0; font-weight: 700; border-right: 1px solid #d9c59a; }
-.q-row.q-gain { border-top: 1.5px solid #b79a66; background: rgba(120, 170, 90, .16); }
-.q-row .q-vp { display: grid; place-items: center; }
-.q-row .q-vp .game-icon { width: 1.25em; height: 1.25em; }
+/* Tiered Adventures: hourglass, then a table — what is counted and its thresholds above, feather and rewards below */
+.q-tiers { display: flex; align-items: center; gap: 4px; }
+.q-hg { flex: none; display: grid; place-items: center; }
+.q-hg .game-icon { width: 1.4em; height: 1.4em; }
+.q-grid { display: grid; grid-template-columns: fit-content(4.8em) repeat(var(--n, 3), 1.7em); align-items: stretch; border: 1.5px solid #b79a66; border-radius: 7px; overflow: hidden; background: rgba(255, 255, 255, .5); flex: none; }
+.q-grid > * { display: grid; place-items: center; padding: 3px 2px; text-align: center; border-left: 1px solid #d9c59a; }
+.q-grid > .q-label { border-left: none; min-width: 1.9em; padding: 3px 4px; font-size: .78em; line-height: 1.12; font-weight: 600; max-width: 9.5em; text-wrap: balance; overflow-wrap: normal; }
+.q-grid > .q-label:has(.set4) { max-width: none; }
+.q-grid .q-label .set4 { display: inline-flex; flex-wrap: nowrap; gap: 1px; }
+.q-grid .q-label .set4 .skill-tag { width: 1.08em; height: 1.08em; border-width: 1px; margin: 0; }
+.q-grid > b { font-weight: 700; }
+.q-grid > .q-gain { border-top: 1.5px solid #b79a66; background: rgba(120, 170, 90, .16); }
+.q-grid .q-label .game-icon { width: 1.3em; height: 1.3em; }
+.q-grid .q-label .skill-tag { width: 1.45em; height: 1.45em; }
 .q-rest { margin: 4px 0 0 !important; font-size: .92em; }
 
 /* Cards with four tags or more: the tags stay at the top, a little smaller */
@@ -3201,3 +3206,6 @@ button.needs-click { outline: none; }
 .fc-skills.many .skill-tag { width: 15px; height: 15px; border-width: 1.5px; border-radius: 3px; box-shadow: none; }
 .fc-head.many-tags { gap: 4px; }
 .fc-head.many-tags .fc-name { line-height: 1; }
+.nb.vpn .game-icon { margin-left: -0.08em; margin-right: -0.05em; }
+.q-grid .q-label .guide-vpmark { position: static; }
+.q-grid .q-label > .game-icon { width: 1.5em; height: 1.5em; }
