@@ -1547,7 +1547,7 @@ async function activateCardInner(card) {
   const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
   if (/spend 1 XP to gain 2 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
-  if (/spend 3 coins to (?:level up|place XP)/i.test(text) && state.coins < 3) return;
+  if (/spend 2 coins to (?:level up|place XP)/i.test(text) && state.coins < 2) return;
   if (hasActivationCost) {
     const ok = await confirmCost(card);
     G.cur = seat;
@@ -1622,8 +1622,8 @@ async function activateCardInner(card) {
     else if (from) from.xpOn -= 1;
     else return;
     gain("coins", 2);
-  } else if (/spend 3 coins to (?:level up|place XP)/i.test(text)) {
-    state.coins -= 3;
+  } else if (/spend 2 coins to (?:level up|place XP)/i.test(text)) {
+    state.coins -= 2;
     state.freeUpgrades += 1;
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);

@@ -483,7 +483,7 @@ window.GAME_DATA = {
       "name": "The Forest Animals",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 3 coins to place XP on a Character so that it levels up.",
+      "effect": "Activation: spend 2 coins to place XP on a Character so that it levels up.",
       "copy": 1
     },
     {
@@ -492,7 +492,7 @@ window.GAME_DATA = {
       "name": "The Forest Animals",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 3 coins to place XP on a Character so that it levels up.",
+      "effect": "Activation: spend 2 coins to place XP on a Character so that it levels up.",
       "copy": 2
     },
     {
@@ -672,7 +672,7 @@ window.GAME_DATA = {
       "id": "I13",
       "deck": "item",
       "name": "Long Bow",
-      "cost": 4,
+      "cost": 5,
       "icons": "Strength 1",
       "effect": "Instant: gain 1 VP for each Bad card. If you have Robin Hood, gain 2 VP more.",
       "copy": 1
@@ -1099,7 +1099,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 1 XP for each Dwarf and each Charm icon. Game End: 1 VP for each Dwarf.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Dwarf.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Dwarf.",
       "upgraded": false
     },
     {
