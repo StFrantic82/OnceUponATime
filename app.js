@@ -494,13 +494,7 @@ function endRoundAll() {
     return;
   }
   for (const p of G.players) withSeat(p.seat, drawActionCard);
-  // The oldest Item and the oldest Adventure still on display leave the game, so that both rows keep moving.
-  if (G.itemDisplay.length && G.decks.items.length) {
-    const [old] = G.itemDisplay.splice(0, 1);
-    G.discards = G.discards || { common: [], legendary: [], items: [] };
-    G.discards.items.push(old);
-  }
-  if (G.questDisplay.length && G.decks.quests.length) G.questDisplay.splice(0, 1);
+  // Items and Adventures stay on display from one round to the next: only the empty spots are refilled.
   while (G.itemDisplay.length < 1 + G.players.length && G.decks.items.length) G.itemDisplay.push(...draw("items", 1));
   while (G.questDisplay.length < 1 + G.players.length && G.decks.quests.length) G.questDisplay.push(...draw("quests", 1));
   startRound();
@@ -1782,7 +1776,7 @@ function scoreCards(only = null) {
     else if (n === "Hot Air Balloon") total += (card.tucked || 0) * 2;
     else if (n === "The Crown of England") total += card.stash || 0;
     else if (n === "Glass Slipper") total += quests + (hasCard("Cinderella") ? 3 : 0);
-    else if (n === "Enchanted Rose") total += upgradedLeg;
+    else if (n === "Enchanted Rose") total += Math.floor(upgradedLeg / 2);
     else if (n === "Undersea Throne") total += Math.floor(state.items.length / 2);
     else if (n === "Alice") total += up ? quests * 2 : quests;
     else if (n === "Grandmother") total += countAlignment("Bad");

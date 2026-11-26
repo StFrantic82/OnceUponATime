@@ -98,12 +98,34 @@
     return givesVpInPlay(card) ? `<span class="fc-vpmark" title="VP">${resourceIcon("vp", "VP")}</span>` : "";
   }
 
+  // Layout helpers: keep "2 [icon]" and "[icon]." together so that an icon is never alone on a line.
+  const ICON_HTML = '(?:<img\\b[^>]*>|<span class="(?:skill-tag|set4|tagtok-ico|ac-quest)[^"]*"[^>]*>(?:<span[^>]*>.*?<\\/span>|<img\\b[^>]*>|<i><\\/i>|<svg[\\s\\S]*?<\\/svg>)*<\\/span>|<svg\\b[\\s\\S]*?<\\/svg>)';
+  const GLUE_NUM = new RegExp(`(\\d+(?:\\s*\\/\\s*\\d+)*)\\s*(${ICON_HTML})(\\s*[.,;:!?)])?`, "g");
+  const GLUE_PUNCT = new RegExp(`(${ICON_HTML})\\s*([.,;:!?)])`, "g");
+  function gtext(text) {
+    // French punctuation: no line break before ":" ";" "!" "?" nor inside « ».
+    return formatGameText(String(text || "").replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0"))
+      .replace(GLUE_NUM, (_, n, icon, p) => `<span class="nb">${n}&nbsp;${icon}${(p || "").trim()}</span>`)
+      .replace(GLUE_PUNCT, (m, icon, p) => (m.includes('class="nb"') ? m : `<span class="nb">${icon}${p}</span>`));
+  }
+
+  // Tiered Adventures ("3 / 4 / 6 Charm icons: 2 / 4 / 6 VP."): thresholds on one line, rewards on the next.
+  function questText(scoring) {
+    const m = String(scoring).match(/^(\d+(?:\s*\/\s*\d+)+)\s*([^:]*?)\s*:\s*(\d+(?:\s*\/\s*\d+)+)\s*(VP|PV)\s*\.\s*(.*)$/);
+    const hourglass = resourceIcon("endgame", "Game End");
+    if (!m) return `<p>${hourglass} ${gtext(scoring)}</p>`;
+    const [, tiers, what, gains, , rest] = m;
+    const cells = (list) => list.split("/").map((x) => `<b>${x.trim()}</b>`).join("");
+    return `<div class="q-tiers"><div class="q-what">${hourglass} ${gtext(what)}</div>
+      <div class="q-grid" style="--n:${tiers.split("/").length}"><div class="q-row">${cells(tiers)}</div><div class="q-row q-gain">${cells(gains)}<span class="q-vp">${resourceIcon("vp", "VP")}</span></div></div></div>${rest ? `<p class="q-rest">${gtext(rest)}</p>` : ""}`;
+  }
+
   function common(card, opts = {}) {
     const align = (card.alignment || "neutral").toLowerCase();
     return `<article class="fcard fc-common fc-${align} ${opts.cls || ""}">
       ${head(card, 160, 15)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
-      <div class="fc-text">${card.effect ? `<p>${formatGameText(tc(card.effect))}</p>` : ""}</div>
+      <div class="fc-text">${card.effect ? `<p>${gtext(tc(card.effect))}</p>` : ""}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }
@@ -188,7 +210,7 @@
       ${opts.notch || ""}
       <div class="writer-card-header"><div class="writer-title"><div class="writer-name">${esc(tc(card.name))}</div>${card.coins != null ? `<div class="writer-coins" title="${esc(t("startCoins"))}">${card.coins}${resourceIcon("coins", "coins")}</div>` : ""}${level ? `<div class="writer-level">${esc(t("levelN", { n: level }))}</div>` : ""}</div>${writerPortrait(card.name)}</div>
       <div class="writer-levels">${levels
-        .map((l, i) => `${i ? xpStep(l.cost, filledFor(l.n, l.cost)) : ""}<div class="writer-level-box ${level && l.n > level ? "locked" : ""}"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}</strong>${formatGameText(tc(l.text))}</div>`)
+        .map((l, i) => `${i ? xpStep(l.cost, filledFor(l.n, l.cost)) : ""}<div class="writer-level-box ${level && l.n > level ? "locked" : ""}"><strong>${resourceIcon(l.type, l.type)} ${esc(t("levelN", { n: l.n }))}</strong>${gtext(tc(l.text))}</div>`)
         .join("")}</div>
       ${opts.extra || ""}
     </article>`;
@@ -201,9 +223,9 @@
     return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
       ${head(card, 204, 16)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
-      <div class="fc-side fc-base">${formatGameText(stripIconPrefix(tc(card.base)))}</div>
+      <div class="fc-side fc-base">${gtext(stripIconPrefix(tc(card.base)))}</div>
       ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
-      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${formatGameText(tc(upgradeText))}</div>
+      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${gtext(tc(upgradeText))}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }
@@ -217,7 +239,7 @@
         ${card.stash ? `<span class="fc-stash">${card.stash}${resourceIcon("coins", "coins")}</span>` : ""}
         <span class="fc-price">${opts.original != null && opts.original !== price ? `<s>${opts.original}</s>` : ""}${price}${resourceIcon("coins", "coins")}</span>
       </div>
-      <div class="fc-text"><p>${formatGameText(tc(card.effect))}</p></div>
+      <div class="fc-text"><p>${gtext(tc(card.effect))}</p></div>
       ${bad ? alignFoot("Bad") : ""}
     </article>`;
   }
@@ -229,7 +251,7 @@
       <div class="fc-qbody">
         <header class="fc-name" style="${nameStyle(name, 170, 0, 15)}">${esc(name)}</header>
         <div class="fc-theme">${esc(tc(card.theme))}</div>
-        <div class="fc-text"><p>${resourceIcon("endgame", "Game End")} ${formatGameText(tc(card.scoring))}</p></div>
+        <div class="fc-text">${questText(tc(card.scoring))}</div>
       </div>
     </article>`;
   }

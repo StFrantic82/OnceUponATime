@@ -3179,3 +3179,18 @@ button.needs-click { outline: none; }
 
 /* Effect text starts at the left, right after its effect icon */
 .fc-common .fc-text, .fc-item .fc-text { text-align: left; justify-content: flex-start; }
+
+/* Harmonious card texts: balanced lines, numbers glued to their icon */
+.nb { white-space: nowrap; }
+.fc-text p, .fc-side, .writer-level-box { text-wrap: pretty; }
+.fc-item .fc-text p, .fc-common .fc-text p, .fc-quest .fc-text p { text-wrap: balance; }
+/* Tiered Adventures: what is counted, then thresholds above their rewards */
+.q-tiers { display: flex; flex-direction: column; gap: 5px; }
+.q-what { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; line-height: 1.25; }
+.q-grid { display: inline-grid; align-self: flex-start; grid-template-columns: 1fr; border: 1.5px solid #b79a66; border-radius: 7px; overflow: hidden; background: rgba(255, 255, 255, .5); }
+.q-row { display: grid; grid-template-columns: repeat(var(--n, 3), 2.2em) 1.9em; align-items: center; text-align: center; }
+.q-row b { padding: 2px 0; font-weight: 700; border-right: 1px solid #d9c59a; }
+.q-row.q-gain { border-top: 1.5px solid #b79a66; background: rgba(120, 170, 90, .16); }
+.q-row .q-vp { display: grid; place-items: center; }
+.q-row .q-vp .game-icon { width: 1.25em; height: 1.25em; }
+.q-rest { margin: 4px 0 0 !important; font-size: .92em; }

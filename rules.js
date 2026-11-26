@@ -168,7 +168,7 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
-        <li>Discard the cards nobody took. Then discard the oldest Item and the oldest Adventure still on display (the leftmost of each row), slide the others to the left and refill on the right: Items to 1 + players, Adventures to 1 + players.</li>
+        <li>Discard the characters nobody took. The Items and the Adventures stay on display from one round to the next: only refill the empty spots, Items to 1 + players and Adventures to 1 + players.</li>
         <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
@@ -250,7 +250,7 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
-        <li>Défaussez les cartes que personne n’a prises. Défaussez ensuite l’Objet et l’Aventure les plus anciens encore visibles (les plus à gauche de chaque rangée), décalez les autres vers la gauche et complétez par la droite : Objets jusqu’à 1 + joueurs, Aventures jusqu’à 1 + joueurs.</li>
+        <li>Défaussez les personnages que personne n’a pris. Les Objets et les Aventures restent visibles d’une manche à l’autre : complétez seulement les emplacements vides, Objets jusqu’à 1 + joueurs et Aventures jusqu’à 1 + joueurs.</li>
         <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
@@ -332,7 +332,7 @@ const RULES = {
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
-        <li>Scarta le carte che nessuno ha preso. Poi scarta l’Oggetto e l’Avventura più vecchi ancora visibili (i più a sinistra di ogni fila), fai scorrere gli altri verso sinistra e completa da destra: Oggetti fino a 1 + giocatori, Avventure fino a 1 + giocatori.</li>
+        <li>Scarta i personaggi che nessuno ha preso. Gli Oggetti e le Avventure restano visibili da un round all’altro: completa solo gli spazi vuoti, Oggetti fino a 1 + giocatori e Avventure fino a 1 + giocatori.</li>
         <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],

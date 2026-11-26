@@ -825,9 +825,9 @@ window.GAME_DATA = {
       "id": "I30",
       "deck": "item",
       "name": "Enchanted Rose",
-      "cost": 7,
+      "cost": 4,
       "icons": "Sorcery 1",
-      "effect": "Game End: 1 VP for each upgraded Legendary card.",
+      "effect": "Game End: 1 VP for each pair of upgraded Legendary cards.",
       "copy": 1
     },
     {
