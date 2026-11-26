@@ -3254,3 +3254,11 @@ button.needs-click { outline: none; }
 /* Joker tag (the Sirens): the five colours in one square tag */
 .skill-tag.sk-wild { padding: 0; overflow: hidden; background: #2a190f; }
 .skill-tag.sk-wild .tagtok-ico { display: block; width: 100%; height: 100%; border: 0; border-radius: 0; box-shadow: none; vertical-align: 0; }
+
+/* Tableau: what each element is; hover note: what a scoring card is worth right now */
+.kind-chip { display: inline-block; font: 700 10px/1 "Alegreya Sans", sans-serif; letter-spacing: .06em; text-transform: uppercase; padding: 3px 7px; border-radius: 999px; margin-bottom: 3px; }
+.kind-chip.kind-item { background: #e9d9a8; color: #6a4a10; border: 1px solid #c9a544; }
+.kind-chip.kind-char { background: #dfe6ee; color: #2f4a66; border: 1px solid #9fb3c8; }
+.vp-note { margin-top: 6px !important; padding: 6px 10px; border-radius: 10px; background: #3a2412; color: #ffe9b8; font: 700 13px/1.25 "Alegreya Sans", sans-serif; text-align: center; white-space: nowrap; width: max-content; max-width: 320px; white-space: normal; }
+[data-vp-note] { cursor: help; }
+.slot-quest .fcard[data-vp-note], .slot-item .fcard[data-vp-note], .group-cards .fcard[data-vp-note] { cursor: zoom-in; }

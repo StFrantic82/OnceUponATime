@@ -242,14 +242,20 @@
     window.addEventListener("scroll", close, { passive: true });
 
     // In the game: Adventure and Item offers are shown small; hovering shows them full size.
-    const offer = (target) => target.closest?.(".slot-quest .fcard, .slot-item .fcard, .group-cards .fcard");
+    const offer = (target) => target.closest?.(".slot-quest .fcard, .slot-item .fcard, .group-cards .fcard, #gameScreen [data-vp-note], .board [data-vp-note]");
+    // A scoring card also tells what it is worth right now; a card of the tableau shows only that note.
+    const tipHtml = (card) => {
+      const note = card.dataset.vpNote ? `<div class="vp-note">${card.dataset.vpNote.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</div>` : "";
+      const zoomed = card.matches(".slot-quest .fcard, .slot-item .fcard, .group-cards .fcard");
+      return (zoomed ? card.outerHTML : "") + note;
+    };
     document.addEventListener("pointermove", (e) => {
       if (e.pointerType === "touch") return;
       const card = offer(e.target);
       if (card) {
         if (card !== current) {
           current = card;
-          tip.innerHTML = card.outerHTML;
+          tip.innerHTML = tipHtml(card);
           tip.hidden = false;
         }
         place(e.clientX, e.clientY);
@@ -260,7 +266,7 @@
       const card = offer(e.target);
       if (card && card !== current) {
         current = card;
-        tip.innerHTML = card.outerHTML;
+        tip.innerHTML = tipHtml(card);
         tip.hidden = false;
         place(e.clientX, e.clientY);
       } else if (current && !e.target.closest("#statsScreen")) close();

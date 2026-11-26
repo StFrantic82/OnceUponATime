@@ -2468,10 +2468,51 @@ function renderDisplays() {
   }
 }
 
+// What a scoring card (Game End effect or Adventure) is worth right now for the viewer.
+// A card that is not owned yet is valued as if it had just been taken.
+function scoringNote(card, kind, owned) {
+  const esc = (text) => escapeHtml(text);
+  if (kind === "quest") {
+    if (owned) return esc(t("vpNow", { n: scoreQuest(card) }));
+    state.quests.push(card);
+    let n = 0;
+    try { n = scoreQuest(card); } finally { state.quests.pop(); }
+    return esc(t("vpIfTaken", { n }));
+  }
+  const base = card.deck === "legendary" ? card.base : card.effect;
+  const baseScores = /Game End/i.test(base || "");
+  const upScores = card.deck === "legendary" && /Game End/i.test(card.upgrade || "");
+  if (!baseScores && !upScores) return "";
+  const zone = kind === "item" ? state.items : state.tableau;
+  const probe = owned ? card : { ...card };
+  const wasUp = probe.upgraded;
+  if (!owned) zone.push(probe);
+  let now = 0;
+  let later = null;
+  try {
+    now = scoreCards([probe]);
+    if (card.deck === "legendary" && !wasUp && upScores) {
+      probe.upgraded = true;
+      later = scoreCards([probe]);
+    }
+  } finally {
+    probe.upgraded = wasUp;
+    if (!owned) zone.pop();
+  }
+  const parts = [];
+  if (baseScores || wasUp) parts.push(t(owned ? "vpNow" : "vpIfTaken", { n: now }));
+  if (later != null) parts.push(t("vpUpgraded", { n: later }));
+  return esc(parts.join(" · "));
+}
+
+function withNote(html, note) {
+  return note ? html.replace("<article ", `<article data-vp-note="${note}" `) : html;
+}
+
 function renderQuest(quest) {
   return `
     <div class="slot slot-quest ${state.questChoices > 0 ? "can-pick" : ""}">
-      ${CardFace.quest(quest)}
+      ${withNote(CardFace.quest(quest), scoringNote(quest, "quest", false))}
       ${state.questChoices > 0 ? `<button type="button" class="primary" data-quest="${quest.id}">${t("takeQuest")}</button>` : ""}
     </div>
   `;
@@ -2483,7 +2524,7 @@ function renderItem(item) {
   const canBuy = perraultPurchase || (state.phase === "roundDone" && G.active === view.seat && !state.writerRound.itemBought);
   return `
     <div class="slot slot-item">
-      ${CardFace.item(item, { price, original: discount ? item.cost : null })}
+      ${withNote(CardFace.item(item, { price, original: discount ? item.cost : null }), scoringNote(item, "item", false))}
       <button type="button" class="${canBuy && state.coins + crownStash() >= price ? "primary" : ""}" ${!canBuy || state.coins + crownStash() < price ? "disabled" : ""} data-item="${item.id}">${t("buyFor", { n: `${price} ${resourceIcon("coins", "coins")}` })}</button>
     </div>
   `;
@@ -2499,7 +2540,7 @@ function renderGroups() {
       return `
         <div class="group ${group.taken && !mine ? "removed" : ""} ${mine ? "taken" : ""} ${group.taken ? "is-taken" : ""}" style="--pcol:${group.taken ? playerColor(G.players[group.takenSeat]) : "transparent"}">
           <h3>${t("group", { n: group.id.slice(1) })}${label}</h3>
-          <div class="group-cards">${group.cards.map(renderCard).join("")}</div>
+          <div class="group-cards">${group.cards.map((card) => withNote(renderCard(card), scoringNote(card, "character", false))).join("")}</div>
           <button type="button" class="${myTurn && !group.taken ? "primary" : ""}" ${!myTurn || group.taken ? "disabled" : ""} data-group="${group.id}">${t("takeGroup")}</button>
         </div>
       `;
@@ -2565,19 +2606,33 @@ function legendaryXpControls(card) {
     ${state.freeUpgrades > 0 ? `<button type="button" data-upgrade="${card.id}">${t("freeUpBtn")}</button>` : ""}</div>`;
 }
 
+// "Item" or "Character" label on each element of the tableau.
+function kindChip(card) {
+  const item = card.zone === "Item";
+  return `<span class="kind-chip ${item ? "kind-item" : "kind-char"}">${escapeHtml(t(item ? "kindItem" : "kindChar"))}</span>`;
+}
+
+function ownedNote(card) {
+  if (card.zone === "Quest") return "";
+  const item = card.zone === "Item";
+  const real = (item ? state.items : state.tableau).find((c) => c.id === card.id);
+  const note = real ? scoringNote(real, item ? "item" : "character", true) : "";
+  return note ? `data-vp-note="${note}"` : "";
+}
+
 function renderCompactOwnedCard(card) {
-  return `<div data-own-id="${card.id}" class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
-    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><strong>${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</strong>${renderTags(card)}</div></div>
+  return `<div data-own-id="${card.id}" ${ownedNote(card)} class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
+    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div>${kindChip(card)}<strong>${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</strong>${renderTags(card)}</div></div>
     ${card.deck === "legendary" ? `<details><summary>${t("effectsUpgrade")}</summary>${renderLegendaryEffects(card)}</details>${legendaryXpControls(card)}` : ""}
     ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
   </div>`;
 }
 
 function renderOwnedCard(card) {
-  if (card.zone === "Quest") return CardFace.quest(card, { cls: "fc-small" });
+  if (card.zone === "Quest") return withNote(CardFace.quest(card, { cls: "fc-small" }), scoringNote(state.quests.find((q) => q.id === card.id) || card, "quest", true));
   return `
-    <div data-own-id="${card.id}" class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
-      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div><div class="card-title">${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
+    <div data-own-id="${card.id}" ${ownedNote(card)} class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
+      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div>${kindChip(card)}<div class="card-title">${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
       ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(tc(card.effect))}</div>`}
       ${legendaryXpControls(card)}
       ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
