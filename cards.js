@@ -54,8 +54,8 @@
   }
 
   // Font size for a card name so it fits beside the tags on one or two lines.
-  function nameStyle(name, innerWidth, tagCount, max) {
-    const avail = innerWidth - (tagCount ? tagCount * (TAG + 3) + 6 : 0) - 12;
+  function nameStyle(name, innerWidth, tagCount, max, tagSize = TAG) {
+    const avail = innerWidth - (tagCount ? tagCount * (tagSize + (tagSize < TAG ? 2 : 3)) + 6 : 0) - 12;
     const len = Math.max(1, String(name).length);
     const oneLine = avail / (len * 0.52);
     if (oneLine >= max) return `font-size:${max}px`;
@@ -79,16 +79,12 @@
   }
 
   function head(card, innerWidth, max, extra = "") {
-    const all = skillList(card);
-    // Four tags or more do not fit beside the name: they go in a band of their own (tagBand).
-    const skills = all.length >= 4 ? [] : all;
+    const skills = skillList(card);
     const name = tc(card.name);
-    return `<header class="fc-head">${skillTags(skills)}<div class="fc-name" style="${nameStyle(name, innerWidth, skills.length, max)}">${esc(name)}${extra}</div></header>`;
-  }
-
-  function tagBand(card, cls = "") {
-    const all = skillList(card);
-    return all.length >= 4 ? `<div class="fc-tagband ${cls}">${skillTags(all)}</div>` : "";
+    // Four tags or more stay at the top, beside the name, but smaller.
+    const many = skills.length >= 4;
+    const tags = many ? skillTags(skills).replace('class="fc-skills"', 'class="fc-skills many"') : skillTags(skills);
+    return `<header class="fc-head ${many ? "many-tags" : ""}">${tags}<div class="fc-name" style="${nameStyle(name, innerWidth, skills.length, max, many ? 15 : TAG)}">${esc(name)}${extra}</div></header>`;
   }
 
   // Round VP mark (not a tag): the card grants VP during the game or at Game End.
@@ -229,7 +225,7 @@
     const upgradeText = String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
     return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
       ${head(card, 204, 16)}
-      <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}${tagBand(card)}</div>
+      <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
       <div class="fc-side fc-base">${gtext(stripIconPrefix(tc(card.base)))}</div>
       ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
       <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${gtext(tc(upgradeText))}</div>
@@ -246,8 +242,7 @@
         ${card.stash ? `<span class="fc-stash">${card.stash}${resourceIcon("coins", "coins")}</span>` : ""}
         <span class="fc-price">${opts.original != null && opts.original !== price ? `<s>${opts.original}</s>` : ""}${price}${resourceIcon("coins", "coins")}</span>
       </div>
-      <div class="fc-text">${card.effect ? `<p>${gtext(tc(card.effect))}</p>` : tagBand(card, "big")}</div>
-      ${card.effect ? tagBand(card) : ""}
+      <div class="fc-text">${card.effect ? `<p>${gtext(tc(card.effect))}</p>` : ""}</div>
       ${bad ? alignFoot("Bad") : ""}
     </article>`;
   }
