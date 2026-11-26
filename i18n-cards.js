@@ -357,6 +357,8 @@ window.CARD_I18N = [
   ["Instant: gain 2 XP. Game End: 1 VP for each Dwarf.", "Instant : gagnez 2 XP. Game End : 1 VP par Nain.", "Instant: ottieni 2 XP. Game End: 1 VP per ogni Nano."],
   ["Game End: 2 VP for each of your non-upgraded Legendary Characters.", "Game End : 2 VP par Personnage Légendaire non amélioré.", "Game End: 2 VP per ogni tuo Personaggio Leggendario non potenziato."],
   ["Game End: 3 VP for each of your non-upgraded Legendary Characters.", "Game End : 3 VP par Personnage Légendaire non amélioré.", "Game End: 3 VP per ogni tuo Personaggio Leggendario non potenziato."],
+  ["3 VP for each icon type of which you have 2 or more.", "3 VP par type d’icône que vous avez en 2 exemplaires ou plus.", "3 VP per ogni tipo di icona di cui hai 2 o più esemplari."],
+  ["2 VP for each icon type of which you have 2 or more.", "2 VP par type d’icône que vous avez en 2 exemplaires ou plus.", "2 VP per ogni tipo di icona di cui hai 2 o più esemplari."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],
