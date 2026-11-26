@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Once Upon a Time</title>
     <link rel="stylesheet" href="assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="styles.css?v=182" />
-    <link rel="stylesheet" href="rules.css?v=182" />
-    <link rel="stylesheet" href="present.css?v=182" />
+    <link rel="stylesheet" href="styles.css?v=183" />
+    <link rel="stylesheet" href="rules.css?v=183" />
+    <link rel="stylesheet" href="present.css?v=183" />
+    <link rel="stylesheet" href="box.css?v=183" />
   </head>
   <body>
     <section id="home" class="home-screen" hidden>
@@ -42,6 +43,7 @@
           <button type="button" id="statsBtn"><img class="game-icon" src="assets/icons/vp.png" alt="" /><span data-i18n="statistics"></span></button>
           <button type="button" id="rulesBtn"><img class="game-icon" src="assets/icons/effect-type-instant.png" alt="" /><span data-i18n="rules"></span></button>
           <button type="button" id="presentBtn"><img class="game-icon" src="assets/icons/effect-type-ongoing.png" alt="" /><span id="presentLabel"></span></button>
+          <button type="button" id="boxBtn"><img class="game-icon" src="assets/icons/effect-type-endgame.png" alt="" /><span id="boxLabel"></span></button>
           <button type="button" id="pnpBtn"><img class="game-icon" src="assets/icons/coin.png" alt="" /><span>Print &amp; Play</span></button>
         </div>
         <div class="decklinks">
@@ -69,6 +71,10 @@
     <section id="presentScreen" class="present-screen" hidden>
       <div class="rules-bar"><button type="button" id="presentBack" class="primary">← <span data-i18n="home"></span></button><div class="lang-switch small" role="group" aria-label="Language"></div><span></span></div>
       <div id="presentInApp"></div>
+    </section>
+    <section id="boxScreen" class="present-screen" hidden>
+      <div class="rules-bar"><button type="button" id="boxBack" class="primary">← <span data-i18n="home"></span></button><div class="lang-switch small" role="group" aria-label="Language"></div><span></span></div>
+      <div id="boxInApp"></div>
     </section>
     <section id="rulesScreen" class="rules-screen" hidden>
       <div class="rules-bar"><button type="button" id="rulesBack" class="primary">← <span data-i18n="home"></span></button><div class="lang-switch small" role="group" aria-label="Language"></div><button type="button" id="rulesPrint" title="Print">🖨</button></div>
@@ -186,17 +192,18 @@
       </section>
     <div id="coach" class="coach" hidden role="status"></div>
 
-    <script src="game-data.js?v=182"></script>
-    <script src="i18n-cards.js?v=182"></script>
-    <script src="i18n.js?v=182"></script>
-    <script src="art.js?v=182"></script>
-    <script src="cards.js?v=182"></script>
-    <script src="app.js?v=182"></script>
-    <script src="bot.js?v=182"></script>
-    <script src="online.js?v=182"></script>
-    <script src="sims.js?v=182"></script>
-    <script src="rules.js?v=182"></script>
-    <script src="present.js?v=182"></script>
-    <script src="home.js?v=182"></script>
+    <script src="game-data.js?v=183"></script>
+    <script src="i18n-cards.js?v=183"></script>
+    <script src="i18n.js?v=183"></script>
+    <script src="art.js?v=183"></script>
+    <script src="cards.js?v=183"></script>
+    <script src="app.js?v=183"></script>
+    <script src="bot.js?v=183"></script>
+    <script src="online.js?v=183"></script>
+    <script src="sims.js?v=183"></script>
+    <script src="rules.js?v=183"></script>
+    <script src="present.js?v=183"></script>
+    <script src="box.js?v=183"></script>
+    <script src="home.js?v=183"></script>
   </body>
 </html>

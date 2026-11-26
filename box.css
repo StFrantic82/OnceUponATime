@@ -1,5 +1,5 @@
 /* Box art: square cover and box back (design size 1000 × 1000 px) */
-#box { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; padding: 20px; }
+#box, .box-stage { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; padding: 20px; }
 .box-wrap { margin: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; }
 .box-wrap figcaption { font: 700 15px "Alegreya Sans", sans-serif; color: #7a3a24; }
 .box-face { position: relative; width: 1000px; height: 1000px; overflow: hidden; border-radius: 10px; box-shadow: 0 14px 40px rgba(40, 20, 10, .35); zoom: var(--box-zoom, .62); }
@@ -64,3 +64,7 @@
 
 .back-badges { gap: 8px; }
 .back-badges span { font-size: 18px; padding: 5px 14px; white-space: nowrap; }
+.box-wrap figcaption { display: flex; gap: 14px; align-items: center; }
+.box-dl { font: 700 13px "Alegreya Sans", sans-serif; padding: 4px 12px; border-radius: 99px; background: #7a3a24; color: #fff4dc; text-decoration: none; }
+.present-screen .box-wrap figcaption { color: #f6dfa4; }
+.present-screen .box-dl { background: #d9a441; color: #2a1a08; }

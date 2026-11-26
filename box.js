@@ -3,7 +3,7 @@
 (function () {
 const TEXT = {
   en: {
-    page: "Box", cover: "Cover", back: "Box back",
+    page: "Box", cover: "Cover", back: "Box back", dl: "Download the image",
     by: "A game by", tagline: "Gather the heroes, villains and treasures of the classic tales into your own story.",
     players: "2–4 players", age: "Ages 14+", time: "40 min",
     pitch: "You are storytellers. Round after round, heroes, villains and treasures step out of the classic tales, and each of you weaves them into a story of your own. After 8 rounds, the finest story wins.",
@@ -17,7 +17,7 @@ const TEXT = {
     contents: "Contents", list: ["62 Common characters", "43 Legendary characters", "40 Items", "25 Adventures", "8 Writers", "48 Chapter cards", "1 board", "Coins, XP, VP and Tag tokens"],
   },
   fr: {
-    page: "Boîte", cover: "Couverture", back: "Dos de boîte",
+    page: "Boîte", cover: "Couverture", back: "Dos de boîte", dl: "Télécharger l’image",
     by: "Un jeu de", tagline: "Réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques.",
     players: "2–4 joueurs", age: "14 ans et +", time: "40 min",
     pitch: "Vous êtes des conteurs. Manche après manche, héros, méchants et trésors sortent des contes classiques, et chacun les tisse dans sa propre histoire. Après 8 manches, la plus belle histoire l’emporte.",
@@ -31,7 +31,7 @@ const TEXT = {
     contents: "Contenu", list: ["62 personnages Communs", "43 personnages Légendaires", "40 Objets", "25 Aventures", "8 Écrivains", "48 cartes Chapitre", "1 plateau", "Pièces, XP, PV et jetons Tag"],
   },
   it: {
-    page: "Scatola", cover: "Copertina", back: "Retro della scatola",
+    page: "Scatola", cover: "Copertina", back: "Retro della scatola", dl: "Scarica l’immagine",
     by: "Un gioco di", tagline: "Riunisci nella tua storia gli eroi, i cattivi e i tesori delle fiabe classiche.",
     players: "2–4 giocatori", age: "14+ anni", time: "40 min",
     pitch: "Siete dei narratori. Round dopo round, eroi, cattivi e tesori escono dalle fiabe classiche, e ognuno li intreccia nella propria storia. Dopo 8 round, vince la storia più bella.",
@@ -103,16 +103,26 @@ function back(L) {
   </div>`;
 }
 
+let mounted = null;
 function build() {
   const L = TEXT[I18N.lang] || TEXT.en;
-  document.title = `Once Upon a Time · ${L.page}`;
-  document.querySelector(".rules-home").textContent = `← ${t("home")}`;
-  document.querySelector("#box").innerHTML = `<figure class="box-wrap"><figcaption>${esc(L.cover)}</figcaption>${cover(L)}</figure><figure class="box-wrap"><figcaption>${esc(L.back)}</figcaption>${back(L)}</figure>`;
+  if (!mounted || !mounted.isConnected) return;
+  if (document.body.classList.contains("box-body")) {
+    document.title = `Once Upon a Time · ${L.page}`;
+    document.querySelector(".rules-home").textContent = `← ${t("home")}`;
+  }
+  const lang = TEXT[I18N.lang] ? I18N.lang : "en";
+  const dl = (kind) => `<a class="box-dl" href="box/once-upon-a-time-${kind}-${lang}.png" download>⬇ ${esc(L.dl)}</a>`;
+  mounted.innerHTML = `<figure class="box-wrap"><figcaption>${esc(L.cover)} ${dl("cover")}</figcaption>${cover(L)}</figure><figure class="box-wrap"><figcaption>${esc(L.back)} ${dl("back")}</figcaption>${back(L)}</figure>`;
 }
 
-const params = new URLSearchParams(location.search);
-if (params.get("lang")) I18N.setLang(params.get("lang"), false);
-I18N.apply();
-build();
+window.BoxArt = { render: (root) => { mounted = root; root.classList.add("box-stage"); build(); }, label: () => (TEXT[I18N.lang] || TEXT.en).page };
 window.addEventListener("langchange", build);
+// Stand-alone page (box.html)
+if (document.body.classList.contains("box-body")) {
+  const params = new URLSearchParams(location.search);
+  if (params.get("lang")) I18N.setLang(params.get("lang"), false);
+  I18N.apply();
+  window.BoxArt.render(document.querySelector("#box"));
+}
 })();
