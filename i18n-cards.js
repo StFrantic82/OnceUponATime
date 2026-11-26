@@ -380,6 +380,13 @@ window.CARD_I18N = [
   ["Gains Strength. Activation: gain 1 VP for each Item.", "Gagne Strength. Activation : gagnez 1 VP par Objet.", "Ottiene Strength. Activation: ottieni 1 VP per ogni Oggetto."],
   ["Activation: gain 2 coins, plus 1 coin for each Pirate.", "Activation : gagnez 2 coins, plus 1 coin par Pirate.", "Activation: ottieni 2 coins, più 1 coin per ogni Pirata."],
   ["Instant: place 3 XP on a Character. Gain 1 coin for each Mice.", "Instant : placez 3 XP sur un Personnage. Gagnez 1 coin par Souris.", "Instant: piazza 3 XP su un Personaggio. Ottieni 1 coin per ogni Topolini."],
+  ["Ongoing: when choosing a group, you may discard a Common card from it to gain 3 coins.", "Ongoing : en choisissant un groupe, vous pouvez défausser une carte commune qui s’y trouve pour gagner 3 coins.", "Ongoing: scegliendo un gruppo, puoi scartare una carta comune che vi si trova per ottenere 3 coins."],
+  ["Instant: gain 3 XP. Gain 1 coin for each Mice.", "Instant : gagnez 3 XP. Gagnez 1 coin par Souris.", "Instant: ottieni 3 XP. Ottieni 1 coin per ogni Topolini."],
+  ["Activation: gain 3 XP.", "Activation : gagnez 3 XP.", "Activation: ottieni 3 XP."],
+  ["Instant: each opponent with more coins than you loses 1 coin. Gain 3 coins. If an opponent has Captain Hook, gain 2 VP.", "Instant : chaque adversaire qui a plus de coins que vous en perd 1. Gagnez 3 coins. Si un adversaire a le Capitaine Crochet, gagnez 2 VP.", "Instant: ogni avversario con più coins di te ne perde 1. Ottieni 3 coins. Se un avversario ha Capitan Uncino, ottieni 2 VP."],
+  ["Activation: gain 1 Tag token and 1 VP.", "Activation : gagnez 1 jeton d’icône et 1 VP.", "Activation: ottieni 1 segnalino icona e 1 VP."],
+  ["Instant: take the first player token and gain 1 VP.", "Instant : prenez le jeton premier joueur et gagnez 1 VP.", "Instant: prendi il segnalino primo giocatore e ottieni 1 VP."],
+  ["Instant: choose one: gain 3 coins, gain 3 XP, or gain 1 Tag token.", "Instant : au choix : gagnez 3 coins, gagnez 3 XP, ou gagnez 1 jeton d’icône.", "Instant: scegli: ottieni 3 coins, ottieni 3 XP, oppure ottieni 1 segnalino icona."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],

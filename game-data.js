@@ -719,7 +719,7 @@ window.GAME_DATA = {
       "name": "Magic Carpet",
       "cost": 2,
       "icons": "Sorcery 1",
-      "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 2 coins.",
+      "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 3 coins.",
       "copy": 1
     },
     {
@@ -800,7 +800,7 @@ window.GAME_DATA = {
       "name": "Seven-League Boots",
       "cost": 1,
       "icons": "Dexterity 1",
-      "effect": "Instant: take the first player token.",
+      "effect": "Instant: take the first player token and gain 1 VP.",
       "copy": 1
     },
     {
@@ -933,7 +933,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Sorcery 1. Instant: gain 2 Tag tokens of your choice.",
-      "upgrade": "Cost 1 XP. Activation: gain 1 Tag token and 1 coin.",
+      "upgrade": "Cost 1 XP. Activation: gain 1 Tag token and 1 VP.",
       "upgraded": false
     },
     {
@@ -952,7 +952,7 @@ window.GAME_DATA = {
       "name": "Crocodile",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. Gain 2 coins. If an opponent has Captain Hook, gain 2 VP.",
+      "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. Gain 3 coins. If an opponent has Captain Hook, gain 2 VP.",
       "upgrade": "Cost 2 XP. Activation: gain 1 coin for each Chapter card with value 9 or higher in your discard.",
       "upgraded": false
     },
@@ -1222,8 +1222,8 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: place 3 XP on a Character. Gain 1 coin for each Mice.",
-      "upgrade": "Cost 2 XP. Activation: place 3 XP on a Character.",
+      "base": "Sorcery 1. Instant: gain 3 XP. Gain 1 coin for each Mice.",
+      "upgrade": "Cost 2 XP. Activation: gain 3 XP.",
       "upgraded": false
     },
     {
@@ -1242,7 +1242,7 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 2 XP, or gain 1 Tag token.",
+      "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 3 XP, or gain 1 Tag token.",
       "upgrade": "Cost 2 XP. Activation: choose one of those effects.",
       "upgraded": false
     },
@@ -1273,7 +1273,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: take back 1 Chapter card with value 6 or lower from your discard. If you have The Fairies, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP and 1 VP.",
+      "upgrade": "Cost 1 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP and 1 VP.",
       "upgraded": false
     },
     {

@@ -540,7 +540,7 @@ function takeGroup(choice) {
     if (dropped) {
       group.cards = group.cards.filter((card) => card !== dropped);
       toDiscard(dropped);
-      gain("coins", 2);
+      gain("coins", 3);
       log("l_carpet", { p: state.name, c: C(dropped.name) });
     }
   }
@@ -1281,7 +1281,7 @@ function applyInstantInner(card) {
   else if (/gain 4 coins/i.test(text)) gain("coins", 4);
   else if (/gain 3 coins/i.test(text)) gain("coins", 3);
   else if (/gain 2 coins/i.test(text)) gain("coins", 2);
-  else if (/gain 1 coin\b/i.test(text)) gain("coins", 1);
+  else if (/gain 1 coin\b(?! for each)/i.test(text)) gain("coins", 1);
   if (/gain 3 VP/i.test(text)) gain("vp", 3);
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
   if (/coins? and 1 XP/i.test(text)) gain("xp", 1);
@@ -1309,7 +1309,6 @@ function instantLinks(card) {
   if (n === "Princess Briar Rose" && hasCard("The Fairies")) gain("xp", 1);
   if (n === "Fairy Godmother") {
     gain("coins", countByName("Mice"));
-    placeFreeXp(3, false);
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (/^Wicked Witch/.test(n)) placeWriterXp(2);
@@ -1326,6 +1325,7 @@ function instantLinks(card) {
     G.firstSeat = G.cur;
     for (const p of G.players) p.playerFirst = p.seat === G.cur;
     log("l_boots", { p: state.name });
+    gain("vp", 1);
   }
   if (n === "Mad Hatter's Hat") {
     const [legend] = draw("legendary", 1);
@@ -1605,16 +1605,17 @@ function activationLinks(card, text) {
     state.coins -= 1;
     card.stash = (card.stash || 0) + 1;
   }
-  if (n === "Fairy Godmother" && card.upgraded) placeFreeXp(3, false);
+  if (n === "Fairy Godmother" && card.upgraded) gain("xp", 3);
   if (n === "The Magic Mirror" && hasCard("The Evil Queen")) gain("vp", 1);
   if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
   if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
-  if (n === "Tinker Bell" && card.upgraded) gain("coins", 1);
+  
   if (n === "Aladin" && card.upgraded) {
     gain("coins", 1);
     gain("xp", 1);
     if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
   }
+  if (n === "Tinker Bell" && card.upgraded) gain("vp", 1);
   if (n === "Trident" && (countIcon("Strength") >= 2 || hasCard("King Triton"))) gain("xp", 1);
   if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 1);
   if (n === "The Wizard of Oz") {
