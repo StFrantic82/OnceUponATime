@@ -16,7 +16,7 @@ const SLIDES = {
         "<b>Adventures</b>: goals that score at the end of the game.",
         "Each player also has a <b>Writer</b> and 12 <b>Chapter cards</b>."], "[[common:Dwarf]][[item:Glass Slipper]][[quest:The Midnight Ball]]"],
       ["Your Writer", "A personal power on three levels", [
-        "Everyone picks a Writer at the start and takes the coins [[icon:coins]] shown on it.",
+        "Everyone draws 2 Writers at the start, keeps 1 and takes the coins [[icon:coins]] shown on it.",
         "Level 1 is active at once.",
         "Fill the star spaces with XP [[icon:xp]] to reach level 2, then level 3.",
         "Level 3 usually scores Victory Points at the end of the game."], "[[writer:Brothers Grimm]]"],
@@ -96,7 +96,7 @@ const SLIDES = {
         "<b>Aventures</b> : des objectifs qui rapportent en fin de partie.",
         "Chaque joueur a aussi un <b>Écrivain</b> et 12 <b>cartes Chapitre</b>."], "[[common:Dwarf]][[item:Glass Slipper]][[quest:The Midnight Ball]]"],
       ["Votre Écrivain", "Un pouvoir personnel sur trois niveaux", [
-        "Chacun choisit un Écrivain au début et prend les pièces [[icon:coins]] indiquées dessus.",
+        "Chacun pioche 2 Écrivains au début, en garde 1 et prend les pièces [[icon:coins]] indiquées dessus.",
         "Le niveau 1 est actif tout de suite.",
         "Remplissez les cases étoile avec de l’XP [[icon:xp]] pour atteindre le niveau 2, puis le niveau 3.",
         "Le niveau 3 rapporte en général des Points de Victoire en fin de partie."], "[[writer:Brothers Grimm]]"],
@@ -176,7 +176,7 @@ const SLIDES = {
         "<b>Avventure</b>: obiettivi che danno punti a fine partita.",
         "Ogni giocatore ha anche uno <b>Scrittore</b> e 12 <b>carte Capitolo</b>."], "[[common:Dwarf]][[item:Glass Slipper]][[quest:The Midnight Ball]]"],
       ["Il tuo Scrittore", "Un potere personale su tre livelli", [
-        "All’inizio ognuno sceglie uno Scrittore e prende le monete [[icon:coins]] indicate.",
+        "All’inizio ognuno pesca 2 Scrittori, ne tiene 1 e prende le monete [[icon:coins]] indicate.",
         "Il livello 1 è attivo subito.",
         "Riempi le caselle stella con XP [[icon:xp]] per raggiungere il livello 2, poi il livello 3.",
         "Il livello 3 di solito dà Punti Vittoria a fine partita."], "[[writer:Brothers Grimm]]"],
