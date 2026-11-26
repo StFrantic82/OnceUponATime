@@ -910,7 +910,7 @@ async function resolveWriterInstant() {
   if (name === "Charles Perrault") {
     state.writerItemDiscount = 2;
   } else if (name === "Brothers Grimm") {
-    gain("xp", Math.min(5, Math.min(countAlignment("Good"), countAlignment("Bad"))));
+    gain("xp", Math.min(countAlignment("Good"), countAlignment("Bad")));
   } else if (name === "Hans Christian Andersen") {
     state.writerDiscardRemaining = 2;
   } else if (name === "Carlo Collodi") {
@@ -1825,7 +1825,10 @@ function scoreWriter() {
   if (!state.writer || state.writerLevel < 3) return 0;
   const name = state.writer.name;
   if (name === "Charles Perrault") return state.items.filter((item) => item.cost >= 4).length * 2;
-  if (name === "Brothers Grimm") return Math.min(12, Math.min(countAlignment("Good"), countAlignment("Bad")) * 2);
+  if (name === "Brothers Grimm") {
+    const pairs = Math.min(countAlignment("Good"), countAlignment("Bad"));
+    return pairs >= 7 ? 14 : pairs >= 5 ? 10 : pairs >= 3 ? 6 : 0;
+  }
   if (name === "Hans Christian Andersen") return countCardsWith("Game End") * 2;
   if (name === "Carlo Collodi") {
     // XP stays on the star spaces: count what is placed on Legendaries (filled steps included) and on the Writer.
@@ -1833,14 +1836,14 @@ function scoreWriter() {
     const onWriter = (state.writerLevel >= 2 ? state.writer.cost2 : 0) + (state.writerLevel >= 3 ? state.writer.cost3 : 0) + (state.writerXp || 0);
     return Math.floor((onCards + onWriter) / 3);
   }
-  if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
+  if (name === "Lewis Carroll") return Math.floor(countCardsWith("Activation") / 2) * 3;
   if (name === "J. M. Barrie") {
     const counts = {};
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
     return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 5;
   }
   if (name === "L. Frank Baum") return ICONS.filter((icon) => countIcon(icon) >= 3).length * 3;
-  if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
+  if (name === "Le Prince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 2;
   return 0;
 }
 

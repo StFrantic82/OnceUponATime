@@ -364,6 +364,12 @@ window.CARD_I18N = [
   ["Instant: gain 1 Dexterity token.", "Instant : gagnez 1 jeton Dexterity.", "Instant: ottieni 1 segnalino Dexterity."],
   ["Instant: gain 1 Intelligence token.", "Instant : gagnez 1 jeton Intelligence.", "Instant: ottieni 1 segnalino Intelligence."],
   ["Instant: gain 1 Sorcery token.", "Instant : gagnez 1 jeton Sorcery.", "Instant: ottieni 1 segnalino Sorcery."],
+  ["Gain 1 XP for each Good–Bad pair of cards.", "Gagnez 1 XP par paire de cartes Gentil–Méchant.", "Ottieni 1 XP per ogni coppia di carte Buono–Cattivo."],
+  ["2 VP for each Good–Bad pair of cards.", "2 VP par paire de cartes Gentil–Méchant.", "2 VP per ogni coppia di carte Buono–Cattivo."],
+  ["1 VP for each card with Activation.", "1 VP par carte à Activation.", "1 VP per ogni carta con Activation."],
+  ["2 VP for each upgraded Legendary card.", "2 VP par carte Légendaire améliorée.", "2 VP per ogni carta Leggendaria potenziata."],
+  ["3 VP for each pair of cards with Activation.", "3 VP par paire de cartes à Activation.", "3 VP per ogni coppia di carte con Activation."],
+  ["3 / 5 / 7 Good–Bad pairs of cards: 6 / 10 / 14 VP.", "3 / 5 / 7 paires de cartes Gentil–Méchant : 6 / 10 / 14 VP.", "3 / 5 / 7 coppie di carte Buono–Cattivo: 6 / 10 / 14 VP."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],

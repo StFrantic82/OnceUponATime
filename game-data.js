@@ -1540,10 +1540,10 @@ window.GAME_DATA = {
       "name": "Brothers Grimm",
       "level1": "The first time each round you take both a Good and a Bad card, gain 1 coin.",
       "cost2": 3,
-      "level2": "Gain 1 XP for each Good–Bad pair you own, maximum 5 XP.",
+      "level2": "Gain 1 XP for each Good–Bad pair of cards.",
       "cost3": 6,
-      "level3": "2 VP for each Good–Bad pair. Max 12 VP.",
-      "coins": 3
+      "level3": "3 / 5 / 7 Good–Bad pairs of cards: 6 / 10 / 14 VP.",
+      "coins": 2
     },
     {
       "id": "W3",
@@ -1572,7 +1572,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Immediately activate up to two different cards.",
       "cost3": 6,
-      "level3": "2 VP for each card with Activation. Max 14 VP.",
+      "level3": "3 VP for each pair of cards with Activation.",
       "coins": 2
     },
     {
@@ -1602,7 +1602,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
       "cost3": 6,
-      "level3": "3 VP for each upgraded Legendary card. Max 12 VP.",
+      "level3": "2 VP for each upgraded Legendary card.",
       "coins": 2
     }
   ],
