@@ -60,6 +60,7 @@ const el = {
   stats: document.querySelector("#stats"),
   phaseText: document.querySelector("#phaseText"),
   actionHand: document.querySelector("#actionHand"),
+  chapterTrack: document.querySelector("#chapterTrack"),
   questDisplay: document.querySelector("#questDisplay"),
   itemDisplay: document.querySelector("#itemDisplay"),
   groups: document.querySelector("#groups"),
@@ -1960,6 +1961,7 @@ function render() {
   G.cur = view.seat;
   renderStats();
   renderPlayers();
+  renderChapterTrack();
   renderActions();
   renderWriter();
   renderDisplays();
@@ -2188,6 +2190,28 @@ function playerStatus(p) {
   if (p.phase === "chooseAction" || p.phase === "chooseWriter") return t("ps_choosing");
   if (p.phase === "waitAction") return t("ps_ready");
   return "";
+}
+
+// The chapters played this round, in turn order: just the player and the chapter number.
+function renderChapterTrack() {
+  if (!el.chapterTrack) return;
+  const n = G.players.length;
+  if (G.gameOver || !G.players.some((p) => p.writer)) {
+    el.chapterTrack.innerHTML = "";
+    return;
+  }
+  // Once every chapter is played, the turn order of the round is known (kept in the history of the round).
+  const last = G.history[G.history.length - 1];
+  const settled = Boolean(last && last.round === G.round && G.players.every((p) => p.currentAction));
+  const pos = (p) => (last.plays.find((x) => x.seat === p.seat) || { pos: 99 }).pos;
+  const ordered = settled ? [...G.players].sort((a, b) => pos(a) - pos(b)) : [...G.players].sort((a, b) => ((a.seat - G.firstSeat + n) % n) - ((b.seat - G.firstSeat + n) % n));
+  el.chapterTrack.innerHTML = `<span class="ct-title">${escapeHtml(t("turnOrder"))}</span>${ordered
+    .map((p, i) => {
+      const number = p.currentAction ? p.currentAction.number : "…";
+      const done = settled && p.phase === "waitRound";
+      return `<span class="ct-chip ${G.active === p.seat ? "active" : ""} ${p.seat === view.seat ? "me" : ""} ${done ? "done" : ""}" style="--pcol:${playerColor(p)}"><i class="ct-pos">${settled ? i + 1 : "·"}</i><b class="ct-num">${number}</b><span class="ct-name">${escapeHtml(p.name)}</span></span>`;
+    })
+    .join(settled ? '<span class="ct-sep">›</span>' : "")}`;
 }
 
 function renderPlayers() {
