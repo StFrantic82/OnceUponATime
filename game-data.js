@@ -1592,7 +1592,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 6,
-      "level3": "3 VP for each icon type of which you have 2 or more.",
+      "level3": "3 VP for each icon type of which you have 3 or more.",
       "coins": 2
     },
     {

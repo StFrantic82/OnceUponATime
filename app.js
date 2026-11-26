@@ -1838,7 +1838,7 @@ function scoreWriter() {
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
     return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 5;
   }
-  if (name === "L. Frank Baum") return ICONS.filter((icon) => countIcon(icon) >= 2).length * Number((state.writer.level3.match(/^(\d+) VP/) || [0, 3])[1]);
+  if (name === "L. Frank Baum") return ICONS.filter((icon) => countIcon(icon) >= 3).length * 3;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
 }
