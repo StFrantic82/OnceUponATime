@@ -564,7 +564,7 @@ window.GAME_DATA = {
       "id": "I1",
       "deck": "item",
       "name": "Enchanted Sword",
-      "cost": 2,
+      "cost": 3,
       "icons": "Strength 1",
       "effect": "Instant: gain 1 XP for each Strength icon.",
       "copy": 1
@@ -591,7 +591,7 @@ window.GAME_DATA = {
       "id": "I4",
       "deck": "item",
       "name": "Spellbook",
-      "cost": 3,
+      "cost": 4,
       "icons": "Intelligence 1",
       "effect": "Instant: gain 1 XP for each different icon.",
       "copy": 1
@@ -627,7 +627,7 @@ window.GAME_DATA = {
       "id": "I8",
       "deck": "item",
       "name": "The Glass Coffin",
-      "cost": 3,
+      "cost": 4,
       "icons": "none",
       "effect": "Instant: take 1 Character from the discard pile of your choice (resolve its Instant effect).",
       "copy": 1
@@ -645,7 +645,7 @@ window.GAME_DATA = {
       "id": "I10",
       "deck": "item",
       "name": "Mad Hatter's Hat",
-      "cost": 6,
+      "cost": 7,
       "icons": "Intelligence 1",
       "effect": "Instant: take the top card of the Legendary deck and add it to your tableau (resolve its Instant effect).",
       "copy": 1
@@ -681,7 +681,7 @@ window.GAME_DATA = {
       "id": "I14",
       "deck": "item",
       "name": "Horn of Sherwood",
-      "cost": 3,
+      "cost": 2,
       "icons": "none",
       "effect": "Activation: gain 1 coin for each Merry Men (1 coin more if you have Robin Hood).",
       "copy": 1
@@ -780,7 +780,7 @@ window.GAME_DATA = {
       "id": "I25",
       "deck": "item",
       "name": "The Crown of England",
-      "cost": 2,
+      "cost": 3,
       "icons": "none",
       "effect": "Instant: place 2 coins from the supply on this Item. Activation: place 1 of your coins on it. You can spend the coins on it to buy Items. Game End: 1 VP for each coin on it.",
       "copy": 1
@@ -834,7 +834,7 @@ window.GAME_DATA = {
       "id": "I31",
       "deck": "item",
       "name": "Ruby Slippers",
-      "cost": 3,
+      "cost": 2,
       "icons": "Dexterity 1",
       "effect": "Activation: the Chapter card you resolve this turn gives twice as many coins or XP.",
       "copy": 1
@@ -1008,7 +1008,7 @@ window.GAME_DATA = {
       "name": "The Hunter",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 5 VP (7 VP if it is The Wolf or The Evil Queen).",
+      "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 6 VP (8 VP if it is The Wolf or The Evil Queen).",
       "upgrade": "Cost 2 XP. Activation: gain 2 VP if you have at least one Bad card.",
       "upgraded": false
     },
@@ -1018,7 +1018,7 @@ window.GAME_DATA = {
       "name": "The Prince (Mermaid)",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 coin for each pair of Good cards.",
+      "base": "Charm 1. Instant: gain 1 XP, plus 1 coin for each pair of Good cards.",
       "upgrade": "Cost 2 XP. Activation: gain 1 VP and 1 coin (2 VP if you have Little Mermaid).",
       "upgraded": false
     },
@@ -1028,7 +1028,7 @@ window.GAME_DATA = {
       "name": "Sheriff of Nottingham",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: each opponent loses 1 coin and you gain 2 coins.",
+      "base": "Strength 1. Instant: each opponent loses 1 coin and you gain 3 coins.",
       "upgrade": "Cost 3 XP. Ongoing: whenever you gain coins from a card effect, gain 1 coin more.",
       "upgraded": false
     },
@@ -1069,7 +1069,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant: gain 1 Tag token.",
-      "upgrade": "Cost 5 XP. Game End: 3 VP for each set of 5 different icons.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each set of 5 different icons.",
       "upgraded": false
     },
     {
@@ -1119,7 +1119,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: spend 1 coin to gain 2 XP.",
-      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: spend 1 coin to gain 2 XP. Gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion.",
+      "upgrade": "Cost 1 XP. Gains Intelligence. Activation: spend 1 coin to gain 2 XP. Gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion.",
       "upgraded": false
     },
     {
@@ -1149,7 +1149,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Ongoing: if you have a Pirate or Captain Hook, upgrade Peter Pan for free.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell.",
       "upgraded": false
     },
     {
@@ -1249,7 +1249,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 4 coins.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each Bad card.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 coin for each Bad card.",
       "upgraded": false
     },
     {
@@ -1289,7 +1289,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: the first time each round you gain XP from a card, gain 1 XP more.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Intelligence icon. If you have Beast, gain 2 VP more.",
+      "upgrade": "Cost 4 XP. Game End: 1 VP for each Intelligence icon. If you have Beast, gain 2 VP more.",
       "upgraded": false
     },
     {
@@ -1308,7 +1308,7 @@ window.GAME_DATA = {
       "name": "Princess Briar Rose",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: take back 1 Chapter card with value 6 or lower from your discard. If you have The Fairies, gain 1 XP.",
+      "base": "Charm 1. Instant: take back 1 Chapter card with value 6 or lower from your discard. Gain 1 XP (2 XP if you have The Fairies).",
       "upgrade": "Cost 1 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP and 1 VP.",
       "upgraded": false
     },

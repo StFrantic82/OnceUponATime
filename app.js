@@ -1179,7 +1179,7 @@ function botOption(options) {
     const best = hunt.indexOf(Math.max(...hunt));
     const card = state.tableau.find((c) => c.id === options[best].split(" ")[1]);
     if (card && card.upgraded) return hunt.length > 1 ? hunt.indexOf(Math.min(...hunt)) : null;
-    if (card && card.deck === "legendary" && hunt[best] < 6) return null;
+    if (card && card.deck === "legendary" && hunt[best] < 7) return null;
     return best;
   }
   // The Genie's wishes: a free upgrade when there is a Legendary to upgrade, else an Adventure, else a Chapter card.
@@ -1419,9 +1419,9 @@ function hunterChoice() {
   if (!bad.length) return;
   const options = [];
   const villain = bad.find((card) => card.name === "The Wolf" || card.name === "The Evil Queen");
-  if (villain) options.push(`discard ${villain.id} gain 7 VP`);
+  if (villain) options.push(`discard ${villain.id} gain 8 VP`);
   const common = bad.filter((card) => card.deck === "common")[0] || bad.find((card) => card !== villain);
-  if (common) options.push(`discard ${common.id} gain 5 VP`);
+  if (common) options.push(`discard ${common.id} gain 6 VP`);
   offerChoice("The Hunter", options, "optional");
 }
 
@@ -1922,7 +1922,7 @@ function scoreCards(only = null) {
     else if (n === "Grandmother") total += countAlignment("Bad");
     else if (n === "Stepmother") total += plainLeg * (up ? 3 : 2);
     else if (n === "Prince Charming") total += icons.Charm;
-    else if (n === "Evil Sorcerer") total += sets * 3;
+    else if (n === "Evil Sorcerer") total += sets * 2;
     else if (n === "The Evil Queen") total += icons.Charm * (up ? 2 : 1);
     else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
     else if (n === "Dorothy Gale") total += sets * 4;
