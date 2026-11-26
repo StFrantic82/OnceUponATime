@@ -27,7 +27,7 @@ window.CARD_I18N = [
   // ---- Names: Items ----
   ["Enchanted Sword", "Épée enchantée", "Spada incantata"],
   ["Puss’s Boots", "Les Bottes du Chat", "Gli Stivali del Gatto"],
-  ["whishing ring", "Anneau à souhaits", "Anello dei desideri"],
+  ["Wishing Ring", "Anneau à souhaits", "Anello dei desideri"],
   ["Spellbook", "Grimoire", "Libro degli incantesimi"],
   ["The Dwarves House", "La Maison des Nains", "La Casa dei Nani"],
   ["The Magic Mirror", "Le Miroir magique", "Lo Specchio magico"],
@@ -399,6 +399,8 @@ window.CARD_I18N = [
   ["The Ogre", "L’Ogre", "L’Orco"],
   ["Instant: discard 1 Common card from your tableau to gain 3 XP.", "Instant : défaussez 1 carte Commune de votre tableau pour gagner 3 XP.", "Instant: scarta 1 carta Comune dal tuo tableau per ottenere 3 XP."],
   ["Activation: discard 1 Common card from your tableau to gain 3 VP.", "Activation : défaussez 1 carte Commune de votre tableau pour gagner 3 VP.", "Activation: scarta 1 carta Comune dal tuo tableau per ottenere 3 VP."],
+  ["Instant: gain 1 coin for each pair of Good cards.", "Instant : gagnez 1 coin par paire de cartes Gentilles.", "Instant: ottieni 1 coin per ogni coppia di carte Buone."],
+  ["Instant: gain 1 XP for each pair of Good cards.", "Instant : gagnez 1 XP par paire de cartes Gentilles.", "Instant: ottieni 1 XP per ogni coppia di carte Buone."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP. Dorothy Gale, Scarecrow, The Tin Woodman, The Cowardly Lion, The Wizard of Oz, the four Witches, The Munchkins.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP. Dorothy Gale, l’Épouvantail, le Bûcheron de fer-blanc, le Lion peureux, le Magicien d’Oz, les quatre Sorcières, les Munchkins.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP. Dorothy Gale, lo Spaventapasseri, il Boscaiolo di latta, il Leone codardo, il Mago di Oz, le quattro Streghe, i Mastichini."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],

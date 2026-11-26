@@ -581,7 +581,7 @@ window.GAME_DATA = {
     {
       "id": "I3",
       "deck": "item",
-      "name": "whishing ring",
+      "name": "Wishing Ring",
       "cost": 2,
       "icons": "Sorcery 1",
       "effect": "Ongoing: whenever you gain a Tag token, gain 1 coin and 1 VP.",
@@ -1018,7 +1018,7 @@ window.GAME_DATA = {
       "name": "The Prince (Mermaid)",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 2 coins.",
+      "base": "Charm 1. Instant: gain 1 coin for each pair of Good cards.",
       "upgrade": "Cost 2 XP. Activation: gain 1 VP and 1 coin (2 VP if you have Little Mermaid).",
       "upgraded": false
     },
@@ -1228,7 +1228,7 @@ window.GAME_DATA = {
       "name": "Cinderella",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: buy 1 Item for 2 coins less.",
+      "base": "Charm 1. Instant: gain 1 XP for each pair of Good cards.",
       "upgrade": "Cost 5 XP. Game End: 1 VP for each Item.",
       "upgraded": false
     },

@@ -274,7 +274,7 @@
     // Items
     "Enchanted Sword": { bg: "castle", m: [["sword", 100, 74, 1.2, 0], ["sparkles", 100, 70, 1.2, 0]] },
     "Puss’s Boots": { bg: "village", m: [["boot", 80, 82, 1, -6, { feather: true }], ["boot", 126, 86, 1, 6]] },
-    "whishing ring": { bg: "night", m: [["ring", 100, 76, 1.3, 0], ["sparkles", 100, 70, 1.3, 0]] },
+    "Wishing Ring": { bg: "night", m: [["ring", 100, 76, 1.3, 0], ["sparkles", 100, 70, 1.3, 0]] },
     "Spellbook": { bg: "study", m: [["book", 100, 84, 1.3, 0, { c: "#2f5d8a" }], ["sparkles", 100, 50, 1, 0]] },
     "The Dwarves House": { bg: "forest", m: [["cottage", 100, 82, 1.2, 0, { roof: "#4f7a3a" }]] },
     "The Magic Mirror": { bg: "castle", m: [["mirror", 100, 76, 1.3, 0, { face: true }]] },

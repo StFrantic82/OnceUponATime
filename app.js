@@ -1300,7 +1300,7 @@ function applyInstantInner(card) {
   else if (/gain 2 XP if you have a Bad/i.test(text)) {
     if (countAlignment("Bad")) gain("xp", 2);
   } else if (/gain 2 XP/i.test(text)) gain("xp", 2);
-  else if (/gain 1 XP/i.test(text)) gain("xp", 1);
+  else if (/gain 1 XP\b(?! for each pair of Good)/i.test(text)) gain("xp", 1);
   if (/gain 5 coins/i.test(text)) gain("coins", 5);
   else if (/gain 4 coins/i.test(text)) gain("coins", 4);
   else if (/gain 3 coins/i.test(text)) gain("coins", 3);
@@ -1342,7 +1342,8 @@ function instantLinks(card) {
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
-  if (n === "Cinderella") state.writerItemDiscount = 2;
+  if (n === "Cinderella") gain("xp", Math.floor(countAlignment("Good") / 2));
+  if (n === "The Prince (Mermaid)") gain("coins", Math.floor(countAlignment("Good") / 2));
   if (n === "The Glass Coffin") pickFromDiscard(n);
   if (n === "The Crown of England") card.stash = (card.stash || 0) + 2;
   if (n === "Seven-League Boots") {
