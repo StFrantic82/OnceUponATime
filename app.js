@@ -1277,7 +1277,7 @@ function withGainBonus(fn) {
       state.coins += 1;
       state.coinsGained += 1;
     }
-    if ((state.xpGained || 0) > xp && !state.writerRound.belleRewarded && state.tableau.some((c) => c.name === "Belle" && !c.upgraded)) {
+    if ((state.xpGained || 0) > xp && !state.writerRound.belleRewarded && state.tableau.some((c) => c.name === "Belle")) {
       state.writerRound.belleRewarded = true;
       state.xp += 1;
       state.xpGained += 1;
@@ -1457,7 +1457,7 @@ function onPlayChapter(number) {
   vpSource = "ON-CHAPTER (Barrie/Briar Rose/Clock)";
   vpSource = "The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "Pinocchio");
-  if (pino && !pino.upgraded && number >= 10) {
+  if (pino && number >= 10) {
     gainTagToken(1, "Pinocchio");
     log("l_nose", { p: state.name });
   }
@@ -1543,6 +1543,7 @@ async function activateCardInner(card) {
   const taglessAct = text.match(/Activation: gain (\d+) VP for each of your Legendary cards and Items without tags/i);
   if (taglessAct) {
     gain("vp", Number(taglessAct[1]) * countTagless());
+    if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
   } else if (/Activation:[^.]*\bsteal\b/i.test(text)) {
     applyMean(text.slice(text.search(/Activation:/i)), card.name);
   } else if (/choose one of those effects/i.test(text)) {
@@ -1662,7 +1663,7 @@ function activationLinks(card, text) {
   }
   if (n === "Fairy Godmother" && card.upgraded) gain("xp", 3);
   if (n === "The Magic Mirror" && hasCard("The Evil Queen")) gain("vp", 1);
-  if (n === "Mad Hatter" && !card.upgraded && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
+  if (n === "Mad Hatter" && state.items.some((i) => i.name === "Mad Hatter's Hat")) gain("xp", 1);
   if (n === "The Prince (Mermaid)" && card.upgraded && hasCard("Little Mermaid")) gain("vp", 1);
   
   if (n === "Aladin" && card.upgraded) {
@@ -1829,7 +1830,7 @@ function scoreCards(only = null) {
   const plainLeg = state.tableau.filter((card) => card.deck === "legendary" && !card.upgraded).length;
   const quests = state.quests.length;
   for (const card of only || [...state.tableau, ...state.items]) {
-    const text = card.deck === "legendary" ? (card.upgraded ? card.upgrade : card.base) : card.effect;
+    const text = card.deck === "legendary" ? `${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}` : card.effect;
     if (!/Game End/i.test(text || "")) continue;
     const n = card.name;
     const up = Boolean(card.upgraded);
@@ -1856,7 +1857,7 @@ function scoreCards(only = null) {
     else if (n === "Robin Hood") total += up ? countByName("The Merry Men") * 2 : 0;
     else if (n === "Prince John") total += Math.floor(state.coins / 3);
     else if (n === "Cinderella") total += state.items.length;
-    else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
+    else if (n === "Rumpelstiltskin") total += Math.floor(countAlignment("Bad") / 2) * (up ? 2 : 1);
     else if (n === "Belle") total += up ? icons.Intelligence * 1 + (hasCard("Beast") ? 2 : 0) : 0;
     else if (n === "Pinocchio") total += Math.floor(countAlignment("Good") / 2);
     else if (n === "Geppetto") total += Math.floor(state.items.length / 2) * 3 + (hasCard("Pinocchio") ? 4 : 0);
@@ -2443,7 +2444,8 @@ function renderTableau() {
 
 // An upgraded Legendary only has its upgraded effect: it replaces the base effect.
 function activeCardText(card) {
-  return `${card.effect || ""} ${card.upgraded ? card.upgrade || "" : card.base || ""}`;
+  // An upgraded Legendary keeps its base effect: the upgraded effect is added to it.
+  return `${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`;
 }
 
 function canUpgradeCard(card) {
@@ -2743,7 +2745,7 @@ async function simulateGame(opts) {
           common: p.tableau.filter((c) => c.deck === "common").map((c) => c.name),
           items: p.items.map((c) => c.name),
           questNames: r.questScores.map((q) => [q.quest.name, q.points]),
-          endPts: withSeat(p.seat, () => [...p.tableau, ...p.items].filter((c) => /Game End/i.test(c.deck === "legendary" ? (c.upgraded ? c.upgrade : c.base) : c.effect || "")).map((c) => [c.name, scoreCards([c]), Boolean(c.upgraded)])),
+          endPts: withSeat(p.seat, () => [...p.tableau, ...p.items].filter((c) => /Game End/i.test(c.deck === "legendary" ? `${c.base || ""} ${c.upgraded ? c.upgrade || "" : ""}` : c.effect || "")).map((c) => [c.name, scoreCards([c]), Boolean(c.upgraded)])),
           vpBy: p.vpBy || {},
           coinsGained: p.coinsGained || 0,
           groupPicks: p.groupPicks || [],

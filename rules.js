@@ -125,7 +125,7 @@ const RULES = {
     legendary: "Legendary character",
     anatomy: {
       common: ["Name of the character (Common characters have no tag).", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
-      legendary: ["Skill tags.", "Name of the character.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (replaces the base effect).", "Good or Bad."],
+      legendary: ["Skill tags.", "Name of the character.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (added to the base effect).", "Good or Bad."],
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
@@ -179,7 +179,7 @@ const RULES = {
       <p><b>XP not placed.</b> XP you have not placed by the end of the turn goes to the first free space: your Writer first, as long as it is not at level 3, then your Legendary characters. If no space is free, it waits in your reserve and goes to the next space that becomes free. Some effects place XP <b>on your Writer</b> only (the Wicked Witches, the “Drink Me” Bottle): if your Writer is already at level 3, that XP is lost.</p>
       <p><b>Draw a Chapter card.</b> Draw 1 card from your Chapter deck, then put 1 Chapter card from your hand under your deck. If your Chapter deck is empty, the effect does nothing. This way the deck always counts the rounds.</p>
       <h3>Legendary characters</h3>
-      <p>A Legendary character starts on its base side. When its star spaces are full, it is upgraded: from then on, only the upgraded effect counts (the full star spaces show it).</p>
+      <p>A Legendary character starts on its base side. When its star spaces are full, it is upgraded: from then on, the upgraded effect is <b>added</b> to the base effect, which stays active (the full star spaces show it).</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Writers</h3>
       <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. You reach each level by filling its star spaces with XP.</p>
@@ -192,7 +192,7 @@ const RULES = {
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 5 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 3 / 4 / 6 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 2 VP per Charm: another 10 VP.
+      <div class="example"><b>Example.</b> At the end, Sofia has 5 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 3 / 4 / 6 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 1 VP per Charm for her base effect and 1 more for her upgraded effect: another 10 VP.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconography", `[[iconguide]]`],
     ],
@@ -207,7 +207,7 @@ const RULES = {
     legendary: "Personnage légendaire",
     anatomy: {
       common: ["Nom du personnage (les personnages communs n’ont pas de tag).", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
-      legendary: ["Tags de compétence.", "Nom du personnage.", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (remplace l’effet de base).", "Gentil ou Méchant."],
+      legendary: ["Tags de compétence.", "Nom du personnage.", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (s’ajoute à l’effet de base).", "Gentil ou Méchant."],
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
@@ -261,7 +261,7 @@ const RULES = {
       <p><b>XP non placé.</b> L’XP que vous n’avez pas placé à la fin du tour va sur le premier emplacement libre : d’abord votre Écrivain, tant qu’il n’est pas au niveau 3, puis vos personnages Légendaires. S’il n’y a aucune case libre, il attend dans votre réserve et ira sur la prochaine case qui se libère. Certains effets placent de l’XP <b>sur votre Écrivain</b> uniquement (les Sorcières d’Oz, le Flacon « Bois-moi ») : si votre Écrivain est déjà au niveau 3, cet XP est perdu.</p>
       <p><b>Piocher une carte Chapitre.</b> Piochez 1 carte de votre pioche Chapitre, puis remettez 1 carte Chapitre de votre main sous votre pioche. Si votre pioche est vide, l’effet ne fait rien. Ainsi, la pioche compte toujours les manches.</p>
       <h3>Personnages légendaires</h3>
-      <p>Un personnage Légendaire commence sur sa face de base. Quand ses cases étoile sont pleines, il est amélioré : dès lors, seul l’effet amélioré compte (les cases étoile pleines le montrent).</p>
+      <p>Un personnage Légendaire commence sur sa face de base. Quand ses cases étoile sont pleines, il est amélioré : dès lors, l’effet amélioré <b>s’ajoute</b> à l’effet de base, qui reste actif (les cases étoile pleines le montrent).</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Écrivains</h3>
       <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. On atteint chaque niveau en remplissant ses cases étoile avec de l’XP.</p>
@@ -274,7 +274,7 @@ const RULES = {
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 5 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 3 / 4 / 6 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 2 PV par Charme : encore 10 PV.
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 5 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 3 / 4 / 6 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 1 PV par Charme pour son effet de base et 1 de plus pour son effet amélioré : encore 10 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconographie", `[[iconguide]]`],
     ],
@@ -289,7 +289,7 @@ const RULES = {
     legendary: "Personaggio leggendario",
     anatomy: {
       common: ["Nome del personaggio (i personaggi comuni non hanno tag).", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
-      legendary: ["Tag di abilità.", "Nome del personaggio.", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (sostituisce quello base).", "Buono o Cattivo."],
+      legendary: ["Tag di abilità.", "Nome del personaggio.", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (si aggiunge a quello base).", "Buono o Cattivo."],
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [
@@ -343,7 +343,7 @@ const RULES = {
       <p><b>XP non piazzati.</b> Gli XP che non hai piazzato alla fine del turno vanno sul primo spazio libero: prima il tuo Scrittore, finché non è al livello 3, poi i tuoi personaggi Leggendari. Se non c’è nessuna casella libera, restano nella tua riserva e andranno sulla prossima casella che si libera. Alcuni effetti piazzano XP solo <b>sul tuo Scrittore</b> (le Streghe di Oz, la Bottiglietta «Bevimi»): se il tuo Scrittore è già al livello 3, quegli XP sono persi.</p>
       <p><b>Pescare una carta Capitolo.</b> Pesca 1 carta dal tuo mazzo Capitolo, poi rimetti 1 carta Capitolo dalla mano sotto il mazzo. Se il mazzo è vuoto, l’effetto non fa nulla. Così il mazzo conta sempre i round.</p>
       <h3>Personaggi leggendari</h3>
-      <p>Un personaggio Leggendario inizia sul lato base. Quando le sue caselle stella sono piene, è potenziato: da quel momento conta solo l’effetto potenziato (le caselle stella piene lo mostrano).</p>
+      <p>Un personaggio Leggendario inizia sul lato base. Quando le sue caselle stella sono piene, è potenziato: da quel momento l’effetto potenziato <b>si aggiunge</b> all’effetto base, che resta attivo (le caselle stella piene lo mostrano).</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <h3>Scrittori</h3>
       <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Si raggiunge ogni livello riempiendo le sue caselle stella con XP.</p>
@@ -356,7 +356,7 @@ const RULES = {
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 5 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 3 / 4 / 6 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino: altri 10 PV.
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 5 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 3 / 4 / 6 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 1 PV per Fascino per l’effetto base e 1 in più per l’effetto potenziato: altri 10 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconografia", `[[iconguide]]`],
     ],

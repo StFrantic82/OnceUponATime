@@ -658,9 +658,7 @@ h2::after {
   height: 16px;
 }
 
-.is-upgraded .fc-base {
-  opacity: 0.55;
-}
+/* An upgraded Legendary keeps its base effect: both stay fully visible. */
 
 /* Items: square tiles */
 .fc-item {

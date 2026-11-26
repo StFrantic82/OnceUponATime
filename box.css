@@ -48,7 +48,7 @@
 .scene-shop { margin-left: 8px; align-items: center; }
 .scene-player { align-items: center; }
 .scene-writer .fig { zoom: .46; }
-.scene-hand .fig { zoom: .9; }
+.scene-hand .fig { zoom: .62; }
 .scene-hand .fig:first-child { transform: translateY(-34px); filter: drop-shadow(0 0 14px rgba(247, 201, 90, .95)); }
 .callout { position: absolute; display: flex; align-items: center; gap: 6px; padding: 4px 12px 4px 4px; border-radius: 99px; background: #fff4dc; color: #3d2414; font: 800 15.5px "Alegreya Sans", sans-serif; box-shadow: 0 3px 10px rgba(0, 0, 0, .45); white-space: nowrap; }
 .callout i { font-style: normal; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: #7a3a24; color: #fff4dc; }

@@ -3,7 +3,7 @@
 (function () {
 const SLIDES = {
   en: {
-    title: "The game in 16 steps", prev: "Previous", next: "Next", button: "Presentation",
+    title: "The game in 16 steps", prev: "Previous", next: "Next", end: "The end", button: "Presentation",
     slides: [
       ["Once Upon a Time", "A game by Simone Luciani & Matthieu Verdier · 2 to 4 players · ages 14+ · 40 min", [
         "You are <b>storytellers</b>: you gather the heroes, villains and treasures of the classic tales into your own story.",
@@ -51,7 +51,7 @@ const SLIDES = {
       ["Legendary characters", "Upgrade them with XP", [
         "A Legendary character starts with its <b>base effect</b>.",
         "Each XP [[icon:xp]] fills one star space. When they are all full, the card is <b>upgraded</b>.",
-        "The upgraded effect <b>replaces</b> the base effect.",
+        "The upgraded effect is <b>added</b> to the base effect.",
         "[[icon:freeup]] A free upgrade fills all the remaining star spaces of one Legendary character at once."], "[[legendary:The Sea Witch]][[legendaryUp:The Sea Witch]]"],
       ["Items", "Treasures of the tales", [
         "On your turn you may buy <b>one</b> Item by paying its price in coins [[icon:coins]].",
@@ -83,7 +83,7 @@ const SLIDES = {
     ],
   },
   fr: {
-    title: "Le jeu en 16 étapes", prev: "Précédent", next: "Suivant", button: "Présentation",
+    title: "Le jeu en 16 étapes", prev: "Précédent", next: "Suivant", end: "Fin", button: "Présentation",
     slides: [
       ["Once Upon a Time", "Un jeu de Simone Luciani & Matthieu Verdier · 2 à 4 joueurs · 14 ans et + · 40 min", [
         "Vous êtes des <b>conteurs</b> : vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques.",
@@ -131,7 +131,7 @@ const SLIDES = {
       ["Les personnages Légendaires", "Améliorez-les avec de l’XP", [
         "Un personnage Légendaire commence avec son <b>effet de base</b>.",
         "Chaque XP [[icon:xp]] remplit une case étoile. Quand elles sont toutes pleines, la carte est <b>améliorée</b>.",
-        "L’effet amélioré <b>remplace</b> l’effet de base.",
+        "L’effet amélioré <b>s’ajoute</b> à l’effet de base.",
         "[[icon:freeup]] Une amélioration gratuite remplit d’un coup toutes les cases étoile restantes d’un personnage Légendaire."], "[[legendary:The Sea Witch]][[legendaryUp:The Sea Witch]]"],
       ["Les Objets", "Les trésors des contes", [
         "À votre tour, vous pouvez acheter <b>un</b> Objet en payant son prix en pièces [[icon:coins]].",
@@ -163,7 +163,7 @@ const SLIDES = {
     ],
   },
   it: {
-    title: "Il gioco in 16 tappe", prev: "Indietro", next: "Avanti", button: "Presentazione",
+    title: "Il gioco in 16 tappe", prev: "Indietro", next: "Avanti", end: "Fine", button: "Presentazione",
     slides: [
       ["Once Upon a Time", "Un gioco di Simone Luciani & Matthieu Verdier · da 2 a 4 giocatori · 14+ anni · 40 min", [
         "Siete dei <b>narratori</b>: riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche.",
@@ -211,7 +211,7 @@ const SLIDES = {
       ["I personaggi Leggendari", "Potenziali con gli XP", [
         "Un personaggio Leggendario inizia con il suo <b>effetto base</b>.",
         "Ogni XP [[icon:xp]] riempie una casella stella. Quando sono tutte piene, la carta è <b>potenziata</b>.",
-        "L’effetto potenziato <b>sostituisce</b> l’effetto base.",
+        "L’effetto potenziato <b>si aggiunge</b> all’effetto base.",
         "[[icon:freeup]] Un potenziamento gratis riempie in un colpo tutte le caselle stella rimaste di un personaggio Leggendario."], "[[legendary:The Sea Witch]][[legendaryUp:The Sea Witch]]"],
       ["Gli Oggetti", "I tesori delle fiabe", [
         "Nel tuo turno puoi comprare <b>un</b> Oggetto pagando il suo prezzo in monete [[icon:coins]].",
@@ -262,9 +262,15 @@ function draw() {
     <nav class="deck-nav">
       <button type="button" data-deck="-1" ${index === 0 ? "disabled" : ""}>← ${L.prev}</button>
       <div class="deck-dots">${L.slides.map((_, i) => `<button type="button" data-goto="${i}" class="${i === index ? "on" : ""}" aria-label="${i + 1}"></button>`).join("")}</div>
-      <button type="button" class="primary" data-deck="1" ${index === L.slides.length - 1 ? "disabled" : ""}>${L.next} →</button>
+      ${index === L.slides.length - 1 ? `<button type="button" class="primary" data-deck-end>${L.end} ✓</button>` : `<button type="button" class="primary" data-deck="1">${L.next} →</button>`}
     </nav></div>`;
   root.querySelectorAll("[data-deck]").forEach((b) => b.addEventListener("click", () => go(index + Number(b.dataset.deck))));
+  // "The end" goes back to the home screen (in the app) or to the home page (stand-alone).
+  root.querySelector("[data-deck-end]")?.addEventListener("click", () => {
+    const back = document.querySelector("#presentBack");
+    if (back) back.click();
+    else location.href = "./";
+  });
   root.querySelectorAll("[data-goto]").forEach((b) => b.addEventListener("click", () => go(Number(b.dataset.goto))));
 }
 

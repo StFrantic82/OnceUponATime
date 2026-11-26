@@ -36,3 +36,5 @@
   .slide-points li { font-size: 17px; }
   .deck-nav > button { padding: 9px 12px; font-size: 14px; }
 }
+.slide-figs .fig-action { zoom: 1.3; }
+.slide-figs .fig-action figcaption { font-size: 11px; }

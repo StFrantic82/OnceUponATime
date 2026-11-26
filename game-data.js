@@ -949,7 +949,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Game End: 1 VP for each Adventure you completed.",
-      "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure you completed.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Adventure you completed.",
       "upgraded": false
     },
     {
@@ -979,7 +979,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Ongoing: the first time each round you take a Good card, gain 1 coin.",
-      "upgrade": "Cost 1 XP. Ongoing: the first time each round you take a Good card, gain 1 coin and 1 XP.",
+      "upgrade": "Cost 1 XP. Ongoing: the first time each round you take a Good card, gain 1 XP.",
       "upgraded": false
     },
     {
@@ -1039,7 +1039,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Game End: 2 VP for each of your non-upgraded Legendary Characters.",
-      "upgrade": "Cost 1 XP. Game End: 3 VP for each of your non-upgraded Legendary Characters.",
+      "upgrade": "Cost 1 XP. Game End: 1 VP for each of your non-upgraded Legendary Characters.",
       "upgraded": false
     },
     {
@@ -1059,7 +1059,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: your Items cost 1 coin less.",
-      "upgrade": "Cost 1 XP. Ongoing: your Items cost 2 coins less.",
+      "upgrade": "Cost 1 XP. Ongoing: your Items cost 1 coin less.",
       "upgraded": false
     },
     {
@@ -1089,7 +1089,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1, Sorcery 1. Game End: 1 VP for each Charm icon.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -1099,7 +1099,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Instant: gain 1 XP for each Dwarf and each Charm icon. Game End: 1 VP for each Dwarf.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Dwarf.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each Dwarf.",
       "upgraded": false
     },
     {
@@ -1119,7 +1119,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: spend 1 coin to gain 2 XP.",
-      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: spend up to 2 coins to gain 2 XP for each coin spent, then gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion.",
+      "upgrade": "Cost 2 XP. Gains Intelligence. Activation: spend 1 coin to gain 2 XP. Gain 1 VP for each Scarecrow, Tin Woodman and Cowardly Lion.",
       "upgraded": false
     },
     {
@@ -1129,7 +1129,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Ongoing: your Chapter cards count as +1 value for turn order. You may play the same Chapter as an opponent, and you win ties.",
-      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value for turn order. You may play the same Chapter as an opponent, and you win ties. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
+      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +1 value more for turn order. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
     {
@@ -1159,7 +1159,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Dexterity 1. Game End: 1 VP for each Dexterity icon.",
-      "upgrade": "Cost 2 XP. Game End: 2 VP for each Dexterity icon.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Dexterity icon.",
       "upgraded": false
     },
     {
@@ -1189,7 +1189,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Strength 1, Sorcery 1. Activation: gain 1 XP for each pair of Items.",
-      "upgrade": "Cost 3 XP. Gains Strength. Activation: gain 1 VP for each Item.",
+      "upgrade": "Cost 4 XP. Gains Strength. Activation: gain 1 VP for each Item.",
       "upgraded": false
     },
     {
@@ -1199,7 +1199,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Ongoing: whenever you take an Adventure, gain 1 XP and 1 Tag token.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you take an Adventure, gain 1 XP, 1 Tag token and 2 VP.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you take an Adventure, gain 2 VP.",
       "upgraded": false
     },
     {
@@ -1239,7 +1239,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Dexterity 1, Sorcery 1. Game End: 1 VP for each pair of Bad cards.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Bad card.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each pair of Bad cards.",
       "upgraded": false
     },
     {
@@ -1299,7 +1299,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Game End: 1 VP for each Strength icon.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon. If you have Belle, gain 2 VP more.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each Strength icon. If you have Belle, gain 2 VP more.",
       "upgraded": false
     },
     {
@@ -1339,7 +1339,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Sorcery 1. Game End: 1 VP for each Sorcery icon.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Sorcery icon.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each Sorcery icon.",
       "upgraded": false
     },
     {

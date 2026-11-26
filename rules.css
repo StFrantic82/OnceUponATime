@@ -42,6 +42,8 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 .fig figcaption { font: 700 14px "Alegreya Sans", sans-serif; color: #6b3420; }
 .fig .card, .fig .fcard, .fig .acard { cursor: default; }
 .fig-writer .writer-card { width: 260px; }
+/* Chapter cards all share one size, whatever their content */
+.fig-action .acard { width: 150px; height: 210px; aspect-ratio: auto; box-sizing: border-box; }
 
 /* anatomy */
 .anatomy { display: flex; gap: 26px; align-items: center; margin: 18px 0; flex-wrap: wrap; justify-content: center; }
@@ -97,10 +99,9 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 }
 .rules-screen .rules-hero { background: #fffaf0; border-radius: 18px; border: 1px solid rgba(122, 58, 36, .16); margin-top: 8px; padding: 18px; }
 .rules-screen .rules-section { background: #fffaf0; }
-.actions-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin: 12px 0 18px; }
-.actions-grid .fig { width: 100%; }
-.actions-grid .acard { width: 100%; }
-@media (max-width: 640px) { .actions-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.actions-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0 18px; }
+.actions-grid .fig { zoom: .86; }
+@media (max-width: 640px) { .actions-grid .fig { zoom: .62; } }
 @media print { .actions-grid { break-inside: avoid; } }
 
 .freeup-ico { width: 1.5em; height: 1.5em; vertical-align: middle; display: inline-block; }
