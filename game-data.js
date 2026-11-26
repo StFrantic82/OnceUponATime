@@ -5,7 +5,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 1
     },
@@ -41,7 +41,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 5
     },
@@ -1332,7 +1332,7 @@ window.GAME_DATA = {
     },
     {
       "number": 9,
-      "effect": "3 Coins"
+      "effect": "2 Coins"
     },
     {
       "number": 10,
