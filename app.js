@@ -1807,7 +1807,7 @@ function finalScore() {
 function scoreWriter() {
   if (!state.writer || state.writerLevel < 3) return 0;
   const name = state.writer.name;
-  if (name === "Charles Perrault") return state.items.length * 2;
+  if (name === "Charles Perrault") return state.items.filter((item) => item.cost >= 4).length * 2;
   if (name === "Brothers Grimm") return Math.min(12, Math.min(countAlignment("Good"), countAlignment("Bad")) * 2);
   if (name === "Hans Christian Andersen") return countCardsWith("Game End") * 2;
   if (name === "Carlo Collodi") {

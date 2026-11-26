@@ -350,7 +350,7 @@ window.CARD_I18N = [
   ["1 VP for each Good Character. Max 10 VP.", "1 VP par Personnage Gentil. Max 10 VP.", "1 VP per ogni Personaggio Buono. Max 10 VP."],
   ["3 VP for each card without tags. Max 12 VP.", "3 VP par carte sans tag. Max 12 VP.", "3 VP per ogni carta senza tag. Max 12 VP."],
   ["1 VP for each Character. Max 10 VP.", "1 VP par Personnage. Max 10 VP.", "1 VP per ogni Personaggio. Max 10 VP."],
-  ["2 VP for each Item.", "2 VP par Objet.", "2 VP per ogni Oggetto."],
+  ["2 VP for each Item that costs 4 coins or more.", "2 VP par Objet qui coûte 4 coins ou plus.", "2 VP per ogni Oggetto che costa 4 coins o più."],
   ["2 VP for each card with an Ongoing effect. Max 10 VP.", "2 VP par carte à effet Ongoing. Max 10 VP.", "2 VP per ogni carta con effetto Ongoing. Max 10 VP."],
   ["2 VP for each card with an Activation effect. Max 10 VP.", "2 VP par carte à effet Activation. Max 10 VP.", "2 VP per ogni carta con effetto Activation. Max 10 VP."],
   ["3 VP for each upgraded Legendary card. Max 12 VP.", "3 VP par carte Légendaire améliorée. Max 12 VP.", "3 VP per ogni carta Leggendaria potenziata. Max 12 VP."],

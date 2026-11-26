@@ -1525,7 +1525,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Immediately buy an Item for 2 fewer coins.",
       "cost3": 6,
-      "level3": "2 VP for each Item.",
+      "level3": "2 VP for each Item that costs 4 coins or more.",
       "coins": 2
     },
     {
