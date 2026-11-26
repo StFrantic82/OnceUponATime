@@ -1309,7 +1309,7 @@ function instantLinks(card) {
   if (n === "Princess Briar Rose" && hasCard("The Fairies")) gain("xp", 1);
   if (n === "Fairy Godmother") {
     gain("coins", Math.min(3, countByName("Mice")));
-    placeFreeXp(2, true);
+    placeFreeXp(3, true);
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (/^Wicked Witch/.test(n)) placeWriterXp(2);
@@ -1499,7 +1499,7 @@ async function activateCardInner(card) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
   } else if (card.name === "Crocodile" && card.upgraded) {
-    gain("coins", state.actionDiscard.filter((c) => c.number >= 10).length);
+    gain("coins", state.actionDiscard.filter((c) => c.number >= 9).length);
   } else if (card.name === "Robin Hood" && card.upgraded) {
     const k = Math.min(4, state.coins);
     state.coins -= k;
@@ -1507,7 +1507,7 @@ async function activateCardInner(card) {
   } else if (card.name === "Cheshire Cat" && card.upgraded) {
     commonPick(2, card.name, "discard");
   } else if (card.name === "Magic Wand") {
-    placeFreeXp(1, true);
+    placeFreeXp(1, false);
   } else if (card.name === "Crocodile's Clock") {
     takeBackChapter((v) => v >= 7);
   } else if (card.name === "The Fairies") {
@@ -1527,7 +1527,7 @@ async function activateCardInner(card) {
   } else if (card.name === "The Hunter" && card.upgraded) {
     if (countAlignment("Bad") > 0) gain("vp", 2);
   } else if (card.name === "Puss in Boots" && card.upgraded) {
-    gain("coins", Math.floor(countAlignment("Bad") / 2));
+    gain("coins", countAlignment("Bad"));
   } else if (card.name === "The Wizard of Oz") {
     // resolved in activationLinks: spend coins, gain XP and VP
   } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
@@ -1545,7 +1545,8 @@ async function activateCardInner(card) {
     state.freeUpgrades += 1;
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
-    else if (/gain 1 XP\b/i.test(text)) gain("xp", 1);
+    else if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
+    if (/gain 1 VP for each Item, max 6/i.test(text)) gain("vp", Math.min(6, state.items.length));
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(4, countByName("Pirate") + countAlignment("Bad")));
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
@@ -1556,7 +1557,7 @@ async function activateCardInner(card) {
     else if (/gain 1 VP and 1 coin/i.test(text)) {
       gain("vp", 1);
       gain("coins", 1);
-    } else if (/gain 1 VP\b/i.test(text)) gain("vp", 1);
+    } else if (/gain 1 VP\b(?! for each)/i.test(text)) gain("vp", 1);
     if (/Tag token/i.test(text)) gainTagToken(1, card.name);
     if (/Activation: gain 1 coin\./i.test(text)) gain("coins", 1);
   }
@@ -1799,7 +1800,7 @@ function scoreCards(only = null) {
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
     else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 2 : 0);
-    else if (n === "Pinocchio") total += countAlignment("Good");
+    else if (n === "Pinocchio") total += Math.floor(countAlignment("Good") / 2);
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
     else if (n === "The Whale") total += countTagless();
     else if (n === "Beast") total += up ? icons.Strength * 2 + (hasCard("Belle") ? 2 : 0) : icons.Strength;
@@ -2352,8 +2353,9 @@ function renderTableau() {
     .join("");
 }
 
+// An upgraded Legendary only has its upgraded effect: it replaces the base effect.
 function activeCardText(card) {
-  return `${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`;
+  return `${card.effect || ""} ${card.upgraded ? card.upgrade || "" : card.base || ""}`;
 }
 
 function canUpgradeCard(card) {

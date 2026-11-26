@@ -645,7 +645,7 @@ window.GAME_DATA = {
       "id": "I10",
       "deck": "item",
       "name": "Mad Hatter's Hat",
-      "cost": 5,
+      "cost": 6,
       "icons": "Intelligence 1",
       "effect": "Instant: pull the top card of the Legendary deck out of the hat and add it to your tableau (resolve its Instant effect).",
       "copy": 1
@@ -699,9 +699,9 @@ window.GAME_DATA = {
       "id": "I16",
       "deck": "item",
       "name": "Magic Wand",
-      "cost": 4,
+      "cost": 3,
       "icons": "Sorcery 1",
-      "effect": "Activation: place 1 XP on a Good Character.",
+      "effect": "Activation: place 1 XP on a Character.",
       "copy": 1
     },
     {
@@ -952,8 +952,8 @@ window.GAME_DATA = {
       "name": "Crocodile",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. You gain 1 coin. If an opponent has Captain Hook, gain 2 VP.",
-      "upgrade": "Cost 2 XP. Activation: gain 1 coin for each Chapter card with value 10 or higher in your discard.",
+      "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. Gain 2 coins. If an opponent has Captain Hook, gain 2 VP.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 coin for each Chapter card with value 9 or higher in your discard.",
       "upgraded": false
     },
     {
@@ -1212,8 +1212,8 @@ window.GAME_DATA = {
       "name": "Puss in Boots",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: gain 3 coins.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each pair of Bad cards.",
+      "base": "Dexterity 1. Instant: gain 4 coins.",
+      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each Bad card.",
       "upgraded": false
     },
     {
@@ -1222,7 +1222,7 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: place 2 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.",
+      "base": "Sorcery 1. Instant: place 3 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.",
       "upgrade": "Cost 2 XP. Activation: place 3 XP on a Character.",
       "upgraded": false
     },
@@ -1283,7 +1283,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
-      "upgrade": "Cost 6 XP. Game End: 1 VP for each Good card.",
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each pair of Good cards.",
       "upgraded": false
     },
     {

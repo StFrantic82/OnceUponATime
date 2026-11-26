@@ -344,6 +344,13 @@ window.CARD_I18N = [
   ["7 VP per set of 5 different icons.", "7 VP par série de 5 icônes différentes.", "7 VP per ogni set di 5 icone diverse."],
   ["1 / 2 / 4 Dwarves: 2 / 4 / 6 VP. All 7 Dwarves: you win the game!", "1 / 2 / 4 Nains : 2 / 4 / 6 VP. Les 7 Nains : vous gagnez la partie !", "1 / 2 / 4 Nani: 2 / 4 / 6 VP. Tutti e 7 i Nani: vinci la partita!"],
   ["1 VP for each different Item cost.", "1 VP par coût d’Objet différent.", "1 VP per ogni costo di Oggetto diverso."],
+  ["Game End: 1 VP for each pair of Good cards.", "Game End : 1 VP par paire de cartes Gentilles.", "Game End: 1 VP per ogni coppia di carte Buone."],
+  ["Instant: each opponent with more coins than you loses 1 coin. Gain 2 coins. If an opponent has Captain Hook, gain 2 VP.", "Instant : chaque adversaire qui a plus de coins que vous en perd 1. Gagnez 2 coins. Si un adversaire a le Capitaine Crochet, gagnez 2 VP.", "Instant: ogni avversario con più coins di te ne perde 1. Ottieni 2 coins. Se un avversario ha Capitan Uncino, ottieni 2 VP."],
+  ["Activation: gain 1 coin for each Chapter card with value 9 or higher in your discard.", "Activation : gagnez 1 coin par carte Chapitre de valeur 9 ou plus dans votre défausse.", "Activation: ottieni 1 coin per ogni carta Capitolo di valore 9 o superiore nella tua pila degli scarti."],
+  ["Instant: gain 4 coins.", "Instant : gagnez 4 coins.", "Instant: ottieni 4 coins."],
+  ["Activation: gain 1 coin for each Bad card.", "Activation : gagnez 1 coin par carte Méchante.", "Activation: ottieni 1 coin per ogni carta Cattiva."],
+  ["Activation: place 1 XP on a Character.", "Activation : placez 1 XP sur un Personnage.", "Activation: piazza 1 XP su un Personaggio."],
+  ["Instant: place 3 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.", "Instant : placez 3 XP sur un Personnage Gentil. Gagnez 1 coin par Souris, max 3 coins.", "Instant: piazza 3 XP su un Personaggio Buono. Ottieni 1 coin per ogni Topolini, max 3 coins."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],
