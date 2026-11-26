@@ -582,9 +582,9 @@ window.GAME_DATA = {
       "id": "I3",
       "deck": "item",
       "name": "Wishing Ring",
-      "cost": 2,
+      "cost": 3,
       "icons": "Sorcery 1",
-      "effect": "Ongoing: whenever you complete a set of 5 different icons, gain 2 coins and 2 VP.",
+      "effect": "Ongoing: whenever you complete a set of 5 different icons, gain 1 coin and 2 VP.",
       "copy": 1
     },
     {
@@ -645,7 +645,7 @@ window.GAME_DATA = {
       "id": "I10",
       "deck": "item",
       "name": "Mad Hatter's Hat",
-      "cost": 7,
+      "cost": 8,
       "icons": "Intelligence 1",
       "effect": "Instant: take the top card of the Legendary deck and add it to your tableau (resolve its Instant effect).",
       "copy": 1
@@ -683,14 +683,14 @@ window.GAME_DATA = {
       "name": "Horn of Sherwood",
       "cost": 2,
       "icons": "none",
-      "effect": "Activation: gain 1 coin for each Merry Men (1 coin more if you have Robin Hood).",
+      "effect": "Activation: gain 1 coin, plus 1 coin for each Merry Men (1 coin more if you have Robin Hood).",
       "copy": 1
     },
     {
       "id": "I15",
       "deck": "item",
       "name": "Pumpkin Carriage",
-      "cost": 6,
+      "cost": 7,
       "icons": "none",
       "effect": "Instant: take 1 Adventure.",
       "copy": 1
@@ -780,7 +780,7 @@ window.GAME_DATA = {
       "id": "I25",
       "deck": "item",
       "name": "The Crown of England",
-      "cost": 3,
+      "cost": 4,
       "icons": "none",
       "effect": "Instant: place 2 coins from the supply on this Item. Activation: place 1 of your coins on it. You can spend the coins on it to buy Items. Game End: 1 VP for each coin on it.",
       "copy": 1
@@ -897,7 +897,7 @@ window.GAME_DATA = {
       "id": "I38",
       "deck": "item",
       "name": "Enchanted Candelabra",
-      "cost": 3,
+      "cost": 5,
       "icons": "Sorcery 1",
       "effect": "Game End: 1 VP for each Sorcery icon.",
       "copy": 1
@@ -929,7 +929,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Instant: activate 1 of your Activation cards.",
-      "upgrade": "Cost 2 XP. Instant: gain 2 VP for each of your Legendary cards and Items without tags.",
+      "upgrade": "Cost 1 XP. Instant: gain 2 VP for each of your Legendary cards and Items without tags.",
       "upgraded": false
     },
     {
@@ -1149,7 +1149,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Ongoing: if you have a Pirate or Captain Hook, upgrade Peter Pan for free.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell.",
+      "upgrade": "Cost 3 XP. Game End: 3 VP for each Pirate, Lost Boys and Tinker Bell.",
       "upgraded": false
     },
     {
@@ -1179,7 +1179,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1, Dexterity 1. Instant: steal 1 VP from each opponent.",
-      "upgrade": "Cost 3 XP. Activation: steal 1 coin from each opponent.",
+      "upgrade": "Cost 2 XP. Activation: steal 1 coin from each opponent.",
       "upgraded": false
     },
     {
@@ -1189,7 +1189,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Strength 1, Sorcery 1. Activation: gain 1 XP for each pair of Items.",
-      "upgrade": "Cost 4 XP. Gains Strength. Activation: gain 1 VP for each Item.",
+      "upgrade": "Cost 3 XP. Gains Strength. Activation: gain 1 VP for each pair of Items.",
       "upgraded": false
     },
     {
@@ -1219,7 +1219,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Instant: steal 1 coin from each opponent.",
-      "upgrade": "Cost 2 XP. Game End: 1 VP for every 3 coins.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for every 2 coins.",
       "upgraded": false
     },
     {
@@ -1279,7 +1279,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Sorcery 1. Instant: choose one: take 1 Adventure, buy 1 Item for 4 coins less, or place XP on a Character so that it levels up. If you have Aladin, do all three.",
-      "upgrade": "Cost 2 XP. Activation: gain 2 coins or 2 XP. If you have Aladin, gain both.",
+      "upgrade": "Cost 2 XP. Activation: gain 3 coins or 3 XP. If you have Aladin, gain both.",
       "upgraded": false
     },
     {

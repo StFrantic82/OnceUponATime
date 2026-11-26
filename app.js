@@ -1008,7 +1008,7 @@ function applyWriterAfterGroup(cards) {
 }
 
 // L. Frank Baum, level 1: at the start of each round, 1 coin per set of the 4 different icons.
-// Wishing Ring: 2 coins and 2 VP each time its owner completes one more set of 5 different icons.
+// Wishing Ring: 1 coin and 2 VP each time its owner completes one more set of 5 different icons.
 // Sets completed before the Ring was bought do not count; a set broken and completed again pays again.
 function checkBaumSets() {
   const rings = (state.items || []).filter((item) => item.name === "Wishing Ring").length;
@@ -1020,7 +1020,7 @@ function checkBaumSets() {
   if (fresh <= 0) return;
   const source = vpSource;
   vpSource = "Wishing Ring";
-  gain("coins", 2 * fresh * rings);
+  gain("coins", fresh * rings);
   gain("vp", 2 * fresh * rings);
   vpSource = source;
 }
@@ -1572,7 +1572,7 @@ async function activateCardInner(card) {
   } else if (/Activation:[^.]*\bsteal\b/i.test(text)) {
     applyMean(text.slice(text.search(/Activation:/i)), card.name);
   } else if (card.name === "Genie" && card.upgraded) {
-    const wishes = ["gain 2 coins", "gain 2 XP"];
+    const wishes = ["gain 3 coins", "gain 3 XP"];
     if (hasCard("Aladin")) wishes.forEach((o) => applyOption(o, card.name));
     else offerChoice(card.name, wishes);
   } else if (/choose one of those effects/i.test(text)) {
@@ -1634,6 +1634,8 @@ async function activateCardInner(card) {
     if (/plus 1 coin for each Pirate/i.test(text)) gain("coins", 2 + countByName("Pirate"));
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
+    if (/plus 1 coin for each Merry Men/i.test(text)) gain("coins", 1 + countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
+    if (/gain 1 VP for each pair of Items/i.test(text)) gain("vp", Math.floor(state.items.length / 2));
     if (/gain 1 VP for each pair of Strength/i.test(text)) gain("vp", Math.floor(countIcon("Strength") / 2));
     if (/gain 1 XP for each pair of Charm/i.test(text)) gain("xp", Math.floor(countIcon("Charm") / 2));
     if (/gain 1 XP for each pair of Sorcery/i.test(text)) gain("xp", Math.floor(countIcon("Sorcery") / 2));
@@ -1926,13 +1928,13 @@ function scoreCards(only = null) {
     else if (n === "The Evil Queen") total += icons.Charm * (up ? 2 : 1);
     else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
     else if (n === "Dorothy Gale") total += sets * 4;
-    else if (n === "Peter Pan") total += (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2;
+    else if (n === "Peter Pan") total += (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 3;
     else if (n === "Captain Hook") total += icons.Dexterity * (up ? 2 : 1);
     else if (n === "The Sea Witch") total += icons.Sorcery * (up ? 2 : 1);
     else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += up ? countByName("The Merry Men") * 2 : 0;
-    else if (n === "Prince John") total += Math.floor(state.coins / 3);
+    else if (n === "Prince John") total += Math.floor(state.coins / 2);
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += Math.floor(countAlignment("Bad") / 2) * (up ? 2 : 1);
     else if (n === "Belle") total += up ? icons.Intelligence * 1 + (hasCard("Beast") ? 2 : 0) : 0;
