@@ -125,7 +125,7 @@ const RULES = {
     legendary: "Legendary character",
     anatomy: {
       common: ["Name of the character (Common characters have no tag).", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
-      legendary: ["Skill tags.", "Name and “Legendary”.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (replaces the base effect).", "Good or Bad."],
+      legendary: ["Skill tags.", "Name of the character.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (replaces the base effect).", "Good or Bad."],
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
@@ -207,7 +207,7 @@ const RULES = {
     legendary: "Personnage légendaire",
     anatomy: {
       common: ["Nom du personnage (les personnages communs n’ont pas de tag).", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
-      legendary: ["Tags de compétence.", "Nom et mention « Légendaire ».", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (remplace l’effet de base).", "Gentil ou Méchant."],
+      legendary: ["Tags de compétence.", "Nom du personnage.", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (remplace l’effet de base).", "Gentil ou Méchant."],
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
@@ -289,7 +289,7 @@ const RULES = {
     legendary: "Personaggio leggendario",
     anatomy: {
       common: ["Nome del personaggio (i personaggi comuni non hanno tag).", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
-      legendary: ["Tag di abilità.", "Nome e dicitura «Leggendaria».", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (sostituisce quello base).", "Buono o Cattivo."],
+      legendary: ["Tag di abilità.", "Nome del personaggio.", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (sostituisce quello base).", "Buono o Cattivo."],
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [

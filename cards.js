@@ -199,7 +199,7 @@
     const cost = opts.cost ?? Number((String(card.upgrade).match(/Cost (\d+) XP/i) || [])[1] || 4);
     const upgradeText = String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
     return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
-      ${head(card, 204, 16, `<small>${esc(t("legendary"))}</small>`)}
+      ${head(card, 204, 16)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
       <div class="fc-side fc-base">${formatGameText(stripIconPrefix(tc(card.base)))}</div>
       ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
