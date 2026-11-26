@@ -172,7 +172,8 @@ function backFace(kind, set = 0) {
 }
 
 // Lay out a list of components on as many A4 sheets as needed.
-function sheetsFor(kind, items, title, back = false) {
+// fillBacks: the free spaces of the last page are filled with backs of the same kind, to save paper.
+function sheetsFor(kind, items, title, back = false, fillBacks = false) {
   const k = KINDS[kind];
   const cols = Math.floor(200 / k.w);
   const rows = Math.floor(280 / k.h);
@@ -181,6 +182,9 @@ function sheetsFor(kind, items, title, back = false) {
   for (let i = 0; i < items.length; i += per) {
     const chunk = items.slice(i, i + per);
     const cells = chunk.map((item) => `<div class="cell" style="width:${k.w}mm;height:${k.h}mm" data-nw="${k.nw}">${back ? item : k.render(item)}</div>`);
+    if (fillBacks && !back) {
+      while (cells.length < per) cells.push(`<div class="cell" style="width:${k.w}mm;height:${k.h}mm" data-nw="${k.nw}">${backFace(kind)}</div>`);
+    }
     // Backs are mirrored left-right so they line up with the fronts in duplex printing.
     const grid = back
       ? Array.from({ length: Math.ceil(cells.length / cols) }, (_, r) => {
@@ -205,7 +209,7 @@ function tokenSheet() {
   const tags = ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"].flatMap((icon) => Array.from({ length: 9 }, () => `<div class="tok tag-tok sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon, true)}</div>`));
   // A coin is a coin; a feather is 1 VP, a feather with a green 5 is 5 VP.
   const round = (icon, value, n) => Array.from({ length: n }, () => `<div class="tok round-tok tok-${icon} ${value > 1 ? "tok-multi" : ""}">${value > 1 ? `<b class="tok-val">${value}</b>` : ""}${resourceIcon(icon, icon, true)}</div>`);
-  const res = [...round("coins", 1, 36), ...round("vp", 1, 18), ...round("vp", 5, 9)];
+  const res = [...round("coins", 1, 36), ...round("vp", 1, 27), ...round("vp", 5, 18)];
   const xp = Array.from({ length: 90 }, () => `<div class="tok xp-tok">${resourceIcon("xp", "XP", true)}</div>`);
   return [
     `<section class="sheet"><header class="sheet-head">${esc(L.tagsTitle)} · 20 × 20 mm</header><div class="tok-grid">${tags.join("")}</div>
@@ -297,11 +301,21 @@ function build() {
   const add = (label, sheets) => sections.push([label, sheets]);
   add(L.sizes.common, sheetsFor("common", DATA.common, L.sizes.common));
   add(`${L.backs} · ${L.sizes.common.split(" · ")[0]}`, backsSheet("common"));
-  add(L.sizes.legendary, sheetsFor("legendary", DATA.legendary, L.sizes.legendary));
+  // Legendary cards that would sit alone on a last page go on the last Item page instead, each beside its back.
+  const legPer = Math.floor(200 / KINDS.legendary.w) * Math.floor(280 / KINDS.legendary.h);
+  const legExtra = DATA.legendary.length % legPer <= 2 ? DATA.legendary.slice(DATA.legendary.length - (DATA.legendary.length % legPer)) : [];
+  add(L.sizes.legendary, sheetsFor("legendary", DATA.legendary.slice(0, DATA.legendary.length - legExtra.length), L.sizes.legendary));
   add(`${L.backs} · ${L.sizes.legendary.split(" · ")[0]}`, backsSheet("legendary"));
-  add(L.sizes.items, sheetsFor("items", DATA.items, L.sizes.items));
+  const itemSheets = sheetsFor("items", DATA.items, L.sizes.items);
+  if (legExtra.length) {
+    const lk = KINDS.legendary;
+    const cell = (html) => `<div class="cell" style="width:${lk.w}mm;height:${lk.h}mm" data-nw="${lk.nw}">${html}</div>`;
+    const extra = `<header class="sheet-head second">${esc(L.sizes.legendary.split(" · ")[0])} · ${esc(L.backs)}</header><div class="grid" style="grid-template-columns:repeat(${legExtra.length * 2}, ${lk.w}mm)">${legExtra.map((c) => cell(lk.render(c)) + cell(backFace("legendary"))).join("")}</div>`;
+    itemSheets[itemSheets.length - 1] = itemSheets[itemSheets.length - 1].replace(/<\/section>$/, `${extra}</section>`);
+  }
+  add(L.sizes.items, itemSheets);
   add(`${L.backs} · ${L.sizes.items.split(" · ")[0]}`, backsSheet("items"));
-  add(L.sizes.quests, sheetsFor("quests", DATA.quests, L.sizes.quests));
+  add(L.sizes.quests, sheetsFor("quests", DATA.quests, L.sizes.quests, false, true));
   add(`${L.backs} · ${L.sizes.quests.split(" · ")[0]}`, backsSheet("quests"));
   add(L.sizes.writers, sheetsFor("writers", DATA.writers, L.sizes.writers));
   add(`${L.backs} · ${L.sizes.writers.split(" · ")[0]}`, backsSheet("writers"));

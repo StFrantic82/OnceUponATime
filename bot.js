@@ -41,12 +41,86 @@
     return after - before;
   }
 
+  // Simulations: seats flagged "prev" keep the previous valuation (A/B tests of the valuation below).
+  const next = () => state.ai !== "prev";
+  const ICON_RE = "Charm|Strength|Dexterity|Intelligence|Sorcery";
+
+  // How many of the things an effect counts ("for each ...") the bot has, the card itself included.
+  function countFor(phrase, card) {
+    let m;
+    const self = (icon) => (card ? iconAmount(card, icon) : 0);
+    const side = (a) => countAlignment(a) + (card && card.alignment === a && !state.tableau.includes(card) ? 1 : 0);
+    if ((m = phrase.match(new RegExp(`pair of (${ICON_RE}) icons`, "i")))) return Math.floor((countIcon(m[1]) + self(m[1])) / 2);
+    if ((m = phrase.match(new RegExp(`(${ICON_RE}) icon`, "i")))) return countIcon(m[1]) + self(m[1]);
+    if (/set of 5 different/i.test(phrase)) return liveSets();
+    if (/different icon/i.test(phrase)) return liveDifferent();
+    if (/icon type of which you have 3/i.test(phrase)) return liveTypesWith(3);
+    if (/Good.Bad pair/i.test(phrase)) return Math.min(side("Good"), side("Bad"));
+    if (/pair of Good cards/i.test(phrase)) return Math.floor(side("Good") / 2);
+    if (/pair of Bad cards/i.test(phrase)) return Math.floor(side("Bad") / 2);
+    if (/Bad card/i.test(phrase)) return side("Bad");
+    if (/Good card/i.test(phrase)) return side("Good");
+    if (/pair of Items/i.test(phrase)) return Math.floor(state.items.length / 2);
+    if (/without tags/i.test(phrase)) return countTagless();
+    if (/\bItem\b/i.test(phrase)) return state.items.length;
+    if (/Adventure/i.test(phrase)) return state.quests.length;
+    if (/Dwarf/i.test(phrase)) return countByName("Dwarf");
+    if (/Mice/i.test(phrase)) return countByName("Mice");
+    if (/Merry Men/i.test(phrase)) return countByName("The Merry Men");
+    if (/Pirate/i.test(phrase)) return countByName("Pirate");
+    if (/opponent/i.test(phrase)) return G.players.length - 1;
+    return 1;
+  }
+
+  // Value of one resolution of a clause ("Instant: ..." or "Activation: ..."): what it gives, times what it counts.
+  function clauseValue(clause, card, growth = 0) {
+    const left = roundsLeft();
+    const rate = { coin: left ? tune("coinInstant") : 0.15, XP: xpTargets().length ? 1.1 : 0.1, VP: 1 };
+    const unit = (u) => rate[/coin/i.test(u) ? "coin" : u.toUpperCase() === "XP" ? "XP" : "VP"];
+    let rest = String(clause || "").replace(/\((?:\d[^)]*)?if you have[^)]*\)/gi, "").replace(/If (?:you have|an opponent has|it was)[^.]*\./gi, "");
+    let value = 0;
+    rest = rest.replace(/(\d+) (coins?|XP|VP)(?: and (\d+) (coins?|XP|VP))?,? (?:plus \d+ coins? )?(?:for each|from each|for every) ([^.(]+)/gi, (all, n, u, n2, u2, what) => {
+      const count = countFor(all, card) + growth;
+      value += count * (Number(n) * unit(u) + (n2 ? Number(n2) * unit(u2) : 0));
+      return "";
+    });
+    let m;
+    const flat = /(?:gain|place|you gain) (\d+) (coins?|XP|VP)(?: (?:and|or) (\d+) (coins?|XP|VP))?/gi;
+    while ((m = flat.exec(rest))) value += Number(m[1]) * unit(m[2]) + (m[3] && !/ or /.test(m[0]) ? Number(m[3]) * unit(m[4]) : 0);
+    if ((m = rest.match(/(\d+) Tag tokens?/i))) value += Number(m[1]) * 1.2;
+    else if (/Tag token|\b(?:Charm|Strength|Dexterity|Intelligence|Sorcery) token/i.test(rest)) value += 1.2;
+    if ((m = rest.match(/spend (\d+) coins?/i))) value -= Number(m[1]) * rate.coin;
+    if (/spend 1 XP/i.test(rest)) value -= 1.1;
+    if (/discard 1 (?:Common card|Character|Bad Character)/i.test(rest)) value -= 2;
+    if (/take 1 (?:Quest|Adventure)/i.test(rest)) value += 3 + 0.3 * left;
+    if (/activate (?:1|another) of your Activation cards/i.test(rest)) value += activationCandidates().length ? 1.3 * (card && card.name === "Sand Hourglass" && countIcon("Intelligence") + 1 >= 3 ? 2 : 1) : 0;
+    if (card && card.name === "Magic Wand" && countIcon("Sorcery") + 1 >= 3) value += rate.XP;
+    if (/place XP on a Character so that it levels up/i.test(rest)) value += 4;
+    if (/buy 1 Item for (\d+) coins less/i.test(rest)) value += Number(RegExp.$1) * rate.coin;
+    if (/take the top card of the Legendary deck|take 1 Character from the discard/i.test(rest)) value += 5;
+    return value;
+  }
+  const clauseOf = (text, kind) => (String(text).match(new RegExp(`${kind}:[^]*?(?=(?:Instant|Activation|Ongoing|Game End):|$)`, "i")) || [""])[0];
+  // Activations still to come for a card held from now on: about 2 per game for a card held 5 rounds.
+  const activationsLeft = () => 0.42 * roundsLeft();
+
+  // An Ongoing effect: what one trigger gives, times how often it should still trigger.
+  function ongoingValue(text, card) {
+    const left = roundsLeft();
+    const clause = clauseOf(text, "Ongoing");
+    const per = clauseValue(clause, card);
+    const often = /first time each round/i.test(clause) ? 0.8 : /take an Adventure/i.test(clause) ? 0.25 : /play (?:a|the lowest) Chapter/i.test(clause) ? 0.3
+      : /buy an Item/i.test(clause) ? 0.4 : /level up a Character/i.test(clause) ? 0.5 : /gain coins from a card/i.test(clause) ? 0.5 : 0;
+    return often && per > 0 ? Math.max(0.3 * left, per * often * left) : 0.3 * left;
+  }
+
   // Value of what a text gives at once.
-  function immediate(text) {
+  function immediate(text, card) {
     const left = roundsLeft();
     let value = 0;
     let m;
     const instant = (String(text).match(/Instant:[^]*?(?=(?:Activation|Ongoing|Game End):|$)/i) || [""])[0];
+    if (next()) return clauseValue(instant, card);
     if ((m = instant.match(/gain (\d+) coins?/i))) value += Number(m[1]) * (left ? tune("coinInstant") : 0.15);
     if ((m = instant.match(/(\d+) XP/i))) value += Number(m[1]) * (xpTargets().length ? 1.1 : 0.1);
     if ((m = instant.match(/gain (\d+) VP/i))) value += Number(m[1]);
@@ -59,10 +133,15 @@
   function future(card) {
     const left = roundsLeft();
     const text = card.deck === "legendary" ? card.base || "" : card.effect || "";
-    let value = immediate(text);
+    let value = immediate(text, card);
     if (/Game End/i.test(text)) value += 0.35 * left;
-    if (/Activation/i.test(text)) value += 0.45 * left;
-    if (/Ongoing/i.test(text)) value += 0.3 * left;
+    if (/Activation/i.test(text)) {
+      // What one activation gives, times the activations still to come (counts keep growing a little).
+      const per = next() ? clauseValue(clauseOf(text, "Activation"), card, 0.1 * left) : 0;
+      value += next() ? Math.max(0.3, per > 0 ? per : 1.1) * activationsLeft() : 0.45 * left;
+    }
+    if (/Ongoing/i.test(text)) value += next() ? ongoingValue(text, card) : 0.3 * left;
+    if (next() && card.name === "Wishing Ring") value += 3 * Math.min(1.5, 0.22 * left);
     value += totalIcons(card) * (0.4 + 0.12 * left);
     if (card.deck === "legendary") value += 1 + Math.min(3, 0.6 * left);
     else if (card.deck === "common") value += 0.8;
@@ -72,7 +151,22 @@
       if (mine.some((c) => fullText.includes(c.name) || `${c.effect || ""} ${c.base || ""} ${c.upgrade || ""}`.includes(card.name))) value += 1.5;
       for (const quest of state.quests) {
         for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"]) {
-          if (new RegExp(icon).test(quest.scoring)) value += iconAmount(card, icon) * 0.8;
+          if (new RegExp(icon).test(quest.scoring)) value += (iconAmount(card, icon) + (next() && isWild(card) ? 1 : 0)) * 0.8;
+        }
+      }
+      if (next()) {
+        // Thresholds: an icon that brings Magic Wand or Sand Hourglass to 3 icons of its tag is worth more.
+        for (const [item, icon] of [["Magic Wand", "Sorcery"], ["Sand Hourglass", "Intelligence"]]) {
+          if (state.items.some((i) => i.name === item) && iconAmount(card, icon) > 0 && countIcon(icon) < 3) value += 0.9;
+        }
+        // A joker tag or a missing tag type that completes a set while the Wishing Ring is owned.
+        if (state.items.some((i) => i.name === "Wishing Ring") && totalIcons(card) > 0) {
+          const before = liveSets();
+          const list = card.cost != null ? state.items : state.tableau;
+          list.push(card);
+          const after = liveSets();
+          list.pop();
+          value += 3 * (after - before);
         }
       }
     }
@@ -96,11 +190,14 @@
     const after = projected();
     card.upgraded = false;
     const text = String(card.upgrade || "");
-    let value = after - before + immediate(text);
+    let value = after - before + immediate(text, card);
     let m;
     if ((m = text.match(/Gain (\d+) VP/))) value += Number(m[1]);
-    if (/Activation/i.test(text)) value += 0.8 + 0.5 * left;
-    if (/Ongoing/i.test(text)) value += 0.5 + 0.35 * left;
+    if (/Activation/i.test(text)) {
+      const per = next() ? clauseValue(clauseOf(text, "Activation"), card, 0.1 * left) : 0;
+      value += next() ? 0.5 + Math.max(0.3, per > 0 ? per : 1.2) * activationsLeft() : 0.8 + 0.5 * left;
+    }
+    if (/Ongoing/i.test(text)) value += next() ? 0.5 + ongoingValue(text, card) : 0.5 + 0.35 * left;
     if (/Game End/i.test(text)) value += 0.3 * left;
     return Math.max(0.5, value);
   }

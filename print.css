@@ -206,9 +206,10 @@ body.print-body {
   height: 13mm;
 }
 
-.round-tok.tok-multi { display: flex; justify-content: center; align-items: center; gap: 0.6mm; }
-.round-tok.tok-multi .game-icon { width: 10mm; height: 10mm; }
-.round-tok .tok-val { font: 800 21pt "Alegreya", serif; color: #3f8f4c; -webkit-text-stroke: 0.2mm #fff; }
+/* 5 VP: the number sits right against the feather, both centred in the token */
+.round-tok.tok-multi { display: flex; justify-content: center; align-items: center; gap: 0; }
+.round-tok.tok-multi .game-icon { flex: none; width: 9mm; height: 9mm; margin: 0 0 0 -0.4mm; }
+.round-tok .tok-val { flex: none; width: auto; line-height: 1; font: 800 21pt/1 "Alegreya", serif; color: #3f8f4c; -webkit-text-stroke: 0.2mm #fff; }
 
 .first-tok {
   width: 30mm;
