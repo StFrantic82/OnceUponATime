@@ -639,6 +639,7 @@ function takeQuest(questId) {
   vpSource = "Little Mermaid";
   const questRewardCards = state.tableau.filter((card) => /whenever you take an? (?:Quest|Adventure), gain 1 XP/i.test(`${card.base || ""} ${card.upgrade || ""}`));
   if (questRewardCards.length) gain("xp", questRewardCards.length);
+  if (state.tableau.some((card) => card.name === "Little Mermaid")) gainTagToken(1, "Little Mermaid");
   const mermaid = state.tableau.find((card) => card.name === "Little Mermaid" && card.upgraded);
   if (mermaid) {
     vpSource = "Little Mermaid";
@@ -1137,6 +1138,7 @@ function applyOption(option, source) {
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
   else if (/take 1 (?:Quest|Adventure)/i.test(option)) grantQuestChoice(source);
+  else if (/gain 2 Tag tokens/i.test(option)) gainTagToken(2, source);
   else if (/gain 1 Tag token/i.test(option)) gainTagToken(1, source);
 }
 
@@ -1318,7 +1320,10 @@ function applyInstantInner(card) {
   else if (/gain 2 XP if you have a Bad/i.test(text)) {
     if (countAlignment("Bad")) gain("xp", 2);
   } else if (/gain 2 XP/i.test(text)) gain("xp", 2);
-  else if (/gain 1 XP\b(?! for each pair of Good)/i.test(text)) gain("xp", 1);
+  else if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
+  const xpPerIcon = text.match(/gain 1 XP for each (Charm|Strength|Dexterity|Intelligence|Sorcery) icon/i);
+  if (xpPerIcon) gain("xp", countIcon(ICONS.find((icon) => icon.toLowerCase() === xpPerIcon[1].toLowerCase())));
+  if (/gain 1 XP for each different icon/i.test(text)) gain("xp", ICONS.filter((icon) => iconCounts()[icon] > 0).length);
   if (/gain 5 coins/i.test(text)) gain("coins", 5);
   else if (/gain 4 coins/i.test(text)) gain("coins", 4);
   else if (/gain 3 coins/i.test(text)) gain("coins", 3);
@@ -1356,7 +1361,7 @@ function instantLinks(card) {
   if (/^Wicked Witch/.test(n)) placeWriterXp(2);
   if (n === "The Prince") activateOne();
   if (n === "Prince Charming") gain("vp", iconCounts().Charm);
-  if (n === "Snow White") gain("xp", countByName("Dwarf"));
+  if (n === "Snow White") gain("xp", countByName("Dwarf") + countIcon("Charm"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
@@ -1544,7 +1549,7 @@ async function activateCardInner(card) {
     const options = choiceOptions(card.base || "");
     if (options) offerChoice(card.name, options);
   } else if (card.name === "Crocodile" && card.upgraded) {
-    gain("coins", state.actionDiscard.filter((c) => c.number >= 9).length);
+    gain("vp", Math.floor(countIcon("Strength") / 2));
   } else if (card.name === "Robin Hood" && card.upgraded) {
     const k = Math.min(4, state.coins);
     state.coins -= k;
@@ -1593,6 +1598,7 @@ async function activateCardInner(card) {
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
     else if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
+    if (/gain 1 VP for each set of 5 different icons/i.test(text)) gain("vp", Math.min(...ICONS.map((icon) => iconCounts()[icon])));
     if (/gain 1 VP for each Item\./i.test(text)) gain("vp", state.items.length);
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/plus 1 coin for each Pirate/i.test(text)) gain("coins", 2 + countByName("Pirate"));

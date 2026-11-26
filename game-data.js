@@ -593,7 +593,7 @@ window.GAME_DATA = {
       "name": "Spellbook",
       "cost": 3,
       "icons": "Intelligence 1",
-      "effect": "Instant: gain 1 XP for each Intelligence icon.",
+      "effect": "Instant: gain 1 XP for each different icon.",
       "copy": 1
     },
     {
@@ -969,7 +969,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Sorcery 1. Instant: gain 2 Tag tokens of your choice.",
-      "upgrade": "Cost 1 XP. Activation: gain 1 Tag token and 1 VP.",
+      "upgrade": "Cost 1 XP. Activation: gain 1 VP for each set of 5 different icons, then gain 1 Tag token.",
       "upgraded": false
     },
     {
@@ -989,7 +989,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Instant: each opponent with more coins than you loses 1 coin. Gain 3 coins. If an opponent has Captain Hook, gain 2 VP.",
-      "upgrade": "Cost 2 XP. Activation: gain 1 coin for each Chapter card with value 9 or higher in your discard.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each pair of Strength icons.",
       "upgraded": false
     },
     {
@@ -1098,7 +1098,7 @@ window.GAME_DATA = {
       "name": "Snow White",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 XP for each Dwarf. Game End: 1 VP for each Dwarf.",
+      "base": "Charm 1. Instant: gain 1 XP for each Dwarf and each Charm icon. Game End: 1 VP for each Dwarf.",
       "upgrade": "Cost 3 XP. Game End: 2 VP for each Dwarf.",
       "upgraded": false
     },
@@ -1198,8 +1198,8 @@ window.GAME_DATA = {
       "name": "Little Mermaid",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: whenever you take an Adventure, gain 1 XP.",
-      "upgrade": "Cost 2 XP. Ongoing: whenever you take an Adventure, gain 1 XP and 2 VP.",
+      "base": "Charm 1. Ongoing: whenever you take an Adventure, gain 1 XP and 1 Tag token.",
+      "upgrade": "Cost 2 XP. Ongoing: whenever you take an Adventure, gain 1 XP, 1 Tag token and 2 VP.",
       "upgraded": false
     },
     {
@@ -1278,7 +1278,7 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 3 XP, or gain 1 Tag token.",
+      "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 3 XP, or gain 2 Tag tokens.",
       "upgrade": "Cost 2 XP. Activation: choose one of those effects.",
       "upgraded": false
     },
