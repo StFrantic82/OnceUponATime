@@ -131,6 +131,20 @@ const RULES = {
     sections: [
       ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Adventures. After <b>8 rounds</b>, the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
       <p>The heart of the game is your hand of <b>Chapter cards</b>, numbered 1 to 12 like the chapters of a book. A high chapter lets you choose first; a low chapter gives a stronger effect. Every chapter you play is gone, so choose wisely when to spend it.</p>`],
+      ["material", "Components", `<ul class="material-list">
+        <li><b>62</b> Common character cards</li>
+        <li><b>43</b> Legendary character cards</li>
+        <li><b>40</b> Item tiles</li>
+        <li><b>25</b> Adventure cards</li>
+        <li><b>8</b> Writer cards</li>
+        <li><b>48</b> Chapter cards (12 per player, in 4 colours)</li>
+        <li><b>1</b> board (groups for 2, 3 and 4 players, and the icons)</li>
+        <li><b>1</b> first player token</li>
+        <li><b>36</b> coins [[icon:coins]]</li>
+        <li><b>90</b> XP tokens [[icon:xp]]</li>
+        <li><b>45</b> Victory Point tokens [[icon:vp]] (27 worth 1 VP, 18 worth 5 VP)</li>
+        <li><b>45</b> Tag tokens (9 per skill)</li>
+      </ul>`],
       ["components", "The cards", `<p>Every character and Item shows the same elements:</p>
       [[anatomy:common]]
       [[anatomy:legendary]]
@@ -213,6 +227,20 @@ const RULES = {
     sections: [
       ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Aventures. Après <b>8 manches</b>, le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
       <p>Le cœur du jeu, c’est votre main de <b>cartes Chapitre</b>, numérotées de 1 à 12 comme les chapitres d’un livre. Un grand chapitre vous fait choisir en premier ; un petit chapitre donne un effet plus fort. Chaque chapitre joué est perdu : choisissez bien quand le dépenser.</p>`],
+      ["material", "Matériel", `<ul class="material-list">
+        <li><b>62</b> cartes Personnage commun</li>
+        <li><b>43</b> cartes Personnage légendaire</li>
+        <li><b>40</b> tuiles Objet</li>
+        <li><b>25</b> cartes Aventure</li>
+        <li><b>8</b> cartes Écrivain</li>
+        <li><b>48</b> cartes Chapitre (12 par joueur, en 4 couleurs)</li>
+        <li><b>1</b> plateau (groupes pour 2, 3 et 4 joueurs, et iconographie)</li>
+        <li><b>1</b> jeton Premier joueur</li>
+        <li><b>36</b> pièces [[icon:coins]]</li>
+        <li><b>90</b> jetons XP [[icon:xp]]</li>
+        <li><b>45</b> jetons Point de Victoire [[icon:vp]] (27 de valeur 1, 18 de valeur 5)</li>
+        <li><b>45</b> jetons Tag (9 par compétence)</li>
+      </ul>`],
       ["components", "Les cartes", `<p>Chaque personnage et chaque Objet présente les mêmes éléments :</p>
       [[anatomy:common]]
       [[anatomy:legendary]]
@@ -295,6 +323,20 @@ const RULES = {
     sections: [
       ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Avventure. Dopo <b>8 round</b>, vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
       <p>Il cuore del gioco è la tua mano di <b>carte Capitolo</b>, numerate da 1 a 12 come i capitoli di un libro. Un capitolo alto ti fa scegliere per primo; un capitolo basso dà un effetto più forte. Ogni capitolo giocato è perso: scegli bene quando usarlo.</p>`],
+      ["material", "Componenti", `<ul class="material-list">
+        <li><b>62</b> carte Personaggio comune</li>
+        <li><b>43</b> carte Personaggio leggendario</li>
+        <li><b>40</b> tessere Oggetto</li>
+        <li><b>25</b> carte Avventura</li>
+        <li><b>8</b> carte Scrittore</li>
+        <li><b>48</b> carte Capitolo (12 per giocatore, in 4 colori)</li>
+        <li><b>1</b> plancia (gruppi per 2, 3 e 4 giocatori, e iconografia)</li>
+        <li><b>1</b> segnalino Primo giocatore</li>
+        <li><b>36</b> monete [[icon:coins]]</li>
+        <li><b>90</b> segnalini XP [[icon:xp]]</li>
+        <li><b>45</b> segnalini Punto Vittoria [[icon:vp]] (27 da 1 PV, 18 da 5 PV)</li>
+        <li><b>45</b> segnalini Tag (9 per abilità)</li>
+      </ul>`],
       ["components", "Le carte", `<p>Ogni personaggio e ogni Oggetto mostra gli stessi elementi:</p>
       [[anatomy:common]]
       [[anatomy:legendary]]

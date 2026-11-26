@@ -141,3 +141,8 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 .ig-icon .guide-vpmark { position: static; }
 .ig-text { font-size: 13px; line-height: 1.3; }
 @media (max-width: 640px) { .icon-guide { grid-template-columns: 1fr; } }
+
+/* Components list */
+.material-list { columns: 2; column-gap: 28px; padding-left: 20px; margin: 6px 0 0; }
+.material-list li { break-inside: avoid; margin: 0 0 5px; }
+@media (max-width: 640px) { .material-list { columns: 1; } }
