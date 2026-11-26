@@ -388,7 +388,7 @@ for (const [name, fn] of Object.entries({ esc, resourceIcon, formatGameText, ico
 }
 
 // Stand-alone page (rules.html)
-if (document.body.classList.contains("rules-body") && !document.body.classList.contains("present-body")) {
+if (document.body.classList.contains("rules-body") && !document.body.classList.contains("present-body") && !document.body.classList.contains("box-body")) {
   const params = new URLSearchParams(location.search);
   if (params.get("lang")) I18N.setLang(params.get("lang"), false);
   I18N.apply();

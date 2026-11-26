@@ -1,0 +1,63 @@
+/* Box art: square cover and box back (design size 1000 × 1000 px) */
+#box { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; padding: 20px; }
+.box-wrap { margin: 0; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+.box-wrap figcaption { font: 700 15px "Alegreya Sans", sans-serif; color: #7a3a24; }
+.box-face { position: relative; width: 1000px; height: 1000px; overflow: hidden; border-radius: 10px; box-shadow: 0 14px 40px rgba(40, 20, 10, .35); zoom: var(--box-zoom, .62); }
+
+/* ---- Cover ---- */
+.box-cover { background: radial-gradient(ellipse at 50% 58%, #3b4f8c 0%, #232f5e 38%, #121836 100%); color: #f6dfa4; }
+.cover-stars { position: absolute; inset: 0; opacity: .9;
+  background-image: radial-gradient(#fff6c8 1.4px, transparent 1.8px), radial-gradient(#ffe9a3 1px, transparent 1.4px), radial-gradient(#ffffff 1.8px, transparent 2.3px);
+  background-size: 173px 149px, 97px 113px, 311px 263px; background-position: 20px 30px, 60px 90px, 140px 10px; }
+.cover-frame { position: absolute; inset: 22px; border: 5px solid #d9a441; border-radius: 26px; box-shadow: inset 0 0 0 5px #121836, inset 0 0 0 7px #a8782c; pointer-events: none; z-index: 5; }
+.cover-by { position: absolute; top: 58px; left: 0; right: 0; margin: 0; text-align: center; font: 500 25px "Alegreya Sans", sans-serif; letter-spacing: .04em; color: #e9d6a8; }
+.cover-by b { font-weight: 800; color: #ffe9a3; }
+.cover-title { position: absolute; top: 102px; left: 0; right: 0; margin: 0; text-align: center; white-space: nowrap;
+  font: 800 112px/1 "Alegreya", serif; color: #f7c95a; text-shadow: 0 4px 0 #7a4a12, 0 8px 22px rgba(0, 0, 0, .55); }
+.cover-book { position: absolute; left: 50%; top: 566px; width: 372px; height: 372px; transform: translate(-50%, -50%); border-radius: 50%; overflow: hidden;
+  border: 9px solid #d9a441; box-shadow: 0 0 0 5px #7a4a12, 0 0 70px 20px rgba(255, 214, 120, .45); }
+.cover-book svg, .medal svg { width: 100%; height: 100%; display: block; }
+.medal { position: absolute; width: 138px; height: 138px; transform: translate(-50%, -50%); border-radius: 50%; overflow: hidden; border: 6px solid #d9a441; box-shadow: 0 6px 18px rgba(0, 0, 0, .5); }
+.medal-good { box-shadow: 0 0 0 5px #2f6fb5, 0 6px 18px rgba(0, 0, 0, .5); }
+.medal-bad { box-shadow: 0 0 0 5px #b5312b, 0 6px 18px rgba(0, 0, 0, .5); }
+.cover-tagline { position: absolute; left: 40px; right: 40px; bottom: 92px; margin: 0; text-align: center; white-space: nowrap; font: italic 500 24.5px/1.2 "Alegreya", serif; color: #fbeecb; text-shadow: 0 2px 6px rgba(0, 0, 0, .6); }
+.cover-badges, .back-badges { display: flex; gap: 12px; justify-content: center; }
+.cover-badges { position: absolute; left: 0; right: 0; bottom: 46px; }
+.cover-badges span, .back-badges span { font: 800 20px "Alegreya Sans", sans-serif; padding: 5px 18px; border-radius: 99px; background: #d9a441; color: #2a1a08; }
+
+/* ---- Back ---- */
+.box-back { background: radial-gradient(ellipse at 50% 20%, #fff6e1, #efd9ac); color: #3d2414; display: flex; flex-direction: column; gap: 14px; padding: 50px 54px 44px; box-sizing: border-box; }
+.back-frame { position: absolute; inset: 20px; border: 5px solid #7a3a24; border-radius: 26px; box-shadow: inset 0 0 0 3px #e3c288; pointer-events: none; }
+.back-head h2 { margin: 0; font: 800 50px/1 "Alegreya", serif; color: #5a2716; }
+.back-head p { margin: 8px 0 0; font: 500 22px/1.3 "Alegreya Sans", sans-serif; }
+.back-keys { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.back-keys li { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: rgba(255, 252, 244, .8); border: 2px solid #c9a46b; }
+.key-num { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: #7a3a24; color: #fff4dc; font: 800 22px "Alegreya Sans", sans-serif; }
+.back-keys b { display: block; font: 800 20px/1.1 "Alegreya", serif; color: #5a2716; margin-bottom: 4px; }
+.back-keys span { font: 500 16.5px/1.25 "Alegreya Sans", sans-serif; }
+.back-keys .key-num { font-size: 22px; }
+.back-scene { flex: 1; display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+.back-scene h3 { margin: 0; font: italic 700 22px "Alegreya", serif; color: #7a3a24; text-align: center; }
+.scene-table { position: relative; flex: 1; border-radius: 22px; padding: 16px 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+  background: radial-gradient(ellipse at 50% 40%, #2f6b4f, #1d4636); border: 6px solid #7a4a1a; box-shadow: inset 0 0 40px rgba(0, 0, 0, .45); overflow: hidden; }
+.scene-row { display: flex; gap: 14px; align-items: flex-end; justify-content: center; }
+.scene-row .fig { zoom: .4; }
+.scene-group, .scene-shop, .scene-hand, .scene-tableau { display: flex; gap: 5px; align-items: flex-end; padding: 6px; border-radius: 12px; }
+.scene-group { border: 2px dashed rgba(255, 240, 200, .55); }
+.scene-group.picked { border: 3px solid #f7c95a; box-shadow: 0 0 18px rgba(247, 201, 90, .7); background: rgba(247, 201, 90, .12); }
+.scene-shop { margin-left: 8px; align-items: center; }
+.scene-player { align-items: center; }
+.scene-writer .fig { zoom: .46; }
+.scene-hand .fig { zoom: .9; }
+.scene-hand .fig:first-child { transform: translateY(-34px); filter: drop-shadow(0 0 14px rgba(247, 201, 90, .95)); }
+.callout { position: absolute; display: flex; align-items: center; gap: 6px; padding: 4px 12px 4px 4px; border-radius: 99px; background: #fff4dc; color: #3d2414; font: 800 15.5px "Alegreya Sans", sans-serif; box-shadow: 0 3px 10px rgba(0, 0, 0, .45); white-space: nowrap; }
+.callout i { font-style: normal; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: #7a3a24; color: #fff4dc; }
+.co-1 { left: 236px; bottom: 204px; }
+.co-2 { left: 214px; top: 6px; }
+.co-3 { right: 60px; bottom: 204px; }
+.back-foot { display: grid; grid-template-columns: 1fr auto; gap: 6px 18px; align-items: center; }
+.back-contents { font: 500 16.5px/1.3 "Alegreya Sans", sans-serif; }
+.back-contents b { display: block; font: 800 18px "Alegreya", serif; color: #5a2716; }
+.back-badges span { background: #7a3a24; color: #fff4dc; }
+.back-by { grid-column: 1 / -1; margin: 0; text-align: center; font: italic 17px "Alegreya", serif; color: #6b4a30; }
+@media print { .rules-top, .box-wrap figcaption { display: none; } .box-face { zoom: 1; box-shadow: none; page-break-after: always; } }
