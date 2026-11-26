@@ -14,7 +14,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 2
     },
@@ -23,7 +23,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 3
     },
@@ -32,7 +32,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 4
     },
@@ -50,7 +50,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 6
     },
@@ -59,7 +59,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Dwarf",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Activation: gain 1 coin.",
       "copy": 7
     },
@@ -68,7 +68,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Playing Card Soldier",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 1
     },
@@ -77,7 +77,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Playing Card Soldier",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 2
     },
@@ -86,7 +86,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Playing Card Soldier",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 3
     },
@@ -95,7 +95,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Playing Card Soldier",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 4
     },
@@ -104,7 +104,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Playing Card Soldier",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 5
     },
@@ -113,7 +113,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Playing Card Soldier",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 6
     },
@@ -122,7 +122,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Pirate",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 1
     },
@@ -131,7 +131,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Pirate",
       "alignment": "Bad",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 2
     },
@@ -140,7 +140,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Pirate",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 3
     },
@@ -149,7 +149,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Pirate",
       "alignment": "Bad",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 4
     },
@@ -158,7 +158,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Pirate",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 5
     },
@@ -167,7 +167,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Pirate",
       "alignment": "Bad",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent who has more coins than you.",
       "copy": 6
     },
@@ -176,7 +176,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Merry Men",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 1
     },
@@ -185,7 +185,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Merry Men",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 2
     },
@@ -194,7 +194,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Merry Men",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 3
     },
@@ -203,7 +203,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Merry Men",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 4
     },
@@ -212,7 +212,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Merry Men",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Activation: spend 1 coin to gain 1 XP.",
       "copy": 5
     },
@@ -221,7 +221,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Mice",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: gain 1 Tag token.",
       "copy": 1
     },
@@ -230,7 +230,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Mice",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: gain 1 Tag token.",
       "copy": 2
     },
@@ -239,7 +239,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Mice",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: gain 1 Tag token.",
       "copy": 3
     },
@@ -248,7 +248,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Mice",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: gain 1 Tag token.",
       "copy": 4
     },
@@ -257,7 +257,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Mice",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: gain 1 Tag token.",
       "copy": 5
     },
@@ -266,7 +266,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Wicked Witch of the West",
       "alignment": "Bad",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
@@ -275,7 +275,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Wicked Witch of the East",
       "alignment": "Bad",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
@@ -284,7 +284,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Wicked Witch of the North",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
@@ -293,7 +293,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Wicked Witch of the South",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: place 2 XP on your Writer.",
       "copy": 1
     },
@@ -302,7 +302,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Scarecrow",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Instant: gain 1 XP (2 XP if you have Dorothy Gale).",
       "copy": 1
     },
@@ -311,7 +311,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Tin Woodman",
       "alignment": "Good",
-      "icons": "Charm 1",
+      "icons": "",
       "effect": "Instant: gain 1 XP (2 XP if you have Dorothy Gale).",
       "copy": 1
     },
@@ -320,7 +320,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Cowardly Lion",
       "alignment": "Good",
-      "icons": "Strength 1",
+      "icons": "",
       "effect": "Instant: gain 1 XP (2 XP if you have Dorothy Gale).",
       "copy": 1
     },
@@ -329,7 +329,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Lost Boys",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: spend 1 XP to gain 2 coins.",
       "copy": 1
     },
@@ -338,7 +338,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Lost Boys",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: spend 1 XP to gain 2 coins.",
       "copy": 2
     },
@@ -347,7 +347,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Lost Boys",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: spend 1 XP to gain 2 coins.",
       "copy": 3
     },
@@ -356,7 +356,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Lost Boys",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: spend 1 XP to gain 2 coins.",
       "copy": 4
     },
@@ -365,8 +365,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "Charm 2",
-      "effect": "",
+      "icons": "",
+      "effect": "Instant: gain 1 Charm token.",
       "copy": 1
     },
     {
@@ -374,8 +374,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "Charm 1, Strength 1",
-      "effect": "",
+      "icons": "",
+      "effect": "Instant: gain 1 Charm token.",
       "copy": 2
     },
     {
@@ -383,8 +383,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "Charm 1, Dexterity 1",
-      "effect": "",
+      "icons": "",
+      "effect": "Instant: gain 1 Charm token.",
       "copy": 3
     },
     {
@@ -392,8 +392,8 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Sirens",
       "alignment": "Good",
-      "icons": "Charm 1, Intelligence 1",
-      "effect": "",
+      "icons": "",
+      "effect": "Instant: gain 1 Charm token.",
       "copy": 4
     },
     {
@@ -401,7 +401,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Stepsister",
       "alignment": "Bad",
-      "icons": "none",
+      "icons": "",
       "effect": "Instant: each opponent loses 1 coin (2 coins if they have Cinderella).",
       "copy": 1
     },
@@ -410,7 +410,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "Stepsister",
       "alignment": "Bad",
-      "icons": "none",
+      "icons": "",
       "effect": "Instant: each opponent loses 1 coin (2 coins if they have Cinderella).",
       "copy": 2
     },
@@ -419,7 +419,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Invisible Servants",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Ongoing: gain 1 coin whenever you level up a Character.",
       "copy": 1
     },
@@ -428,7 +428,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Invisible Servants",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Ongoing: gain 1 coin whenever you level up a Character.",
       "copy": 2
     },
@@ -437,7 +437,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Invisible Servants",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Ongoing: gain 1 coin whenever you level up a Character.",
       "copy": 3
     },
@@ -446,7 +446,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Invisible Servants",
       "alignment": "Good",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Ongoing: gain 1 coin whenever you level up a Character.",
       "copy": 4
     },
@@ -455,7 +455,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Fairies",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Activation: gain 2 XP that you can only place on Good Characters (any XP that does not fit is lost).",
       "copy": 1
     },
@@ -464,7 +464,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Fairies",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Activation: gain 2 XP that you can only place on Good Characters (any XP that does not fit is lost).",
       "copy": 2
     },
@@ -473,7 +473,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Fairies",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Activation: gain 2 XP that you can only place on Good Characters (any XP that does not fit is lost).",
       "copy": 3
     },
@@ -482,7 +482,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Forest Animals",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: spend 3 coins to place XP on a Character so that it levels up.",
       "copy": 1
     },
@@ -491,7 +491,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Forest Animals",
       "alignment": "Good",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Activation: spend 3 coins to place XP on a Character so that it levels up.",
       "copy": 2
     },
@@ -500,7 +500,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Munchkins",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Ongoing: gain 1 VP whenever you buy an Item.",
       "copy": 1
     },
@@ -509,7 +509,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Munchkins",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Ongoing: gain 1 VP whenever you buy an Item.",
       "copy": 2
     },
@@ -518,7 +518,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Munchkins",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Ongoing: gain 1 VP whenever you buy an Item.",
       "copy": 3
     },
@@ -527,7 +527,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Cat and the Fox",
       "alignment": "Bad",
-      "icons": "Dexterity 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent (2 coins from an opponent who has Pinocchio).",
       "copy": 1
     },
@@ -536,7 +536,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Cat and the Fox",
       "alignment": "Bad",
-      "icons": "Intelligence 1",
+      "icons": "",
       "effect": "Instant: steal 1 coin from each opponent (2 coins from an opponent who has Pinocchio).",
       "copy": 2
     },
@@ -545,7 +545,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Talking Cricket",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Ongoing: whenever you play a Chapter card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
       "copy": 1
     },
@@ -554,7 +554,7 @@ window.GAME_DATA = {
       "deck": "common",
       "name": "The Talking Cricket",
       "alignment": "Good",
-      "icons": "none",
+      "icons": "",
       "effect": "Ongoing: whenever you play a Chapter card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
       "copy": 2
     }
@@ -575,7 +575,7 @@ window.GAME_DATA = {
       "name": "Puss’s Boots",
       "cost": 4,
       "icons": "Dexterity 1",
-      "effect": "Activation: gain 1 coin for each pair of Dexterity icons (1 coin more if you have Puss in Boots).",
+      "effect": "Activation: gain 1 coin for each Dexterity icon (1 coin more if you have Puss in Boots).",
       "copy": 1
     },
     {
@@ -583,7 +583,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "whishing ring",
       "cost": 2,
-      "icons": "Charm 1",
+      "icons": "Sorcery 1",
       "effect": "Ongoing: whenever you gain a Tag token, gain 1 coin and 1 VP.",
       "copy": 1
     },
@@ -610,7 +610,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "The Magic Mirror",
       "cost": 4,
-      "icons": "Intelligence 1",
+      "icons": "Sorcery 1",
       "effect": "Activation: gain 2 XP. If you have The Evil Queen, gain 1 VP too.",
       "copy": 1
     },
@@ -628,7 +628,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "The Glass Coffin",
       "cost": 3,
-      "icons": "Charm 1",
+      "icons": "none",
       "effect": "Instant: take 1 Character from the discard pile of your choice (resolve its Instant effect).",
       "copy": 1
     },
@@ -637,7 +637,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Hot Air Balloon",
       "cost": 4,
-      "icons": "Dexterity 1",
+      "icons": "Intelligence 1",
       "effect": "Activation: tuck 1 Character of your tableau face down under this Item (it loses its tags and effects). Game End: 2 VP for each tucked Character, max 8 VP.",
       "copy": 1
     },
@@ -664,7 +664,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Bottle \"Drink Me\"",
       "cost": 2,
-      "icons": "Charm 1",
+      "icons": "none",
       "effect": "Instant: gain 1 Tag token of your choice and place 1 XP on your Writer.",
       "copy": 1
     },
@@ -682,7 +682,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Horn of Sherwood",
       "cost": 3,
-      "icons": "Intelligence 1",
+      "icons": "none",
       "effect": "Activation: gain 1 coin for each Merry Men (1 coin more if you have Robin Hood).",
       "copy": 1
     },
@@ -691,7 +691,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Pumpkin Carriage",
       "cost": 5,
-      "icons": "Charm 1",
+      "icons": "none",
       "effect": "Instant: take 1 Adventure.",
       "copy": 1
     },
@@ -700,7 +700,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Magic Wand",
       "cost": 4,
-      "icons": "Charm 1",
+      "icons": "Sorcery 1",
       "effect": "Activation: place 1 XP on a Good Character.",
       "copy": 1
     },
@@ -718,7 +718,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Magic Carpet",
       "cost": 4,
-      "icons": "Dexterity 1",
+      "icons": "Sorcery 1",
       "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 2 coins.",
       "copy": 1
     },
@@ -737,7 +737,7 @@ window.GAME_DATA = {
       "name": "Spinning Wheel",
       "cost": 3,
       "icons": "Bad 1",
-      "effect": "Ongoing: whenever you take a card without tags, gain 1 VP.",
+      "effect": "Ongoing: whenever you take a Legendary card or an Item without tags, gain 1 VP.",
       "copy": 1
     },
     {
@@ -745,7 +745,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Basket of Treats",
       "cost": 2,
-      "icons": "Charm 1",
+      "icons": "none",
       "effect": "Instant: gain 2 coins and 1 XP (and 1 VP if you have Little Red Riding Hood).",
       "copy": 1
     },
@@ -754,7 +754,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Fairy Dust",
       "cost": 3,
-      "icons": "Charm 1",
+      "icons": "Sorcery 1",
       "effect": "Instant: place 2 XP on a Good Character.",
       "copy": 1
     },
@@ -764,7 +764,7 @@ window.GAME_DATA = {
       "name": "Seashell",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Activation: gain 1 XP for each Charm icon, max 5 XP.",
+      "effect": "Activation: gain 1 XP for each Charm icon.",
       "copy": 1
     },
     {
@@ -809,7 +809,7 @@ window.GAME_DATA = {
       "name": "Trident",
       "cost": 5,
       "icons": "Strength 1",
-      "effect": "Activation: gain 2 VP. If you have at least 3 Strength or King Triton, gain 1 XP too.",
+      "effect": "Activation: gain 2 VP. If you have at least 2 Strength or King Triton, gain 1 XP too.",
       "copy": 1
     },
     {
@@ -817,7 +817,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Magic Lamp",
       "cost": 7,
-      "icons": "Intelligence 1",
+      "icons": "Sorcery 1",
       "effect": "Instant: choose one: gain 4 coins, gain 3 XP, or take 1 Adventure.",
       "copy": 1
     },
@@ -826,7 +826,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Enchanted Rose",
       "cost": 6,
-      "icons": "Charm 1",
+      "icons": "Sorcery 1",
       "effect": "Game End: 1 VP for each upgraded Legendary card.",
       "copy": 1
     },
@@ -844,7 +844,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Magic Contract",
       "cost": 3,
-      "icons": "Bad 1",
+      "icons": "Bad 1, Intelligence 1",
       "effect": "Instant: discard 1 Character to gain 3 coins or 2 XP.",
       "copy": 1
     },
@@ -862,7 +862,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Undersea Throne",
       "cost": 5,
-      "icons": "Intelligence 1",
+      "icons": "Strength 1",
       "effect": "Game End: 1 VP for each Item.",
       "copy": 1
     },
@@ -871,7 +871,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Crocodile's Clock",
       "cost": 3,
-      "icons": "Dexterity 1",
+      "icons": "none",
       "effect": "Activation: take back 1 Chapter card with value 7 or higher from your discard.",
       "copy": 1
     },
@@ -879,9 +879,9 @@ window.GAME_DATA = {
       "id": "I36",
       "deck": "item",
       "name": "The Whale",
-      "cost": 4,
+      "cost": 5,
       "icons": "Strength 1",
-      "effect": "Game End: 1 VP for each of your cards without tags.",
+      "effect": "Game End: 2 VP for each of your Legendary cards and Items without tags.",
       "copy": 1
     }
   ],
@@ -893,7 +893,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Instant: activate 1 of your Activation cards.",
-      "upgrade": "Cost 2 XP. Instant: gain 1 VP for each of your cards without tags, max 5 VP.",
+      "upgrade": "Cost 2 XP. Instant: gain 2 VP for each of your Legendary cards and Items without tags.",
       "upgraded": false
     },
     {
@@ -912,7 +912,7 @@ window.GAME_DATA = {
       "name": "Alice",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1, Intelligence 1. Game End: 1 VP for each Adventure you completed.",
+      "base": "Intelligence 1. Game End: 1 VP for each Adventure you completed.",
       "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure you completed, max 12 VP.",
       "upgraded": false
     },
@@ -923,7 +923,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Activation: gain 1 XP (2 XP if you have Mad Hatter's Hat).",
-      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each of your cards without tags, max 3 VP.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each of your Legendary cards and Items without tags.",
       "upgraded": false
     },
     {
@@ -932,7 +932,7 @@ window.GAME_DATA = {
       "name": "Tinker Bell",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 2 Tag tokens of your choice.",
+      "base": "Sorcery 1. Instant: gain 1 Tag token of your choice.",
       "upgrade": "Cost 1 XP. Activation: gain 1 Tag token and 1 coin.",
       "upgraded": false
     },
@@ -1012,7 +1012,7 @@ window.GAME_DATA = {
       "name": "Prince Charming",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 VP for each pair of Charm icons.",
+      "base": "Charm 1. Instant: gain 1 VP for each Charm icon.",
       "upgrade": "Cost 4 XP. Gains Charm. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
@@ -1022,7 +1022,7 @@ window.GAME_DATA = {
       "name": "Princess Jasmine",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: your Items cost 1 coin less.",
+      "base": "Intelligence 1. Ongoing: your Items cost 1 coin less.",
       "upgrade": "Cost 1 XP. Ongoing: your Items cost 2 coins less.",
       "upgraded": false
     },
@@ -1032,8 +1032,8 @@ window.GAME_DATA = {
       "name": "Evil Sorcerer",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm, Strength, Dexterity, Intelligence. Instant: gain 1 Tag token.",
-      "upgrade": "Cost 5 XP. Game End: 1 VP for each complete set of four icons.",
+      "base": "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant: gain 1 Tag token.",
+      "upgrade": "Cost 5 XP. Game End: 3 VP for each set of 5 different icons.",
       "upgraded": false
     },
     {
@@ -1042,7 +1042,7 @@ window.GAME_DATA = {
       "name": "The Evil Fairy",
       "rank": null,
       "alignment": "Bad",
-      "base": "Intelligence 1. Instant: choose an opponent. They discard 1 coin or 1 XP. You gain the chosen resource.",
+      "base": "Sorcery 1. Instant: choose an opponent. They discard 1 coin or 1 XP. You gain the chosen resource.",
       "upgrade": "Cost 2 XP. Activation: gain 1 VP for each Bad card, max 5 VP.",
       "upgraded": false
     },
@@ -1052,8 +1052,8 @@ window.GAME_DATA = {
       "name": "The Evil Queen",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1. Game End: 1 VP for each pair of Charm icons.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Charm icon.",
+      "base": "Charm 1, Sorcery 1. Game End: 1 VP for each Charm icon.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -1072,8 +1072,8 @@ window.GAME_DATA = {
       "name": "Dorothy Gale",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Instant: gain 1 Tag token of your choice.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each complete set of four icons.",
+      "base": "Instant: gain 1 Tag token of your choice.",
+      "upgrade": "Cost 4 XP. Game End: 4 VP for each set of 5 different icons.",
       "upgraded": false
     },
     {
@@ -1092,7 +1092,7 @@ window.GAME_DATA = {
       "name": "Queen of Hearts",
       "rank": null,
       "alignment": "Bad",
-      "base": "Ongoing: your Chapter cards count as +1 value for turn order. You may play the same Chapter as an opponent, and you win ties.",
+      "base": "Strength 1. Ongoing: your Chapter cards count as +1 value for turn order. You may play the same Chapter as an opponent, and you win ties.",
       "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +2 value for turn order. You may play the same Chapter as an opponent, and you win ties. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
@@ -1102,7 +1102,7 @@ window.GAME_DATA = {
       "name": "Cheshire Cat",
       "rank": null,
       "alignment": "Neutral",
-      "base": "Dexterity 1. Instant: draw 3 cards from the Common deck, play 2 and discard the other. If you have Alice, gain 2 XP.",
+      "base": "Dexterity 1, Sorcery 1. Instant: draw 3 cards from the Common deck, play 2 and discard the other. If you have Alice, gain 2 XP.",
       "upgrade": "Cost 3 XP. Activation: draw 2 cards from the Common deck, play 1 and discard the other.",
       "upgraded": false
     },
@@ -1122,8 +1122,8 @@ window.GAME_DATA = {
       "name": "Captain Hook",
       "rank": null,
       "alignment": "Bad",
-      "base": "Dexterity 1. Game End: 1 VP for each pair of Dexterity icons.",
-      "upgrade": "Cost 2 XP. Game End: 1 VP for each Dexterity icon.",
+      "base": "Dexterity 1. Game End: 1 VP for each Dexterity icon.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Dexterity icon.",
       "upgraded": false
     },
     {
@@ -1142,7 +1142,7 @@ window.GAME_DATA = {
       "name": "The Wolf",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: steal 2 VP from the opponent with the most VP.",
+      "base": "Strength 1, Dexterity 1. Instant: steal 2 VP from the opponent with the most VP.",
       "upgrade": "Cost 3 XP. Activation: steal 1 coin from each opponent.",
       "upgraded": false
     },
@@ -1152,7 +1152,7 @@ window.GAME_DATA = {
       "name": "King Triton",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1. Activation: gain 1 XP for each Item, max 4 XP.",
+      "base": "Strength 1, Sorcery 1. Activation: gain 1 XP for each Item, max 4 XP.",
       "upgrade": "Cost 3 XP. Gains Strength. Activation: gain 1 VP for each Item, max 6 VP.",
       "upgraded": false
     },
@@ -1172,7 +1172,7 @@ window.GAME_DATA = {
       "name": "Robin Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each pair of Intelligence icons, plus 2 VP for each Merry Men.",
+      "base": "Dexterity 1, Intelligence 1. Game End: 2 VP for each Intelligence icon, plus 2 VP for each Merry Men.",
       "upgrade": "Cost 2 XP. Activation: spend up to 4 coins to gain that many VP.",
       "upgraded": false
     },
@@ -1182,7 +1182,7 @@ window.GAME_DATA = {
       "name": "Prince John",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1. Instant: steal 1 coin from each opponent.",
+      "base": "Instant: steal 1 coin from each opponent.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for every 2 coins, max 8 VP.",
       "upgraded": false
     },
@@ -1202,7 +1202,7 @@ window.GAME_DATA = {
       "name": "Rumpelstiltskin",
       "rank": null,
       "alignment": "Bad",
-      "base": "Intelligence 1. Game End: 1 VP for each pair of Bad cards.",
+      "base": "Dexterity 1, Sorcery 1. Game End: 1 VP for each pair of Bad cards.",
       "upgrade": "Cost 3 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
@@ -1222,7 +1222,7 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: place 2 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.",
+      "base": "Sorcery 1. Instant: place 2 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.",
       "upgrade": "Cost 2 XP. Activation: place 3 XP on a Character.",
       "upgraded": false
     },
@@ -1242,7 +1242,7 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Instant: choose one: gain 3 coins or gain 2 XP.",
+      "base": "Sorcery 1. Instant: choose one: gain 3 coins or gain 2 XP.",
       "upgrade": "Cost 4 XP. Activation: choose one of those effects.",
       "upgraded": false
     },
@@ -1262,8 +1262,8 @@ window.GAME_DATA = {
       "name": "Beast",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Game End: 1 VP for each pair of Strength icons.",
-      "upgrade": "Cost 5 XP. Game End: 1 VP for each Strength icon. If you have Belle, gain 2 VP more.",
+      "base": "Strength 1. Game End: 1 VP for each Strength icon.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Strength icon. If you have Belle, gain 2 VP more.",
       "upgraded": false
     },
     {
@@ -1282,7 +1282,7 @@ window.GAME_DATA = {
       "name": "Pinocchio",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
+      "base": "Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
       "upgrade": "Cost 5 XP. Game End: 2 VP for each Good Legendary card.",
       "upgraded": false
     },
@@ -1353,28 +1353,28 @@ window.GAME_DATA = {
       "number": 1,
       "name": "The Midnight Ball",
       "theme": "Cinderella",
-      "scoring": "6 / 8 / 10 Charm icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 Charm icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q2",
       "number": 2,
       "name": "The Duel with Hook",
       "theme": "Peter Pan",
-      "scoring": "6 / 8 / 10 Strength icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 Strength icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q3",
       "number": 3,
       "name": "Down the Rabbit Hole",
       "theme": "Alice",
-      "scoring": "6 / 8 / 10 Dexterity icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 Dexterity icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q4",
       "number": 4,
       "name": "The Lost Voice",
       "theme": "The Little Mermaid",
-      "scoring": "6 / 8 / 10 Intelligence icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 5 / 7 Intelligence icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q5",
@@ -1388,7 +1388,7 @@ window.GAME_DATA = {
       "number": 6,
       "name": "Neverland",
       "theme": "Peter Pan",
-      "scoring": "5 / 6 icons of each type: 3 / 6 VP."
+      "scoring": "2 / 3 icons of each type: 3 / 6 VP."
     },
     {
       "id": "Q7",
@@ -1409,7 +1409,7 @@ window.GAME_DATA = {
       "number": 9,
       "name": "The Queen's Command",
       "theme": "Alice",
-      "scoring": "1 VP for each card without tags."
+      "scoring": "1 VP for each Legendary card and Item without tags."
     },
     {
       "id": "Q10",
@@ -1515,6 +1515,13 @@ window.GAME_DATA = {
       "name": "The Marquis of Carabas",
       "theme": "Puss in Boots",
       "scoring": "3 / 5 / 7 coins left at the end: 2 / 4 / 6 VP."
+    },
+    {
+      "id": "Q25",
+      "number": 25,
+      "name": "The Fairies’ Gift",
+      "theme": "Sleeping Beauty",
+      "scoring": "3 / 5 / 7 Sorcery icons: 2 / 4 / 6 VP."
     }
   ],
   "writers": [
@@ -1581,11 +1588,11 @@ window.GAME_DATA = {
     {
       "id": "W7",
       "name": "L. Frank Baum",
-      "level1": "At the start of each round, gain 1 coin per set of 4 different icons.",
+      "level1": "At the start of each round, gain 1 coin per set of 5 different icons.",
       "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 6,
-      "level3": "3 VP per set of 4 different icons.",
+      "level3": "6 VP per set of 5 different icons.",
       "coins": 0
     },
     {

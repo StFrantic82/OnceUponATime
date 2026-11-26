@@ -312,6 +312,7 @@
     "The Apple's Bite": { bg: "lair", m: [["apple", 100, 84, 1.3, 0]] },
     "The Yellow Brick Road": { bg: "oz", m: [["road", 90, 112, 1, 0], ["figure", 66, 94, 0.5, 0, { style: "long", hair: "#6b3f1f", coat: "#3f6fa8" }], ["strawhat", 114, 70, 0.4, 0], ["slipper", 116, 124, 0.35, 0, { c: "#c8312b" }]] },
     "Grandmother's Path": { bg: "forest", m: [["basket", 62, 116, 0.5, 0], ["wolf", 114, 100, 0.5, 0], ["cottage", 88, 56, 0.45, 0]] },
+    "The Fairies’ Gift": { bg: "night", m: [["wand", 96, 92, 1.1, 0], ["star", 122, 52, 0.7, 0], ["star", 62, 60, 0.4, 0], ["sparkles", 100, 80, 1, 0]] },
     "The Hundred-Year Sleep": { bg: "night", m: [["castle", 88, 92, 0.65, 0], ["rose", 58, 124, 0.4, 0], ["moon", 118, 40, 0.45, 0]] },
     "The Marquis of Carabas": { bg: "village", m: [["cathead", 76, 98, 0.5, 0, { c: "#e8a24a", s: "#b5591a" }], ["tophat", 76, 64, 0.35, -10, { c: "#3a3a3a", c2: "#2b2b2b" }], ["coins", 118, 122, 0.45, 0], ["castle", 116, 56, 0.35, 0]] },
     "The Queen's Command": { bg: "wonder", m: [["crown", 100, 70, 0.9, 0, { gem: "#c8312b" }], ["cardsoldier", 50, 104, 0.55, 0], ["cardsoldier", 150, 104, 0.55, 0, { red: true }]] },

@@ -4,13 +4,14 @@
 // personal fields to the player currently acting (G.cur) and everything else to G.
 const DATA = window.GAME_DATA;
 
-const ICONS = ["Charm", "Strength", "Dexterity", "Intelligence"];
+const ICONS = ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"];
 const ICON_FILES = {
   Charm: "assets/icons/tag-charm.png",
   Strength: "assets/icons/tag-strength.png",
   Dexterity: "assets/icons/tag-ruse.png",
   DexteritySq: "assets/icons/tag-ruse-square.png",
   Intelligence: "assets/icons/tag-intelligence.png",
+  Sorcery: "assets/icons/tag-magic.png",
   coins: "assets/icons/coin.png",
   xp: "assets/icons/xp.png",
   vp: "assets/icons/vp.png",
@@ -21,7 +22,7 @@ const ICON_FILES = {
   activation: "assets/icons/effect-type-activation.png",
   endgame: "assets/icons/effect-type-endgame.png",
 };
-const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence" };
+const ICON_LABELS = { Charm: "Charm", Strength: "Strength", Dexterity: "Dexterity", Intelligence: "Intelligence", Sorcery: "Magic" };
 
 const PERSONAL = new Set([
   "coins", "xp", "writerXp", "ai", "activatePending", "strategy", "choices", "coinsGained", "xpGained", "xpBy", "coinsBy", "writerOnlyXp", "vp", "tagTokens", "freeUpgrades", "hand", "actionDeck", "actionDiscard", "tableau", "items", "quests",
@@ -262,7 +263,7 @@ function newPlayer(seat, info) {
     writerItemDiscount: 0,
     writerDraftChoices: [],
     writerDiscardRemaining: 0,
-    iconTokens: { Charm: 0, Strength: 0, Dexterity: 0, Intelligence: 0 },
+    iconTokens: { Charm: 0, Strength: 0, Dexterity: 0, Intelligence: 0, Sorcery: 0 },
     writerRound: {},
     rewardedIconSets: 0,
     currentAction: null,
@@ -1137,7 +1138,7 @@ function botOption(options) {
 function discardWeakestCommon() {
   const commons = state.tableau.filter((card) => card.deck === "common");
   if (!commons.length) return false;
-  const weakest = commons.sort((a, b) => iconAmount(a, "Charm") + iconAmount(a, "Strength") + iconAmount(a, "Dexterity") + iconAmount(a, "Intelligence") - (iconAmount(b, "Charm") + iconAmount(b, "Strength") + iconAmount(b, "Dexterity") + iconAmount(b, "Intelligence")))[0];
+  const weakest = commons.sort((a, b) => totalIcons(a) - totalIcons(b))[0];
   state.tableau = state.tableau.filter((card) => card !== weakest);
   toDiscard(weakest);
   log("l_discards", { p: state.name, c: C(weakest.name) });
@@ -1276,6 +1277,7 @@ function applyInstantInner(card) {
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
   if (/coins? and 1 XP/i.test(text)) gain("xp", 1);
   if (/place 1 XP on your Writer/i.test(text)) placeWriterXp(1);
+  if (/gain 1 Charm token/i.test(text)) applyOption("token Charm 1", card.name);
   if (/Gain 2 Tag tokens/i.test(text)) gainTagToken(2, card.name);
   else if (/Tag token/i.test(text)) gainTagToken(1, card.name);
   if (/take 1 (?:Quest|Adventure)/i.test(text)) grantQuestChoice(card.name);
@@ -1302,7 +1304,7 @@ function instantLinks(card) {
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (/^Wicked Witch/.test(n)) placeWriterXp(2);
   if (n === "The Prince") activateOne();
-  if (n === "Prince Charming") gain("vp", Math.floor(iconCounts().Charm / 2));
+  if (n === "Prince Charming") gain("vp", iconCounts().Charm);
   if (n === "Snow White") gain("xp", countByName("Dwarf"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
@@ -1342,9 +1344,9 @@ function hunterChoice() {
 
 function applyUpgradeGain(card) {
   vpSource = card.name;
-  const tagless = (card.upgrade || "").match(/Gain 1 VP for each of your cards without tags, max (\d+) VP/i);
+  const tagless = (card.upgrade || "").match(/Instant: gain (\d+) VP for each of your Legendary cards and Items without tags/i);
   if (tagless) {
-    gain("vp", Math.min(Number(tagless[1]), countTagless()));
+    gain("vp", Number(tagless[1]) * countTagless());
     return;
   }
   const vp = (card.upgrade || "").match(/Gain (\d+) VP/i);
@@ -1352,7 +1354,9 @@ function applyUpgradeGain(card) {
 }
 
 // Cards without any skill tag (Characters and Items): a strategy of their own, linked to VP tokens.
+// Only Legendary cards and Items carry tags: a Common card is never a "card without tags".
 function isTagless(card) {
+  if (card.deck === "common") return false;
   return !ICONS.some((icon) => iconAmount(card, icon) > 0);
 }
 
@@ -1476,9 +1480,9 @@ async function activateCardInner(card) {
     }
     return;
   }
-  const taglessAct = text.match(/Activation: gain 1 VP for each of your cards without tags, max (\d+) VP/i);
+  const taglessAct = text.match(/Activation: gain (\d+) VP for each of your Legendary cards and Items without tags/i);
   if (taglessAct) {
-    gain("vp", Math.min(Number(taglessAct[1]), countTagless()));
+    gain("vp", Number(taglessAct[1]) * countTagless());
   } else if (/Activation:[^.]*\bsteal\b/i.test(text)) {
     applyMean(text.slice(text.search(/Activation:/i)), card.name);
   } else if (/choose one of those effects/i.test(text)) {
@@ -1532,11 +1536,11 @@ async function activateCardInner(card) {
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
     else if (/gain 1 XP\b/i.test(text)) gain("xp", 1);
-    if (/gain 1 coin for each pair of Dexterity/i.test(text)) gain("coins", Math.floor(countIcon("Dexterity") / 2));
+    if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
     if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(4, countByName("Pirate") + countAlignment("Bad")));
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
-    if (/gain 1 XP for each Charm/i.test(text)) gain("xp", Math.min(5, countIcon("Charm")));
+    if (/gain 1 XP for each Charm/i.test(text)) gain("xp", countIcon("Charm"));
     if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
     else if (/gain 1 VP and 1 coin/i.test(text)) {
@@ -1600,7 +1604,7 @@ function activationLinks(card, text) {
     gain("xp", 1);
     if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
   }
-  if (n === "Trident" && (countIcon("Strength") >= 3 || hasCard("King Triton"))) gain("xp", 1);
+  if (n === "Trident" && (countIcon("Strength") >= 2 || hasCard("King Triton"))) gain("xp", 1);
   if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 1);
   if (n === "The Wizard of Oz") {
     const k = Math.min(card.upgraded ? 2 : 1, state.coins);
@@ -1660,7 +1664,7 @@ function iconCounts() {
 // Icons printed on a card: the "icons" field, or the icon list that opens a Legendary's base text
 // (e.g. "Charm 1, Intelligence 1. Game End: ..."). Mentions inside effect text do not count.
 function printedIcons(card) {
-  const lead = String(card.base || "").match(/^\s*(?:(?:Charm|Strength|Dexterity|Intelligence)(?:\s*\d+)?\s*[,.]?\s*)+/i);
+  const lead = String(card.base || "").match(/^\s*(?:(?:Charm|Strength|Dexterity|Intelligence|Sorcery)(?:\s*\d+)?\s*[,.]?\s*)+/i);
   return `${card.icons || ""} ${lead ? lead[0] : ""}`;
 }
 
@@ -1717,12 +1721,13 @@ function scoreQuest(quest) {
   const name = quest.name;
   // Tiers: reaching the first, second or third step gives 2 / 4 / 6 VP.
   const tiers = (n, a = 6, b = 8, c = 10) => (n >= c ? 6 : n >= b ? 4 : n >= a ? 2 : 0);
-  if (/Midnight Ball/.test(name)) return tiers(icons.Charm);
-  if (/Hook/.test(name)) return tiers(icons.Strength);
-  if (/Rabbit Hole/.test(name)) return tiers(icons.Dexterity);
-  if (/Lost Voice/.test(name)) return tiers(icons.Intelligence);
+  if (/Midnight Ball/.test(name)) return tiers(icons.Charm, 3, 5, 7);
+  if (/Hook/.test(name)) return tiers(icons.Strength, 3, 5, 7);
+  if (/Rabbit Hole/.test(name)) return tiers(icons.Dexterity, 3, 5, 7);
+  if (/Lost Voice/.test(name)) return tiers(icons.Intelligence, 3, 5, 7);
+  if (/Fairies’ Gift/.test(name)) return tiers(icons.Sorcery, 3, 5, 7);
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
-  if (/Neverland/.test(name)) return completeSets >= 6 ? 6 : completeSets >= 5 ? 3 : 0;
+  if (/Neverland/.test(name)) return completeSets >= 3 ? 6 : completeSets >= 2 ? 3 : 0;
   if (/Apple's Bite/.test(name)) return countAlignment("Bad");
   if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 1, 3, 5);
   if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 3, 5, 7);
@@ -1771,23 +1776,23 @@ function scoreCards(only = null) {
     else if (n === "Grandmother") total += countAlignment("Bad");
     else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
     else if (n === "Prince Charming") total += icons.Charm;
-    else if (n === "Evil Sorcerer") total += sets;
-    else if (n === "The Evil Queen") total += up ? icons.Charm : Math.floor(icons.Charm / 2);
+    else if (n === "Evil Sorcerer") total += sets * 3;
+    else if (n === "The Evil Queen") total += icons.Charm * (up ? 2 : 1);
     else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
-    else if (n === "Dorothy Gale") total += sets * 2;
+    else if (n === "Dorothy Gale") total += sets * 4;
     else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
-    else if (n === "Captain Hook") total += up ? icons.Dexterity : Math.floor(icons.Dexterity / 2);
+    else if (n === "Captain Hook") total += icons.Dexterity * (up ? 2 : 1);
     else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
-    else if (n === "Robin Hood") total += Math.floor(icons.Intelligence / 2) + countByName("The Merry Men") * 2;
+    else if (n === "Robin Hood") total += icons.Intelligence * 2 + countByName("The Merry Men") * 2;
     else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
     else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 2 : 0);
     else if (n === "Pinocchio") total += state.tableau.filter((c) => c.deck === "legendary" && c.alignment === "Good").length * 2;
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
-    else if (n === "The Whale") total += countTagless();
-    else if (n === "Beast") total += up ? icons.Strength + (hasCard("Belle") ? 2 : 0) : Math.floor(icons.Strength / 2);
+    else if (n === "The Whale") total += countTagless() * 2;
+    else if (n === "Beast") total += up ? icons.Strength * 2 + (hasCard("Belle") ? 2 : 0) : icons.Strength;
   }
   return total;
 }
@@ -1822,7 +1827,7 @@ function scoreWriter() {
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
     return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 4;
   }
-  if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 3;
+  if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 6;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
 }
@@ -2579,13 +2584,14 @@ function formatGameText(text) {
     .replace(/\bStrength\b/gi, skillIcon("Strength"))
     .replace(/\b(?:Dexterity|Ruse)\b/gi, skillIcon("Dexterity"))
     .replace(/\bIntelligence\b/gi, skillIcon("Intelligence"))
+    .replace(/\bSorcery\b/gi, skillIcon("Sorcery"))
     .replace(/\bCharm\b/gi, skillIcon("Charm"))
     .replace(/\bVP\b/g, resourceIcon("vp", "VP"))
     .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
     .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
     .replace(/\bGoals?\b/gi, "Adventure")
     .replace(/\u0002/g, '<span class="fc-max">').replace(/\u0003/g, "</span>")
-    .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence"].map(skillIcon).join("")}</span>`);
+    .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"].map(skillIcon).join("")}</span>`);
 }
 
 el.newGameBtn.addEventListener("click", () => window.Home?.show());
@@ -2640,7 +2646,7 @@ async function simulateGame(opts) {
           groupPicks: p.groupPicks || [],
           ...withSeat(p.seat, () => {
             const ic = iconCounts();
-            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence };
+            return { tagCharm: ic.Charm, tagStrength: ic.Strength, tagDexterity: ic.Dexterity, tagIntelligence: ic.Intelligence, tagSorcery: ic.Sorcery };
           }),
           xpGained: p.xpGained || 0,
           xpBy: p.xpBy || {},

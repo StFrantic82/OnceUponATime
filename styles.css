@@ -1974,27 +1974,31 @@ html {
 }
 
 .skill-tag .game-icon {
-  width: 160%;
-  height: 160%;
+  width: 100%;
+  height: 100%;
   max-width: none;
   vertical-align: middle;
   filter: none;
 }
 
 .sk-charm {
-  background: #7a4f9e;
+  background: #944e7b;
 }
 
 .sk-strength {
-  background: #b8402e;
+  background: #c5340f;
 }
 
 .sk-dexterity {
-  background: #4a2814;
+  background: #eba13b;
 }
 
 .sk-intelligence {
-  background: #26487c;
+  background: #364859;
+}
+
+.sk-sorcery {
+  background: #2a8a74;
 }
 
 .tag-row .skill-tag {

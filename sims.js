@@ -45,7 +45,7 @@
     ["cards", "cmpCardPts"], ["writerPts", "cmpWriterPts"], ["cardCount", "simResCards"], ["legendaryCount", "simResLeg"],
     ["upgradedCount", "simResUp"], ["itemCount", "simResItems"], ["questCount", "simResQuests"], ["writerLevel", "cmpWriterLevel"],
     ["coinsLeft", "simResCoins"], ["xpLeft", "simResXp"],
-    ["tagCharm", "cmpCharm"], ["tagStrength", "cmpStrength"], ["tagDexterity", "cmpDexterity"], ["tagIntelligence", "cmpIntelligence"],
+    ["tagCharm", "cmpCharm"], ["tagStrength", "cmpStrength"], ["tagDexterity", "cmpDexterity"], ["tagIntelligence", "cmpIntelligence"], ["tagSorcery", "cmpSorcery"],
   ];
 
   function bump(map, name, deck, won, score, extra = 0) {

@@ -2,7 +2,7 @@
 // Uses formatGameText / resourceIcon / iconAmount from app.js and t / tc from i18n.js (resolved at render time).
 (function () {
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-  const ICONS = ["Charm", "Strength", "Dexterity", "Intelligence"];
+  const ICONS = ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"];
   const TAG = 26; // px, size of a square skill tag
 
   // "Tag token" in card texts becomes a small square token icon with the four skill colours.
@@ -26,10 +26,10 @@
       .replace(/\bplace XP on a Character so that it levels up\b/gi, FREEUP_ICON)
       .replace(/\bplac(?:ez|er) de l[’']XP sur un Personnage de manière à l[’']améliorer\b/gi, FREEUP_ICON)
       .replace(/\bpiazza(?:re)? XP su un Personaggio in modo da potenziarlo\b/gi, FREEUP_ICON)
-      .replace(/\b(?:all )?(?:four|4)(?: different)? icons\b/gi, SET4)
+      .replace(/\b(?:all )?(?:four|five|4|5)(?: different)? icons\b/gi, SET4)
       .replace(/\b(take|takes|prenez|prend|prendre|prendi|prende)\s+(1|an?|une|una|un’)\s*(?:Quest|Quête|Missione|Adventure|Aventure|Avventura)\b/gi, (_, verb, n) => `${verb} ${/^\d$/.test(n) ? n : "1"} ${QUEST_ICON}`)
-      .replace(/\b(?:des quatre icônes|de 4 icônes différentes)/gi, `de ${SET4}`)
-      .replace(/\b(?:delle quattro icone|di 4 icone diverse)/gi, `di ${SET4}`)
+      .replace(/\b(?:des (?:quatre|cinq) icônes|de [45] icônes différentes)/gi, `de ${SET4}`)
+      .replace(/\b(?:delle (?:quattro|cinque) icone|di [45] icone diverse)/gi, `di ${SET4}`)
       .replace(/\b(\d+|a|one|two)\s+Tag tokens?/gi, (_, n) => `${/^\d$/.test(n) ? n : { a: "1", one: "1", two: "2" }[n.toLowerCase()]} ${TAG_ICON}`)
       .replace(/\btwo tokens\b/gi, `2 ${TAG_ICON}`)
       .replace(/\b(\d+|un|deux)\s+jetons?\s+d[’']ic[ôo]ne/gi, (_, n) => `${({ un: "1", deux: "2" })[n.toLowerCase()] || n} ${TAG_ICON}`)
@@ -74,7 +74,7 @@
   // Icons shown as tags at the start of a legendary's base text are removed from the text.
   function stripIconPrefix(text) {
     return String(text || "")
-      .replace(/^\s*((Charm|Strength|Dexterity|Intelligence)(\s*\d+)?\s*[,.]?\s*)+/i, "")
+      .replace(/^\s*((Charm|Strength|Dexterity|Intelligence|Sorcery)(\s*\d+)?\s*[,.]?\s*)+/i, "")
       .trim();
   }
 
@@ -274,9 +274,9 @@
   function iconGuide() {
     const gear = resourceIcon("activation", "Activation");
     const rows = [
-      [skillTags(["Charm", "Strength", "Dexterity", "Intelligence"]), "ico_tags"],
+      [skillTags(["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"]), "ico_tags"],
       [TAG_ICON, "ico_tagToken"],
-      [`<span class="set4 guide-set4">${skillTags(["Charm", "Strength", "Dexterity", "Intelligence"])}</span>`, "ico_set4"],
+      [`<span class="set4 guide-set4">${skillTags(["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"])}</span>`, "ico_set4"],
       [resourceIcon("coins", "coins"), "ico_coin"],
       [resourceIcon("xp", "XP"), "ico_xp"],
       [`<span class="xp-box">${resourceIcon("xp", "XP")}</span>`, "ico_xpSpace"],

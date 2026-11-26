@@ -8,6 +8,7 @@ const ICON_FILES = {
   Dexterity: "assets/icons/tag-ruse.png",
   DexteritySq: "assets/icons/tag-ruse-square.png",
   Intelligence: "assets/icons/tag-intelligence.png",
+  Sorcery: "assets/icons/tag-magic.png",
   coins: "assets/icons/coin.png",
   xp: "assets/icons/xp.png",
   vp: "assets/icons/vp.png",
@@ -36,15 +37,16 @@ function formatGameText(text) {
     .replace(/\bStrength\b/gi, skillIcon("Strength"))
     .replace(/\b(?:Dexterity|Ruse)\b/gi, skillIcon("Dexterity"))
     .replace(/\bIntelligence\b/gi, skillIcon("Intelligence"))
+    .replace(/\bSorcery\b/gi, skillIcon("Sorcery"))
     .replace(/\bCharm\b/gi, skillIcon("Charm"))
     .replace(/\bVP\b/g, resourceIcon("vp", "VP"))
     .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
     .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
     .replace(/\u0002/g, '<span class="fc-max">').replace(/\u0003/g, "</span>")
-    .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence"].map(skillIcon).join("")}</span>`);
+    .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"].map(skillIcon).join("")}</span>`);
 }
 function printedIcons(card) {
-  const lead = String(card.base || "").match(/^\s*(?:(?:Charm|Strength|Dexterity|Intelligence)(?:\s*\d+)?\s*[,.]?\s*)+/i);
+  const lead = String(card.base || "").match(/^\s*(?:(?:Charm|Strength|Dexterity|Intelligence|Sorcery)(?:\s*\d+)?\s*[,.]?\s*)+/i);
   return `${card.icons || ""} ${lead ? lead[0] : ""}`;
 }
 function textIconAmount(text, icon) {
@@ -72,7 +74,7 @@ function squareTag(icon) {
 
 // Card anatomy: a card with numbered markers and their legend.
 const ANATOMY = {
-  common: { card: () => CardFace.common(find(DATA.common, "Pirate")), marks: [[0, 5], [100, 5], [100, 30], [100, 70], [100, 95]] },
+  common: { card: () => CardFace.common(find(DATA.common, "Pirate")), marks: [[100, 5], [100, 30], [100, 70], [100, 95]] },
   legendary: { card: () => CardFace.legendary(find(DATA.legendary, "Snow White")), marks: [[0, 4], [100, 4], [100, 30], [0, 60], [100, 66], [0, 76], [100, 96]] },
   item: { card: () => CardFace.item(find(DATA.items, "Magic Lamp")), marks: [[0, 8], [100, 8], [0, 28], [100, 85]] },
 };
@@ -122,7 +124,7 @@ const RULES = {
     normal: "Common character",
     legendary: "Legendary character",
     anatomy: {
-      common: ["Skill tags (square, top left): Charm, Strength, Cunning, Intelligence.", "Name of the character.", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
+      common: ["Name of the character (Common characters have no tag).", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
       legendary: ["Skill tags.", "Name and “Legendary”.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (replaces the base effect).", "Good or Bad."],
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
@@ -135,7 +137,7 @@ const RULES = {
       [[anatomy:item]]
       <p><b>Adventure cards</b> score at the end of the game; some have tiers (2 / 4 / 6 VP). <b>Writer cards</b> give each player a personal power that grows over three levels. <b>Chapter cards</b> are pages of a book: their chapter number sets the turn order, their effect is resolved during your turn.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>The four skills are <b>Charm</b> [[tag:Charm]], <b>Strength</b> [[tag:Strength]], <b>Cunning</b> [[tag:Dexterity]] and <b>Intelligence</b> [[tag:Intelligence]]. Many Adventures and effects count them. A square <b>Tag token</b> counts as one icon of its type: when you gain one, you choose its type. A round green badge with a feather marks the cards that give VP tokens during the game (not those that only score at Game End); it is <b>not a tag</b>. Some cards have <b>no tag</b> at all: they are rewarded in other ways, often with Victory Points during the game (Spinning Wheel, Mad Hatter, “The Queen’s Command”…).</p>
+      <p>The five skills are <b>Charm</b> [[tag:Charm]], <b>Strength</b> [[tag:Strength]], <b>Cunning</b> [[tag:Dexterity]], <b>Intelligence</b> [[tag:Intelligence]] and <b>Magic</b> [[tag:Sorcery]]. Only <b>Legendary characters and Items</b> carry tags (none, one or two; rarely more): Common characters never have any. Many Adventures and effects count them. A square <b>Tag token</b> counts as one icon of its type: when you gain one, you choose its type. A round green badge with a feather marks the cards that give VP tokens during the game (not those that only score at Game End); it is <b>not a tag</b>. Some Legendary characters and Items have <b>no tag</b> at all: they are rewarded in other ways, often with Victory Points during the game (Spinning Wheel, Mad Hatter, “The Queen’s Command”…). A Common character never counts as a “card without tags”.</p>
       <p><b>Story links.</b> Cards from the same tale work together: “if you have X” means X is in your tableau (Characters) or among your Items. For example, the Scarecrow gives 2 XP instead of 1 if you have Dorothy Gale, and the Cat and the Fox steal 2 coins from a player who has Pinocchio. Villains’ links often target the cards of your opponents.</p>
       <p><b>Good and Bad cards.</b> A “Good card” or “Bad card” is any card that shows that icon: Characters, but also some Items (the Poisoned Apple, the Spinning Wheel and the Magic Contract are Bad). Only Bad cards have mean effects on other players.</p>
       <p>Effects have four types: [[icon:instant]] <b>Instant</b> (once, when you take the card), [[icon:activation]] <b>Activation</b> (each time an effect activates it), [[icon:ongoing]] <b>Ongoing</b> (always true) and [[icon:endgame]] <b>Game End</b> (scored at the end).</p>`],
@@ -190,7 +192,7 @@ const RULES = {
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 8 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 6 / 8 / 10 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 1 VP per Charm: another 8 VP.
+      <div class="example"><b>Example.</b> At the end, Sofia has 5 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 3 / 5 / 7 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 2 VP per Charm: another 10 VP.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconography", `[[iconguide]]`],
     ],
@@ -204,7 +206,7 @@ const RULES = {
     normal: "Personnage commun",
     legendary: "Personnage légendaire",
     anatomy: {
-      common: ["Tags de compétence (carrés, en haut à gauche) : Charme, Force, Ruse, Intelligence.", "Nom du personnage.", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
+      common: ["Nom du personnage (les personnages communs n’ont pas de tag).", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
       legendary: ["Tags de compétence.", "Nom et mention « Légendaire ».", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (remplace l’effet de base).", "Gentil ou Méchant."],
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
@@ -217,7 +219,7 @@ const RULES = {
       [[anatomy:item]]
       <p>Les <b>cartes Aventure</b> rapportent des points en fin de partie ; certaines ont des paliers (2 / 4 / 6 PV). Les <b>cartes Écrivain</b> donnent à chaque joueur un pouvoir personnel qui grandit sur trois niveaux. Les <b>cartes Chapitre</b> sont des pages de livre : leur numéro de chapitre fixe l’ordre du tour, leur effet se résout pendant votre tour.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Les quatre compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]] et l’<b>Intelligence</b> [[tag:Intelligence]]. Beaucoup d’Aventures et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type : quand vous en gagnez un, vous choisissez son type. Un badge rond vert avec une plume signale les cartes qui rapportent des jetons PV pendant la partie (pas celles qui ne marquent qu’en fin de partie) ; ce n’est <b>pas un tag</b>. Certaines cartes n’ont <b>aucun tag</b> : elles sont récompensées autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…).</p>
+      <p>Les cinq compétences sont le <b>Charme</b> [[tag:Charm]], la <b>Force</b> [[tag:Strength]], la <b>Ruse</b> [[tag:Dexterity]], l’<b>Intelligence</b> [[tag:Intelligence]] et la <b>Magie</b> [[tag:Sorcery]]. Seuls les <b>personnages Légendaires et les Objets</b> portent des tags (aucun, un ou deux ; rarement plus) : les personnages communs n’en ont jamais. Beaucoup d’Aventures et d’effets les comptent. Un <b>jeton Tag</b> carré compte comme une icône de son type : quand vous en gagnez un, vous choisissez son type. Un badge rond vert avec une plume signale les cartes qui rapportent des jetons PV pendant la partie (pas celles qui ne marquent qu’en fin de partie) ; ce n’est <b>pas un tag</b>. Certains personnages Légendaires et Objets n’ont <b>aucun tag</b> : ils sont récompensés autrement, souvent par des Points de Victoire pendant la partie (Rouet, Chapelier fou, « L’Ordre de la Reine »…). Un personnage commun ne compte jamais comme une « carte sans tag ».</p>
       <p><b>Liens entre contes.</b> Les cartes d’un même conte fonctionnent ensemble : « si vous avez X » veut dire que X est dans votre tableau (Personnages) ou parmi vos Objets. Par exemple, l’Épouvantail donne 2 XP au lieu de 1 si vous avez Dorothy Gale, et le Chat et le Renard volent 2 pièces à un joueur qui a Pinocchio. Les liens des méchants visent souvent les cartes de vos adversaires.</p>
       <p><b>Cartes Gentilles et Méchantes.</b> Une « carte Gentille » ou « carte Méchante » est toute carte qui porte cette icône : les Personnages, mais aussi certains Objets (la Pomme empoisonnée, le Rouet et le Contrat magique sont Méchants). Seules les cartes Méchantes ont des effets contre les autres joueurs.</p>
       <p>Les effets sont de quatre types : [[icon:instant]] <b>Instantané</b> (une fois, quand vous prenez la carte), [[icon:activation]] <b>Activation</b> (chaque fois qu’un effet l’active), [[icon:ongoing]] <b>Permanent</b> (toujours valable) et [[icon:endgame]] <b>Fin de partie</b> (compté à la fin).</p>`],
@@ -272,7 +274,7 @@ const RULES = {
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 8 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 6 / 8 / 10 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 1 PV par Charme : encore 8 PV.
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 5 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 3 / 5 / 7 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 2 PV par Charme : encore 10 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconographie", `[[iconguide]]`],
     ],
@@ -286,7 +288,7 @@ const RULES = {
     normal: "Personaggio comune",
     legendary: "Personaggio leggendario",
     anatomy: {
-      common: ["Tag di abilità (quadrati, in alto a sinistra): Fascino, Forza, Astuzia, Intelligenza.", "Nome del personaggio.", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
+      common: ["Nome del personaggio (i personaggi comuni non hanno tag).", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
       legendary: ["Tag di abilità.", "Nome e dicitura «Leggendaria».", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (sostituisce quello base).", "Buono o Cattivo."],
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
@@ -299,7 +301,7 @@ const RULES = {
       [[anatomy:item]]
       <p>Le <b>carte Avventura</b> danno punti a fine partita; alcune hanno delle soglie (2 / 4 / 6 PV). Le <b>carte Scrittore</b> danno a ogni giocatore un potere personale che cresce su tre livelli. Le <b>carte Capitolo</b> sono pagine di un libro: il numero del capitolo decide l’ordine di turno, il loro effetto si risolve durante il tuo turno.</p>
       <div class="fig-row">[[quest:The Midnight Ball]][[writer:Charles Perrault]][[action:3]]</div>
-      <p>Le quattro abilità sono <b>Fascino</b> [[tag:Charm]], <b>Forza</b> [[tag:Strength]], <b>Astuzia</b> [[tag:Dexterity]] e <b>Intelligenza</b> [[tag:Intelligence]]. Molte Avventure ed effetti le contano. Un <b>segnalino Tag</b> quadrato conta come un’icona del suo tipo: quando ne ottieni uno, ne scegli il tipo. Un distintivo rotondo verde con una piuma segnala le carte che danno segnalini PV durante la partita (non quelle che segnano solo a fine partita); <b>non è un tag</b>. Alcune carte non hanno <b>nessun tag</b>: sono premiate in altro modo, spesso con Punti Vittoria durante la partita (Arcolaio, Cappellaio Matto, «La Regina Ordina»…).</p>
+      <p>Le cinque abilità sono <b>Fascino</b> [[tag:Charm]], <b>Forza</b> [[tag:Strength]], <b>Astuzia</b> [[tag:Dexterity]], <b>Intelligenza</b> [[tag:Intelligence]] e <b>Magia</b> [[tag:Sorcery]]. Solo i <b>personaggi Leggendari e gli Oggetti</b> hanno tag (nessuno, uno o due; raramente di più): i personaggi comuni non ne hanno mai. Molte Avventure ed effetti le contano. Un <b>segnalino Tag</b> quadrato conta come un’icona del suo tipo: quando ne ottieni uno, ne scegli il tipo. Un distintivo rotondo verde con una piuma segnala le carte che danno segnalini PV durante la partita (non quelle che segnano solo a fine partita); <b>non è un tag</b>. Alcuni personaggi Leggendari e Oggetti non hanno <b>nessun tag</b>: sono premiati in altro modo, spesso con Punti Vittoria durante la partita (Arcolaio, Cappellaio Matto, «La Regina Ordina»…). Un personaggio comune non conta mai come «carta senza tag».</p>
       <p><b>Legami tra le fiabe.</b> Le carte di una stessa fiaba funzionano insieme: «se hai X» significa che X è nel tuo tableau (Personaggi) o tra i tuoi Oggetti. Per esempio, lo Spaventapasseri dà 2 XP invece di 1 se hai Dorothy Gale, e il Gatto e la Volpe rubano 2 monete a un giocatore che ha Pinocchio. I legami dei cattivi colpiscono spesso le carte degli avversari.</p>
       <p><b>Carte Buone e Cattive.</b> Una «carta Buona» o «carta Cattiva» è ogni carta che porta quell’icona: i Personaggi, ma anche alcuni Oggetti (la Mela avvelenata, l’Arcolaio e il Contratto magico sono Cattivi). Solo le carte Cattive hanno effetti contro gli altri giocatori.</p>
       <p>Gli effetti sono di quattro tipi: [[icon:instant]] <b>Istantaneo</b> (una volta, quando prendi la carta), [[icon:activation]] <b>Attivazione</b> (ogni volta che un effetto la attiva), [[icon:ongoing]] <b>Permanente</b> (sempre valido) e [[icon:endgame]] <b>Fine partita</b> (contato alla fine).</p>`],
@@ -354,7 +356,7 @@ const RULES = {
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 8 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 6 / 8 / 10 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 1 PV per Fascino: altri 8 PV.
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 5 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 3 / 5 / 7 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino: altri 10 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconografia", `[[iconguide]]`],
     ],

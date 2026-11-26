@@ -190,8 +190,8 @@ body.print-body {
 }
 
 .tag-tok .game-icon {
-  width: 160%;
-  height: 160%;
+  width: 100%;
+  height: 100%;
   max-width: none;
 }
 

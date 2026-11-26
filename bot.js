@@ -71,7 +71,7 @@
       const fullText = `${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`;
       if (mine.some((c) => fullText.includes(c.name) || `${c.effect || ""} ${c.base || ""} ${c.upgrade || ""}`.includes(card.name))) value += 1.5;
       for (const quest of state.quests) {
-        for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence"]) {
+        for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"]) {
           if (new RegExp(icon).test(quest.scoring)) value += iconAmount(card, icon) * 0.8;
         }
       }
@@ -203,7 +203,7 @@
     if (mine.some((c) => fullText.includes(c.name) || `${c.effect || ""} ${c.base || ""} ${c.upgrade || ""}`.includes(card.name))) value += 2;
     if (card.alignment === "Good" && mine.some((c) => c.name === "Pinocchio")) value += 0.5;
     for (const quest of state.quests) {
-      for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence"]) {
+      for (const icon of ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"]) {
         if (new RegExp(icon).test(quest.scoring)) value += iconAmount(card, icon) * 1.5;
       }
       if (/Bad card/.test(quest.scoring) && card.alignment === "Bad") value += 2;
