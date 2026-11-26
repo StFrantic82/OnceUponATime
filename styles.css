@@ -2888,15 +2888,13 @@ html {
 .fc-up .fc-cost { position: absolute; top: -8px; right: 6px; z-index: 2; }
 .fc-up.on .fc-cost, .fc-up .fc-cost { opacity: 1; }
 
-/* Tag token icon (gain a Tag token): a square token split in the four skill colours */
+/* Tag token icon (gain a Tag token): a square token split in the five skill colours */
 .tagtok-ico {
-  display: inline-grid; grid-template-columns: 1fr 1fr; gap: 1.5px; width: 1.35em; height: 1.35em; vertical-align: -0.3em; box-sizing: border-box;
-  border-radius: 4px; overflow: hidden; border: 2px solid #2a190f; background: #fff3d6; box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+  display: inline-block; width: 1.35em; height: 1.35em; vertical-align: -0.3em; box-sizing: border-box;
+  border-radius: 4px; overflow: hidden; border: 2px solid #2a190f; box-shadow: 0 1px 2px rgba(0, 0, 0, .3);
+  background: conic-gradient(#9a4a9a 0 72deg, #e2492a 72deg 144deg, #f2ac3d 144deg 216deg, #33506e 216deg 288deg, #72d4b0 288deg 360deg);
 }
-.tagtok-ico i:nth-child(1) { background: #7a4f9e; }
-.tagtok-ico i:nth-child(2) { background: #b8402e; }
-.tagtok-ico i:nth-child(3) { background: #8a5426; }
-.tagtok-ico i:nth-child(4) { background: #26487c; }
+.tagtok-ico i { display: none; }
 
 /* XP placed on star spaces */
 .xp-place { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -3164,11 +3162,13 @@ button.needs-click { outline: none; }
 
 /* Iconography summary */
 .icon-guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 6px 0; }
-.ig-row { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255, 248, 226, .7); border: 1px solid #e2cfa8; }
+.ig-row { display: grid; grid-template-columns: 132px 1fr; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255, 248, 226, .7); border: 1px solid #e2cfa8; }
 .ig-icon { display: flex; align-items: center; justify-content: center; gap: 3px; flex-wrap: wrap; min-height: 30px; }
 .ig-icon .game-icon { width: 26px; height: 26px; }
 .ig-icon .fc-skills { position: static; display: flex; gap: 3px; }
-.ig-icon .skill-tag { width: 22px; height: 22px; }
+.ig-icon .skill-tag { width: 21px; height: 21px; }
+.ig-icon .skill-tag .game-icon { width: 100%; height: 100%; }
+.ig-icon .fc-skills, .ig-icon .set4 { flex-wrap: nowrap; }
 .ig-icon .xp-box { width: 30px; height: 30px; display: grid; place-items: center; border: 2px dashed #c58b3c; border-radius: 6px; }
 .ig-icon .xp-box .game-icon { width: 18px; height: 18px; opacity: .6; }
 .ig-icon .freeup-ico { width: 30px; height: 30px; }

@@ -6,7 +6,7 @@
   const TAG = 26; // px, size of a square skill tag
 
   // "Tag token" in card texts becomes a small square token icon with the four skill colours.
-  const TAG_ICON = `<span class="tagtok-ico" role="img" aria-label="Tag"><i></i><i></i><i></i><i></i></span>`;
+  const TAG_ICON = `<span class="tagtok-ico" role="img" aria-label="Tag"><i></i><i></i><i></i><i></i><i></i></span>`;
   // A tiny Quest tile (landscape card: picture on the left, purple title band and text on the right).
   const QUEST_ICON = `<svg class="quest-ico" viewBox="0 0 30 20" role="img" aria-label="Q"><rect x="0.8" y="0.8" width="28.4" height="18.4" rx="2.6" fill="#f6ead0" stroke="#6b4a8a" stroke-width="1.6"/><rect x="1.6" y="1.6" width="11" height="16.8" rx="1.6" fill="#2e3f6e"/><path d="M2.4 18 L2.4 13 Q7 9.8 12.2 13 L12.2 18Z" fill="#4f7a3a"/><circle cx="9.4" cy="5.2" r="1.6" fill="#f6d98a"/><rect x="13.4" y="1.6" width="15" height="4.4" fill="#8a64ad"/><rect x="15" y="8.6" width="11.5" height="1.4" rx=".7" fill="#b39b72"/><rect x="15" y="11.6" width="9" height="1.4" rx=".7" fill="#b39b72"/><rect x="15" y="14.6" width="10.5" height="1.4" rx=".7" fill="#b39b72"/></svg>`;
   window.QUEST_ICON = QUEST_ICON;

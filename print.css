@@ -544,11 +544,13 @@ body.print-body {
 
 /* Iconography summary */
 .icon-guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 6px 0; }
-.ig-row { display: grid; grid-template-columns: 96px 1fr; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255, 248, 226, .7); border: 1px solid #e2cfa8; }
+.ig-row { display: grid; grid-template-columns: 132px 1fr; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255, 248, 226, .7); border: 1px solid #e2cfa8; }
 .ig-icon { display: flex; align-items: center; justify-content: center; gap: 3px; flex-wrap: wrap; min-height: 30px; }
 .ig-icon .game-icon { width: 26px; height: 26px; }
 .ig-icon .fc-skills { position: static; display: flex; gap: 3px; }
-.ig-icon .skill-tag { width: 22px; height: 22px; }
+.ig-icon .skill-tag { width: 21px; height: 21px; }
+.ig-icon .skill-tag .game-icon { width: 100%; height: 100%; }
+.ig-icon .fc-skills, .ig-icon .set4 { flex-wrap: nowrap; }
 .ig-icon .xp-box { width: 30px; height: 30px; display: grid; place-items: center; border: 2px dashed #c58b3c; border-radius: 6px; }
 .ig-icon .xp-box .game-icon { width: 18px; height: 18px; opacity: .6; }
 .ig-icon .freeup-ico { width: 30px; height: 30px; }
