@@ -394,6 +394,11 @@ window.CARD_I18N = [
   ["Game End: 1 VP for each pair of Items.", "Game End : 1 VP par paire d’Objets.", "Game End: 1 VP per ogni coppia di Oggetti."],
   ["Game End: 1 VP for each pair of upgraded Legendary cards.", "Game End : 1 VP par paire de cartes Légendaires améliorées.", "Game End: 1 VP per ogni coppia di carte Leggendarie potenziate."],
   ["Game End: 1 VP for each Sorcery icon.", "Game End : 1 VP par icône Sorcery.", "Game End: 1 VP per ogni icona Sorcery."],
+  ["The Sea Witch", "La Sorcière des mers", "La Strega del mare"],
+  ["Game End: 2 VP for each Sorcery icon.", "Game End : 2 VP par icône Sorcery.", "Game End: 2 VP per ogni icona Sorcery."],
+  ["The Ogre", "L’Ogre", "L’Orco"],
+  ["Instant: discard 1 Common card from your tableau to gain 3 XP.", "Instant : défaussez 1 carte Commune de votre tableau pour gagner 3 XP.", "Instant: scarta 1 carta Comune dal tuo tableau per ottenere 3 XP."],
+  ["Activation: discard 1 Common card from your tableau to gain 3 VP.", "Activation : défaussez 1 carte Commune de votre tableau pour gagner 3 VP.", "Activation: scarta 1 carta Comune dal tuo tableau per ottenere 3 VP."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP. Dorothy Gale, Scarecrow, The Tin Woodman, The Cowardly Lion, The Wizard of Oz, the four Witches, The Munchkins.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP. Dorothy Gale, l’Épouvantail, le Bûcheron de fer-blanc, le Lion peureux, le Magicien d’Oz, les quatre Sorcières, les Munchkins.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP. Dorothy Gale, lo Spaventapasseri, il Boscaiolo di latta, il Leone codardo, il Mago di Oz, le quattro Streghe, i Mastichini."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],

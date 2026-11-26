@@ -256,6 +256,8 @@
     "Little Red Riding Hood": { bg: "forest", m: [["hood", 100, 96, 1.05, 0], ["basket", 156, 116, 0.5, 0], ["pine", 40, 90, 0.8, 0]] },
     "The Wolf": { bg: "night", m: [["wolf", 96, 90, 1.25, 0], ["pine", 170, 92, 0.8, 0]] },
     "King Triton": { bg: "under", m: [F({ style: "whitebeard", coat: "#2f9f8a" }), ["crown", 100, 58, 0.45, 0, { gem: "#2f9f8a" }], ["trident", 156, 86, 0.75, 8]] },
+    "The Sea Witch": { bg: "under", m: [["tail", 100, 118, 0.7, 0, { c: "#4a3566" }], ["figure", 100, 76, 0.85, 0, { style: "long", skin: "#cdd3e6", hair: "#f1ecf5", coat: "#3a2a4a", collar: "#8f5bb5" }], ["bottle", 154, 104, 0.5, 0], ["shell", 46, 122, 0.35, 0], ["sparkles", 154, 70, 0.5, 0]] },
+    "The Ogre": { bg: "castle", m: [["horns", 100, 56, 0.7, 0], F({ style: "beard", skin: "#9fb36a", hair: "#4a3a22", coat: "#6b4a2a", collar: "#c9922a" }), ["mouse", 154, 124, 0.5, 0], ["boot", 46, 120, 0.45, 0]] },
     "Little Mermaid": { bg: "under", m: [["tail", 100, 116, 0.65, 0, { c: "#4fbfa0" }], ["figure", 100, 76, 0.85, 0, { style: "long", hair: "#e7b43a", coat: "#d9a5c2" }], ["shell", 156, 120, 0.35, 0], ["goldfish", 44, 60, 0.7, 0]] },
     "Robin Hood": { bg: "forest", m: [F({ style: "short", hair: "#a8692f", coat: "#4f9a45" }), ["featherCap", 100, 60, 0.75, 0], ["bow", 154, 96, 0.75, 0]] },
     "Prince John": { bg: "castle", m: [["coins", 154, 116, 0.6, 0], F({ style: "short", hair: "#c98f4a", coat: "#5a3b6e", collar: "#e7b43a" }), ["crown", 100, 62, 0.5, -10]] },

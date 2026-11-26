@@ -1331,6 +1331,26 @@ window.GAME_DATA = {
       "base": "Intelligence 1. Activation: gain 1 coin for each pair of Items.",
       "upgrade": "Cost 5 XP. Game End: 3 VP for each pair of Items (4 VP more if you have Pinocchio).",
       "upgraded": false
+    },
+    {
+      "id": "L42",
+      "deck": "legendary",
+      "name": "The Sea Witch",
+      "rank": null,
+      "alignment": "Bad",
+      "base": "Sorcery 1. Game End: 1 VP for each Sorcery icon.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Sorcery icon.",
+      "upgraded": false
+    },
+    {
+      "id": "L43",
+      "deck": "legendary",
+      "name": "The Ogre",
+      "rank": null,
+      "alignment": "Bad",
+      "base": "Strength 1, Sorcery 1. Instant: discard 1 Common card from your tableau to gain 3 XP.",
+      "upgrade": "Cost 3 XP. Activation: discard 1 Common card from your tableau to gain 3 VP.",
+      "upgraded": false
     }
   ],
   "actions": [

@@ -756,6 +756,22 @@ function offerMirror() {
   if (worth(pick.split(" ")[1]) < 4.5) applyOption(pick, "Whispering Mirror");
 }
 
+// The Ogre: discard 1 Common card from your tableau, for 3 XP (Instant) or 3 VP (upgraded, Activation).
+function offerOgre(kind) {
+  const seen = new Set();
+  const commons = state.tableau.filter((c) => c.deck === "common" && !seen.has(c.name) && seen.add(c.name));
+  if (!commons.length) return;
+  const options = commons.map((c) => `ogre ${c.id} ${kind}`);
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source: "The Ogre", options, cost: "optional" }];
+    return;
+  }
+  const worth = (id) => (window.Bot?.cardWorth ? window.Bot.cardWorth(state.tableau.find((c) => c.id === id)) : 0);
+  const pick = [...options].sort((a, b) => worth(a.split(" ")[1]) - worth(b.split(" ")[1]))[0];
+  if (worth(pick.split(" ")[1]) < (kind === "xp" ? 5 : 2.6)) applyOption(pick, "The Ogre");
+}
+
 function checkPeterPan() {
   const pan = state.tableau.find((card) => card.name === "Peter Pan" && !card.upgraded);
   if (pan && state.tableau.some((card) => card.name === "Pirate" || card.name === "Captain Hook")) completeUpgrade(pan);
@@ -1045,6 +1061,15 @@ function applyOption(option, source) {
     log("l_tucks", { p: state.name, c: C(card.name) });
     return;
   }
+  if ((m = option.match(/^ogre (\S+) (xp|vp)/))) {
+    const card = state.tableau.find((c) => c.id === m[1]);
+    if (!card) return;
+    state.tableau = state.tableau.filter((c) => c !== card);
+    toDiscard(card);
+    log("l_discards", { p: state.name, c: C(card.name) });
+    gain(m[2], 3);
+    return;
+  }
   if ((m = option.match(/^mirror (\S+)/))) {
     const card = state.tableau.find((c) => c.id === m[1]);
     if (!card) return;
@@ -1257,6 +1282,10 @@ function applyInstantInner(card) {
     hunterChoice();
     return;
   }
+  if (card.name === "The Ogre") {
+    offerOgre("xp");
+    return;
+  }
   const text = stripLinks(full);
   const options = choiceOptions(text);
   if (options) {
@@ -1464,7 +1493,7 @@ async function activateCardInner(card) {
   const seat = G.cur;
   const fullText = activeCardText(card);
   const text = stripLinks(fullText);
-  const ownChoice = ["Hot Air Balloon", "Whispering Mirror", "The Crown of England"].includes(card.name);
+  const ownChoice = ["Hot Air Balloon", "Whispering Mirror", "The Crown of England", "The Ogre"].includes(card.name);
   const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
   if (/spend 1 XP to gain 2 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
@@ -1519,6 +1548,8 @@ async function activateCardInner(card) {
     else if (xp) gain("xp", xp);
   } else if (card.name === "The Evil Fairy" && card.upgraded) {
     gain("vp", Math.floor(countAlignment("Bad") / 2));
+  } else if (card.name === "The Ogre" && card.upgraded) {
+    offerOgre("vp");
   } else if (card.name === "The Hunter" && card.upgraded) {
     if (countAlignment("Bad") > 0) gain("vp", 2);
   } else if (card.name === "Puss in Boots" && card.upgraded) {
@@ -1790,6 +1821,7 @@ function scoreCards(only = null) {
     else if (n === "Dorothy Gale") total += sets * 4;
     else if (n === "Peter Pan") total += (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2;
     else if (n === "Captain Hook") total += icons.Dexterity * (up ? 2 : 1);
+    else if (n === "The Sea Witch") total += icons.Sorcery * (up ? 2 : 1);
     else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += icons.Intelligence * 2 + countByName("The Merry Men") * 2;
@@ -2073,6 +2105,10 @@ function renderGuide() {
       if ((m = o.match(/^pick (\S+)/))) {
         const card = ((G.limbo || {})[choice.source]?.cards || []).find((c) => c.id === m[1]);
         return card ? `<span class="pick-card">${CardFace.common ? CardFace.common(card) : escapeHtml(tc(card.name))}</span>` : "?";
+      }
+      if ((m = o.match(/^ogre (\S+) (xp|vp)/))) {
+        const card = state.tableau.find((c) => c.id === m[1]);
+        return `− ${escapeHtml(tc(card ? card.name : ""))} → +3 ${resourceIcon(m[2], m[2].toUpperCase())}`;
       }
       if ((m = o.match(/^discard (\S+) gain (\d+) VP/))) {
         const card = state.tableau.find((c) => c.id === m[1]);
