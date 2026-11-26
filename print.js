@@ -76,10 +76,10 @@ const P = {
     tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
     page: "Page",
     set: "Set",
-    board: "Board · group spaces · front: 2–3 players, back: 4 players",
+    board: "Board · groups for 2, 3 and 4 players · icons · single-sided",
     boardSide: "Board",
     boardPlayers: "{n} players",
-    boardHow: "Each round, deal the revealed characters below their space: one group per space. Use the side that matches your number of players.",
+    boardHow: "Each round, deal the revealed characters below their space: one group per space, on the row for your number of players.",
     normal: "common", normals: "common", legendary: "Legendary", legendaries: "Legendary",
     itemsShown: "Items revealed", questsShown: "Adventures revealed",
     yourBook: "Your book",
@@ -100,10 +100,10 @@ const P = {
     tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
     page: "Page",
     set: "Jeu",
-    board: "Plateau · emplacements des lots · recto : 2–3 joueurs, verso : 4 joueurs",
+    board: "Plateau · lots à 2, 3 et 4 joueurs · iconographie · recto seul",
     boardSide: "Plateau",
     boardPlayers: "{n} joueurs",
-    boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement. Utilisez la face qui correspond à votre nombre de joueurs.",
+    boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement, sur la ligne de votre nombre de joueurs.",
     normal: "commune", normals: "communes", legendary: "Légendaire", legendaries: "Légendaires",
     itemsShown: "Objets révélés", questsShown: "Aventures révélées",
     yourBook: "Votre livre",
@@ -124,10 +124,10 @@ const P = {
     tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
     page: "Pagina",
     set: "Mazzo",
-    board: "Plancia · spazi dei gruppi · fronte: 2–3 giocatori, retro: 4 giocatori",
+    board: "Plancia · gruppi per 2, 3 e 4 giocatori · iconografia · solo fronte",
     boardSide: "Plancia",
     boardPlayers: "{n} giocatori",
-    boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio. Usa il lato adatto al vostro numero di giocatori.",
+    boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio, sulla riga del vostro numero di giocatori.",
     normal: "comune", normals: "comuni", legendary: "Leggendaria", legendaries: "Leggendarie",
     itemsShown: "Oggetti rivelati", questsShown: "Avventure rivelate",
     yourBook: "Il tuo libro",
@@ -232,33 +232,33 @@ function fitFace(face) {
   }
 }
 
-// Board: one space per group of characters. Front 2–3 players, back 4 players.
+// Board: single-sided. One row per player count (one space per group of characters), then the icon guide.
 const BOARDS = { 2: [[0, 1], [2, 1], [2, 0]], 3: [[0, 1], [2, 1], [2, 0], [1, 1]], 4: [[0, 1], [1, 1], [2, 0], [2, 1], [1, 1]] };
 
 function boardSection(n) {
   const groups = BOARDS[n].map(([c, l], i) => {
     const minis = `${'<i class="mini mini-c"></i>'.repeat(c)}${'<i class="mini mini-l"></i>'.repeat(l)}`;
     const text = [c ? `${c} ${c > 1 ? L.normals : L.normal}` : "", l ? `${l} ${l > 1 ? L.legendaries : L.legendary}` : ""].filter(Boolean).join(" + ");
-    return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${esc(text)}</div><div class="barrow">▼</div></div>`;
+    return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${esc(text)}</div></div>`;
   }).join("");
   return `<div class="bsection">
-    <div class="bhead"><span class="bstar">✦</span>${esc(L.boardPlayers.replace("{n}", n))}<span class="bstar">✦</span></div>
-    <div class="bslots" style="grid-template-columns:repeat(${BOARDS[n].length}, 1fr)">${groups}</div>
-    <div class="bdisplays">
+    <div class="bhead">${esc(L.boardPlayers.replace("{n}", n))}
       <div class="bdisp">${resourceIcon("coins", "Items", true)} ${esc(L.itemsShown)} : <b>${n + 1}</b></div>
       <div class="bdisp">${resourceIcon("endgame", "Adventures", true)} ${esc(L.questsShown)} : <b>${n + 1}</b></div>
     </div>
+    <div class="bslots">${groups}</div>
   </div>`;
 }
 
 function boardSheets() {
-  return [[2, 3], [4]].map(([a, b]) => `<section class="sheet board-sheet"><header class="sheet-head">${esc(L.boardSide)} · ${esc(L.boardPlayers.replace("{n}", b ? `${a}–${b}` : `${a}`))}</header>
+  return [`<section class="sheet board-sheet"><header class="sheet-head">${esc(L.boardSide)}</header>
     <div class="board">
       <div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time</h2></div>
-      ${boardSection(a)}
-      ${b ? boardSection(b) : ""}
+      ${[2, 3, 4].map(boardSection).join("")}
       <p class="board-how">${esc(L.boardHow)}</p>
-    </div></section>`);
+      <h3 class="board-sub">${esc(t("icoTitle"))}</h3>
+      ${CardFace.iconGuide()}
+    </div></section>`];
 }
 
 // Score pad: six games per A4 page (9 cm wide each), up to 4 storytellers.
@@ -313,7 +313,6 @@ function build() {
   add(L.board, boardSheets());
   add(L.scorePad, scoreSheet());
   add(L.sizes.tokens, tokenSheet());
-  add(t("icoTitle"), [`<section class="sheet"><header class="sheet-head">${esc(t("icoTitle"))}</header><div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>${esc(t("icoTitle"))}</h2></div>${CardFace.iconGuide()}</section>`]);
 
   let page = 2;
   const index = sections.map(([label, sheets]) => {

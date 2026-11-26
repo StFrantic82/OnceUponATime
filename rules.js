@@ -145,7 +145,7 @@ const RULES = {
         <li>Shuffle the Common characters and the Legendary characters into two separate decks.</li>
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Adventures and reveal <b>1 + the number of players</b>.</li>
         <li>Each player takes the 12 Chapter cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Chapter deck.</li>
-        <li>Put the board in the middle, on the side for your number of players. Choose a first player at random: they take the first player token.</li>
+        <li>Put the board in the middle: it shows the groups for 2, 3 and 4 players, and all the icons. Choose a first player at random: they take the first player token.</li>
         <li>Place <b>1 + the number of players</b> Writers face up in the middle of the table. In reverse turn order (the player to the right of the first player chooses first, the first player last), each player chooses a Writer, at level 1, and takes the <b>coins</b> [[icon:coins]] shown on it. Discard the Writer nobody took.</li>
         <li>Place your Chapter deck to the left of your Writer, against the notch: it is the book you are writing.</li>
       </ol>`],
@@ -227,7 +227,7 @@ const RULES = {
         <li>Mélangez les personnages Communs et les personnages Légendaires en deux pioches séparées.</li>
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Aventures et révélez-en <b>1 + le nombre de joueurs</b>.</li>
         <li>Chaque joueur prend les 12 cartes Chapitre d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Chapitre.</li>
-        <li>Placez le plateau au centre, sur la face qui correspond à votre nombre de joueurs. Désignez un premier joueur au hasard : il prend le jeton premier joueur.</li>
+        <li>Placez le plateau au centre : il indique les lots à 2, 3 et 4 joueurs, ainsi que toute l’iconographie. Désignez un premier joueur au hasard : il prend le jeton premier joueur.</li>
         <li>Placez <b>1 + le nombre de joueurs</b> Écrivains face visible au centre de la table. Dans l’ordre inverse du tour (le joueur à droite du premier joueur choisit en premier, le premier joueur en dernier), chaque joueur choisit un Écrivain, au niveau 1, et prend les <b>pièces</b> [[icon:coins]] indiquées dessus. L’Écrivain restant est défaussé.</li>
         <li>Posez votre pioche Chapitre à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
       </ol>`],
@@ -309,7 +309,7 @@ const RULES = {
         <li>Mescola i personaggi Comuni e i personaggi Leggendari in due mazzi separati.</li>
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Avventure e rivelane <b>1 + il numero di giocatori</b>.</li>
         <li>Ogni giocatore prende le 12 carte Capitolo di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Capitolo.</li>
-        <li>Metti la plancia al centro, sul lato adatto al vostro numero di giocatori. Scegliete a caso il primo giocatore: prende il segnalino primo giocatore.</li>
+        <li>Metti la plancia al centro: mostra i gruppi per 2, 3 e 4 giocatori e tutta l’iconografia. Scegliete a caso il primo giocatore: prende il segnalino primo giocatore.</li>
         <li>Metti <b>1 + il numero di giocatori</b> Scrittori scoperti al centro del tavolo. In ordine di turno inverso (sceglie per primo il giocatore a destra del primo giocatore, il primo giocatore per ultimo), ogni giocatore sceglie uno Scrittore, al livello 1, e prende le <b>monete</b> [[icon:coins]] indicate sopra. Lo Scrittore rimasto viene scartato.</li>
         <li>Metti il tuo mazzo Capitolo a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
       </ol>`],
