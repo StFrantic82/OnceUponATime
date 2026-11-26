@@ -3194,3 +3194,12 @@ button.needs-click { outline: none; }
 .q-row .q-vp { display: grid; place-items: center; }
 .q-row .q-vp .game-icon { width: 1.25em; height: 1.25em; }
 .q-rest { margin: 4px 0 0 !important; font-size: .92em; }
+
+/* Cards with four tags or more: the tags get their own band */
+.fc-tagband { display: flex; justify-content: center; }
+.fc-tagband .fc-skills { position: static; display: flex; gap: 4px; }
+.fc-art .fc-tagband { position: absolute; left: 0; right: 0; bottom: 5px; }
+.fc-tagband.big { width: 100%; }
+.fc-tagband.big .fc-skills { gap: 6px; }
+.fc-tagband.big .skill-tag { width: 30px; height: 30px; }
+.fc-item .fc-text:has(.fc-tagband.big) { justify-content: center; }

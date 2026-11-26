@@ -61,6 +61,10 @@ window.CARD_I18N = [
   ["Undersea Throne", "Trône sous-marin", "Trono sottomarino"],
   ["Crocodile's Clock", "L’Horloge du Crocodile", "L’Orologio del Coccodrillo"],
   ["The Whale", "La Baleine", "La Balena"],
+  ["The Book of Tales", "Le Livre des contes", "Il Libro delle fiabe"],
+  ["Enchanted Candelabra", "Chandelier enchanté", "Candelabro incantato"],
+  ["Puppet Strings", "Fils de marionnette", "Fili da burattino"],
+  ["Stolen Purse", "Bourse volée", "Borsa rubata"],
   // ---- Names: Legendary characters ----
   ["The Prince", "Le Prince", "Il Principe"],
   ["The White Rabbit", "Le Lapin blanc", "Il Bianconiglio"],
@@ -389,6 +393,7 @@ window.CARD_I18N = [
   ["Instant: choose one: gain 3 coins, gain 3 XP, or gain 1 Tag token.", "Instant : au choix : gagnez 3 coins, gagnez 3 XP, ou gagnez 1 jeton d’icône.", "Instant: scegli: ottieni 3 coins, ottieni 3 XP, oppure ottieni 1 segnalino icona."],
   ["Game End: 1 VP for each pair of Items.", "Game End : 1 VP par paire d’Objets.", "Game End: 1 VP per ogni coppia di Oggetti."],
   ["Game End: 1 VP for each pair of upgraded Legendary cards.", "Game End : 1 VP par paire de cartes Légendaires améliorées.", "Game End: 1 VP per ogni coppia di carte Leggendarie potenziate."],
+  ["Game End: 1 VP for each Sorcery icon.", "Game End : 1 VP par icône Sorcery.", "Game End: 1 VP per ogni icona Sorcery."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],

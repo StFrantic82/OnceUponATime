@@ -883,6 +883,42 @@ window.GAME_DATA = {
       "icons": "Strength 1",
       "effect": "Game End: 1 VP for each of your Legendary cards and Items without tags.",
       "copy": 1
+    },
+    {
+      "id": "I37",
+      "deck": "item",
+      "name": "The Book of Tales",
+      "cost": 5,
+      "icons": "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1",
+      "effect": "",
+      "copy": 1
+    },
+    {
+      "id": "I38",
+      "deck": "item",
+      "name": "Enchanted Candelabra",
+      "cost": 3,
+      "icons": "Sorcery 1",
+      "effect": "Game End: 1 VP for each Sorcery icon.",
+      "copy": 1
+    },
+    {
+      "id": "I39",
+      "deck": "item",
+      "name": "Puppet Strings",
+      "cost": 3,
+      "icons": "Dexterity 1",
+      "effect": "Activation: gain 1 VP and 1 coin.",
+      "copy": 1
+    },
+    {
+      "id": "I40",
+      "deck": "item",
+      "name": "Stolen Purse",
+      "cost": 2,
+      "icons": "none",
+      "effect": "Instant: gain 4 coins.",
+      "copy": 1
     }
   ],
   "legendary": [
