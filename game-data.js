@@ -1112,7 +1112,7 @@ window.GAME_DATA = {
       "name": "Peter Pan",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: as soon as you have a Pirate or Captain Hook, Peter Pan is upgraded for free.",
+      "base": "Dexterity 1. Ongoing: if you have a Pirate or Captain Hook, upgrade Peter Pan for free.",
       "upgrade": "Cost 4 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell, max 14 VP.",
       "upgraded": false
     },
