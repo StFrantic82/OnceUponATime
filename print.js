@@ -76,7 +76,7 @@ const P = {
     tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
     page: "Page",
     set: "Set",
-    board: "Board · groups for 2, 3 and 4 players · icons · single-sided",
+    board: "Board · A5, single-sided · 2 copies",
     boardSide: "Board",
     boardPlayers: "{n} players",
     boardHow: "Each round, deal the revealed characters below their space: one group per space, on the row for your number of players.",
@@ -100,7 +100,7 @@ const P = {
     tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
     page: "Page",
     set: "Jeu",
-    board: "Plateau · lots à 2, 3 et 4 joueurs · iconographie · recto seul",
+    board: "Plateau · format A5, recto seul · 2 exemplaires",
     boardSide: "Plateau",
     boardPlayers: "{n} joueurs",
     boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement, sur la ligne de votre nombre de joueurs.",
@@ -124,7 +124,7 @@ const P = {
     tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
     page: "Pagina",
     set: "Mazzo",
-    board: "Plancia · gruppi per 2, 3 e 4 giocatori · iconografia · solo fronte",
+    board: "Plancia · formato A5, solo fronte · 2 copie",
     boardSide: "Plancia",
     boardPlayers: "{n} giocatori",
     boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio, sulla riga del vostro numero di giocatori.",
@@ -238,8 +238,8 @@ const BOARDS = { 2: [[0, 1], [2, 1], [2, 0]], 3: [[0, 1], [2, 1], [2, 0], [1, 1]
 function boardSection(n) {
   const groups = BOARDS[n].map(([c, l], i) => {
     const minis = `${'<i class="mini mini-c"></i>'.repeat(c)}${'<i class="mini mini-l"></i>'.repeat(l)}`;
-    const text = [c ? `${c} ${c > 1 ? L.normals : L.normal}` : "", l ? `${l} ${l > 1 ? L.legendaries : L.legendary}` : ""].filter(Boolean).join(" + ");
-    return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${esc(text)}</div></div>`;
+    const text = [c ? `${c} ${c > 1 ? L.normals : L.normal}` : "", l ? `${l} ${l > 1 ? L.legendaries : L.legendary}` : ""].filter(Boolean).map(esc).join("<br>+ ");
+    return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${text}</div></div>`;
   }).join("");
   return `<div class="bsection">
     <div class="bhead">${esc(L.boardPlayers.replace("{n}", n))}
@@ -251,14 +251,14 @@ function boardSection(n) {
 }
 
 function boardSheets() {
-  return [`<section class="sheet board-sheet"><header class="sheet-head">${esc(L.boardSide)}</header>
-    <div class="board">
+  const board = `<div class="board">
       <div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time</h2></div>
       ${[2, 3, 4].map(boardSection).join("")}
       <p class="board-how">${esc(L.boardHow)}</p>
-      <h3 class="board-sub">${esc(t("icoTitle"))}</h3>
       ${CardFace.iconGuide()}
-    </div></section>`];
+    </div>`;
+  // A5 landscape: two copies fit on one A4 sheet.
+  return [`<section class="sheet board-sheet"><header class="sheet-head">${esc(L.board)}</header>${board}${board}</section>`];
 }
 
 // Score pad: six games per A4 page (9 cm wide each), up to 4 storytellers.
