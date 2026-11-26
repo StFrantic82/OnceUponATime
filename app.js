@@ -1057,7 +1057,7 @@ function applyOption(option, source) {
     state.tableau = state.tableau.filter((c) => c !== card);
     toDiscard(card);
     log("l_discards", { p: state.name, c: C(card.name) });
-    gain("xp", card.alignment === "Good" ? 4 : 3);
+    gain("xp", card.alignment === "Good" ? 3 : 2);
     return;
   }
   if ((m = option.match(/^pick (\S+)/))) {
@@ -1309,7 +1309,7 @@ function instantLinks(card) {
   if (n === "Princess Briar Rose" && hasCard("The Fairies")) gain("xp", 1);
   if (n === "Fairy Godmother") {
     gain("coins", Math.min(3, countByName("Mice")));
-    placeFreeXp(3, true);
+    placeFreeXp(3, false);
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
   if (/^Wicked Witch/.test(n)) placeWriterXp(2);
@@ -1785,7 +1785,7 @@ function scoreCards(only = null) {
     else if (n === "Undersea Throne") total += state.items.length;
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
     else if (n === "Grandmother") total += countAlignment("Bad");
-    else if (n === "Stepmother") total += up ? Math.min(10, plainLeg * 2) : Math.min(6, plainLeg);
+    else if (n === "Stepmother") total += plainLeg * (up ? 3 : 2);
     else if (n === "Prince Charming") total += icons.Charm;
     else if (n === "Evil Sorcerer") total += sets * 3;
     else if (n === "The Evil Queen") total += icons.Charm * (up ? 2 : 1);
@@ -1830,13 +1830,13 @@ function scoreWriter() {
     // XP stays on the star spaces: count what is placed on Legendaries (filled steps included) and on the Writer.
     const onCards = state.tableau.reduce((sum, card) => sum + (card.deck !== "legendary" ? 0 : card.upgraded ? upgradeCost(card) : card.xpOn || 0), 0);
     const onWriter = (state.writerLevel >= 2 ? state.writer.cost2 : 0) + (state.writerLevel >= 3 ? state.writer.cost3 : 0) + (state.writerXp || 0);
-    return Math.min(14, Math.floor((onCards + onWriter) / 2));
+    return Math.floor((onCards + onWriter) / 3);
   }
   if (name === "Lewis Carroll") return Math.min(14, countCardsWith("Activation") * 2);
   if (name === "J. M. Barrie") {
     const counts = {};
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
-    return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 4;
+    return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 5;
   }
   if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 7;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);

@@ -602,7 +602,7 @@ window.GAME_DATA = {
       "name": "The Dwarves House",
       "cost": 3,
       "icons": "none",
-      "effect": "Instant: gain 3 XP. Game End: 1 VP for each Dwarf.",
+      "effect": "Instant: gain 2 XP. Game End: 1 VP for each Dwarf.",
       "copy": 1
     },
     {
@@ -672,7 +672,7 @@ window.GAME_DATA = {
       "id": "I13",
       "deck": "item",
       "name": "Long Bow",
-      "cost": 3,
+      "cost": 4,
       "icons": "Strength 1",
       "effect": "Instant: gain 1 VP for each Bad card. If you have Robin Hood, gain 2 VP more.",
       "copy": 1
@@ -728,7 +728,7 @@ window.GAME_DATA = {
       "name": "Whispering Mirror",
       "cost": 4,
       "icons": "Intelligence 1",
-      "effect": "Activation: discard 1 Character to gain 3 XP. If it was Good, gain 1 XP more.",
+      "effect": "Activation: discard 1 Character to gain 2 XP. If it was Good, gain 1 XP more.",
       "copy": 1
     },
     {
@@ -807,7 +807,7 @@ window.GAME_DATA = {
       "id": "I28",
       "deck": "item",
       "name": "Trident",
-      "cost": 5,
+      "cost": 6,
       "icons": "Strength 1",
       "effect": "Activation: gain 2 VP. If you have at least 2 Strength or King Triton, gain 1 XP too.",
       "copy": 1
@@ -834,7 +834,7 @@ window.GAME_DATA = {
       "id": "I31",
       "deck": "item",
       "name": "Ruby Slippers",
-      "cost": 4,
+      "cost": 3,
       "icons": "Dexterity 1",
       "effect": "Activation: the Chapter card you resolve this turn gives twice as many coins or XP.",
       "copy": 1
@@ -870,7 +870,7 @@ window.GAME_DATA = {
       "id": "I35",
       "deck": "item",
       "name": "Crocodile's Clock",
-      "cost": 3,
+      "cost": 2,
       "icons": "none",
       "effect": "Activation: take back 1 Chapter card with value 7 or higher from your discard.",
       "copy": 1
@@ -1002,8 +1002,8 @@ window.GAME_DATA = {
       "name": "Stepmother",
       "rank": null,
       "alignment": "Bad",
-      "base": "Game End: 1 VP for each of your non-upgraded Legendary Characters, max 6 VP.",
-      "upgrade": "Cost 1 XP. Game End: 2 VP for each of your non-upgraded Legendary Characters, max 10 VP.",
+      "base": "Game End: 2 VP for each of your non-upgraded Legendary Characters.",
+      "upgrade": "Cost 1 XP. Game End: 3 VP for each of your non-upgraded Legendary Characters.",
       "upgraded": false
     },
     {
@@ -1222,7 +1222,7 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: place 3 XP on a Good Character. Gain 1 coin for each Mice, max 3 coins.",
+      "base": "Sorcery 1. Instant: place 3 XP on a Character. Gain 1 coin for each Mice, max 3 coins.",
       "upgrade": "Cost 2 XP. Activation: place 3 XP on a Character.",
       "upgraded": false
     },
@@ -1243,7 +1243,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 2 XP, or gain 1 Tag token.",
-      "upgrade": "Cost 4 XP. Activation: choose one of those effects.",
+      "upgrade": "Cost 2 XP. Activation: choose one of those effects.",
       "upgraded": false
     },
     {
@@ -1562,7 +1562,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 6,
-      "level3": "1 VP for every 2 XP placed on your cards and on your Writer. Max 14 VP.",
+      "level3": "1 VP for every 3 XP placed on your cards and on your Writer.",
       "coins": 2
     },
     {
@@ -1582,7 +1582,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 6,
-      "level3": "4 VP for each pair of identical Common cards.",
+      "level3": "5 VP for each pair of identical Common cards.",
       "coins": 2
     },
     {
