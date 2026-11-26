@@ -3244,3 +3244,8 @@ button.needs-click { outline: none; }
 .ct-sep { display: none; }
 .ct-chip .ct-name { max-width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
 .chapter-track { gap: 4px; }
+
+/* Left column: the Chapter cards and the Writer are two separate blocks, and neither scrolls on its own */
+.layout > .left-col { grid-area: left; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.left-col > .panel { min-height: 0; max-height: none; overflow: visible; }
+.left-col .action-hand { margin-bottom: 0; }
