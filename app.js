@@ -1101,6 +1101,7 @@ function applyOption(option, source) {
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
   else if (/take 1 (?:Quest|Adventure)/i.test(option)) grantQuestChoice(source);
+  else if (/gain 1 Tag token/i.test(option)) gainTagToken(1, source);
 }
 
 // A human player picks with buttons; the computer picks on the spot.
@@ -1195,6 +1196,15 @@ function applyMean(text, source) {
       target.coins -= k;
       gain("coins", k);
       log("l_steal", { p: state.name, n: k, o: target.name, c: C(source) });
+    }
+  }
+  if ((m = text.match(/steal (\d+) VP from each opponent/i))) {
+    for (const o of opponents()) {
+      const k = Math.min(Number(m[1]), o.vp);
+      if (!k) continue;
+      o.vp -= k;
+      gain("vp", k);
+      log("l_stealVp", { p: state.name, n: k, o: o.name, c: C(source) });
     }
   }
   if ((m = text.match(/steal (\d+) VP from the opponent with the most VP/i))) {
@@ -1336,9 +1346,9 @@ function hunterChoice() {
   if (!bad.length) return;
   const options = [];
   const villain = bad.find((card) => card.name === "The Wolf" || card.name === "The Evil Queen");
-  if (villain) options.push(`discard ${villain.id} gain 6 VP`);
+  if (villain) options.push(`discard ${villain.id} gain 7 VP`);
   const common = bad.filter((card) => card.deck === "common")[0] || bad.find((card) => card !== villain);
-  if (common) options.push(`discard ${common.id} gain 4 VP`);
+  if (common) options.push(`discard ${common.id} gain 5 VP`);
   offerChoice("The Hunter", options, "optional");
 }
 
@@ -1540,7 +1550,7 @@ async function activateCardInner(card) {
     if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(4, countByName("Pirate") + countAlignment("Bad")));
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
-    if (/gain 1 XP for each Charm/i.test(text)) gain("xp", countIcon("Charm"));
+    if (/gain 1 XP for each pair of Charm/i.test(text)) gain("xp", Math.floor(countIcon("Charm") / 2));
     if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
     else if (/gain 1 VP and 1 coin/i.test(text)) {
@@ -1721,11 +1731,11 @@ function scoreQuest(quest) {
   const name = quest.name;
   // Tiers: reaching the first, second or third step gives 2 / 4 / 6 VP.
   const tiers = (n, a = 6, b = 8, c = 10) => (n >= c ? 6 : n >= b ? 4 : n >= a ? 2 : 0);
-  if (/Midnight Ball/.test(name)) return tiers(icons.Charm, 3, 5, 7);
-  if (/Hook/.test(name)) return tiers(icons.Strength, 3, 5, 7);
-  if (/Rabbit Hole/.test(name)) return tiers(icons.Dexterity, 3, 5, 7);
-  if (/Lost Voice/.test(name)) return tiers(icons.Intelligence, 3, 5, 7);
-  if (/Fairies’ Gift/.test(name)) return tiers(icons.Sorcery, 3, 5, 7);
+  if (/Midnight Ball/.test(name)) return tiers(icons.Charm, 3, 4, 6);
+  if (/Hook/.test(name)) return tiers(icons.Strength, 3, 4, 6);
+  if (/Rabbit Hole/.test(name)) return tiers(icons.Dexterity, 3, 4, 6);
+  if (/Lost Voice/.test(name)) return tiers(icons.Intelligence, 3, 4, 6);
+  if (/Fairies’ Gift/.test(name)) return tiers(icons.Sorcery, 3, 4, 6);
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
   if (/Neverland/.test(name)) return completeSets >= 3 ? 6 : completeSets >= 2 ? 3 : 0;
   if (/Apple's Bite/.test(name)) return countAlignment("Bad");
@@ -1734,8 +1744,8 @@ function scoreQuest(quest) {
   if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 9).length * 2;
   if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 3, 5, 7);
   if (/Queen's Command/.test(name)) return countTagless();
-  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 1, 3, 5);
-  if (/King's Trident/.test(name)) return state.items.length;
+  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 1, 2, 4);
+  if (/King's Trident/.test(name)) return new Set(state.items.map((item) => item.cost)).size;
   if (/Hatter's Tea Party/.test(name)) return countCardsWith("Ongoing");
   if (/Second Star/.test(name)) return tiers(countCardsWith("Activation"), 6, 9, 12);
   if (/Pact with the Beast/.test(name)) return upgraded;
@@ -1769,7 +1779,7 @@ function scoreCards(only = null) {
     if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
     else if (n === "The Crown of England") total += card.stash || 0;
-    else if (n === "Glass Slipper") total += quests * 2 + (hasCard("Cinderella") ? 3 : 0);
+    else if (n === "Glass Slipper") total += quests + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += upgradedLeg;
     else if (n === "Undersea Throne") total += state.items.length;
     else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
@@ -1789,9 +1799,9 @@ function scoreCards(only = null) {
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
     else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 2 : 0);
-    else if (n === "Pinocchio") total += state.tableau.filter((c) => c.deck === "legendary" && c.alignment === "Good").length * 2;
+    else if (n === "Pinocchio") total += countAlignment("Good");
     else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
-    else if (n === "The Whale") total += countTagless() * 2;
+    else if (n === "The Whale") total += countTagless();
     else if (n === "Beast") total += up ? icons.Strength * 2 + (hasCard("Belle") ? 2 : 0) : icons.Strength;
   }
   return total;
@@ -1827,7 +1837,7 @@ function scoreWriter() {
     for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
     return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 4;
   }
-  if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 6;
+  if (name === "L. Frank Baum") return Math.min(...ICONS.map(countIcon)) * 7;
   if (name === "Le Prince de Beaumont") return Math.min(12, state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3);
   return 0;
 }

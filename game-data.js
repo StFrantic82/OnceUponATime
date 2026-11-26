@@ -690,7 +690,7 @@ window.GAME_DATA = {
       "id": "I15",
       "deck": "item",
       "name": "Pumpkin Carriage",
-      "cost": 5,
+      "cost": 6,
       "icons": "none",
       "effect": "Instant: take 1 Adventure.",
       "copy": 1
@@ -717,7 +717,7 @@ window.GAME_DATA = {
       "id": "I18",
       "deck": "item",
       "name": "Magic Carpet",
-      "cost": 4,
+      "cost": 2,
       "icons": "Sorcery 1",
       "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 2 coins.",
       "copy": 1
@@ -764,7 +764,7 @@ window.GAME_DATA = {
       "name": "Seashell",
       "cost": 3,
       "icons": "Charm 1",
-      "effect": "Activation: gain 1 XP for each Charm icon.",
+      "effect": "Activation: gain 1 XP for each pair of Charm icons.",
       "copy": 1
     },
     {
@@ -791,14 +791,14 @@ window.GAME_DATA = {
       "name": "Glass Slipper",
       "cost": 5,
       "icons": "Charm 1",
-      "effect": "Game End: 2 VP for each Adventure you completed. If you have Cinderella, gain 3 VP more.",
+      "effect": "Game End: 1 VP for each Adventure you completed. If you have Cinderella, gain 3 VP more.",
       "copy": 1
     },
     {
       "id": "I27",
       "deck": "item",
       "name": "Seven-League Boots",
-      "cost": 2,
+      "cost": 1,
       "icons": "Dexterity 1",
       "effect": "Instant: take the first player token.",
       "copy": 1
@@ -825,7 +825,7 @@ window.GAME_DATA = {
       "id": "I30",
       "deck": "item",
       "name": "Enchanted Rose",
-      "cost": 6,
+      "cost": 7,
       "icons": "Sorcery 1",
       "effect": "Game End: 1 VP for each upgraded Legendary card.",
       "copy": 1
@@ -861,7 +861,7 @@ window.GAME_DATA = {
       "id": "I34",
       "deck": "item",
       "name": "Undersea Throne",
-      "cost": 5,
+      "cost": 6,
       "icons": "Strength 1",
       "effect": "Game End: 1 VP for each Item.",
       "copy": 1
@@ -879,9 +879,9 @@ window.GAME_DATA = {
       "id": "I36",
       "deck": "item",
       "name": "The Whale",
-      "cost": 5,
+      "cost": 4,
       "icons": "Strength 1",
-      "effect": "Game End: 2 VP for each of your Legendary cards and Items without tags.",
+      "effect": "Game End: 1 VP for each of your Legendary cards and Items without tags.",
       "copy": 1
     }
   ],
@@ -932,7 +932,7 @@ window.GAME_DATA = {
       "name": "Tinker Bell",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: gain 1 Tag token of your choice.",
+      "base": "Sorcery 1. Instant: gain 2 Tag tokens of your choice.",
       "upgrade": "Cost 1 XP. Activation: gain 1 Tag token and 1 coin.",
       "upgraded": false
     },
@@ -972,7 +972,7 @@ window.GAME_DATA = {
       "name": "The Hunter",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 4 VP (6 VP if it is The Wolf or The Evil Queen).",
+      "base": "Strength 1. Instant: discard 1 Bad Character from your tableau to gain 5 VP (7 VP if it is The Wolf or The Evil Queen).",
       "upgrade": "Cost 2 XP. Activation: gain 2 VP if you have at least one Bad card.",
       "upgraded": false
     },
@@ -1053,7 +1053,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1, Sorcery 1. Game End: 1 VP for each Charm icon.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Charm icon.",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -1142,7 +1142,7 @@ window.GAME_DATA = {
       "name": "The Wolf",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1, Dexterity 1. Instant: steal 2 VP from the opponent with the most VP.",
+      "base": "Strength 1, Dexterity 1. Instant: steal 1 VP from each opponent.",
       "upgrade": "Cost 3 XP. Activation: steal 1 coin from each opponent.",
       "upgraded": false
     },
@@ -1173,7 +1173,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1, Intelligence 1. Game End: 2 VP for each Intelligence icon, plus 2 VP for each Merry Men.",
-      "upgrade": "Cost 2 XP. Activation: spend up to 4 coins to gain that many VP.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Intelligence icon, plus 2 VP for each Merry Men. Activation: spend up to 4 coins to gain that many VP.",
       "upgraded": false
     },
     {
@@ -1242,7 +1242,7 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: choose one: gain 3 coins or gain 2 XP.",
+      "base": "Sorcery 1. Instant: choose one: gain 3 coins, gain 2 XP, or gain 1 Tag token.",
       "upgrade": "Cost 4 XP. Activation: choose one of those effects.",
       "upgraded": false
     },
@@ -1283,7 +1283,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Good Legendary card.",
+      "upgrade": "Cost 6 XP. Game End: 1 VP for each Good card.",
       "upgraded": false
     },
     {
@@ -1353,28 +1353,28 @@ window.GAME_DATA = {
       "number": 1,
       "name": "The Midnight Ball",
       "theme": "Cinderella",
-      "scoring": "3 / 5 / 7 Charm icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 4 / 6 Charm icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q2",
       "number": 2,
       "name": "The Duel with Hook",
       "theme": "Peter Pan",
-      "scoring": "3 / 5 / 7 Strength icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 4 / 6 Strength icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q3",
       "number": 3,
       "name": "Down the Rabbit Hole",
       "theme": "Alice",
-      "scoring": "3 / 5 / 7 Dexterity icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 4 / 6 Dexterity icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q4",
       "number": 4,
       "name": "The Lost Voice",
       "theme": "The Little Mermaid",
-      "scoring": "3 / 5 / 7 Intelligence icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 4 / 6 Intelligence icons: 2 / 4 / 6 VP."
     },
     {
       "id": "Q5",
@@ -1416,14 +1416,14 @@ window.GAME_DATA = {
       "number": 10,
       "name": "The House of Seven",
       "theme": "Snow White",
-      "scoring": "1 / 3 / 5 Dwarves: 2 / 4 / 6 VP. All 7 Dwarves: you win the game!"
+      "scoring": "1 / 2 / 4 Dwarves: 2 / 4 / 6 VP. All 7 Dwarves: you win the game!"
     },
     {
       "id": "Q11",
       "number": 11,
       "name": "The King's Trident",
       "theme": "The Little Mermaid",
-      "scoring": "1 VP for each Item."
+      "scoring": "1 VP for each different Item cost."
     },
     {
       "id": "Q12",
@@ -1521,7 +1521,7 @@ window.GAME_DATA = {
       "number": 25,
       "name": "The Fairies’ Gift",
       "theme": "Sleeping Beauty",
-      "scoring": "3 / 5 / 7 Sorcery icons: 2 / 4 / 6 VP."
+      "scoring": "3 / 4 / 6 Sorcery icons: 2 / 4 / 6 VP."
     }
   ],
   "writers": [
@@ -1592,7 +1592,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Choose an icon type: gain two tokens of that type.",
       "cost3": 6,
-      "level3": "6 VP per set of 5 different icons.",
+      "level3": "7 VP per set of 5 different icons.",
       "coins": 0
     },
     {

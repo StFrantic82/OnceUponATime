@@ -192,7 +192,7 @@ const RULES = {
         <li>their Writer, if it reached level 3.</li>
       </ul>
       <p>The storyteller with the most Victory Points has written the best story and wins.</p>
-      <div class="example"><b>Example.</b> At the end, Sofia has 5 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 3 / 5 / 7 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 2 VP per Charm: another 10 VP.
+      <div class="example"><b>Example.</b> At the end, Sofia has 5 Charm icons. Her Adventure “The Midnight Ball” gives 2 / 4 / 6 VP for 3 / 4 / 6 Charm: she reaches the second step, 4 VP. Her upgraded Evil Queen gives 2 VP per Charm: another 10 VP.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconography", `[[iconguide]]`],
     ],
@@ -274,7 +274,7 @@ const RULES = {
         <li>son Écrivain, s’il a atteint le niveau 3.</li>
       </ul>
       <p>Le conteur qui a le plus de Points de Victoire a écrit la plus belle histoire et gagne la partie.</p>
-      <div class="example"><b>Exemple.</b> À la fin, Sofia a 5 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 3 / 5 / 7 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 2 PV par Charme : encore 10 PV.
+      <div class="example"><b>Exemple.</b> À la fin, Sofia a 5 icônes Charme. Son Aventure « Le Bal de minuit » donne 2 / 4 / 6 PV pour 3 / 4 / 6 Charme : elle atteint le deuxième palier, 4 PV. Sa Méchante Reine améliorée donne 2 PV par Charme : encore 10 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconographie", `[[iconguide]]`],
     ],
@@ -356,7 +356,7 @@ const RULES = {
         <li>il suo Scrittore, se ha raggiunto il livello 3.</li>
       </ul>
       <p>Il narratore con più Punti Vittoria ha scritto la storia più bella e vince.</p>
-      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 5 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 3 / 5 / 7 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino: altri 10 PV.
+      <div class="example"><b>Esempio.</b> Alla fine Sofia ha 5 icone Fascino. La sua Avventura «Il Ballo di Mezzanotte» dà 2 / 4 / 6 PV per 3 / 4 / 6 Fascino: raggiunge la seconda soglia, 4 PV. La sua Regina cattiva potenziata dà 2 PV per Fascino: altri 10 PV.
       <div class="fig-row">[[quest:The Midnight Ball]][[legendaryUp:The Evil Queen]]</div></div>`],
       ["icons", "Iconografia", `[[iconguide]]`],
     ],
