@@ -742,7 +742,6 @@ function offerTuck(balloon) {
     state.choices = [...(state.choices || []), { source: balloon.name, options, cost: "optional" }];
     return;
   }
-  if ((balloon.tucked || 0) >= 4) return;
   const worth = (id) => (window.Bot?.cardWorth ? window.Bot.cardWorth(state.tableau.find((c) => c.id === id)) : 0);
   const pick = [...options].sort((a, b) => worth(a.split(" ")[1]) - worth(b.split(" ")[1]))[0];
   if (worth(pick.split(" ")[1]) < 5) applyOption(pick, balloon.name);
@@ -1309,7 +1308,7 @@ function instantLinks(card) {
   if (n === "Cheshire Cat" && hasCard("Alice")) gain("xp", 2);
   if (n === "Princess Briar Rose" && hasCard("The Fairies")) gain("xp", 1);
   if (n === "Fairy Godmother") {
-    gain("coins", Math.min(3, countByName("Mice")));
+    gain("coins", countByName("Mice"));
     placeFreeXp(3, false);
   }
   if (n === "Fairy Dust") placeFreeXp(2, true);
@@ -1524,7 +1523,7 @@ async function activateCardInner(card) {
     if (coins) gain("coins", coins);
     else if (xp) gain("xp", xp);
   } else if (card.name === "The Evil Fairy" && card.upgraded) {
-    gain("vp", Math.min(5, countAlignment("Bad")));
+    gain("vp", Math.floor(countAlignment("Bad") / 2));
   } else if (card.name === "The Hunter" && card.upgraded) {
     if (countAlignment("Bad") > 0) gain("vp", 2);
   } else if (card.name === "Puss in Boots" && card.upgraded) {
@@ -1547,13 +1546,13 @@ async function activateCardInner(card) {
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
     else if (/gain 1 XP\b(?! for each)/i.test(text)) gain("xp", 1);
-    if (/gain 1 VP for each Item, max 6/i.test(text)) gain("vp", Math.min(6, state.items.length));
+    if (/gain 1 VP for each Item\./i.test(text)) gain("vp", state.items.length);
     if (/gain 1 coin for each Dexterity/i.test(text)) gain("coins", countIcon("Dexterity"));
-    if (/gain 1 coin for each Pirate/i.test(text)) gain("coins", Math.min(4, countByName("Pirate") + countAlignment("Bad")));
+    if (/plus 1 coin for each Pirate/i.test(text)) gain("coins", 2 + countByName("Pirate"));
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
     if (/gain 1 XP for each pair of Charm/i.test(text)) gain("xp", Math.floor(countIcon("Charm") / 2));
-    if (/gain 1 XP for each Item/i.test(text)) gain("xp", Math.min(4, state.items.length));
+    if (/gain 1 XP for each pair of Items/i.test(text)) gain("xp", Math.floor(state.items.length / 2));
     if (/gain 2 VP/i.test(text)) gain("vp", 2);
     else if (/gain 1 VP and 1 coin/i.test(text)) {
       gain("vp", 1);
@@ -1779,12 +1778,12 @@ function scoreCards(only = null) {
     const n = card.name;
     const up = Boolean(card.upgraded);
     if (n === "The Dwarves House") total += countByName("Dwarf");
-    else if (n === "Hot Air Balloon") total += Math.min(8, (card.tucked || 0) * 2);
+    else if (n === "Hot Air Balloon") total += (card.tucked || 0) * 2;
     else if (n === "The Crown of England") total += card.stash || 0;
     else if (n === "Glass Slipper") total += quests + (hasCard("Cinderella") ? 3 : 0);
     else if (n === "Enchanted Rose") total += upgradedLeg;
     else if (n === "Undersea Throne") total += state.items.length;
-    else if (n === "Alice") total += up ? Math.min(12, quests * 2) : quests;
+    else if (n === "Alice") total += up ? quests * 2 : quests;
     else if (n === "Grandmother") total += countAlignment("Bad");
     else if (n === "Stepmother") total += plainLeg * (up ? 3 : 2);
     else if (n === "Prince Charming") total += icons.Charm;
@@ -1792,17 +1791,17 @@ function scoreCards(only = null) {
     else if (n === "The Evil Queen") total += icons.Charm * (up ? 2 : 1);
     else if (n === "Snow White") total += countByName("Dwarf") * (up ? 2 : 1);
     else if (n === "Dorothy Gale") total += sets * 4;
-    else if (n === "Peter Pan") total += Math.min(14, (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2);
+    else if (n === "Peter Pan") total += (countByName("Pirate") + countByName("Lost Boys") + countByName("Tinker Bell")) * 2;
     else if (n === "Captain Hook") total += icons.Dexterity * (up ? 2 : 1);
     else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
     else if (n === "Robin Hood") total += icons.Intelligence * 2 + countByName("The Merry Men") * 2;
-    else if (n === "Prince John") total += Math.min(8, Math.floor(state.coins / 2));
+    else if (n === "Prince John") total += Math.floor(state.coins / 3);
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
     else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 2 : 0);
     else if (n === "Pinocchio") total += Math.floor(countAlignment("Good") / 2);
-    else if (n === "Geppetto") total += Math.min(12, state.items.length * 2 + (hasCard("Pinocchio") ? 4 : 0));
+    else if (n === "Geppetto") total += Math.floor(state.items.length / 2) * 3 + (hasCard("Pinocchio") ? 4 : 0);
     else if (n === "The Whale") total += countTagless();
     else if (n === "Beast") total += up ? icons.Strength * 2 + (hasCard("Belle") ? 2 : 0) : icons.Strength;
   }

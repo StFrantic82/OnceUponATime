@@ -638,7 +638,7 @@ window.GAME_DATA = {
       "name": "Hot Air Balloon",
       "cost": 4,
       "icons": "Intelligence 1",
-      "effect": "Activation: tuck 1 Character of your tableau face down under this Item (it loses its tags and effects). Game End: 2 VP for each tucked Character, max 8 VP.",
+      "effect": "Activation: tuck 1 Character of your tableau face down under this Item (it loses its tags and effects). Game End: 2 VP for each tucked Character.",
       "copy": 1
     },
     {
@@ -854,7 +854,7 @@ window.GAME_DATA = {
       "name": "Pirate Ship",
       "cost": 5,
       "icons": "Strength 1",
-      "effect": "Activation: gain 1 coin for each Pirate and each Bad card, max 4 coins.",
+      "effect": "Activation: gain 2 coins, plus 1 coin for each Pirate.",
       "copy": 1
     },
     {
@@ -913,7 +913,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Game End: 1 VP for each Adventure you completed.",
-      "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure you completed, max 12 VP.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure you completed.",
       "upgraded": false
     },
     {
@@ -1043,7 +1043,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Sorcery 1. Instant: choose an opponent. They discard 1 coin or 1 XP. You gain the chosen resource.",
-      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each Bad card, max 5 VP.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 VP for each pair of Bad cards.",
       "upgraded": false
     },
     {
@@ -1113,7 +1113,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Ongoing: if you have a Pirate or Captain Hook, upgrade Peter Pan for free.",
-      "upgrade": "Cost 4 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell, max 14 VP.",
+      "upgrade": "Cost 4 XP. Game End: 2 VP for each Pirate, Lost Boys and Tinker Bell.",
       "upgraded": false
     },
     {
@@ -1152,8 +1152,8 @@ window.GAME_DATA = {
       "name": "King Triton",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1, Sorcery 1. Activation: gain 1 XP for each Item, max 4 XP.",
-      "upgrade": "Cost 3 XP. Gains Strength. Activation: gain 1 VP for each Item, max 6 VP.",
+      "base": "Strength 1, Sorcery 1. Activation: gain 1 XP for each pair of Items.",
+      "upgrade": "Cost 3 XP. Gains Strength. Activation: gain 1 VP for each Item.",
       "upgraded": false
     },
     {
@@ -1183,7 +1183,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Instant: steal 1 coin from each opponent.",
-      "upgrade": "Cost 2 XP. Game End: 1 VP for every 2 coins, max 8 VP.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for every 3 coins.",
       "upgraded": false
     },
     {
@@ -1222,7 +1222,7 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: place 3 XP on a Character. Gain 1 coin for each Mice, max 3 coins.",
+      "base": "Sorcery 1. Instant: place 3 XP on a Character. Gain 1 coin for each Mice.",
       "upgrade": "Cost 2 XP. Activation: place 3 XP on a Character.",
       "upgraded": false
     },
@@ -1293,7 +1293,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: gain 1 coin for each pair of Items.",
-      "upgrade": "Cost 5 XP. Game End: 2 VP for each Item, and 4 VP if you have Pinocchio, max 12 VP.",
+      "upgrade": "Cost 5 XP. Game End: 3 VP for each pair of Items (4 VP more if you have Pinocchio).",
       "upgraded": false
     }
   ],
