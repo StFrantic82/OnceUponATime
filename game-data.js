@@ -222,7 +222,7 @@ window.GAME_DATA = {
       "name": "Mice",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "effect": "Instant: gain 1 Charm token.",
       "copy": 1
     },
     {
@@ -231,7 +231,7 @@ window.GAME_DATA = {
       "name": "Mice",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "effect": "Instant: gain 1 Strength token.",
       "copy": 2
     },
     {
@@ -240,7 +240,7 @@ window.GAME_DATA = {
       "name": "Mice",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "effect": "Instant: gain 1 Dexterity token.",
       "copy": 3
     },
     {
@@ -249,7 +249,7 @@ window.GAME_DATA = {
       "name": "Mice",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "effect": "Instant: gain 1 Intelligence token.",
       "copy": 4
     },
     {
@@ -258,7 +258,7 @@ window.GAME_DATA = {
       "name": "Mice",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Tag token.",
+      "effect": "Instant: gain 1 Sorcery token.",
       "copy": 5
     },
     {
@@ -366,7 +366,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Charm token.",
+      "effect": "Instant: gain 1 Tag token.",
       "copy": 1
     },
     {
@@ -375,7 +375,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Charm token.",
+      "effect": "Instant: gain 1 Tag token.",
       "copy": 2
     },
     {
@@ -384,7 +384,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Charm token.",
+      "effect": "Instant: gain 1 Tag token.",
       "copy": 3
     },
     {
@@ -393,7 +393,7 @@ window.GAME_DATA = {
       "name": "Sirens",
       "alignment": "Good",
       "icons": "",
-      "effect": "Instant: gain 1 Charm token.",
+      "effect": "Instant: gain 1 Tag token.",
       "copy": 4
     },
     {

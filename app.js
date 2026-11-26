@@ -1287,7 +1287,8 @@ function applyInstantInner(card) {
   else if (/gain 2 VP/i.test(text)) gain("vp", 2);
   if (/coins? and 1 XP/i.test(text)) gain("xp", 1);
   if (/place 1 XP on your Writer/i.test(text)) placeWriterXp(1);
-  if (/gain 1 Charm token/i.test(text)) applyOption("token Charm 1", card.name);
+  const fixedToken = text.match(/gain 1 (Charm|Strength|Dexterity|Intelligence|Sorcery) token/i);
+  if (fixedToken) applyOption(`token ${ICONS.find((icon) => icon.toLowerCase() === fixedToken[1].toLowerCase())} 1`, card.name);
   if (/Gain 2 Tag tokens/i.test(text)) gainTagToken(2, card.name);
   else if (/Tag token/i.test(text)) gainTagToken(1, card.name);
   if (/take 1 (?:Quest|Adventure)/i.test(text)) grantQuestChoice(card.name);

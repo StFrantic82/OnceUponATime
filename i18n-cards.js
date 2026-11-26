@@ -360,6 +360,10 @@ window.CARD_I18N = [
   ["3 VP for each icon type of which you have 2 or more.", "3 VP par type d’icône que vous avez en 2 exemplaires ou plus.", "3 VP per ogni tipo di icona di cui hai 2 o più esemplari."],
   ["2 VP for each icon type of which you have 2 or more.", "2 VP par type d’icône que vous avez en 2 exemplaires ou plus.", "2 VP per ogni tipo di icona di cui hai 2 o più esemplari."],
   ["3 VP for each icon type of which you have 3 or more.", "3 VP par type d’icône que vous avez en 3 exemplaires ou plus.", "3 VP per ogni tipo di icona di cui hai 3 o più esemplari."],
+  ["Instant: gain 1 Strength token.", "Instant : gagnez 1 jeton Strength.", "Instant: ottieni 1 segnalino Strength."],
+  ["Instant: gain 1 Dexterity token.", "Instant : gagnez 1 jeton Dexterity.", "Instant: ottieni 1 segnalino Dexterity."],
+  ["Instant: gain 1 Intelligence token.", "Instant : gagnez 1 jeton Intelligence.", "Instant: ottieni 1 segnalino Intelligence."],
+  ["Instant: gain 1 Sorcery token.", "Instant : gagnez 1 jeton Sorcery.", "Instant: ottieni 1 segnalino Sorcery."],
   // ---- Adventure scoring ----
   ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],
