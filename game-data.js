@@ -584,7 +584,7 @@ window.GAME_DATA = {
       "name": "Wishing Ring",
       "cost": 2,
       "icons": "Sorcery 1",
-      "effect": "Ongoing: whenever you gain a Tag token, gain 1 coin and 1 VP.",
+      "effect": "Ongoing: whenever you complete a set of 5 different icons, gain 2 coins and 2 VP.",
       "copy": 1
     },
     {
@@ -701,7 +701,7 @@ window.GAME_DATA = {
       "name": "Magic Wand",
       "cost": 3,
       "icons": "Sorcery 1",
-      "effect": "Activation: place 1 XP on a Character.",
+      "effect": "Activation: place 1 XP on a Character (2 XP with 3 Sorcery icons or more).",
       "copy": 1
     },
     {
@@ -710,7 +710,7 @@ window.GAME_DATA = {
       "name": "Sand Hourglass",
       "cost": 3,
       "icons": "Intelligence 1",
-      "effect": "Activation: activate another of your Activation cards.",
+      "effect": "Activation: activate another of your Activation cards (2 cards with 3 Intelligence icons or more).",
       "copy": 1
     },
     {
@@ -809,7 +809,7 @@ window.GAME_DATA = {
       "name": "Trident",
       "cost": 6,
       "icons": "Strength 1",
-      "effect": "Activation: gain 2 VP. If you have at least 2 Strength or King Triton, gain 1 XP too.",
+      "effect": "Activation: gain 1 VP for each pair of Strength icons. If you have King Triton, gain 1 XP too.",
       "copy": 1
     },
     {
@@ -917,7 +917,7 @@ window.GAME_DATA = {
       "name": "Stolen Purse",
       "cost": 2,
       "icons": "none",
-      "effect": "Instant: gain 4 coins.",
+      "effect": "Instant: gain 2 coins, plus 1 coin for each Dexterity icon.",
       "copy": 1
     }
   ],
@@ -1278,7 +1278,7 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: choose one: take 1 Adventure, take back 1 Chapter card from your discard, or place XP on a Character so that it levels up. If you have Aladin, do all three.",
+      "base": "Sorcery 1. Instant: choose one: take 1 Adventure, buy 1 Item for 4 coins less, or place XP on a Character so that it levels up. If you have Aladin, do all three.",
       "upgrade": "Cost 2 XP. Activation: gain 2 coins or 2 XP. If you have Aladin, gain both.",
       "upgraded": false
     },

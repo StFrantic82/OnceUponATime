@@ -592,6 +592,7 @@ function buyItem(itemId) {
   G.itemDisplay = G.itemDisplay.filter((entry) => entry.id !== itemId);
   applyInstant(item);
   triggerOnTakeItem();
+  if (item.name === "Wishing Ring") state.rewardedIconSets = Math.max(0, liveSets());
   checkBaumSets();
   log("l_buys", { p: state.name, item: C(item.name), n: price, coin: { icon: "coins" } });
 }
@@ -795,6 +796,7 @@ function completeUpgrade(card) {
   if (/take 1 (?:Quest|Adventure) and gain 1 XP/i.test(card.upgrade || "")) gain("xp", 1);
   const servants = state.tableau.filter((entry) => entry.name === "The Invisible Servants").length;
   if (servants) gain("coins", servants);
+  checkBaumSets();
   log("l_upgrades", { p: state.name, c: C(card.name) });
 }
 
@@ -1005,7 +1007,21 @@ function applyWriterAfterGroup(cards) {
 }
 
 // L. Frank Baum, level 1: at the start of each round, 1 coin per set of the 4 different icons.
-function checkBaumSets() {}
+// Wishing Ring: 2 coins and 2 VP each time its owner completes one more set of 5 different icons.
+// Sets completed before the Ring was bought do not count.
+function checkBaumSets() {
+  const rings = (state.items || []).filter((item) => item.name === "Wishing Ring").length;
+  if (!rings) return;
+  const sets = liveSets();
+  const fresh = sets - (state.rewardedIconSets || 0);
+  if (fresh <= 0) return;
+  state.rewardedIconSets = sets;
+  const source = vpSource;
+  vpSource = "Wishing Ring";
+  gain("coins", 2 * fresh * rings);
+  gain("vp", 2 * fresh * rings);
+  vpSource = source;
+}
 function baumRoundIncome() {
   if (state.writer?.name !== "L. Frank Baum") return;
   gain("coins", liveSets());
@@ -1059,11 +1075,6 @@ function applyOption(option, source) {
     if (giver) {
       giver.tokens = giver.tokens || {};
       giver.tokens[m[1]] = (giver.tokens[m[1]] || 0) + Number(m[2]);
-    }
-    const rings = state.items.filter((item) => /Tag token, gain 1 coin/i.test(item.effect || "")).length;
-    if (rings) {
-      gain("coins", rings);
-      gain("vp", rings);
     }
     log("l_token", { p: state.name, n: Number(m[2]), icon: { icon: m[1] } });
     checkBaumSets();
@@ -1138,7 +1149,7 @@ function applyOption(option, source) {
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
   else if (/take 1 (?:Quest|Adventure)/i.test(option)) grantQuestChoice(source);
-  else if (/take back 1 Chapter card/i.test(option)) takeBackChapter(() => true);
+  else if ((m = option.match(/buy 1 Item for (\d+) coins less/i))) state.writerItemDiscount = Number(m[1]);
   else if (/place XP on a Character so that it levels up/i.test(option)) state.freeUpgrades += 1;
   else if (/gain 2 Tag tokens/i.test(option)) gainTagToken(2, source);
   else if (/gain 1 Tag token/i.test(option)) gainTagToken(1, source);
@@ -1173,8 +1184,8 @@ function botOption(options) {
   if (freeUp >= 0 && state.tableau.some((c) => c.deck === "legendary" && !c.upgraded && upgradeCost(c) - (c.xpOn || 0) >= 2)) return freeUp;
   const quest = options.findIndex((o) => /take 1 (?:Quest|Adventure)/i.test(o));
   if (quest >= 0 && G.questDisplay.length && state.quests.length < 4) return quest;
-  const chapter = options.findIndex((o) => /take back 1 Chapter card/i.test(o));
-  if (chapter >= 0 && state.actionDiscard.length) return chapter;
+  const treasure = options.findIndex((o) => /buy 1 Item for \d+ coins less/i.test(o));
+  if (treasure >= 0) return treasure;
   const xp = options.findIndex((o) => /XP/i.test(o));
   const coins = options.findIndex((o) => /coin/i.test(o));
   if (xp >= 0 && xpTargets().length && (coins < 0 || state.coins >= 4)) return xp;
@@ -1331,6 +1342,8 @@ function applyInstantInner(card) {
   const xpPerIcon = text.match(/gain 1 XP for each (Charm|Strength|Dexterity|Intelligence|Sorcery) icon/i);
   if (xpPerIcon) gain("xp", countIcon(ICONS.find((icon) => icon.toLowerCase() === xpPerIcon[1].toLowerCase())));
   if (/gain 1 XP for each different icon/i.test(text)) gain("xp", liveDifferent());
+  const coinPerIcon = text.match(/plus 1 coin for each (Charm|Strength|Dexterity|Intelligence|Sorcery) icon/i);
+  if (coinPerIcon) gain("coins", countIcon(ICONS.find((icon) => icon.toLowerCase() === coinPerIcon[1].toLowerCase())));
   if (/gain 5 coins/i.test(text)) gain("coins", 5);
   else if (/gain 4 coins/i.test(text)) gain("coins", 4);
   else if (/gain 3 coins/i.test(text)) gain("coins", 3);
@@ -1538,13 +1551,14 @@ async function activateCardInner(card) {
   }
   activationLinks(card, fullText);
   if (card.name === "Sand Hourglass" && !card.busy) {
-    const other = activationCandidates().find((entry) => entry !== card && entry.name !== "Sand Hourglass");
-    if (other) {
-      card.busy = true;
+    // One other card, or two different ones with 3 Intelligence icons or more.
+    const others = activationCandidates().filter((entry) => entry !== card && entry.name !== "Sand Hourglass").slice(0, countIcon("Intelligence") >= 3 ? 2 : 1);
+    card.busy = true;
+    for (const other of others) {
       await activateCard(other);
       G.cur = seat;
-      card.busy = false;
     }
+    card.busy = false;
     return;
   }
   const taglessAct = text.match(/Activation: gain (\d+) VP for each of your Legendary cards and Items without tags/i);
@@ -1569,7 +1583,7 @@ async function activateCardInner(card) {
   } else if (card.name === "Cheshire Cat" && card.upgraded) {
     commonPick(2, card.name, "discard");
   } else if (card.name === "Magic Wand") {
-    placeFreeXp(1, false);
+    placeFreeXp(countIcon("Sorcery") >= 3 ? 2 : 1, false);
   } else if (card.name === "Crocodile's Clock") {
     takeBackChapter((v) => v >= 7);
   } else if (card.name === "The Fairies") {
@@ -1616,6 +1630,7 @@ async function activateCardInner(card) {
     if (/plus 1 coin for each Pirate/i.test(text)) gain("coins", 2 + countByName("Pirate"));
     if (/gain 1 coin for each pair of Items/i.test(text)) gain("coins", Math.floor(state.items.length / 2));
     if (/gain 1 coin for each Merry Men/i.test(text)) gain("coins", countByName("The Merry Men") + (hasCard("Robin Hood") ? 1 : 0));
+    if (/gain 1 VP for each pair of Strength/i.test(text)) gain("vp", Math.floor(countIcon("Strength") / 2));
     if (/gain 1 XP for each pair of Charm/i.test(text)) gain("xp", Math.floor(countIcon("Charm") / 2));
     if (/gain 1 XP for each pair of Sorcery/i.test(text)) gain("xp", Math.floor(countIcon("Sorcery") / 2));
     if (/gain 1 coin for each icon type of which you have 3 or more/i.test(text)) gain("coins", liveTypesWith(3));
@@ -1683,7 +1698,7 @@ function activationLinks(card, text) {
     if (state.items.some((i) => i.name === "Magic Lamp")) gain("vp", 1);
   }
   if (n === "Tinker Bell" && card.upgraded) gain("vp", 1);
-  if (n === "Trident" && (countIcon("Strength") >= 2 || hasCard("King Triton"))) gain("xp", 1);
+  if (n === "Trident" && hasCard("King Triton")) gain("xp", 1);
   if (n === "Puss’s Boots" && hasCard("Puss in Boots")) gain("coins", 1);
   if (n === "The Wizard of Oz") {
     const k = Math.min(card.upgraded ? 2 : 1, state.coins);
@@ -2210,7 +2225,7 @@ function renderGuide() {
       if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
       if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
       if (/take 1 (?:Quest|Adventure)/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
-      if (/take back 1 Chapter card/i.test(o)) return escapeHtml(t("wishChapter"));
+      if ((m = o.match(/buy 1 Item for (\d+) coins less/i))) return `${escapeHtml(t("wishItem"))} −${m[1]} ${resourceIcon("coins", "coins")}`;
       if (/place XP on a Character so that it levels up/i.test(o)) return `${window.FREEUP_ICON || ""} ${escapeHtml(t("freeUpBtn"))}`;
       if ((m = o.match(/^token (\w+) (\d+)/))) return `+${m[2]} ${squareTag(m[1])}`;
       if ((m = o.match(/^(?:tuck|mirror) (\S+)/))) {
