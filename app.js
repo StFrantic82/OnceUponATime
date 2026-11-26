@@ -1258,7 +1258,8 @@ function withGainBonus(fn) {
       state.coins += 1;
       state.coinsGained += 1;
     }
-    if ((state.xpGained || 0) > xp && state.tableau.some((c) => c.name === "Belle" && !c.upgraded)) {
+    if ((state.xpGained || 0) > xp && !state.writerRound.belleRewarded && state.tableau.some((c) => c.name === "Belle" && !c.upgraded)) {
+      state.writerRound.belleRewarded = true;
       state.xp += 1;
       state.xpGained += 1;
     }
@@ -1342,6 +1343,7 @@ function instantLinks(card) {
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
   if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
+  if (n === "Robin Hood") state.writerItemDiscount = 3;
   if (n === "Cinderella") gain("xp", Math.floor(countAlignment("Good") / 2));
   if (n === "The Prince (Mermaid)") gain("coins", Math.floor(countAlignment("Good") / 2));
   if (n === "The Glass Coffin") pickFromDiscard(n);
@@ -1825,11 +1827,11 @@ function scoreCards(only = null) {
     else if (n === "The Sea Witch") total += icons.Sorcery * (up ? 2 : 1);
     else if (n === "Little Red Riding Hood") total += goodBadPairs;
     else if (n === "Little Mermaid") total += Math.min(14, quests * 2);
-    else if (n === "Robin Hood") total += icons.Intelligence * 2 + countByName("The Merry Men") * 2;
+    else if (n === "Robin Hood") total += up ? countByName("The Merry Men") * 2 : 0;
     else if (n === "Prince John") total += Math.floor(state.coins / 3);
     else if (n === "Cinderella") total += state.items.length;
     else if (n === "Rumpelstiltskin") total += up ? countAlignment("Bad") : Math.floor(countAlignment("Bad") / 2);
-    else if (n === "Belle") total += upgradedLeg + (hasCard("Beast") ? 2 : 0);
+    else if (n === "Belle") total += up ? icons.Intelligence * 1 + (hasCard("Beast") ? 2 : 0) : 0;
     else if (n === "Pinocchio") total += Math.floor(countAlignment("Good") / 2);
     else if (n === "Geppetto") total += Math.floor(state.items.length / 2) * 3 + (hasCard("Pinocchio") ? 4 : 0);
     else if (n === "The Whale") total += countTagless();
@@ -2148,7 +2150,7 @@ function phaseMessage() {
   if (G.gameOver) return t("ph_gameOver");
   if (state.tuckPending > 0) return t("ph_tuck");
   if (G.round === G.settings.rounds && state.phase === "chooseAction") return `${t("lastRoundTag")} ${t("ph_chooseAction")}`;
-  if (state.writerItemDiscount > 0) return t("ph_perrault");
+  if (state.writerItemDiscount > 0) return t("ph_perrault", { n: state.writerItemDiscount });
   if (state.questChoices > 0) return t("ph_quest", { n: state.questChoices });
   const active = G.active !== null ? G.players[G.active] : null;
   switch (state.phase) {

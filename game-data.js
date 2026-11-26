@@ -1208,8 +1208,8 @@ window.GAME_DATA = {
       "name": "Robin Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1, Intelligence 1. Game End: 2 VP for each Intelligence icon, plus 2 VP for each Merry Men.",
-      "upgrade": "Cost 2 XP. Game End: 2 VP for each Intelligence icon, plus 2 VP for each Merry Men. Activation: spend up to 4 coins to gain that many VP.",
+      "base": "Dexterity 1, Intelligence 1. Instant: buy 1 Item for 3 coins less.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Merry Men. Activation: spend up to 4 coins to gain that many VP.",
       "upgraded": false
     },
     {
@@ -1288,8 +1288,8 @@ window.GAME_DATA = {
       "name": "Belle",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Ongoing: whenever you gain XP from a card, gain 1 XP more.",
-      "upgrade": "Cost 5 XP. Game End: 1 VP for each upgraded Legendary card. If you have Beast, gain 2 VP more.",
+      "base": "Intelligence 1. Ongoing: the first time each round you gain XP from a card, gain 1 XP more.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each Intelligence icon. If you have Beast, gain 2 VP more.",
       "upgraded": false
     },
     {
