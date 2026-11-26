@@ -381,14 +381,14 @@ function build(root = document.querySelector("#rules")) {
   }));
 }
 
-window.Rules = { render: build };
+window.Rules = { render: build, format: (html) => render(html, RULES[I18N.lang] || RULES.en) };
 // cards.js uses these helpers as globals; on the stand-alone page app.js is not loaded.
 for (const [name, fn] of Object.entries({ esc, resourceIcon, formatGameText, iconAmount, printedIcons, textIconAmount })) {
   if (typeof window[name] !== "function") window[name] = fn;
 }
 
 // Stand-alone page (rules.html)
-if (document.body.classList.contains("rules-body")) {
+if (document.body.classList.contains("rules-body") && !document.body.classList.contains("present-body")) {
   const params = new URLSearchParams(location.search);
   if (params.get("lang")) I18N.setLang(params.get("lang"), false);
   I18N.apply();

@@ -43,6 +43,7 @@
   // ---------- Home ----------
   function renderHome() {
     I18N.apply();
+    $("#presentLabel").textContent = window.Present.label();
     const data = window.GAME_DATA;
     const pick = (list, name) => list.find((card) => card.name === name) || list[0];
     $("#heroCards").innerHTML = [
@@ -75,6 +76,7 @@
     $("#lobbyScreen").hidden = name !== "lobby";
     $("#statsScreen").hidden = name !== "stats";
     $("#rulesScreen").hidden = name !== "rules";
+    $("#presentScreen").hidden = name !== "present";
     document.querySelector(".app").hidden = name !== "game";
     if (name !== "game") {
       hideCoach();
@@ -122,6 +124,7 @@
       else if (btn.id === "createBtn") return createRoom();
       else if (btn.id === "pnpBtn") return showPrintAndPlay();
       else if (btn.id === "rulesBtn") return showRules();
+      else if (btn.id === "presentBtn") return showPresent();
       else if (btn.id === "joinBtn") return joinRoom();
       else return;
       savePrefs();
@@ -133,6 +136,7 @@
     });
     $("#statsBack").addEventListener("click", show);
     $("#rulesBack").addEventListener("click", show);
+    $("#presentBack").addEventListener("click", show);
     bindCardPreview();
     $("#rulesPrint").addEventListener("click", () => window.print());
     window.addEventListener("langchange", () => {
@@ -257,6 +261,12 @@
         place(e.clientX, e.clientY);
       } else if (current && !e.target.closest("#statsScreen")) close();
     });
+  }
+
+  function showPresent() {
+    showScreen("present");
+    window.Present.render($("#presentInApp"), 0);
+    window.scrollTo(0, 0);
   }
 
   function showRules() {
