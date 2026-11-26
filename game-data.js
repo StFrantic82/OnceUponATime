@@ -1438,7 +1438,7 @@ window.GAME_DATA = {
       "number": 8,
       "name": "The Yellow Brick Road",
       "theme": "The Wizard of Oz",
-      "scoring": "1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP."
+      "scoring": "1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP. Dorothy Gale, Scarecrow, The Tin Woodman, The Cowardly Lion, The Wizard of Oz, the four Witches, The Munchkins."
     },
     {
       "id": "Q9",

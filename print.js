@@ -221,7 +221,8 @@ function fitFace(face) {
   if (!face.classList.contains("fcard")) return;
   const foot = face.querySelector(".fc-foot");
   const overflows = () => (foot ? foot.offsetTop + foot.offsetHeight > face.clientHeight + 0.5 : false) || face.scrollHeight > face.clientHeight + 1;
-  const art = face.querySelector(".fc-art");
+  // On an Adventure card the illustration sits beside the text: shrinking it would not help.
+  const art = face.classList.contains("fc-quest") ? null : face.querySelector(".fc-art");
   const texts = [...face.querySelectorAll(".fc-side, .fc-text")];
   if (!overflows()) return;
   const artStart = art ? art.offsetHeight : 0;

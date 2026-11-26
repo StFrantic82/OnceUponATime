@@ -171,7 +171,7 @@
     const effectWord = (label.match(/\b(Activation|Ongoing|Instant|Game End)\b/) || [])[1];
     const labelHtml = effectWord ? gtext(effectWord) : /\bbadge\b|distintivo/i.test(label) ? `<span class="fc-vpmark guide-vpmark">${resourceIcon("vp", "VP")}</span>` : gtext(label);
     return `<div class="q-tiers"><span class="q-hg">${hourglass}</span>
-      <div class="q-grid" style="--n:${tiers.split("/").length}"><span class="q-label">${labelHtml}</span>${cells(tiers)}<span class="q-label q-gain">${resourceIcon("vp", "VP")}</span>${cells(gains).replace(/<b>/g, '<b class="q-gain">')}</div></div>${rest ? `<p class="q-rest">${gtext(rest)}</p>` : ""}`;
+      <div class="q-grid" style="--n:${tiers.split("/").length}"><span class="q-label q-what">${labelHtml}</span><span class="q-spacer"></span>${cells(tiers)}<span class="q-label q-gain">${resourceIcon("vp", "VP")}</span>${cells(gains).replace(/<b>/g, '<b class="q-gain">')}</div></div>${rest ? `<p class="q-rest">${gtext(rest)}</p>` : ""}`;
   }
 
   function common(card, opts = {}) {

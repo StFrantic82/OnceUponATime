@@ -395,7 +395,7 @@ window.CARD_I18N = [
   ["Game End: 1 VP for each pair of upgraded Legendary cards.", "Game End : 1 VP par paire de cartes Légendaires améliorées.", "Game End: 1 VP per ogni coppia di carte Leggendarie potenziate."],
   ["Game End: 1 VP for each Sorcery icon.", "Game End : 1 VP par icône Sorcery.", "Game End: 1 VP per ogni icona Sorcery."],
   // ---- Adventure scoring ----
-  ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP."],
+  ["1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP. Dorothy Gale, Scarecrow, The Tin Woodman, The Cowardly Lion, The Wizard of Oz, the four Witches, The Munchkins.", "1 / 3 / 5 Personnages d’Oz : 2 / 4 / 6 VP. Dorothy Gale, l’Épouvantail, le Bûcheron de fer-blanc, le Lion peureux, le Magicien d’Oz, les quatre Sorcières, les Munchkins.", "1 / 3 / 5 Personaggi di Oz: 2 / 4 / 6 VP. Dorothy Gale, lo Spaventapasseri, il Boscaiolo di latta, il Leone codardo, il Mago di Oz, le quattro Streghe, i Mastichini."],
   ["2 VP for each Item that cost 5 coins or more.", "2 VP par Objet coûtant 5 coins ou plus.", "2 VP per ogni Oggetto che costa 5 coins o più."],
   ["2 VP for each Chapter card with value 4 or lower in your discard.", "2 VP par carte Chapitre de valeur 4 ou moins dans votre défausse.", "2 VP per ogni carta Capitolo di valore 4 o inferiore nella tua pila degli scarti."],
   ["3 / 5 / 7 Good–Bad pairs of cards: 2 / 4 / 6 VP.", "3 / 5 / 7 paires de cartes Gentille–Méchante : 2 / 4 / 6 VP.", "3 / 5 / 7 coppie di carte Buona–Cattiva: 2 / 4 / 6 VP."],
