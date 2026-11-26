@@ -647,7 +647,7 @@ window.GAME_DATA = {
       "name": "Mad Hatter's Hat",
       "cost": 6,
       "icons": "Intelligence 1",
-      "effect": "Instant: pull the top card of the Legendary deck out of the hat and add it to your tableau (resolve its Instant effect).",
+      "effect": "Instant: take the top card of the Legendary deck and add it to your tableau (resolve its Instant effect).",
       "copy": 1
     },
     {
@@ -656,7 +656,7 @@ window.GAME_DATA = {
       "name": "Rabbit's Clock",
       "cost": 3,
       "icons": "Dexterity 1",
-      "effect": "Ongoing: whenever you play the lowest Chapter of the round, you are late: gain 2 coins and 1 XP.",
+      "effect": "Ongoing: whenever you play the lowest Chapter of the round, gain 2 coins and 1 XP.",
       "copy": 1
     },
     {
