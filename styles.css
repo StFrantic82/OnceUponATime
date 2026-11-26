@@ -3146,6 +3146,7 @@ button.needs-click { outline: none; }
 
 .w-good { color: #2f5d8a; font-weight: 800; }
 .w-bad { color: #a8323a; font-weight: 800; }
+.w-neutral { color: #5a3a1c; font-weight: 800; }
 
 #simScreen table.sortable th { cursor: pointer; user-select: none; }
 #simScreen table.sortable th.sorted::after { content: " ▾"; }

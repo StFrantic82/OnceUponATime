@@ -105,9 +105,54 @@
   const ICON_HTML = '(?:<img\\b[^>]*>|<span class="(?:skill-tag|set4|tagtok-ico|ac-quest)[^"]*"[^>]*>(?:<span[^>]*>.*?<\\/span>|<img\\b[^>]*>|<i><\\/i>|<svg[\\s\\S]*?<\\/svg>)*<\\/span>|<svg\\b[\\s\\S]*?<\\/svg>)';
   const GLUE_NUM = new RegExp(`(\\d+(?:\\s*\\/\\s*\\d+)*)\\s*(${ICON_HTML})(\\s*[.,;:!?)])?`, "g");
   const GLUE_PUNCT = new RegExp(`(${ICON_HTML})\\s*([.,;:!?)])`, "g");
+  // Card names quoted in a text ("if you have Cinderella") are in bold, in the colour of their side:
+  // blue for a Good card, red for a Bad one, dark brown for a neutral one.
+  const NAME_ALIASES = {
+    "The Merry Men": ["Merry Men", "Joyeux Compagnons", "Joyeux Compagnon", "Allegri Compagni", "Allegro Compagno"],
+    Dwarf: ["Dwarves", "Dwarf", "Nains", "Nain", "Nani", "Nano"],
+    Pirate: ["Pirates", "Pirate", "Pirati", "Pirata"],
+    Mice: ["Mice", "Souris", "Topolini"],
+    "The Lost Boys": ["Lost Boys", "Garçons perdus", "Bimbi Sperduti"],
+    "Playing Card Soldier": ["Playing Card Soldier", "Soldat de cartes", "Soldato di carte"],
+    "The Fairies": ["Fairies", "Fées", "Fate"],
+    "Tinker Bell": ["Tinker Bell", "Fée Clochette", "Trilli"],
+  };
+  const ARTICLE = /^(?:the|le|la|les|l[’']|il|lo|i|gli|un|une|uno|una)\s*/i;
+  let nameIndex = null;
+  let nameIndexLang = null;
+  function cardNameIndex() {
+    const lang = (window.I18N && window.I18N.lang) || "en";
+    if (nameIndex && nameIndexLang === lang) return nameIndex;
+    const data = window.GAME_DATA || {};
+    const entries = new Map();
+    const add = (label, side) => {
+      const core = String(label || "").replace(ARTICLE, "").trim();
+      if (core.length >= 4 && !entries.has(core.toLowerCase())) entries.set(core.toLowerCase(), { core, side });
+    };
+    for (const card of [...(data.common || []), ...(data.legendary || []), ...(data.items || [])]) {
+      const side = card.deck === "item" || card.cost != null ? (/\bBad\b/.test(card.icons || "") ? "bad" : "neutral") : card.alignment === "Good" ? "good" : card.alignment === "Bad" ? "bad" : "neutral";
+      add(card.name, side);
+      add(tc(card.name), side);
+      (NAME_ALIASES[card.name] || []).forEach((alias) => add(alias, side));
+    }
+    const list = [...entries.values()].sort((x, y) => y.core.length - x.core.length);
+    const esc2 = (x) => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    nameIndex = { list, regex: new RegExp(`(?<![\\p{L}\\p{N}])(${list.map((x) => esc2(x.core)).join("|")})(?![\\p{L}\\p{N}])`, "giu"), bySide: new Map(list.map((x) => [x.core.toLowerCase(), x.side])) };
+    nameIndexLang = lang;
+    return nameIndex;
+  }
+
   function gtext(text) {
+    // Card names are set aside first (so that nothing inside them is turned into an icon), then put back in colour.
+    const idx = cardNameIndex();
+    const held = [];
+    const marked = String(text || "").replace(idx.regex, (m) => {
+      held.push(`<b class="w-${idx.bySide.get(m.toLowerCase()) || "neutral"} w-name">${esc(m)}</b>`);
+      return `\u0004${held.length - 1}\u0004`;
+    });
     // French punctuation: no line break before ":" ";" "!" "?" nor inside « ».
-    return formatGameText(String(text || "").replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0"))
+    return formatGameText(marked.replace(/ ([:;!?»])/g, "\u00a0$1").replace(/« /g, "«\u00a0"))
+      .replace(/\u0004(\d+)\u0004/g, (_, i) => held[Number(i)])
       .replace(GLUE_NUM, (_, n, icon, p) => `<span class="nb">${n}&nbsp;${icon}${(p || "").trim()}</span>`)
       .replace(GLUE_PUNCT, (m, icon, p) => (m.includes('class="nb"') ? m : `<span class="nb">${icon}${p}</span>`));
   }
