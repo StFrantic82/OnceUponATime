@@ -3225,3 +3225,8 @@ button.needs-click { outline: none; }
 /* Adventure art always fills its column, whatever the height of the text */
 .fc-quest .fc-art { align-self: stretch; aspect-ratio: auto; height: auto; min-height: 0; }
 .fc-quest .fc-art .card-art-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+/* Balanced cards: the text boxes hug their text and the illustration takes all the room that is left */
+.fc-common .fc-art, .fc-item .fc-art, .fc-legendary .fc-art { flex: 1 1 auto; min-height: 64px; }
+.fc-common .fc-art .card-art-svg, .fc-item .fc-art .card-art-svg, .fc-legendary .fc-art .card-art-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.fc-common .fc-text, .fc-item .fc-text { flex: 0 0 auto; }
+.fc-legendary .fc-side, .fc-legendary .fc-up { flex: 0 0 auto; }
