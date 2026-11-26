@@ -117,7 +117,7 @@ function render(text, L) {
 const RULES = {
   en: {
     title: "Rules of the game",
-    kicker: "Once Upon a Time · 2 to 4 players",
+    kicker: "Once Upon a Time · 2 to 4 players · ages 14+ · 40 min",
     toc: "Contents",
     players: "Players",
     groups: "Groups revealed each round",
@@ -199,7 +199,7 @@ const RULES = {
   },
   fr: {
     title: "Règles du jeu",
-    kicker: "Once Upon a Time · 2 à 4 joueurs",
+    kicker: "Once Upon a Time · 2 à 4 joueurs · 14 ans et + · 40 min",
     toc: "Sommaire",
     players: "Joueurs",
     groups: "Groupes révélés à chaque manche",
@@ -281,7 +281,7 @@ const RULES = {
   },
   it: {
     title: "Regole del gioco",
-    kicker: "Once Upon a Time · da 2 a 4 giocatori",
+    kicker: "Once Upon a Time · da 2 a 4 giocatori · 14+ anni · 40 min",
     toc: "Indice",
     players: "Giocatori",
     groups: "Gruppi rivelati a ogni round",

@@ -5,7 +5,7 @@ const SLIDES = {
   en: {
     title: "The game in 16 steps", prev: "Previous", next: "Next", button: "Presentation",
     slides: [
-      ["Once Upon a Time", "A game by Simone Luciani & Matthieu Verdier · 2 to 4 players", [
+      ["Once Upon a Time", "A game by Simone Luciani & Matthieu Verdier · 2 to 4 players · ages 14+ · 40 min", [
         "You are <b>storytellers</b>: you gather the heroes, villains and treasures of the classic tales into your own story.",
         "The game lasts <b>8 rounds</b>.",
         "The storyteller with the most <b>Victory Points</b> [[icon:vp]] wins."], "[[legendary:Alice]][[legendary:Captain Hook]][[item:Magic Lamp]]"],
@@ -85,7 +85,7 @@ const SLIDES = {
   fr: {
     title: "Le jeu en 16 étapes", prev: "Précédent", next: "Suivant", button: "Présentation",
     slides: [
-      ["Once Upon a Time", "Un jeu de Simone Luciani & Matthieu Verdier · 2 à 4 joueurs", [
+      ["Once Upon a Time", "Un jeu de Simone Luciani & Matthieu Verdier · 2 à 4 joueurs · 14 ans et + · 40 min", [
         "Vous êtes des <b>conteurs</b> : vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques.",
         "La partie dure <b>8 manches</b>.",
         "Le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte."], "[[legendary:Alice]][[legendary:Captain Hook]][[item:Magic Lamp]]"],
@@ -165,7 +165,7 @@ const SLIDES = {
   it: {
     title: "Il gioco in 16 tappe", prev: "Indietro", next: "Avanti", button: "Presentazione",
     slides: [
-      ["Once Upon a Time", "Un gioco di Simone Luciani & Matthieu Verdier · da 2 a 4 giocatori", [
+      ["Once Upon a Time", "Un gioco di Simone Luciani & Matthieu Verdier · da 2 a 4 giocatori · 14+ anni · 40 min", [
         "Siete dei <b>narratori</b>: riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche.",
         "La partita dura <b>8 round</b>.",
         "Vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]]."], "[[legendary:Alice]][[legendary:Captain Hook]][[item:Magic Lamp]]"],

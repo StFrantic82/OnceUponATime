@@ -61,3 +61,6 @@
 .back-badges span { background: #7a3a24; color: #fff4dc; }
 .back-by { grid-column: 1 / -1; margin: 0; text-align: center; font: italic 17px "Alegreya", serif; color: #6b4a30; }
 @media print { .rules-top, .box-wrap figcaption { display: none; } .box-face { zoom: 1; box-shadow: none; page-break-after: always; } }
+
+.back-badges { gap: 8px; }
+.back-badges span { font-size: 18px; padding: 5px 14px; white-space: nowrap; }

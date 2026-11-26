@@ -5,7 +5,7 @@ const TEXT = {
   en: {
     page: "Box", cover: "Cover", back: "Box back",
     by: "A game by", tagline: "Gather the heroes, villains and treasures of the classic tales into your own story.",
-    players: "2–4 players", rounds: "8 rounds",
+    players: "2–4 players", age: "Ages 14+", time: "40 min",
     pitch: "You are storytellers. Round after round, heroes, villains and treasures step out of the classic tales, and each of you weaves them into a story of your own. After 8 rounds, the finest story wins.",
     keys: [
       ["Twelve chapters, one dilemma", "A high Chapter card lets you choose first. A low one gives a stronger effect. Each can be played only once."],
@@ -19,7 +19,7 @@ const TEXT = {
   fr: {
     page: "Boîte", cover: "Couverture", back: "Dos de boîte",
     by: "Un jeu de", tagline: "Réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques.",
-    players: "2–4 joueurs", rounds: "8 manches",
+    players: "2–4 joueurs", age: "14 ans et +", time: "40 min",
     pitch: "Vous êtes des conteurs. Manche après manche, héros, méchants et trésors sortent des contes classiques, et chacun les tisse dans sa propre histoire. Après 8 manches, la plus belle histoire l’emporte.",
     keys: [
       ["Douze chapitres, un dilemme", "Une grande carte Chapitre vous fait choisir en premier. Une petite donne un effet plus fort. Chacune ne se joue qu’une fois."],
@@ -33,7 +33,7 @@ const TEXT = {
   it: {
     page: "Scatola", cover: "Copertina", back: "Retro della scatola",
     by: "Un gioco di", tagline: "Riunisci nella tua storia gli eroi, i cattivi e i tesori delle fiabe classiche.",
-    players: "2–4 giocatori", rounds: "8 round",
+    players: "2–4 giocatori", age: "14+ anni", time: "40 min",
     pitch: "Siete dei narratori. Round dopo round, eroi, cattivi e tesori escono dalle fiabe classiche, e ognuno li intreccia nella propria storia. Dopo 8 round, vince la storia più bella.",
     keys: [
       ["Dodici capitoli, un dilemma", "Una carta Capitolo alta ti fa scegliere per primo. Una bassa dà un effetto più forte. Ognuna si gioca una sola volta."],
@@ -66,7 +66,7 @@ function cover(L) {
     <div class="cover-book">${CardArt.art("Once Upon a Time")}</div>
     ${arc(good, -1)}${arc(bad, 1)}
     <p class="cover-tagline">${esc(L.tagline)}</p>
-    <div class="cover-badges"><span>${esc(L.players)}</span><span>${esc(L.rounds)}</span></div>
+    <div class="cover-badges"><span>${esc(L.players)}</span><span>${esc(L.age)}</span><span>${esc(L.time)}</span></div>
   </div>`;
 }
 
@@ -97,7 +97,7 @@ function back(L) {
     </section>
     <footer class="back-foot">
       <div class="back-contents"><b>${esc(L.contents)}</b><span>${L.list.map(esc).join(" · ")}</span></div>
-      <div class="back-badges"><span>${esc(L.players)}</span><span>${esc(L.rounds)}</span></div>
+      <div class="back-badges"><span>${esc(L.players)}</span><span>${esc(L.age)}</span><span>${esc(L.time)}</span></div>
       <p class="back-by">${esc(L.by)} ${esc(AUTHORS)}</p>
     </footer>
   </div>`;
