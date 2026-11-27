@@ -1,0 +1,148 @@
+/* Once Upon a Time — illustrated rules page */
+body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
+.rules-top {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px; justify-content: space-between;
+  padding: 10px 20px; background: rgba(250, 242, 226, .94); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(122, 58, 36, .18);
+}
+.rules-top a, .rules-top button { font: 600 14px "Alegreya Sans", sans-serif; }
+.rules-home { color: #7a3a24; text-decoration: none; }
+.rules-top .tools { display: flex; gap: 10px; align-items: center; }
+
+.rules { max-width: 940px; margin: 0 auto; padding: 24px 22px 80px; font: 17px/1.6 "Alegreya", Georgia, serif; color: #3b2a1e; }
+.rules-hero { text-align: center; padding: 10px 0 20px; }
+.rules-hero-art { width: 180px; margin: 0 auto; }
+.rules-hero-art svg { width: 100%; height: auto; display: block; }
+.rules-hero h1 { font-size: 44px; margin: 4px 0 14px; color: #5a2716; }
+.rules-toc { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.rules-toc a {
+  font: 600 14px "Alegreya Sans", sans-serif; color: #6b3420; text-decoration: none;
+  padding: 5px 12px; border-radius: 999px; background: #fff8ea; border: 1px solid rgba(122, 58, 36, .25);
+}
+.rules-toc a:hover { background: #f3dfbd; }
+
+.rules-section {
+  background: #fffaf0; border: 1px solid rgba(122, 58, 36, .16); border-radius: 18px;
+  padding: 22px 28px; margin: 22px 0; box-shadow: 0 6px 18px rgba(90, 50, 20, .07); scroll-margin-top: 70px;
+}
+.rules-section h2 { margin: 0 0 10px; font-size: 28px; color: #5a2716; border-bottom: 2px solid #e6cfa6; padding-bottom: 6px; }
+.rules-section h3 { margin: 22px 0 6px; font-size: 20px; color: #7a3a24; }
+.rules-section li { margin: 4px 0; }
+.rules-section p { margin: 0 0 10px; }
+.rules .hero-kicker { color: #9a6a3a; font-style: italic; margin: 6px 0 0; }
+.rules .game-icon { width: 1.25em; height: 1.25em; vertical-align: -.25em; object-fit: contain; }
+.rules .skill-tag { display: inline-flex; width: 1.5em; height: 1.5em; vertical-align: -.35em; position: static; }
+.rules .skill-tag .game-icon { width: 100%; height: 100%; vertical-align: 0; }
+
+.example {
+  margin: 16px 0; padding: 14px 18px; border-radius: 14px; background: #f8ecd6; border-left: 5px solid #c58b3c;
+}
+.fig-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: flex-start; margin: 14px 0 4px; }
+.fig { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 0 0 auto; }
+.fig > * { flex: 0 0 auto; }
+.fig figcaption { font: 700 14px "Alegreya Sans", sans-serif; color: #6b3420; }
+.fig .card, .fig .fcard, .fig .acard { cursor: default; }
+.fig-writer .writer-card { width: 260px; }
+/* Chapter cards all share one size, whatever their content */
+.fig-action .acard { width: 150px; height: 210px; aspect-ratio: auto; box-sizing: border-box; }
+
+/* anatomy */
+.anatomy { display: flex; gap: 26px; align-items: center; margin: 18px 0; flex-wrap: wrap; justify-content: center; }
+.anatomy-card { position: relative; margin: 0; flex: 0 0 auto; }
+.anatomy-card .mark {
+  position: absolute; transform: translate(-50%, -50%); z-index: 3;
+  width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center;
+  background: #b5452a; color: #fff; font: 800 13px "Alegreya Sans", sans-serif; box-shadow: 0 0 0 2px #fff, 0 2px 6px rgba(0, 0, 0, .3);
+}
+.anatomy-legend { flex: 1 1 260px; max-width: 420px; margin: 0; padding-left: 0; list-style: none; counter-reset: m; }
+.anatomy-legend li { counter-increment: m; position: relative; padding-left: 34px; margin: 8px 0; }
+.anatomy-legend li::before {
+  content: counter(m); position: absolute; left: 0; top: 2px; width: 22px; height: 22px; border-radius: 50%;
+  background: #b5452a; color: #fff; display: grid; place-items: center; font: 800 12px "Alegreya Sans", sans-serif;
+}
+
+/* groups per player count */
+.boards { border-collapse: collapse; margin: 10px auto; }
+.boards th, .boards td { padding: 6px 14px; border-bottom: 1px solid #ead7b4; text-align: left; font-family: "Alegreya Sans", sans-serif; }
+.boards th { font-size: 14px; color: #7a3a24; }
+.board-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.board-group { display: inline-flex; gap: 3px; padding: 5px 7px; border-radius: 8px; background: #f3e4c6; border: 1px dashed #c9a46b; min-height: 26px; align-items: center; }
+.chip { display: inline-block; width: 14px; height: 21px; border-radius: 3px; box-shadow: 0 1px 2px rgba(0, 0, 0, .25); }
+.chip-c { background: #e9d3a8; border: 1px solid #a5784a; }
+.chip-l { background: linear-gradient(160deg, #e8b85a, #b0702b); border: 1px solid #7a4a1a; }
+.legend-line { text-align: center; font: 14px "Alegreya Sans", sans-serif; }
+.legend-line .chip { vertical-align: -5px; }
+
+@media (max-width: 640px) {
+  .rules { padding: 14px 10px 60px; font-size: 16px; }
+  .rules-section { padding: 16px 14px; }
+  .rules-hero h1 { font-size: 34px; }
+}
+
+@media print {
+  .rules-top { display: none; }
+  body.rules-body { background: #fff; }
+  .rules { max-width: none; padding: 0; font-size: 11pt; }
+  .rules-section { box-shadow: none; border: none; padding: 0; margin: 0 0 8mm; }
+  .rules-section + .rules-section { break-before: page; }
+  .example, .anatomy, .fig-row, .boards { break-inside: avoid; }
+  .rules-toc { display: none; }
+}
+
+/* rules shown inside the app (index.html) */
+.rules-screen { min-height: 100vh; }
+.rules-bar {
+  position: sticky; top: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 10px 20px; background: rgba(250, 242, 226, .94); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(122, 58, 36, .18);
+}
+@media print {
+  .rules-bar, .rules-screen ~ *, #home, .lang-switch { display: none !important; }
+}
+.rules-screen .rules-hero { background: #fffaf0; border-radius: 18px; border: 1px solid rgba(122, 58, 36, .16); margin-top: 8px; padding: 18px; }
+.rules-screen .rules-section { background: #fffaf0; }
+.actions-grid { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 12px 0 18px; }
+.actions-grid .fig { zoom: .86; }
+@media (max-width: 640px) { .actions-grid .fig { zoom: .62; } }
+@media print { .actions-grid { break-inside: avoid; } }
+
+.freeup-ico { width: 1.5em; height: 1.5em; vertical-align: middle; display: inline-block; }
+.ac-line .freeup-ico { width: 28px; height: 28px; }
+.fc-text .freeup-ico { width: 2.3em; height: 2.3em; }
+
+.ac-quest .quest-ico { width: 2.6em; height: auto; }
+.action-hand .ac-quest .quest-ico { width: 2.2em; }
+
+.ac-gears { display: inline-flex; gap: 1px; }
+.ac-draw { font-size: 0.78em; line-height: 1.15; font-weight: 600; padding: 0 2px; }
+
+/* VP mark: a round badge (not a tag) on cards that grant VP */
+.fc-art { position: relative; }
+.fc-vpmark { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; background: #fffaf0; border: 2px solid #3f8f4c; display: grid; place-items: center; box-shadow: 0 1px 2px rgba(0,0,0,.25); z-index: 2; }
+.fc-vpmark .game-icon { width: 15px; height: 15px; }
+
+.w-good { color: #2f5d8a; font-weight: 800; }
+.w-bad { color: #a8323a; font-weight: 800; }
+
+.writer-coins { display: inline-flex; align-items: center; gap: 3px; font: 800 1.05em "Alegreya", serif; color: #6b3a12; }
+.writer-coins .game-icon { width: 1.3em; height: 1.3em; }
+
+/* Iconography summary */
+.icon-guide { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 22px; margin: 6px 0; }
+.ig-row { display: grid; grid-template-columns: 132px 1fr; gap: 10px; align-items: center; padding: 6px 8px; border-radius: 8px; background: rgba(255, 248, 226, .7); border: 1px solid #e2cfa8; }
+.ig-icon { display: flex; align-items: center; justify-content: center; gap: 3px; flex-wrap: wrap; min-height: 30px; }
+.ig-icon .game-icon { width: 26px; height: 26px; }
+.ig-icon .fc-skills { position: static; display: flex; gap: 3px; }
+.ig-icon .skill-tag { width: 21px; height: 21px; }
+.ig-icon .skill-tag .game-icon { width: 100%; height: 100%; }
+.ig-icon .fc-skills, .ig-icon .set4 { flex-wrap: nowrap; }
+.ig-icon .xp-box { width: 30px; height: 30px; display: grid; place-items: center; border: 2px dashed #c58b3c; border-radius: 6px; }
+.ig-icon .xp-box .game-icon { width: 18px; height: 18px; opacity: .6; }
+.ig-icon .freeup-ico { width: 30px; height: 30px; }
+.ig-icon .quest-ico { width: 40px; height: auto; }
+.ig-icon .guide-vpmark { position: static; }
+.ig-text { font-size: 13px; line-height: 1.3; }
+@media (max-width: 640px) { .icon-guide { grid-template-columns: 1fr; } }
+
+/* Components list */
+.material-list { columns: 2; column-gap: 28px; padding-left: 20px; margin: 6px 0 0; }
+.material-list li { break-inside: avoid; margin: 0 0 5px; }
+@media (max-width: 640px) { .material-list { columns: 1; } }

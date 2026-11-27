@@ -3270,3 +3270,8 @@ button.needs-click { outline: none; }
 .fc-common .q-grid { flex: 1 1 auto; grid-template-columns: 1.7em repeat(var(--n, 3), minmax(0, 1fr)); }
 .fc-common .q-grid > * { padding: 2px 0; min-width: 0; }
 .mini-card-ico { display: inline-grid !important; place-items: center; width: .95em; height: 1.3em; border: 1.2px solid #4a2c1a; border-radius: 2px; background: #fffaf0; font-size: .95em; line-height: 1; color: #2a1a10; }
+
+/* Link between the two versions of the game */
+.version-link { display: inline-block; margin: 10px auto 0; padding: 6px 14px; border-radius: 999px; border: 1.5px dashed #b0702b; color: #7a4a1a; font: 700 14px/1.2 "Alegreya Sans", sans-serif; text-decoration: none; background: rgba(255, 240, 210, .6); }
+.version-link:hover { background: #f7e2b0; }
+.v2-badge { display: inline-block; vertical-align: super; margin-left: 8px; padding: 2px 9px; border-radius: 999px; background: #7a3b8a; color: #fff; font: 700 .32em/1.4 "Alegreya Sans", sans-serif; letter-spacing: .05em; }

@@ -1,0 +1,361 @@
+// Once Upon a Time — Print & Play sheets (A4), at the real size of every component.
+// Open print.html?lang=fr (or en, it) and print at 100 % scale, or use the ready-made PDFs.
+const DATA = window.GAME_DATA;
+const MM = 96 / 25.4; // CSS pixels per millimetre
+
+// ---- helpers the card faces need (the same as in the game) ----
+const ICON_FILES = {
+  Charm: "assets/icons/tag-charm.png",
+  Strength: "assets/icons/tag-strength.png",
+  Dexterity: "assets/icons/tag-ruse.png",
+  DexteritySq: "assets/icons/tag-ruse-square.png",
+  Intelligence: "assets/icons/tag-intelligence.png",
+  Sorcery: "assets/icons/tag-magic.png",
+  coins: "assets/icons/coin.png",
+  xp: "assets/icons/xp.png",
+  vp: "assets/icons/vp.png",
+  Good: "assets/icons/good.png",
+  Bad: "assets/icons/evil.png",
+  ongoing: "assets/icons/effect-type-ongoing.png",
+  instant: "assets/icons/effect-type-instant.png",
+  activation: "assets/icons/effect-type-activation.png",
+  endgame: "assets/icons/effect-type-endgame.png",
+};
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+// Cards use lighter icons (72 px is still above 200 dpi at card size); tokens use the full ones.
+function resourceIcon(kind, label, full = false) {
+  const src = full ? ICON_FILES[kind] : ICON_FILES[kind].replace("assets/icons/", "assets/icons/print/");
+  return `<img class="game-icon" src="${src}" alt="${esc(label)}">`;
+}
+// Skill icons in card texts are square, like the tags on the cards.
+function skillIcon(icon) {
+  return `<span class="skill-tag txt-tag sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon)}</span>`;
+}
+
+function formatGameText(text) {
+  return (window.tagTokens ? window.tagTokens(text) : String(text || ""))
+    .replace(/\bGame End\b/gi, resourceIcon("endgame", "Game End"))
+    .replace(/\bOngoing\b/gi, resourceIcon("ongoing", "Ongoing"))
+    .replace(/\bInstant\b/gi, resourceIcon("instant", "Instant"))
+    .replace(/\bActivation\b/gi, resourceIcon("activation", "Activation"))
+    .replace(/\bStrength\b/gi, skillIcon("Strength"))
+    .replace(/\b(?:Dexterity|Ruse)\b/gi, skillIcon("Dexterity"))
+    .replace(/\bIntelligence\b/gi, skillIcon("Intelligence"))
+    .replace(/\bSorcery\b/gi, skillIcon("Sorcery"))
+    .replace(/\bCharm\b/gi, skillIcon("Charm"))
+    .replace(/\bVP\b/g, resourceIcon("vp", "VP"))
+    .replace(/\bXP\b/g, resourceIcon("xp", "XP"))
+    .replace(/\b(?:Coins?|coins?)\b/g, resourceIcon("coins", "Coins"))
+    .replace(/\u0002/g, '<span class="fc-max">').replace(/\u0003/g, "</span>")
+    .replace(/\u0001SET4\u0001/g, `<span class="set4">${["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"].map(skillIcon).join("")}</span>`);
+}
+function printedIcons(card) {
+  const lead = String(card.base || "").match(/^\s*(?:(?:Charm|Strength|Dexterity|Intelligence|Sorcery)(?:\s*\d+)?\s*[,.]?\s*)+/i);
+  return `${card.icons || ""} ${lead ? lead[0] : ""}`;
+}
+function textIconAmount(text, icon) {
+  const regex = new RegExp(`${icon}\\s*(\\d+)?`, "gi");
+  let total = 0;
+  let m;
+  while ((m = regex.exec(text || ""))) total += Number(m[1] || 1);
+  return total;
+}
+function iconAmount(card, icon) {
+  return textIconAmount(printedIcons(card), icon);
+}
+
+// ---- texts of the sheets ----
+const P = {
+  en: {
+    title: "Print & Play",
+    intro: "Print on A4 paper at 100 % scale (“actual size”, no “fit to page”). Cut along the dotted lines. Card sizes are those of standard sleeves.",
+    backsHow: "Backs: print each “Backs” page on the reverse of the pages of the same kind (long-edge duplex), or glue it on.",
+    contents: "Contents",
+    sizes: { common: "Common characters · 53 cards · 54 × 80 mm", legendary: "Legendary characters · 37 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 24 tiles · 63 × 63 mm", quests: "Adventure cards · 16 cards · 80 × 54 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Chapter cards · 4 sets of 12 · 41 × 63 mm", tokens: "Tokens · coins, XP, VP, first player" },
+    backs: "Backs",
+    tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
+    page: "Page",
+    set: "Set",
+    board: "Board · A5, single-sided · 2 copies",
+    boardSide: "Board",
+    boardPlayers: "{n} players",
+    boardHow: "Each round, deal the revealed characters below their space: one group per space, on the row for your number of players.",
+    normal: "common", normals: "common", legendary: "Legendary", legendaries: "Legendary",
+    itemsShown: "Items revealed", questsShown: "Adventures revealed",
+    yourBook: "Your book",
+    yourBookHint: "Chapter deck",
+    scorePad: "Score pad",
+    scoreGame: "Game",
+    scoreDate: "Date",
+    scoreRounds: "Rounds: 8 □  9 □",
+    scoreRows: ["Storyteller", "Writer", "VP gained during the game", "Adventures", "Game End effects of characters and Items", "Writer level 3", "Total"],
+  },
+  fr: {
+    title: "Print & Play",
+    intro: "Imprimez sur du papier A4 à l’échelle 100 % (« taille réelle », sans « ajuster à la page »). Découpez le long des pointillés. Les formats correspondent aux protège-cartes du commerce.",
+    backsHow: "Dos : imprimez chaque page « Dos » au verso des pages du même type (recto verso, bord long), ou collez-la.",
+    contents: "Contenu",
+    sizes: { common: "Personnages communs · 53 cartes · 54 × 80 mm", legendary: "Personnages légendaires · 37 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 24 tuiles · 63 × 63 mm", quests: "Cartes Aventure · 16 cartes · 80 × 54 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Chapitre · 4 jeux de 12 · 41 × 63 mm", tokens: "Jetons · pièces, XP, PV, premier joueur" },
+    backs: "Dos",
+    tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
+    page: "Page",
+    set: "Jeu",
+    board: "Plateau · format A5, recto seul · 2 exemplaires",
+    boardSide: "Plateau",
+    boardPlayers: "{n} joueurs",
+    boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement, sur la ligne de votre nombre de joueurs.",
+    normal: "commune", normals: "communes", legendary: "Légendaire", legendaries: "Légendaires",
+    itemsShown: "Objets révélés", questsShown: "Aventures révélées",
+    yourBook: "Votre livre",
+    yourBookHint: "Pioche Chapitre",
+    scorePad: "Carnet de score",
+    scoreGame: "Partie",
+    scoreDate: "Date",
+    scoreRounds: "Manches : 8 □  9 □",
+    scoreRows: ["Conteur", "Écrivain", "PV gagnés pendant la partie", "Aventures", "Effets Fin de partie des personnages et Objets", "Écrivain niveau 3", "Total"],
+  },
+  it: {
+    title: "Print & Play",
+    intro: "Stampa su carta A4 in scala 100 % («dimensioni reali», senza «adatta alla pagina»). Ritaglia lungo le linee tratteggiate. I formati corrispondono alle bustine protettive in commercio.",
+    backsHow: "Retri: stampa ogni pagina «Retri» sul retro delle pagine dello stesso tipo (fronte-retro, lato lungo), oppure incollala.",
+    contents: "Contenuto",
+    sizes: { common: "Personaggi comuni · 53 carte · 54 × 80 mm", legendary: "Personaggi leggendari · 37 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 24 tessere · 63 × 63 mm", quests: "Carte Avventura · 16 carte · 80 × 54 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Capitolo · 4 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · monete, XP, PV, primo giocatore" },
+    backs: "Retri",
+    tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
+    page: "Pagina",
+    set: "Mazzo",
+    board: "Plancia · formato A5, solo fronte · 2 copie",
+    boardSide: "Plancia",
+    boardPlayers: "{n} giocatori",
+    boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio, sulla riga del vostro numero di giocatori.",
+    normal: "comune", normals: "comuni", legendary: "Leggendaria", legendaries: "Leggendarie",
+    itemsShown: "Oggetti rivelati", questsShown: "Avventure rivelate",
+    yourBook: "Il tuo libro",
+    yourBookHint: "Mazzo Capitolo",
+    scorePad: "Blocco segnapunti",
+    scoreGame: "Partita",
+    scoreDate: "Data",
+    scoreRounds: "Round: 8 □  9 □",
+    scoreRows: ["Narratore", "Scrittore", "PV ottenuti durante la partita", "Avventure", "Effetti Fine partita di personaggi e Oggetti", "Scrittore livello 3", "Totale"],
+  },
+};
+
+const params = new URLSearchParams(location.search);
+I18N.setLang(params.get("lang") || I18N.lang, false);
+I18N.apply();
+const L = P[I18N.lang] || P.en;
+const SET_COLORS = ["#7a3a24", "#2f5d8a", "#3f7a32", "#6b4a8a", "#b5793a"];
+
+// ---- components: [kind, mm width, mm height, native px width, render] ----
+const KINDS = {
+  common: { w: 54, h: 80, nw: 170, render: (c) => CardFace.common(c) },
+  legendary: { w: 61, h: 112, nw: 216, render: (c) => CardFace.legendary(c, { xpSlot: true }) },
+  items: { w: 63, h: 63, nw: 205, render: (c) => CardFace.item(c) },
+  quests: { w: 80, h: 54, nw: 300, render: (c) => CardFace.quest(c) },
+  writers: { w: 99.9, h: 99.9, nw: 410, render: (c) => writerCard(c) },
+  actions: { w: 41, h: 63, nw: 150, render: (c) => `<div class="acard" style="--spine:${SET_COLORS[c.set]}">${CardFace.action(c).replace(/^<div class="acard[^"]*">/, "").replace(/<\/div>\s*$/, "")}</div>` },
+};
+
+
+function writerCard(writer) {
+  return CardFace.writer(writer, {
+    cls: "print-writer",
+    notch: `<div class="book-notch"><span class="notch-label"><b>${esc(L.yourBook)}</b> · ${esc(L.yourBookHint)}</span></div>`,
+  });
+}
+
+function backFace(kind, set = 0) {
+  const label = { common: t("deck_common"), legendary: t("deck_legendary"), items: t("deck_items"), quests: t("deck_quests"), writers: "", actions: t("deck_actions") }[kind];
+  return `<div class="card-back back-${kind}" style="--spine:${SET_COLORS[set] || "#7a3a24"}">
+    <div class="back-frame">${kind === "writers" ? `<div class="back-medal">${CardArt.art("Once Upon a Time")}</div>` : `<span class="back-star">✦</span>`}<b>Once Upon<br>a Time</b>${label ? `<small>${esc(label)}</small>` : ""}<span class="back-star">✦</span></div>
+  </div>`;
+}
+
+// Lay out a list of components on as many A4 sheets as needed.
+// fillBacks: the free spaces of the last page are filled with backs of the same kind, to save paper.
+function sheetsFor(kind, items, title, back = false, fillBacks = false) {
+  const k = KINDS[kind];
+  const cols = Math.floor(200 / k.w);
+  const rows = Math.floor(280 / k.h);
+  const per = cols * rows;
+  const out = [];
+  for (let i = 0; i < items.length; i += per) {
+    const chunk = items.slice(i, i + per);
+    const cells = chunk.map((item) => `<div class="cell" style="width:${k.w}mm;height:${k.h}mm" data-nw="${k.nw}">${back ? item : k.render(item)}</div>`);
+    if (fillBacks && !back) {
+      while (cells.length < per) cells.push(`<div class="cell" style="width:${k.w}mm;height:${k.h}mm" data-nw="${k.nw}">${backFace(kind)}</div>`);
+    }
+    // Backs are mirrored left-right so they line up with the fronts in duplex printing.
+    const grid = back
+      ? Array.from({ length: Math.ceil(cells.length / cols) }, (_, r) => {
+          const row = cells.slice(r * cols, r * cols + cols);
+          while (row.length < cols) row.push(`<div class="cell empty" style="width:${k.w}mm;height:${k.h}mm"></div>`);
+          return row.reverse().join("");
+        }).join("")
+      : cells.join("");
+    out.push(`<section class="sheet"><header class="sheet-head">${esc(title)}</header><div class="grid" style="grid-template-columns:repeat(${cols}, ${k.w}mm)">${grid}</div></section>`);
+    if (back) break; // one page of backs serves every page of that kind
+  }
+  return out;
+}
+
+function backsSheet(kind, set = 0, count = 0) {
+  const k = KINDS[kind];
+  const per = count || Math.floor(200 / k.w) * Math.floor(280 / k.h);
+  return sheetsFor(kind, Array.from({ length: per }, () => backFace(kind, set)), `${L.backs} · ${L.sizes[kind].split(" · ")[0]}${kind === "actions" ? ` · ${L.set} ${set + 1}` : ""}`, true);
+}
+
+function tokenSheet() {
+  const tags = ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"].flatMap((icon) => Array.from({ length: 9 }, () => `<div class="tok tag-tok sk-${icon.toLowerCase()}">${resourceIcon(icon === "Dexterity" ? "DexteritySq" : icon, icon, true)}</div>`));
+  // A coin is a coin; a feather is 1 VP, a feather with a green 5 is 5 VP.
+  const round = (icon, value, n) => Array.from({ length: n }, () => `<div class="tok round-tok tok-${icon} ${value > 1 ? "tok-multi" : ""}">${value > 1 ? `<b class="tok-val">${value}</b>` : ""}${resourceIcon(icon, icon, true)}</div>`);
+  const res = [...round("coins", 1, 36), ...round("vp", 1, 27), ...round("vp", 5, 18)];
+  const xp = Array.from({ length: 90 }, () => `<div class="tok xp-tok">${resourceIcon("xp", "XP", true)}</div>`);
+  return [
+    `<section class="sheet"><header class="sheet-head">${esc(L.resTitle)} · Ø 20 mm</header><div class="tok-grid">${res.join("")}</div>
+     <header class="sheet-head second">${esc(L.xpTitle)} · 10 × 10 mm</header><div class="tok-grid xp-grid">${xp.join("")}</div>
+     <header class="sheet-head second">${esc(L.firstPlayer)}</header><div class="tok-grid"><div class="tok first-tok"><b>1</b><small>${esc(L.firstPlayer)}</small></div></div></section>`,
+  ];
+}
+
+// Make sure nothing spills out of a card (the Good/Bad band must stay visible):
+// first shrink the illustration a little, then the text.
+function fitFace(face) {
+  if (!face.classList.contains("fcard")) return;
+  const foot = face.querySelector(".fc-foot");
+  const overflows = () => (foot ? foot.offsetTop + foot.offsetHeight > face.clientHeight + 0.5 : false) || face.scrollHeight > face.clientHeight + 1;
+  // On an Adventure card the illustration sits beside the text: shrinking it would not help.
+  const art = face.classList.contains("fc-quest") ? null : face.querySelector(".fc-art");
+  const texts = [...face.querySelectorAll(".fc-side, .fc-text")];
+  if (!overflows()) return;
+  const artStart = art ? art.offsetHeight : 0;
+  for (let h = artStart; art && h > artStart * 0.5 && overflows(); h -= 4) art.style.height = `${h}px`;
+  for (let i = 0; i < 20 && overflows(); i += 1) {
+    for (const el of texts) el.style.fontSize = `${parseFloat(getComputedStyle(el).fontSize) - 0.5}px`;
+  }
+}
+
+// Board: single-sided. One row per player count (one space per group of characters), then the icon guide.
+const BOARDS = { 2: [[0, 1], [2, 0], [1, 1]], 3: [[0, 1], [2, 0], [1, 1], [2, 0]], 4: [[0, 1], [2, 0], [1, 1], [2, 0], [0, 1]] };
+
+function boardSection(n) {
+  const groups = BOARDS[n].map(([c, l], i) => {
+    const minis = `${'<i class="mini mini-c"></i>'.repeat(c)}${'<i class="mini mini-l"></i>'.repeat(l)}`;
+    const text = [c ? `${c} ${c > 1 ? L.normals : L.normal}` : "", l ? `${l} ${l > 1 ? L.legendaries : L.legendary}` : ""].filter(Boolean).map(esc).join("<br>+ ");
+    return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${text}</div></div>`;
+  }).join("");
+  return `<div class="bsection">
+    <div class="bhead">${esc(L.boardPlayers.replace("{n}", n))}
+      <div class="bdisp">${resourceIcon("coins", "Items", true)} ${esc(L.itemsShown)} : <b>${n + 1}</b></div>
+      <div class="bdisp">${resourceIcon("endgame", "Adventures", true)} ${esc(L.questsShown)} : <b>${n + 1}</b></div>
+    </div>
+    <div class="bslots">${groups}</div>
+  </div>`;
+}
+
+function boardSheets() {
+  const board = `<div class="board">
+      <div class="board-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time</h2></div>
+      ${[2, 3, 4].map(boardSection).join("")}
+      <p class="board-how">${esc(L.boardHow)}</p>
+      ${CardFace.iconGuide()}
+    </div>`;
+  // A5 landscape: two copies fit on one A4 sheet.
+  return [`<section class="sheet board-sheet"><header class="sheet-head">${esc(L.board)}</header>${board}${board}</section>`];
+}
+
+// Score pad: six games per A4 page (9 cm wide each), up to 4 storytellers.
+function scoreTable() {
+  const icons = [null, null, ["vp"], ["endgame"], ["endgame"], ["endgame"], null, null];
+  const rows = L.scoreRows.map((label, i) => {
+    const cls = i === 6 ? "srow-total" : i < 2 ? "srow-name" : "";
+    const ico = icons[i] ? icons[i].map((k) => resourceIcon(k, k, true)).join("") : "";
+    return `<tr class="${cls}"><th>${ico}<span>${esc(label)}</span></th>${"<td></td>".repeat(4)}</tr>`;
+  }).join("");
+  return `<div class="score-block"><div class="score-top"><span>${esc(L.scoreGame)} n° ______</span><span>${esc(L.scoreDate)} : ____ / ____ / ________</span></div>
+    <table class="score-table"><tbody>${rows}</tbody></table></div>`;
+}
+
+function scoreSheet() {
+  return [`<section class="sheet score-sheet"><header class="sheet-head">${esc(L.scorePad)}</header>
+    <div class="score-title"><div class="board-art">${CardArt.art("Once Upon a Time")}</div><h2>Once Upon a Time · ${esc(L.scorePad)}</h2></div>
+    <div class="score-grid">${scoreTable().repeat(6)}</div></section>`];
+}
+
+function coverSheet(pages) {
+  return `<section class="sheet cover">
+    <div class="cover-art">${CardArt.art("Once Upon a Time")}</div>
+    <h1>Once Upon a Time</h1>
+    <p class="cover-kicker">${esc(L.title)}</p>
+    <p>${esc(L.intro)}</p>
+    <p>${esc(L.backsHow)}</p>
+    <h2>${esc(L.contents)}</h2>
+    <ul>${pages.map(([label, from, to]) => `<li><span>${esc(label)}</span><b>${esc(L.page)} ${from}${to > from ? `–${to}` : ""}</b></li>`).join("")}</ul>
+    <p class="cover-scale"><span style="width:100mm"></span> 100 mm</p>
+  </section>`;
+}
+
+function build() {
+  const sections = [];
+  const add = (label, sheets) => sections.push([label, sheets]);
+  add(L.sizes.common, sheetsFor("common", DATA.common, L.sizes.common));
+  add(`${L.backs} · ${L.sizes.common.split(" · ")[0]}`, backsSheet("common"));
+  // Legendary cards that would sit alone on a last page go on the last Item page instead, each beside its back.
+  const legPer = Math.floor(200 / KINDS.legendary.w) * Math.floor(280 / KINDS.legendary.h);
+  const legExtra = DATA.legendary.length % legPer <= 2 ? DATA.legendary.slice(DATA.legendary.length - (DATA.legendary.length % legPer)) : [];
+  add(L.sizes.legendary, sheetsFor("legendary", DATA.legendary.slice(0, DATA.legendary.length - legExtra.length), L.sizes.legendary));
+  add(`${L.backs} · ${L.sizes.legendary.split(" · ")[0]}`, backsSheet("legendary"));
+  const itemSheets = sheetsFor("items", DATA.items, L.sizes.items);
+  if (legExtra.length) {
+    const lk = KINDS.legendary;
+    const cell = (html) => `<div class="cell" style="width:${lk.w}mm;height:${lk.h}mm" data-nw="${lk.nw}">${html}</div>`;
+    const extra = `<header class="sheet-head second">${esc(L.sizes.legendary.split(" · ")[0])} · ${esc(L.backs)}</header><div class="grid" style="grid-template-columns:repeat(${legExtra.length * 2}, ${lk.w}mm)">${legExtra.map((c) => cell(lk.render(c)) + cell(backFace("legendary"))).join("")}</div>`;
+    itemSheets[itemSheets.length - 1] = itemSheets[itemSheets.length - 1].replace(/<\/section>$/, `${extra}</section>`);
+  }
+  add(L.sizes.items, itemSheets);
+  add(`${L.backs} · ${L.sizes.items.split(" · ")[0]}`, backsSheet("items"));
+  add(L.sizes.quests, sheetsFor("quests", DATA.quests, L.sizes.quests, false, true));
+  add(`${L.backs} · ${L.sizes.quests.split(" · ")[0]}`, backsSheet("quests"));
+  add(L.sizes.writers, sheetsFor("writers", DATA.writers, L.sizes.writers));
+  add(`${L.backs} · ${L.sizes.writers.split(" · ")[0]}`, backsSheet("writers"));
+  // One page per Action set (12 cards), each followed by its own coloured backs: ready for duplex.
+  add(L.sizes.actions, [0, 1, 2, 3].flatMap((set) => [
+    ...sheetsFor("actions", DATA.actions.map((a) => ({ ...a, set })), `${L.sizes.actions} · ${L.set} ${set + 1}`),
+    ...backsSheet("actions", set, DATA.actions.length),
+  ]));
+  add(L.board, boardSheets());
+  add(L.scorePad, scoreSheet());
+  add(L.sizes.tokens, tokenSheet());
+
+  let page = 2;
+  const index = sections.map(([label, sheets]) => {
+    const from = page;
+    page += sheets.length;
+    return [label, from, page - 1];
+  });
+  document.querySelector("#sheets").innerHTML = coverSheet(index) + sections.flatMap(([, sheets]) => sheets).join("");
+
+  // Draw each card at its usual on-screen size, then scale it to the exact millimetre size of its cell.
+  for (const cell of document.querySelectorAll(".cell[data-nw]")) {
+    const face = cell.firstElementChild;
+    if (!face) continue;
+    const nw = Number(cell.dataset.nw);
+    const scale = (cell.getBoundingClientRect().width || parseFloat(cell.style.width) * MM) / nw;
+    const nh = cell.getBoundingClientRect().height / scale;
+    face.style.width = `${nw}px`;
+    face.style.height = `${nh}px`;
+    face.style.minHeight = "0";
+    face.style.transform = `scale(${scale})`;
+    fitFace(face);
+  }
+  // Fit again once every picture and font has settled, then signal that the page is ready.
+  const refit = () => {
+    for (const cell of document.querySelectorAll(".cell[data-nw]")) if (cell.firstElementChild) fitFace(cell.firstElementChild);
+    document.body.dataset.ready = "1";
+  };
+  if (document.readyState === "complete") setTimeout(refit, 300);
+  else window.addEventListener("load", () => setTimeout(refit, 300));
+}
+
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+else window.addEventListener("load", build);
