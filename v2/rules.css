@@ -146,3 +146,13 @@ body.rules-body { margin: 0; background: var(--bg, #f6ecd9); }
 .material-list { columns: 2; column-gap: 28px; padding-left: 20px; margin: 6px 0 0; }
 .material-list li { break-inside: avoid; margin: 0 0 5px; }
 @media (max-width: 640px) { .material-list { columns: 1; } }
+
+/* Good / Bad / Neutral written in a text: the round icon instead of the word */
+.al-ico { display: inline-grid; place-items: center; vertical-align: -0.28em; width: 1.25em; height: 1.25em; border-radius: 50%; background: #fffaf0; border: 1.5px solid #2a190f; margin: 0 .08em; }
+.al-ico .game-icon { width: 1.05em !important; height: 1.05em !important; }
+.al-ico .fc-neutral-dot { width: .95em; height: .95em; font-size: .62em; border-width: 1px; }
+.al-good { border-color: #1f4a73; }
+.al-bad { border-color: #6e1f1f; }
+.al-ico { width: 1.45em; height: 1.45em; vertical-align: -0.38em; }
+.al-ico .game-icon { width: 1.22em !important; height: 1.22em !important; }
+.nb { white-space: nowrap; }

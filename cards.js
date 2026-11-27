@@ -17,13 +17,21 @@
 
   // "set of four icons" becomes the four square tags in a row (a placeholder, drawn at the end of formatGameText).
   const SET4 = "\u0001SET4\u0001";
+  function alignWordIcon(kind, word, punct = "", glued = false) {
+    const inner = kind === "neutral" ? '<span class="fc-neutral-dot">N</span>' : resourceIcon(kind === "good" ? "Good" : "Bad", word);
+    const icon = `<span class="al-ico al-${kind}" title="${word}">${inner}</span>`;
+    // The icon stays on the line of the word before it, and of the punctuation after it.
+    return glued || punct ? `<span class="nb">${glued ? "\u00a0" : ""}${icon}${punct}</span>` : icon;
+  }
+
   function tagTokens(text) {
     return String(text || "")
       // Caps ("max 14 VP") go on their own line, in brackets (drawn at the end of formatGameText).
       .replace(/[,.;]?\s*\b(max(?:imum)?|massimo)\s+(\d+)(\s*(?:VP|PV|XP|coins?))?\s*\.?/gi, (_, word, n, unit) => `.\u0002(${word.toLowerCase()} ${n}${unit || ""})\u0003 `)
-      // Good / Bad in the text: the word in bold blue / red, like the bands at the bottom of the cards.
-      .replace(/\b(Good|Gentil(?:le)?s?|Buon[oaei])\b/g, '<b class="w-good">$1</b>')
-      .replace(/\b(Bad|Méchant(?:e)?s?|Cattiv[oaei])\b(?!\s+(?:Reine|Sorcière))/g, '<b class="w-bad">$1</b>')
+      // Good / Bad / Neutral in the text: the round icon of the card corner replaces the word.
+      .replace(/ ?\b(Good|Gentil(?:le)?s?|Buon[oaei])\b([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("good", w, p, m.startsWith(" ")))
+      .replace(/ ?\b(Bad|Méchant(?:e)?s?|Cattiv[oaei])\b(?!\s+(?:Reine|Sorcière))([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("bad", w, p, m.startsWith(" ")))
+      .replace(/ ?\b(Neutral|Neutre|Neutrale)\b([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("neutral", w, p, m.startsWith(" ")))
       .replace(/\bplace XP on a Character so that it levels up\b/gi, FREEUP_ICON)
       .replace(/\bplac(?:ez|er) de l[’']XP sur un Personnage de manière à l[’']améliorer\b/gi, FREEUP_ICON)
       .replace(/\bpiazza(?:re)? XP su un Personaggio in modo da potenziarlo\b/gi, FREEUP_ICON)
@@ -39,6 +47,12 @@
       .replace(/\b(\d+|due)\s+segnalini\b/gi, (_, n) => `${n === "due" ? "2" : n} ${TAG_ICON}`);
   }
   window.tagTokens = tagTokens;
+  // Rules and presentation texts: the same icons replace Good / Bad / Neutral.
+  window.alignWords = (text) =>
+    String(text || "")
+      .replace(/ ?\b(Good|Gentil(?:le)?s?|Buon[oaei])\b([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("good", w, p, m.startsWith(" ")))
+      .replace(/ ?\b(Bad|Méchant(?:e)?s?|Cattiv[oaei])\b(?!\s+(?:Reine|Sorcière))([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("bad", w, p, m.startsWith(" ")))
+      .replace(/ ?\b(Neutral|Neutre|Neutrale)\b([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("neutral", w, p, m.startsWith(" ")));
 
   function skillList(card) {
     const out = [];

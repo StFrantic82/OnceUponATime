@@ -99,7 +99,7 @@ function boardsTable(L) {
 }
 
 function render(text, L) {
-  return text
+  return (window.alignWords ? window.alignWords(text) : text)
     .replace(/\[\[anatomy:(\w+)\]\]/g, (_, k) => anatomy(k, L.anatomy[k]))
     .replace(/\[\[boards\]\]/g, () => boardsTable(L))
     .replace(/\[\[soldier\]\]/g, '<span class="mini-card-ico">♠</span>')
