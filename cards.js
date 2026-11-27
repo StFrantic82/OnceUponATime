@@ -3,7 +3,7 @@
 (function () {
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
   const ICONS = ["Charm", "Strength", "Dexterity", "Intelligence", "Sorcery"];
-  const TAG = 26; // px, size of a square skill tag
+  const TAG = 29; // px, size of a square skill tag
 
   // "Tag token" in card texts becomes a small square token icon with the four skill colours.
   const TAG_ICON = `<span class="tagtok-ico" role="img" aria-label="Tag"><i></i><i></i><i></i><i></i><i></i></span>`;
@@ -81,13 +81,30 @@
       .trim();
   }
 
-  function head(card, innerWidth, max, extra = "") {
+  // Good / Bad / Neutral: a round icon at the top right of the card, in the name band.
+  function alignIcon(alignment) {
+    if (!alignment) return "";
+    const key = alignment.toLowerCase();
+    const icon = alignment === "Good" || alignment === "Bad" ? resourceIcon(alignment, t(key)) : `<span class="fc-neutral-dot">N</span>`;
+    return `<span class="fc-align-ico fc-align-${key}" title="${esc(t(key))}">${icon}</span>`;
+  }
+
+  // How many identical copies of a Common card the game has.
+  function copiesOf(card) {
+    if (card.deck !== "common") return 1;
+    return (window.GAME_DATA.common || []).filter((c) => c.name === card.name && c.effect === card.effect).length;
+  }
+
+  function head(card, innerWidth, max, extra = "", alignment = card.alignment) {
     const skills = skillList(card);
-    const name = tc(card.name);
+    const copies = copiesOf(card);
+    if (copies > 1) extra += ` <span class="fc-copies">(×${copies})</span>`;
+    const name = tc(card.name) + (copies > 1 ? ` (×${copies})` : "");
+    innerWidth -= alignment ? 34 : 0;
     // Four tags or more stay at the top, beside the name, but smaller.
     const many = skills.length >= 4;
     const tags = many ? skillTags(skills).replace('class="fc-skills"', 'class="fc-skills many"') : skillTags(skills);
-    return `<header class="fc-head ${many ? "many-tags" : ""}">${tags}<div class="fc-name" style="${nameStyle(name, innerWidth, skills.length, max, many ? 15 : TAG)}">${esc(name)}${extra}</div></header>`;
+    return `<header class="fc-head ${many ? "many-tags" : ""}">${tags}<div class="fc-name" style="${nameStyle(name, innerWidth, skills.length, max, many ? 16.5 : TAG)}">${esc(tc(card.name))}${extra}</div>${alignIcon(alignment)}</header>`;
   }
 
   // Round VP mark (not a tag): the card grants VP during the game or at Game End.
@@ -207,7 +224,6 @@
       ${head(card, 160, 15)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
       <div class="fc-text">${commonText(card.effect, card.name)}</div>
-      ${alignFoot(card.alignment)}
     </article>`;
   }
 
@@ -307,7 +323,6 @@
       <div class="fc-side fc-base">${fxText(stripIconPrefix(tc(card.base)))}</div>
       ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
       <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${fxText(tc(upgradeText))}</div>
-      ${alignFoot(card.alignment)}
     </article>`;
   }
 
@@ -315,13 +330,12 @@
     const price = opts.price ?? card.cost;
     const bad = /\bBad\b/.test(card.icons || "");
     return `<article class="fcard fc-item ${opts.cls || ""}">
-      ${head(card, 188, 14)}
+      ${head(card, 188, 14, "", /\bBad\b/.test(card.icons || "") ? "Bad" : "")}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}
         ${card.stash ? `<span class="fc-stash">${card.stash}${resourceIcon("coins", "coins")}</span>` : ""}
         <span class="fc-price">${opts.original != null && opts.original !== price ? `<s>${opts.original}</s>` : ""}${price}${resourceIcon("coins", "coins")}</span>
       </div>
       <div class="fc-text">${card.effect ? fxText(tc(card.effect)) : ""}</div>
-      ${bad ? alignFoot("Bad") : ""}
     </article>`;
   }
 

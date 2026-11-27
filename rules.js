@@ -80,8 +80,8 @@ function squareTag(icon) {
 
 // Card anatomy: a card with numbered markers and their legend.
 const ANATOMY = {
-  common: { card: () => CardFace.common(find(DATA.common, "Pirate")), marks: [[100, 5], [100, 30], [100, 70], [100, 95]] },
-  legendary: { card: () => CardFace.legendary(find(DATA.legendary, "Snow White")), marks: [[0, 4], [100, 4], [100, 30], [0, 60], [100, 66], [0, 76], [100, 96]] },
+  common: { card: () => CardFace.common(find(DATA.common, "Pirate")), marks: [[0, 5], [100, 30], [100, 70], [100, 5]] },
+  legendary: { card: () => CardFace.legendary(find(DATA.legendary, "Snow White")), marks: [[0, 4], [50, -3], [100, 30], [0, 72], [100, 83], [0, 92], [100, 4]] },
   item: { card: () => CardFace.item(find(DATA.items, "Magic Lamp")), marks: [[0, 8], [100, 8], [0, 28], [100, 85]] },
 };
 
@@ -133,8 +133,8 @@ const RULES = {
     normal: "Common character",
     legendary: "Legendary character",
     anatomy: {
-      common: ["Name of the character (Common characters have no tag).", "Illustration.", "Effect, with its type icon.", "Good or Bad, in its own band."],
-      legendary: ["Skill tags.", "Name of the character.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (added to the base effect).", "Good or Bad."],
+      common: ["Name of the character (Common characters have no tag).", "Illustration.", "Effect, with its type icon.", "Good or Bad: round icon at the top right."],
+      legendary: ["Skill tags.", "Name of the character.", "Illustration.", "Base effect, active as soon as you take the card.", "Star spaces: one per XP needed to upgrade it.", "Upgraded effect (added to the base effect).", "Good or Bad: round icon at the top right."],
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
@@ -232,8 +232,8 @@ const RULES = {
     normal: "Personnage commun",
     legendary: "Personnage légendaire",
     anatomy: {
-      common: ["Nom du personnage (les personnages communs n’ont pas de tag).", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant, dans son propre bandeau."],
-      legendary: ["Tags de compétence.", "Nom du personnage.", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (s’ajoute à l’effet de base).", "Gentil ou Méchant."],
+      common: ["Nom du personnage (les personnages communs n’ont pas de tag).", "Illustration.", "Effet, avec l’icône de son type.", "Gentil ou Méchant : icône ronde en haut à droite."],
+      legendary: ["Tags de compétence.", "Nom du personnage.", "Illustration.", "Effet de base, actif dès que vous prenez la carte.", "Cases étoile : une par XP nécessaire pour l’améliorer.", "Effet amélioré (s’ajoute à l’effet de base).", "Gentil ou Méchant : icône ronde en haut à droite."],
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
@@ -331,8 +331,8 @@ const RULES = {
     normal: "Personaggio comune",
     legendary: "Personaggio leggendario",
     anatomy: {
-      common: ["Nome del personaggio (i personaggi comuni non hanno tag).", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo, nella sua fascia."],
-      legendary: ["Tag di abilità.", "Nome del personaggio.", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (si aggiunge a quello base).", "Buono o Cattivo."],
+      common: ["Nome del personaggio (i personaggi comuni non hanno tag).", "Illustrazione.", "Effetto, con l’icona del suo tipo.", "Buono o Cattivo: icona rotonda in alto a destra."],
+      legendary: ["Tag di abilità.", "Nome del personaggio.", "Illustrazione.", "Effetto base, attivo appena prendi la carta.", "Caselle stella: una per ogni XP necessario a potenziarlo.", "Effetto potenziato (si aggiunge a quello base).", "Buono o Cattivo: icona rotonda in alto a destra."],
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [

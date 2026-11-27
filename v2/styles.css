@@ -3290,3 +3290,13 @@ button.needs-click { outline: none; }
 .fc-text:has(.fx-row) { flex-direction: column; align-items: stretch; justify-content: center; }
 .fc-side:has(.fx-row) { text-align: left; }
 .fx-txt, .fx-plain { text-align: left; }
+
+/* Good / Bad / Neutral: round icon at the top right, in the name band */
+.fc-align-ico { flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #fffaf0; border: 2px solid #2a190f; box-shadow: 0 0 0 1.5px rgba(255,255,255,.7), 0 1px 3px rgba(0,0,0,.35); }
+.fc-align-ico .game-icon { width: 24px; height: 24px; }
+.fc-align-ico .fc-neutral-dot { width: 22px; height: 22px; font-size: 13px; }
+.fc-align-good { border-color: #1f4a73; }
+.fc-align-bad { border-color: #6e1f1f; }
+.fc-head .skill-tag { width: 29px; height: 29px; }
+.fc-skills.many .skill-tag { width: 16.5px; height: 16.5px; }
+.fc-copies { font-size: .78em; font-weight: 700; opacity: .85; white-space: nowrap; }
