@@ -346,14 +346,30 @@
 
   function legendary(card, opts = {}) {
     const align = (card.alignment || "neutral").toLowerCase();
-    const cost = opts.cost ?? Number((String(card.upgrade).match(/Cost (\d+) XP/i) || [])[1] || 4);
-    const upgradeText = String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
-    return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
+    const costOf = (text) => Number((String(text || "").match(/Cost (\d+) XP/i) || [])[1] || 4);
+    const strip = (text) => String(text || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
+    const cost = opts.cost ?? costOf(card.upgrade);
+    const cost2 = card.upgrade2 ? opts.cost2 ?? costOf(card.upgrade2) : 0;
+    const xp1 = card.upgraded ? cost : card.xpOn || 0;
+    const xp2 = card.upgraded2 ? cost2 : card.upgraded ? card.xpOn || 0 : 0;
+    // Branch: two upgrades side by side, only one is chosen when the upgrade completes.
+    const upBlock = card.upgradeAlt
+      ? `<div class="fc-branch">
+          <div class="fc-side fc-up fc-up-a ${card.upgraded && card.branch !== "b" ? "on" : ""} ${card.branch === "b" ? "off" : ""}">${fxText(tc(strip(card.upgrade)))}</div>
+          <span class="fc-or" aria-hidden="true"></span>
+          <div class="fc-side fc-up fc-up-b ${card.upgraded && card.branch === "b" ? "on" : ""} ${card.branch === "a" ? "off" : ""}">${fxText(tc(strip(card.upgradeAlt)))}</div>
+        </div>`
+      : `<div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${fxText(tc(strip(card.upgrade)))}</div>`;
+    const up2Block = card.upgrade2
+      ? `${xpStep(cost2, xp2)}<div class="fc-side fc-up fc-up2 ${card.upgraded2 ? "on" : ""}">${fxText(tc(strip(card.upgrade2)))}</div>`
+      : "";
+    return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${card.upgrade2 ? "has-up2" : ""} ${card.upgradeAlt ? "has-branch" : ""} ${opts.cls || ""}">
       ${head(card, 204, 16)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
       <div class="fc-side fc-base">${fxText(stripIconPrefix(tc(card.base)))}</div>
-      ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
-      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${fxText(tc(upgradeText))}</div>
+      ${xpStep(cost, xp1)}
+      ${upBlock}
+      ${up2Block}
     </article>`;
   }
 

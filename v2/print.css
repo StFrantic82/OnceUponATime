@@ -587,3 +587,10 @@ body.print-body {
 .al-bad { border-color: #6e1f1f; }
 .al-ico { width: 1.45em; height: 1.45em; vertical-align: -0.38em; }
 .al-ico .game-icon { width: 1.22em !important; height: 1.22em !important; }
+
+/* V2: branch (two upgrades side by side) and double upgrade on the printed card */
+.cell .fc-legendary .fc-branch { min-width: 0; max-width: calc(100% - 12px); }
+.cell .fc-legendary .fc-branch .fc-side { flex: 1 1 0; font-size: 11.5px; line-height: 1.22; min-width: 0; margin: 0; overflow-wrap: anywhere; }
+.cell .fc-legendary.has-up2 .fc-art { height: 104px; }
+.cell .fc-legendary.has-up2 .fc-side { font-size: 12px; line-height: 1.25; }
+.cell .fc-legendary.has-up2 .fc-up { flex: 0 0 auto; }

@@ -186,10 +186,31 @@
   function upgradeValue(card) {
     const left = roundsLeft();
     const before = projected();
-    card.upgraded = true;
-    const after = projected();
-    card.upgraded = false;
-    const text = String(card.upgrade || "");
+    const second = Boolean(card.upgraded && card.upgrade2);
+    let after;
+    let text;
+    if (second) {
+      card.upgraded2 = true;
+      after = projected();
+      card.upgraded2 = false;
+      text = String(card.upgrade2 || "");
+    } else {
+      card.upgraded = true;
+      const was = card.branch;
+      card.branch = "a";
+      after = projected();
+      text = String(card.upgrade || "");
+      if (card.upgradeAlt) {
+        card.branch = "b";
+        const alt = projected();
+        if (alt > after) {
+          after = alt;
+          text = String(card.upgradeAlt || "");
+        }
+      }
+      card.branch = was;
+      card.upgraded = false;
+    }
     let value = after - before + immediate(text, card);
     let m;
     if ((m = text.match(/Gain (\d+) VP/))) value += Number(m[1]);
@@ -225,7 +246,7 @@
       else if ((m = part.match(/^(\d+) Coins?/i))) value += Number(m[1]) * (left ? tune("coinGain") : 0.3);
       else if ((m = part.match(/^(\d+) XP/i))) value += Number(m[1]) * (xpTargets().length ? 1.2 : 0);
       else if (/Free level up/i.test(part)) {
-        const legends = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded);
+        const legends = state.tableau.filter((c) => c.deck === "legendary" && !isMaxed(c));
         if (legends.length) value += Math.max(...legends.map((c) => upgradeValue(c) * 0.6 + (upgradeCost(c) - (c.xpOn || 0)) * 0.7));
         else if (G.groups.some((g) => !g.taken && g.cards.some((c) => c.deck === "legendary"))) value += 2;
       } else if (/Draw 1 Chapter/i.test(part)) value += left ? 1 : 0;
@@ -408,7 +429,7 @@
     G.cur = seat;
     let guard = 40;
     while (guard-- > 0) {
-      const legends = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded);
+      const legends = state.tableau.filter((c) => c.deck === "legendary" && !isMaxed(c));
       if (state.freeUpgrades > 0 && legends.length && smart()) {
         const worth = (c) => upgradeValue(c) * 0.6 + (upgradeCost(c) - (c.xpOn || 0)) * 0.7;
         upgradeLegendary([...legends].sort((a, b) => worth(b) - worth(a))[0].id);

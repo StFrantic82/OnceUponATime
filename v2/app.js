@@ -161,7 +161,7 @@ function toDiscard(card) {
   dropTokens(card);
   const pile = card.deck === "legendary" ? "legendary" : card.deck === "item" ? "items" : "common";
   checkBaumSets();
-  const { source: _s, xpOn: _x, upgraded: _u, tucked: _t, busy: _b, tokens: _k, ...clean } = card;
+  const { source: _s, xpOn: _x, upgraded: _u, upgraded2: _u2, branch: _br, tucked: _t, busy: _b, tokens: _k, ...clean } = card;
   if (pile === "legendary") clean.upgraded = false;
   G.discards = G.discards || { common: [], legendary: [], items: [] };
   G.discards[pile].push(clean);
@@ -675,7 +675,7 @@ function grantQuestChoice(source) {
 
 function upgradeLegendary(cardId) {
   const card = state.tableau.find((entry) => entry.id === cardId && entry.deck === "legendary");
-  if (!card || card.upgraded || G.gameOver || state.freeUpgrades <= 0) return;
+  if (!card || isMaxed(card) || G.gameOver || state.freeUpgrades <= 0) return;
   state.freeUpgrades -= 1;
   noteXp(upgradeCost(card) - (card.xpOn || 0), "FREE-UP legendary");
   completeUpgrade(card);
@@ -732,7 +732,7 @@ function takeBackChapter(test) {
 // The Fairies: XP that can only go on Good Characters; what does not fit is lost.
 function placeXpOnGood(n) {
   let left = n;
-  const targets = state.tableau.filter((c) => c.deck === "legendary" && !c.upgraded && c.alignment === "Good").sort((a, b) => upgradeCost(a) - (a.xpOn || 0) - (upgradeCost(b) - (b.xpOn || 0)));
+  const targets = state.tableau.filter((c) => c.deck === "legendary" && !isMaxed(c) && c.alignment === "Good").sort((a, b) => upgradeCost(a) - (a.xpOn || 0) - (upgradeCost(b) - (b.xpOn || 0)));
   for (const card of targets) {
     if (!left) break;
     const room = upgradeCost(card) - (card.xpOn || 0);
@@ -807,12 +807,49 @@ function checkPeterPan() {
   if (pan && state.tableau.some((card) => card.name === "§Pirate" || card.name === "§Captain Hook")) completeUpgrade(pan);
 }
 
+// V2: a Legendary can have a second upgrade (upgrade2, bought after the first one) or a branch
+// (upgrade or upgradeAlt, chosen when the upgrade completes).
+function isMaxed(card) {
+  return Boolean(card.upgraded) && (!card.upgrade2 || Boolean(card.upgraded2));
+}
+function chosenUpgrade(card) {
+  if (!card.upgraded) return "";
+  if (card.upgradeAlt && !card.branch) return "";
+  return card.branch === "b" ? card.upgradeAlt || "" : card.upgrade || "";
+}
+function upgradesText(card) {
+  return `${chosenUpgrade(card)} ${card.upgraded2 ? card.upgrade2 || "" : ""}`;
+}
+function chooseBranch(card) {
+  const p = G.players[G.cur];
+  if (p && p.kind === "human" && !simMode) {
+    state.choices = [...(state.choices || []), { source: card.name, options: [`branch ${card.id} a`, `branch ${card.id} b`], cost: null }];
+    return;
+  }
+  const score = (b) => {
+    card.branch = b;
+    return scoreCards([card]);
+  };
+  const a = score("a");
+  const b = score("b");
+  card.branch = b > a ? "b" : "a";
+}
+
 function completeUpgrade(card) {
-  card.upgraded = true;
   card.xpOn = 0;
+  if (card.upgraded && card.upgrade2) {
+    card.upgraded2 = true;
+    vpSource = card.name;
+    const vp2 = (card.upgrade2 || "").match(/Gain (\d+) VP/i);
+    if (vp2) gain("vp", Number(vp2[1]));
+    log("l_upgrades", { p: state.name, c: C(card.name) });
+    return;
+  }
+  card.upgraded = true;
+  if (card.upgradeAlt) chooseBranch(card);
   applyUpgradeGain(card);
-  if (/take 1 (?:Quest|Adventure)/i.test(card.upgrade || "")) grantQuestChoice(card.name);
-  if (/take 1 (?:Quest|Adventure) and gain 1 XP/i.test(card.upgrade || "")) gain("xp", 1);
+  if (/take 1 (?:Quest|Adventure)/i.test(chosenUpgrade(card))) grantQuestChoice(card.name);
+  if (/take 1 (?:Quest|Adventure) and gain 1 XP/i.test(chosenUpgrade(card))) gain("xp", 1);
   const servants = state.tableau.filter((entry) => entry.name === "§The Invisible Servants").length;
   if (servants) gain("coins", servants);
   checkBaumSets();
@@ -855,7 +892,7 @@ function writerNextCost() {
 function xpTargets() {
   const out = [];
   if (state.writer && state.writerLevel < 3) out.push("writer");
-  for (const card of state.tableau) if (card.deck === "legendary" && !card.upgraded) out.push(card.id);
+  for (const card of state.tableau) if (card.deck === "legendary" && !isMaxed(card)) out.push(card.id);
   return out;
 }
 
@@ -903,7 +940,7 @@ async function placeXp(target = "writer", count = 1) {
         G.cur = seat;
       }
     } else {
-      const card = state.tableau.find((entry) => entry.id === target && entry.deck === "legendary" && !entry.upgraded);
+      const card = state.tableau.find((entry) => entry.id === target && entry.deck === "legendary" && !isMaxed(entry));
       if (!card) return;
       state.xp -= 1;
       card.xpOn = (card.xpOn || 0) + 1;
@@ -925,7 +962,7 @@ async function autoPlaceXp() {
 
 // XP still "in play": the reserve plus XP placed on spaces that have not been completed yet.
 function xpRemaining() {
-  return state.xp + state.writerXp + state.tableau.reduce((sum, card) => sum + (card.upgraded ? 0 : card.xpOn || 0), 0);
+  return state.xp + state.writerXp + state.tableau.reduce((sum, card) => sum + (isMaxed(card) ? 0 : card.xpOn || 0), 0);
 }
 
 async function levelUpWriter() {
@@ -1109,6 +1146,12 @@ function applyOption(option, source) {
     log("l_tucks", { p: state.name, c: C(card.name) });
     return;
   }
+  if ((m = option.match(/^branch (\S+) (a|b)/))) {
+    const card = state.tableau.find((c) => c.id === m[1]);
+    if (card) card.branch = m[2];
+    if (card) log("l_upgrades", { p: state.name, c: C(card.name) });
+    return;
+  }
   if ((m = option.match(/^ogre (\S+) (xp|vp)/))) {
     const card = state.tableau.find((c) => c.id === m[1]);
     if (!card) return;
@@ -1201,7 +1244,7 @@ function botOption(options) {
   }
   // The Genie's wishes: a free upgrade when there is a Legendary to upgrade, else an Adventure, else a Chapter card.
   const freeUp = options.findIndex((o) => /place XP on a Character so that it levels up/i.test(o));
-  if (freeUp >= 0 && state.tableau.some((c) => c.deck === "legendary" && !c.upgraded && upgradeCost(c) - (c.xpOn || 0) >= 2)) return freeUp;
+  if (freeUp >= 0 && state.tableau.some((c) => c.deck === "legendary" && !isMaxed(c) && upgradeCost(c) - (c.xpOn || 0) >= 2)) return freeUp;
   const quest = options.findIndex((o) => /take 1 (?:Quest|Adventure)/i.test(o));
   if (quest >= 0 && G.questDisplay.length && state.quests.length < 4) return quest;
   const treasure = options.findIndex((o) => /buy 1 Item for \d+ coins less/i.test(o));
@@ -1705,7 +1748,7 @@ async function activateCardInner(card) {
 // "Place N XP on a (Good) Character": the XP goes straight onto a Legendary that is not upgraded yet.
 function placeFreeXp(n, goodOnly) {
   const target = state.tableau
-    .filter((card) => card.deck === "legendary" && !card.upgraded && (!goodOnly || card.alignment === "Good"))
+    .filter((card) => card.deck === "legendary" && !isMaxed(card) && (!goodOnly || card.alignment === "Good"))
     .sort((a, b) => upgradeCost(a) - (a.xpOn || 0) - (upgradeCost(b) - (b.xpOn || 0)))[0];
   if (!target) return;
   noteXp(n);
@@ -1714,7 +1757,7 @@ function placeFreeXp(n, goodOnly) {
 }
 
 function spendableXpCard() {
-  return state.tableau.find((card) => card.deck === "legendary" && !card.upgraded && (card.xpOn || 0) > 0);
+  return state.tableau.find((card) => card.deck === "legendary" && !isMaxed(card) && (card.xpOn || 0) > 0);
 }
 
 // The Crown of England keeps coins on it: they can pay for Items and score at the end.
@@ -1787,7 +1830,13 @@ function noteXp(amount, key) {
   state.xpBy = { ...(state.xpBy || {}), [k]: ((state.xpBy || {})[k] || 0) + amount };
 }
 
+function stepCost(text) {
+  const match = (text || "").match(/Cost (\d+) XP/i);
+  const base = match ? Number(match[1]) : 4;
+  return Math.max(0, base - (state.writer?.name === "Leprince de Beaumont" ? 1 : 0));
+}
 function upgradeCost(card) {
+  if (card.upgraded && card.upgrade2) return stepCost(card.upgrade2);
   const match = (card.upgrade || "").match(/Cost (\d+) XP/i);
   const base = match ? Number(match[1]) : 4;
   return Math.max(0, base - (state.writer?.name === "Leprince de Beaumont" ? 1 : 0));
@@ -2295,7 +2344,7 @@ function scoreWriter() {
   if (name === "Hans Christian Andersen") return V2 ? state.tableau.filter((c) => c.deck === "legendary").length * 2 : countCardsWith("Game End") * 2;
   if (name === "Carlo Collodi") {
     // XP stays on the star spaces: count what is placed on Legendaries (filled steps included) and on the Writer.
-    const onCards = state.tableau.reduce((sum, card) => sum + (card.deck !== "legendary" ? 0 : card.upgraded ? upgradeCost(card) : card.xpOn || 0), 0);
+    const onCards = state.tableau.reduce((sum, card) => sum + (card.deck !== "legendary" ? 0 : (card.upgraded ? stepCost(card.upgrade) : 0) + (card.upgraded2 ? stepCost(card.upgrade2) : 0) + (isMaxed(card) ? 0 : card.xpOn || 0)), 0);
     const onWriter = (state.writerLevel >= 2 ? state.writer.cost2 : 0) + (state.writerLevel >= 3 ? state.writer.cost3 : 0) + (state.writerXp || 0);
     return Math.floor((onCards + onWriter) / (V2 ? 2 : 3));
   }
@@ -2454,7 +2503,7 @@ function markXpTargets() {
     }
   }
   for (const wrap of el.tableau.querySelectorAll("[data-own-id]")) {
-    const card = state.tableau.find((entry) => entry.id === wrap.dataset.ownId && entry.deck === "legendary" && !entry.upgraded);
+    const card = state.tableau.find((entry) => entry.id === wrap.dataset.ownId && entry.deck === "legendary" && !isMaxed(entry));
     if (!card) continue;
     const box = wrap.querySelector(".xp-step .xp-box:not(.on)");
     if (box) {
@@ -2542,6 +2591,11 @@ function renderGuide() {
         const card = ((G.limbo || {})[choice.source]?.cards || []).find((c) => c.id === m[1]);
         return card ? `<span class="pick-card">${CardFace.common ? CardFace.common(card) : escapeHtml(tc(card.name))}</span>` : "?";
       }
+      if ((m = o.match(/^branch (\S+) (a|b)/))) {
+        const card = state.tableau.find((c) => c.id === m[1]);
+        const text = String((m[2] === "b" ? card?.upgradeAlt : card?.upgrade) || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
+        return `${m[2] === "b" ? "▶" : "◀"} ${formatGameText(tc(text))}`;
+      }
       if ((m = o.match(/^ogre (\S+) (xp|vp)/))) {
         const card = state.tableau.find((c) => c.id === m[1]);
         return `− ${escapeHtml(tc(card ? card.name : ""))} → +3 ${resourceIcon(m[2], m[2].toUpperCase())}`;
@@ -2568,7 +2622,7 @@ function renderGuide() {
     bubble(el.tableau, t("g_discard"));
     mark("[data-writer-discard], [data-finish-writer-discard]");
   }
-  if (state.freeUpgrades > 0 && state.tableau.some((card) => card.deck === "legendary" && !card.upgraded)) {
+  if (state.freeUpgrades > 0 && state.tableau.some((card) => card.deck === "legendary" && !isMaxed(card))) {
     bubble(el.writerPanel, t("g_free", { n: state.freeUpgrades }));
     mark("[data-upgrade]");
   }
@@ -2722,7 +2776,7 @@ function showPlayerTableau(seat) {
   if (!p) return;
   const box = document.createElement("div");
   box.className = "confirm-overlay";
-  const cards = [...p.tableau.map((card) => CardFace.character(card, card.deck === "legendary" ? { cost: withSeat(seat, () => upgradeCost(card)) } : {})), ...p.items.map((card) => CardFace.item(card)), ...p.quests.map((card) => CardFace.quest(card))];
+  const cards = [...p.tableau.map((card) => CardFace.character(card, card.deck === "legendary" ? withSeat(seat, () => ({ cost: stepCost(card.upgrade), cost2: card.upgrade2 ? stepCost(card.upgrade2) : null })) : {})), ...p.items.map((card) => CardFace.item(card)), ...p.quests.map((card) => CardFace.quest(card))];
   box.innerHTML = `<div class="tableau-box" role="dialog" aria-modal="true"><div class="deck-catalog-header"><h2>${escapeHtml(p.name)} · ${p.writer ? escapeHtml(tc(p.writer.name)) : ""}</h2><button type="button" class="primary" data-close>← ${escapeHtml(t("back"))}</button></div><div class="deck-catalog-cards">${cards.join("") || `<p>${escapeHtml(t("emptyTableau"))}</p>`}</div></div>`;
   box.addEventListener("click", (event) => {
     if (event.target === box || event.target.closest("[data-close]")) box.remove();
@@ -2791,7 +2845,7 @@ function scoringNote(card, kind, owned) {
   }
   const base = card.deck === "legendary" ? card.base : card.effect;
   const baseScores = /Game End/i.test(base || "");
-  const upScores = card.deck === "legendary" && /Game End/i.test(card.upgrade || "");
+  const upScores = card.deck === "legendary" && /Game End/i.test(`${card.upgrade || ""} ${card.upgradeAlt || ""} ${card.upgrade2 || ""}`);
   if (!baseScores && !upScores) return "";
   const zone = kind === "item" ? state.items : state.tableau;
   const probe = owned ? card : { ...card };
@@ -2897,11 +2951,11 @@ function renderTableau() {
 // An upgraded Legendary only has its upgraded effect: it replaces the base effect.
 function activeCardText(card) {
   // An upgraded Legendary keeps its base effect: the upgraded effect is added to it.
-  return `${card.effect || ""} ${card.base || ""} ${card.upgraded ? card.upgrade || "" : ""}`;
+  return `${card.effect || ""} ${card.base || ""} ${upgradesText(card)}`;
 }
 
 function canUpgradeCard(card) {
-  return card.deck === "legendary" && !card.upgraded && !G.gameOver && state.freeUpgrades > 0;
+  return card.deck === "legendary" && !isMaxed(card) && !G.gameOver && state.freeUpgrades > 0;
 }
 
 // Star spaces: filled ones show the XP already placed.
@@ -2910,7 +2964,7 @@ function xpPips(filled, total) {
 }
 
 function legendaryXpControls(card) {
-  if (card.deck !== "legendary" || card.upgraded || G.gameOver) return "";
+  if (card.deck !== "legendary" || isMaxed(card) || G.gameOver) return "";
   return `<div class="xp-place">
     <button type="button" ${state.xp > 0 ? "" : "disabled"} data-place-xp="${card.id}">${t("placeXp", { xp: resourceIcon("xp", "XP") })}</button>
     ${state.freeUpgrades > 0 ? `<button type="button" data-upgrade="${card.id}">${t("freeUpBtn")}</button>` : ""}</div>`;
@@ -2932,7 +2986,7 @@ function ownedNote(card) {
 
 function renderCompactOwnedCard(card) {
   return `<div data-own-id="${card.id}" ${ownedNote(card)} class="compact-owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : ""}">
-    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div>${kindChip(card)}<strong>${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</strong>${renderTags(card)}</div></div>
+    <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div>${kindChip(card)}<strong>${escapeHtml(tc(card.name))}${card.upgraded ? (card.upgraded2 ? " ✦✦" : " ✦") : ""}</strong>${renderTags(card)}</div></div>
     ${card.deck === "legendary" ? `<details><summary>${t("effectsUpgrade")}</summary>${renderLegendaryEffects(card)}</details>${legendaryXpControls(card)}` : ""}
     ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
   </div>`;
@@ -2942,7 +2996,7 @@ function renderOwnedCard(card) {
   if (card.zone === "Quest") return withNote(CardFace.quest(card, { cls: "fc-small" }), scoringNote(state.quests.find((q) => q.id === card.id) || card, "quest", true));
   return `
     <div data-own-id="${card.id}" ${ownedNote(card)} class="card owned ${card.deck === "legendary" ? "legendary-card" : card.deck === "common" ? "common-card" : "item-card"}">
-      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div>${kindChip(card)}<div class="card-title">${escapeHtml(tc(card.name))}${card.upgraded ? " ✦" : ""}</div>${renderTags(card)}</div></div>
+      <div class="owned-head"><span class="owned-thumb">${CardArt.art(card.name)}</span><div>${kindChip(card)}<div class="card-title">${escapeHtml(tc(card.name))}${card.upgraded ? (card.upgraded2 ? " ✦✦" : " ✦") : ""}</div>${renderTags(card)}</div></div>
       ${card.deck === "legendary" ? renderLegendaryEffects(card) : `<div class="effect">${formatGameText(tc(card.effect))}</div>`}
       ${legendaryXpControls(card)}
       ${state.writerDiscardRemaining > 0 && (card.zone === "Tableau" || card.zone === "Item") ? `<button type="button" data-writer-discard="${card.id}">${t("discardBtn", { coin: resourceIcon("coins", "coins"), xp: resourceIcon("xp", "XP") })}</button>` : ""}
@@ -2951,19 +3005,31 @@ function renderOwnedCard(card) {
 }
 
 function renderCard(card) {
-  return CardFace.character(card, card.deck === "legendary" ? { cost: upgradeCost(card) } : {});
+  return CardFace.character(card, card.deck === "legendary" ? { cost: stepCost(card.upgrade), cost2: card.upgrade2 ? stepCost(card.upgrade2) : null } : {});
 }
 
 function renderLegendaryEffects(card) {
-  const upgradeText = String(card.upgrade || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
-  const cost = upgradeCost(card);
+  const strip = (text) => String(text || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
+  const c1 = stepCost(card.upgrade);
+  const block = (text, on, extra = "") => `<div class="legendary-effect-block upgrade-effect ${on ? "unlocked" : ""} ${extra}">
+        <div class="legendary-upgrade-ability ${on ? "" : "locked"}"><div class="effect">${formatGameText(tc(strip(text)))}</div></div>
+      </div>`;
+  let first;
+  if (card.upgradeAlt) {
+    const chosen = card.upgraded && card.branch;
+    first = chosen
+      ? block(card.branch === "b" ? card.upgradeAlt : card.upgrade, true)
+      : `<div class="legendary-branch">${block(card.upgrade, false)}${block(card.upgradeAlt, false)}</div>`;
+  } else first = block(card.upgrade, card.upgraded);
+  const second = card.upgrade2
+    ? `${CardFace.xpStep(stepCost(card.upgrade2), card.upgraded2 ? stepCost(card.upgrade2) : card.upgraded ? card.xpOn || 0 : 0)}${block(card.upgrade2, card.upgraded2)}`
+    : "";
   return `
     <div class="legendary-effects">
       <div class="legendary-effect-block"><div class="effect">${formatGameText(tc(card.base))}</div></div>
-      ${CardFace.xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
-      <div class="legendary-effect-block upgrade-effect ${card.upgraded ? "unlocked" : ""}">
-        <div class="legendary-upgrade-ability ${card.upgraded ? "" : "locked"}"><div class="effect">${formatGameText(tc(upgradeText))}</div></div>
-      </div>
+      ${CardFace.xpStep(c1, card.upgraded ? c1 : card.xpOn || 0)}
+      ${first}
+      ${second}
     </div>
   `;
 }

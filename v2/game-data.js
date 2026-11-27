@@ -758,8 +758,9 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Charm 1. Ongoing: your Dwarves count double for their family.",
-      "upgrade": "Cost 4 XP. Game End: 1 VP for each pair of Good cards.",
-      "upgraded": false
+      "upgrade": "Cost 5 XP. Game End: 1 VP for each pair of Good cards.",
+      "upgraded": false,
+      "upgradeAlt": "Cost 5 XP. Game End: 1 VP for each Bad card."
     },
     {
       "id": "L2",
@@ -819,7 +820,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: you may play the same Chapter as an opponent.",
       "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure.",
-      "upgraded": false
+      "upgraded": false,
+      "upgradeAlt": "Cost 2 XP. Game End: 1 VP for each Intelligence icon."
     },
     {
       "id": "L8",
@@ -849,7 +851,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: whenever you play the lowest Chapter of the round, gain 1 VP.",
       "upgrade": "Cost 3 XP. Game End: 4 VP.",
-      "upgraded": false
+      "upgraded": false,
+      "upgrade2": "Cost 3 XP. Activation: gain 1 XP."
     },
     {
       "id": "L11",
@@ -879,7 +882,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Sorcery 1. Game End: counts as 1 card of the family of your choice.",
       "upgrade": "Cost 2 XP. Activation: gain 1 XP.",
-      "upgraded": false
+      "upgraded": false,
+      "upgrade2": "Cost 3 XP. Game End: 1 VP for each Fairy."
     },
     {
       "id": "L14",
@@ -889,7 +893,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Charm 1. Ongoing: the first time each round you take a Common character, gain 1 coin.",
       "upgrade": "Cost 2 XP. Activation: gain 1 VP.",
-      "upgraded": false
+      "upgraded": false,
+      "upgrade2": "Cost 5 XP. Game End: 1 VP for each Lost Boy."
     },
     {
       "id": "L15",
@@ -899,7 +904,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Dexterity 1, Strength 1. Activation: spend 1 coin to gain 2 VP.",
       "upgrade": "Cost 3 XP. Game End: 2 VP for each Merry Man.",
-      "upgraded": false
+      "upgraded": false,
+      "upgradeAlt": "Cost 3 XP. Game End: 1 VP for each Dexterity icon."
     },
     {
       "id": "L16",
@@ -979,7 +985,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Intelligence 1. Instant: gain 1 XP for each Intelligence icon.",
       "upgrade": "Cost 3 XP. Game End: 1 VP for each Intelligence icon.",
-      "upgraded": false
+      "upgraded": false,
+      "upgradeAlt": "Cost 3 XP. Game End: 1 VP for each Good–Bad pair of cards."
     },
     {
       "id": "L24",
@@ -1039,7 +1046,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Charm 1. Game End: 1 VP for each Friend of Oz.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each different family.",
-      "upgraded": false
+      "upgraded": false,
+      "upgradeAlt": "Cost 2 XP. Game End: 1 VP for each Item."
     },
     {
       "id": "L30",
@@ -1059,7 +1067,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 4 coins.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for every 2 coins.",
-      "upgraded": false
+      "upgraded": false,
+      "upgrade2": "Cost 2 XP. Activation: gain 2 coins."
     },
     {
       "id": "L32",
@@ -1099,7 +1108,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: whenever you play a Chapter card of 10 or higher, gain 1 VP.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each pair of Good cards.",
-      "upgraded": false
+      "upgraded": false,
+      "upgrade2": "Cost 4 XP. Game End: 3 VP."
     },
     {
       "id": "L36",
@@ -1119,7 +1129,8 @@ window.GAME_DATA = {
       "alignment": "Good",
       "base": "Strength 1. Instant: discard 1 Bad character from your tableau to gain 6 VP.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each Strength icon.",
-      "upgraded": false
+      "upgraded": false,
+      "upgrade2": "Cost 3 XP. Activation: gain 1 coin."
     }
   ],
   "actions": [
