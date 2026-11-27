@@ -213,7 +213,7 @@
     "Lewis Carroll": { bg: "#6b4a8a", skin: "#f3d0b0", hair: "#3a2a20", wavy: true, coat: "#22222c", collar: "#fff", bow: "#5a1a2a" },
     "J. M. Barrie": { bg: "#2f6a6a", skin: "#efc8a2", hair: "#3b2d22", mustache: "#3b2d22", coat: "#3a3328", collar: "#fff" },
     "L. Frank Baum": { bg: "#3f7a32", skin: "#efc6a0", hair: "#b0b0b0", mustache: "#9a9a9a", coat: "#2a3a2a", collar: "#fff" },
-    "Le Prince de Beaumont": { bg: "#9a3f5a", skin: "#f4d2b6", hair: "#6a4428", woman: true, coat: "#c07a9a", collar: "#fbe9f0" },
+    "Leprince de Beaumont": { bg: "#9a3f5a", skin: "#f4d2b6", hair: "#6a4428", woman: true, coat: "#c07a9a", collar: "#fbe9f0" },
   };
 
   function bust(p, x, scale = 1) {
@@ -258,7 +258,7 @@
     "Lewis Carroll": "#6b4a8a",
     "J. M. Barrie": "#1f8a8a",
     "L. Frank Baum": "#8a8a1e",
-    "Le Prince de Beaumont": "#b0477a",
+    "Leprince de Beaumont": "#b0477a",
   };
   const writerColor = (name) => WRITER_COLORS[name] || "#5a3b6e";
 

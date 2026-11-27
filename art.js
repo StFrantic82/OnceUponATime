@@ -343,7 +343,7 @@
     "Lewis Carroll": { bg: "wonder", m: [["book", 100, 96, 0.8, 0, { c: "#c8312b" }], ["watch", 150, 60, 0.45, 0], ["quill", 52, 62, 0.6, 0]] },
     "J. M. Barrie": { bg: "night", m: [["book", 100, 96, 0.8, 0, { c: "#4f9a45" }], ["star", 150, 50, 0.6, 0], ["quill", 52, 62, 0.6, 0]] },
     "L. Frank Baum": { bg: "oz", m: [["book", 100, 96, 0.8, 0, { c: "#3f8f4c" }], ["road", 150, 70, 0.5, 0], ["quill", 52, 62, 0.6, 0]] },
-    "Le Prince de Beaumont": { bg: "castle", m: [["book", 100, 96, 0.8, 0, { c: "#5a3b6e" }], ["rose", 150, 66, 0.5, 0, { dome: true }], ["quill", 52, 62, 0.6, 0]] },
+    "Leprince de Beaumont": { bg: "castle", m: [["book", 100, 96, 0.8, 0, { c: "#5a3b6e" }], ["rose", 150, 66, 0.5, 0, { dome: true }], ["quill", 52, 62, 0.6, 0]] },
   };
 
   let counter = 0;

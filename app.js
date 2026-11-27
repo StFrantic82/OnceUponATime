@@ -960,7 +960,7 @@ async function resolveWriterInstant() {
     state.writerDraftChoices = draw("common", 3);
   } else if (name === "L. Frank Baum") {
     state.writerDraftChoices = ICONS.map((icon) => ({ id: icon, name: ICON_LABELS[icon], iconChoice: icon }));
-  } else if (name === "Le Prince de Beaumont") {
+  } else if (name === "Leprince de Beaumont") {
     state.freeUpgrades += 1;
   }
 }
@@ -1005,8 +1005,10 @@ function applyWriterAfterGroup(cards) {
     state.writerRound.gameEndRewarded = true;
   }
   if (state.writer?.name !== "Brothers Grimm" || state.writerRound.alignmentRewarded) return;
+  // Brothers Grimm, level 1: a Bad Character gives 1 coin, a Good one lets you draw a Chapter card and tuck one.
+  if (cards.some((card) => card.alignment === "Good")) drawAndTuck();
   if (cards.some((card) => card.alignment === "Bad")) {
-    gain("coins", 2);
+    gain("coins", 1);
     state.writerRound.alignmentRewarded = true;
   }
 }
@@ -1748,7 +1750,7 @@ function noteXp(amount, key) {
 function upgradeCost(card) {
   const match = (card.upgrade || "").match(/Cost (\d+) XP/i);
   const base = match ? Number(match[1]) : 4;
-  return Math.max(0, base - (state.writer?.name === "Le Prince de Beaumont" ? 1 : 0));
+  return Math.max(0, base - (state.writer?.name === "Leprince de Beaumont" ? 1 : 0));
 }
 
 // ---------------------------------------------------------------------------
@@ -2013,7 +2015,7 @@ function scoreWriter() {
     return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 5;
   }
   if (name === "L. Frank Baum") return ICONS.filter((icon) => iconCounts()[icon] >= 3).length * 3;
-  if (name === "Le Prince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 2;
+  if (name === "Leprince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 2;
   return 0;
 }
 

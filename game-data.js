@@ -1400,7 +1400,7 @@ window.GAME_DATA = {
     },
     {
       "number": 12,
-      "effect": "1 Coin + 1 XP"
+      "effect": "Activate a single card"
     },
     {
       "number": 13,
@@ -1606,7 +1606,7 @@ window.GAME_DATA = {
     {
       "id": "W2",
       "name": "Brothers Grimm",
-      "level1": "Whenever you choose a Bad Character, gain 2 coins.",
+      "level1": "Whenever you choose a Bad Character, gain 1 coin. Whenever you choose a Good Character, draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "cost2": 3,
       "level2": "Gain 1 XP for each Good–Bad pair of cards.",
       "cost3": 6,
@@ -1665,7 +1665,7 @@ window.GAME_DATA = {
     },
     {
       "id": "W8",
-      "name": "Le Prince de Beaumont",
+      "name": "Leprince de Beaumont",
       "level1": "Your Legendary upgrades cost 1 fewer XP.",
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
