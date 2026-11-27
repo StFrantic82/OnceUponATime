@@ -757,8 +757,8 @@ window.GAME_DATA = {
       "name": "Snow White",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Game End: 1 VP for each Dwarf.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each pair of Good cards.",
+      "base": "Charm 1. Ongoing: your Dwarves count double for their family.",
+      "upgrade": "Cost 4 XP. Game End: 1 VP for each pair of Good cards.",
       "upgraded": false
     },
     {
@@ -767,7 +767,7 @@ window.GAME_DATA = {
       "name": "The Evil Queen",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1, Sorcery 1. Instant: each opponent loses 1 coin.",
+      "base": "Charm 1, Sorcery 1. Instant: each opponent with more Charm icons than you loses 2 coins.",
       "upgrade": "Cost 3 XP. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
@@ -777,8 +777,8 @@ window.GAME_DATA = {
       "name": "Cinderella",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Game End: 1 VP for each Mouse.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Item.",
+      "base": "Charm 1. Game End: 2 VP for each Mouse.",
+      "upgrade": "Cost 3 XP. Game End: 4 VP if you have the fewest coins (ties included).",
       "upgraded": false
     },
     {
@@ -787,7 +787,7 @@ window.GAME_DATA = {
       "name": "Fairy Godmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: gain 4 XP.",
+      "base": "Sorcery 1. Instant: place XP on a Character so that it levels up.",
       "upgrade": "Cost 2 XP. Activation: gain 2 XP.",
       "upgraded": false
     },
@@ -797,8 +797,8 @@ window.GAME_DATA = {
       "name": "Prince Charming",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 1 VP for each Charm icon.",
-      "upgrade": "Cost 4 XP. Game End: 1 VP for each Charm icon.",
+      "base": "Charm 1. Ongoing: whenever you take a Good Legendary card, gain 2 VP.",
+      "upgrade": "Cost 3 XP. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
     {
@@ -807,8 +807,8 @@ window.GAME_DATA = {
       "name": "Stepmother",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1. Game End: 2 VP for each Stepsister.",
-      "upgrade": "Cost 3 XP. Activation: gain 2 coins.",
+      "base": "Charm 1. Instant: each opponent with more Good cards than you loses 2 coins.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Stepsister.",
       "upgraded": false
     },
     {
@@ -817,8 +817,8 @@ window.GAME_DATA = {
       "name": "Alice",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each Adventure.",
-      "upgrade": "Cost 2 XP. Game End: 1 VP for each Adventure.",
+      "base": "Intelligence 1. Ongoing: you may play the same Chapter as an opponent.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure.",
       "upgraded": false
     },
     {
@@ -827,8 +827,8 @@ window.GAME_DATA = {
       "name": "Queen of Hearts",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Game End: 2 VP for each Playing Card Soldier.",
-      "upgrade": "Cost 3 XP. Activation: gain 2 coins.",
+      "base": "Strength 1. Ongoing: your Chapter cards count as +1 for turn order and you win ties.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Playing Card Soldier.",
       "upgraded": false
     },
     {
@@ -838,7 +838,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Dexterity 1, Sorcery 1. Instant: take 1 Adventure.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 XP.",
+      "upgrade": "Cost 2 XP. Game End: counts as Good or Bad, as you prefer.",
       "upgraded": false
     },
     {
@@ -847,7 +847,7 @@ window.GAME_DATA = {
       "name": "Mad Hatter",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Activation: gain 1 coin and 1 XP.",
+      "base": "Intelligence 1. Ongoing: whenever you play the lowest Chapter of the round, gain 1 VP.",
       "upgrade": "Cost 3 XP. Game End: 4 VP.",
       "upgraded": false
     },
@@ -857,8 +857,8 @@ window.GAME_DATA = {
       "name": "Peter Pan",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Game End: 2 VP for each Lost Boy.",
-      "upgrade": "Cost 3 XP. Activation: gain 2 coins.",
+      "base": "Dexterity 1. Ongoing: your Chapter cards count as +2 for turn order.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Lost Boy.",
       "upgraded": false
     },
     {
@@ -867,8 +867,8 @@ window.GAME_DATA = {
       "name": "Captain Hook",
       "rank": null,
       "alignment": "Bad",
-      "base": "Dexterity 1. Game End: 2 VP for each Pirate.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Dexterity icon.",
+      "base": "Dexterity 1. Instant: steal 2 coins from the opponent with the most coins.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Pirate.",
       "upgraded": false
     },
     {
@@ -877,8 +877,8 @@ window.GAME_DATA = {
       "name": "Tinker Bell",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: gain 2 XP.",
-      "upgrade": "Cost 2 XP. Game End: 4 VP.",
+      "base": "Sorcery 1. Game End: counts as 1 card of the family of your choice.",
+      "upgrade": "Cost 2 XP. Activation: gain 1 XP.",
       "upgraded": false
     },
     {
@@ -887,7 +887,7 @@ window.GAME_DATA = {
       "name": "Wendy",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Activation: gain 1 coin and 1 XP.",
+      "base": "Charm 1. Ongoing: the first time each round you take a Common character, gain 1 coin.",
       "upgrade": "Cost 2 XP. Activation: gain 1 VP.",
       "upgraded": false
     },
@@ -897,8 +897,8 @@ window.GAME_DATA = {
       "name": "Robin Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1, Strength 1. Game End: 1 VP for each Merry Man.",
-      "upgrade": "Cost 3 XP. Activation: spend 2 coins to gain 3 VP.",
+      "base": "Dexterity 1, Strength 1. Activation: spend 1 coin to gain 2 VP.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Merry Man.",
       "upgraded": false
     },
     {
@@ -908,7 +908,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Instant: steal 1 coin from each opponent.",
-      "upgrade": "Cost 2 XP. Activation: gain 1 coin and 1 VP.",
+      "upgrade": "Cost 2 XP. Activation: each opponent with 4 coins or more gives you 1 coin.",
       "upgraded": false
     },
     {
@@ -917,7 +917,7 @@ window.GAME_DATA = {
       "name": "Little Red Riding Hood",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: gain 2 coins and 1 XP.",
+      "base": "Charm 1. Ongoing: the Bad effects of your opponents do not affect you.",
       "upgrade": "Cost 3 XP. Game End: 1 VP for each Good–Bad pair of cards.",
       "upgraded": false
     },
@@ -927,7 +927,7 @@ window.GAME_DATA = {
       "name": "The Wolf",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1, Dexterity 1. Instant: steal 1 VP from each opponent.",
+      "base": "Strength 1, Dexterity 1. Instant: steal 1 VP from each opponent with more Good cards than you.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
@@ -937,8 +937,8 @@ window.GAME_DATA = {
       "name": "Grandmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each Bad card.",
-      "upgrade": "Cost 2 XP. Activation: gain 1 XP.",
+      "base": "Intelligence 1. Instant: gain 1 coin for each Bad card.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
     {
@@ -947,8 +947,8 @@ window.GAME_DATA = {
       "name": "Little Mermaid",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: whenever you buy an Item, gain 1 VP.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Charm icon.",
+      "base": "Charm 1. Activation: spend 1 XP to gain 2 VP.",
+      "upgrade": "Cost 3 XP. Ongoing: whenever you buy an Item, gain 1 VP.",
       "upgraded": false
     },
     {
@@ -957,7 +957,7 @@ window.GAME_DATA = {
       "name": "King Triton",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1, Sorcery 1. Activation: gain 1 coin.",
+      "base": "Strength 1, Sorcery 1. Activation: gain 1 coin for each Strength icon.",
       "upgrade": "Cost 4 XP. Game End: 1 VP for each Item.",
       "upgraded": false
     },
@@ -967,7 +967,7 @@ window.GAME_DATA = {
       "name": "The Sea Witch",
       "rank": null,
       "alignment": "Bad",
-      "base": "Sorcery 1. Game End: 1 VP for each Sorcery icon.",
+      "base": "Sorcery 1. Instant: gain 4 coins. Game End: lose 3 VP.",
       "upgrade": "Cost 4 XP. Game End: 1 VP for each Sorcery icon.",
       "upgraded": false
     },
@@ -988,7 +988,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Game End: 1 VP for each Strength icon.",
-      "upgrade": "Cost 4 XP. Game End: 1 VP for each Strength icon.",
+      "upgrade": "Cost 3 XP. Becomes Good. Game End: 3 VP if you have Belle.",
       "upgraded": false
     },
     {
@@ -998,7 +998,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: take 1 Adventure.",
-      "upgrade": "Cost 3 XP. Activation: gain 1 coin and 1 XP.",
+      "upgrade": "Cost 3 XP. Activation: gain 1 coin for each different icon.",
       "upgraded": false
     },
     {
@@ -1007,7 +1007,7 @@ window.GAME_DATA = {
       "name": "Genie",
       "rank": null,
       "alignment": "Good",
-      "base": "Sorcery 1. Instant: place XP on a Character so that it levels up and gain 2 coins.",
+      "base": "Sorcery 1. Instant: make 3 wishes: choose three times among 1 coin, 1 XP and 1 VP.",
       "upgrade": "Cost 3 XP. Activation: gain 2 XP.",
       "upgraded": false
     },
@@ -1028,7 +1028,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Ongoing: your Items cost 1 coin less.",
-      "upgrade": "Cost 3 XP. Game End: 1 VP for each Item.",
+      "upgrade": "Cost 4 XP. Game End: 1 VP for each Item.",
       "upgraded": false
     },
     {
@@ -1037,8 +1037,8 @@ window.GAME_DATA = {
       "name": "Dorothy Gale",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Game End: 2 VP for each Friend of Oz.",
-      "upgrade": "Cost 2 XP. Game End: 3 VP for each set of 5 different icons.",
+      "base": "Charm 1. Game End: 1 VP for each Friend of Oz.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each different family.",
       "upgraded": false
     },
     {
@@ -1058,7 +1058,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Dexterity 1. Instant: gain 4 coins.",
-      "upgrade": "Cost 2 XP. Activation: gain 2 coins.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for every 2 coins.",
       "upgraded": false
     },
     {
@@ -1067,7 +1067,7 @@ window.GAME_DATA = {
       "name": "Rumpelstiltskin",
       "rank": null,
       "alignment": "Bad",
-      "base": "Dexterity 1, Sorcery 1. Activation: spend 2 coins to gain 3 VP.",
+      "base": "Dexterity 1, Sorcery 1. Activation: spend 1 XP to gain 3 coins.",
       "upgrade": "Cost 3 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
@@ -1077,8 +1077,8 @@ window.GAME_DATA = {
       "name": "Princess Briar Rose",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Game End: 1 VP for each Fairy.",
-      "upgrade": "Cost 2 XP. Game End: 4 VP.",
+      "base": "Charm 1. Ongoing: whenever you play a Chapter card of 4 or lower, gain 2 XP.",
+      "upgrade": "Cost 2 XP. Game End: 1 VP for each Fairy.",
       "upgraded": false
     },
     {
@@ -1087,7 +1087,7 @@ window.GAME_DATA = {
       "name": "The Evil Fairy",
       "rank": null,
       "alignment": "Bad",
-      "base": "Sorcery 1. Instant: each opponent loses 1 coin.",
+      "base": "Sorcery 1. Instant: each opponent loses 1 coin and you gain 1 XP.",
       "upgrade": "Cost 4 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
@@ -1097,7 +1097,7 @@ window.GAME_DATA = {
       "name": "Pinocchio",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Activation: gain 1 coin.",
+      "base": "Intelligence 1. Ongoing: whenever you play a Chapter card of 10 or higher, gain 1 VP.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each pair of Good cards.",
       "upgraded": false
     },
@@ -1107,7 +1107,7 @@ window.GAME_DATA = {
       "name": "Geppetto",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Game End: 1 VP for each Item.",
+      "base": "Intelligence 1. Activation: gain 1 coin for each pair of Items.",
       "upgrade": "Cost 4 XP. Game End: 1 VP for each Item.",
       "upgraded": false
     },
@@ -1117,7 +1117,7 @@ window.GAME_DATA = {
       "name": "The Hunter",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1. Instant: gain 3 VP.",
+      "base": "Strength 1. Instant: discard 1 Bad character from your tableau to gain 6 VP.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each Strength icon.",
       "upgraded": false
     }
@@ -1364,7 +1364,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
       "cost3": 6,
-      "level3": "4 VP for each upgraded Legendary card.",
+      "level3": "5 VP for each upgraded Legendary card.",
       "coins": 2
     }
   ],

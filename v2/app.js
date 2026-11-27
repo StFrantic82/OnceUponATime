@@ -391,6 +391,7 @@ function actionBonus(p, number) {
   const writerBonus = 0;
   const queen = p.tableau.find((card) => card.name === "§Queen of Hearts");
   const queenBonus = queen ? (queen.upgraded ? 2 : 1) : 0;
+  if (V2) return (p.tableau.some((c) => c.name === "Queen of Hearts") ? 1 : 0) + (p.tableau.some((c) => c.name === "Peter Pan") ? 2 : 0);
   return writerBonus + queenBonus;
 }
 
@@ -421,6 +422,8 @@ function turnPosition(seat) {
 function canPlayChapter(p, number) {
   // The Queen of Hearts may play the same chapter as an opponent (and wins the tie).
   if (p.tableau.some((card) => card.name === "§Queen of Hearts")) return true;
+  // V2: Alice may play the same chapter as an opponent.
+  if (V2 && p.tableau.some((card) => card.name === "Alice")) return true;
   const taken = chaptersTaken(p.seat);
   if (!taken.has(number)) return true;
   return p.hand.every((card) => taken.has(card.number));
@@ -458,7 +461,7 @@ function maybeBotsChoose() {
 function beginTurns() {
   const n = G.players.length;
   const seatRank = (seat) => (seat - G.firstSeat + n) % n; // ties go to the first player, then clockwise
-  const queenTie = (p) => (p.tableau.some((card) => card.name === "§Queen of Hearts") ? 1 : 0); // the Queen of Hearts wins ties
+  const queenTie = (p) => (p.tableau.some((card) => card.name === (V2 ? "Queen of Hearts" : "§Queen of Hearts")) ? 1 : 0); // the Queen of Hearts wins ties
   const order = G.players
     .filter((p) => p.currentAction)
     .sort((a, b) => b.actionValue - a.actionValue || queenTie(b) - queenTie(a) || seatRank(a.seat) - seatRank(b.seat))
@@ -478,6 +481,8 @@ function beginTurns() {
   const lowest = Math.min(...played.map((p) => p.currentAction.number));
   for (const p of played) {
     if (p.currentAction.number !== lowest) continue;
+    // V2: the Mad Hatter rewards the lowest Chapter of the round.
+    if (V2 && p.tableau.some((card) => card.name === "Mad Hatter")) withSeat(p.seat, () => { vpSource = "Mad Hatter"; gain("vp", 1); });
     const clocks = p.items.filter((item) => item.name === "§Rabbit's Clock").length;
     if (clocks) withSeat(p.seat, () => {
       gain("coins", 2 * clocks);
@@ -1003,6 +1008,7 @@ function finishWriterDiscard() {
 }
 
 function applyWriterAfterGroup(cards) {
+  if (V2) v2AfterGroup(cards);
   vpSource = "WRITER";
   if (state.writer?.name === "Hans Christian Andersen" && !state.writerRound.gameEndRewarded && cards.some((card) => (V2 ? card.deck === "legendary" : /Game End/i.test(`${card.effect || ""} ${card.base || ""} ${card.upgrade || ""}`)))) {
     gain("xp", 1);
@@ -1161,6 +1167,7 @@ function applyOption(option, source) {
   }
   if ((m = option.match(/gain (\d+) coins?/i))) gain("coins", Number(m[1]));
   else if ((m = option.match(/gain (\d+) XP/i))) gain("xp", Number(m[1]));
+  else if ((m = option.match(/gain (\d+) VP/i))) gain("vp", Number(m[1]));
   else if (/take 1 (?:Quest|Adventure)/i.test(option)) grantQuestChoice(source);
   else if ((m = option.match(/buy 1 Item for (\d+) coins less/i))) state.writerItemDiscount = Number(m[1]);
   else if (/place XP on a Character so that it levels up/i.test(option)) state.freeUpgrades += 1;
@@ -1230,13 +1237,18 @@ function opponents() {
   return G.players.filter((p) => p.seat !== G.cur);
 }
 
+// Opponents hit by a Bad effect (V2: Little Red Riding Hood protects her owner).
+function meanTargets() {
+  return opponents().filter((o) => !protectedFromMean(o));
+}
+
 function applyMean(text, source) {
   let m;
   const me = G.players[G.cur];
   if ((m = text.match(/steal (\d+) coins? from each opponent( who has more coins than you)?/i))) {
     const n = Number(m[1]);
     const pinoBonus = /2 coins from an opponent who has Pinocchio/i.test(text);
-    for (const o of opponents()) {
+    for (const o of meanTargets()) {
       if (m[2] && o.coins <= me.coins) continue;
       const want = pinoBonus && o.tableau.some((card) => card.name === "§Pinocchio") ? 2 : n;
       const k = Math.min(want, o.coins);
@@ -1249,7 +1261,7 @@ function applyMean(text, source) {
   if ((m = text.match(/each opponent (?:with more coins than you )?loses (\d+) coins?/i))) {
     const onlyRicher = /with more coins than you/i.test(text);
     const cindy = /2 coins if they have Cinderella/i.test(text);
-    for (const o of opponents()) {
+    for (const o of meanTargets()) {
       if (onlyRicher && o.coins <= me.coins) continue;
       const want = cindy && o.tableau.some((c) => c.name === "§Cinderella") ? 2 : Number(m[1]);
       const k = Math.min(want, o.coins);
@@ -1259,7 +1271,7 @@ function applyMean(text, source) {
     }
   }
   if ((m = text.match(/steal (\d+) coins? from the opponent with the most coins/i))) {
-    const target = opponents().sort((a, b) => b.coins - a.coins)[0];
+    const target = meanTargets().sort((a, b) => b.coins - a.coins)[0];
     const k = target ? Math.min(Number(m[1]), target.coins) : 0;
     if (k) {
       target.coins -= k;
@@ -1268,7 +1280,7 @@ function applyMean(text, source) {
     }
   }
   if ((m = text.match(/steal (\d+) VP from each opponent/i))) {
-    for (const o of opponents()) {
+    for (const o of meanTargets()) {
       const k = Math.min(Number(m[1]), o.vp);
       if (!k) continue;
       o.vp -= k;
@@ -1277,7 +1289,7 @@ function applyMean(text, source) {
     }
   }
   if ((m = text.match(/steal (\d+) VP from the opponent with the most VP/i))) {
-    const target = opponents().sort((a, b) => b.vp - a.vp)[0];
+    const target = meanTargets().sort((a, b) => b.vp - a.vp)[0];
     const k = target ? Math.min(Number(m[1]), target.vp) : 0;
     if (k) {
       target.vp -= k;
@@ -1286,7 +1298,7 @@ function applyMean(text, source) {
     }
   }
   if (/choose an opponent\. They discard 1 coin or 1 XP/i.test(text)) {
-    const target = opponents().sort((a, b) => b.coins + b.xp - (a.coins + a.xp))[0];
+    const target = meanTargets().sort((a, b) => b.coins + b.xp - (a.coins + a.xp))[0];
     if (target && target.coins > 0) {
       target.coins -= 1;
       gain("coins", 1);
@@ -1488,6 +1500,11 @@ function hasCard(name) {
 }
 
 function onPlayChapter(number) {
+  if (V2) {
+    if (hasCard("Princess Briar Rose") && number <= 4) { vpSource = "Princess Briar Rose"; gain("xp", 2); }
+    if (hasCard("Pinocchio") && number >= 10) { vpSource = "Pinocchio"; gain("vp", 1); }
+    return;
+  }
   vpSource = "ON-CHAPTER (Barrie/Briar Rose/Clock)";
   vpSource = "§The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "§Pinocchio");
@@ -1874,7 +1891,7 @@ function countIcon(icon) {
 // Good / Bad cards: Characters by their alignment, Items (and any other card) by their Good / Bad icon.
 function countAlignment(alignment) {
   const items = (state.items || []).filter((item) => new RegExp(`\\b${alignment}\\b`).test(item.icons || "")).length;
-  return (state.tableau || []).filter((card) => card.alignment === alignment).length + items;
+  return (state.tableau || []).filter((card) => (V2 ? v2Align(card) : card.alignment) === alignment).length + items;
 }
 
 function countByName(name) {
@@ -1899,7 +1916,8 @@ for (const [key, f] of Object.entries(DATA.families || {})) {
 }
 
 function familyCount(family) {
-  return (state.tableau || []).filter((card) => card.family === family).length;
+  const n = (state.tableau || []).filter((card) => card.family === family).length;
+  return family === "dwarves" && (state.tableau || []).some((c) => c.name === "Snow White") ? n * 2 : n;
 }
 
 // Clauses of one type ("Instant", "Activation", "Game End"…) of a text, joined.
@@ -1924,6 +1942,7 @@ function v2Count(what) {
   if (/^Good–Bad pairs? of cards$/i.test(w)) return Math.min(countAlignment("Good"), countAlignment("Bad"));
   if (/^coins left at the end$/i.test(w)) return state.coins;
   if (/^cards? with an Activation effect$/i.test(w)) return countCardsWith("Activation");
+  if (/^different famil(?:y|ies)$/i.test(w)) return Object.keys(DATA.families || {}).filter((f) => familyCount(f) >= 1).length;
   if (/^families with 2 cards or more$/i.test(w)) return Object.keys(DATA.families || {}).filter((f) => familyCount(f) >= 2).length;
   const family = FAMILY_BY_WORD[w.toLowerCase()];
   if (family) return familyCount(family);
@@ -1942,6 +1961,12 @@ const nums = (s) => String(s).split("/").map((x) => Number(x.trim()));
 // Instant and Activation effects.
 function v2Do(text, card) {
   if (!text) return;
+  text = v2Compare(text, card);
+  if (/make 3 wishes/i.test(text)) {
+    for (let i = 0; i < 3; i += 1) offerChoice(card.name, ["gain 1 coin", "gain 1 XP", "gain 1 VP"]);
+    return;
+  }
+  if (/discard 1 Bad character from your tableau to gain 6 VP/i.test(text)) return v2Hunter();
   applyMean(text, card.name);
   if (/take 1 Adventure/i.test(text)) grantQuestChoice(card.name);
   if (/place XP on a Character so that it levels up/i.test(text)) state.freeUpgrades += 1;
@@ -1956,11 +1981,104 @@ function v2Do(text, card) {
     }
     rest = rest.replace(m[0], "");
   }
+  if ((m = rest.match(/spend (\d+) XP to gain (\d+) (coins?|VP)/i))) {
+    for (let i = 0; i < Number(m[1]); i += 1) {
+      const from = state.xp > 0 ? null : spendableXpCard();
+      if (state.xp > 0) state.xp -= 1;
+      else if (from) from.xpOn -= 1;
+      else return;
+    }
+    gain(KIND_OF(m[3]), Number(m[2]));
+    rest = rest.replace(m[0], "");
+  }
   const perRe = /gain (\d+) (coins?|XP|VP) for each ([^.]+)/gi;
   while ((m = perRe.exec(text))) gain(KIND_OF(m[2]), Number(m[1]) * v2Count(m[3]));
   rest = rest.replace(perRe, "");
   const g = rest.match(/gain ((?:\d+ (?:coins?|XP|VP)(?: and )?)+)/i);
   if (g) for (const part of g[1].matchAll(/(\d+) (coins?|XP|VP)/gi)) gain(KIND_OF(part[2]), Number(part[1]));
+}
+
+
+// ---- V2: the signature effects of the Legendary characters ----
+let cheshireAs = null;
+function v2Align(card) {
+  if (card.name === "Beast" && card.upgraded) return "Good";
+  if (card.name === "Cheshire Cat" && card.upgraded && cheshireAs) return cheshireAs;
+  return card.alignment;
+}
+
+// Little Red Riding Hood: the Bad effects of opponents do not touch her owner.
+function protectedFromMean(p) {
+  return V2 && p.tableau.some((c) => c.name === "Little Red Riding Hood");
+}
+
+function countFor(p, what) {
+  return withSeat(p.seat, () => v2Count(what));
+}
+
+// Effects that compare the players ("each opponent with more X than you…").
+function v2Compare(text, card) {
+  const me = G.players[G.cur];
+  let rest = text;
+  let m;
+  const victims = () => opponents().filter((o) => !protectedFromMean(o));
+  if ((m = text.match(/each opponent with more ([^.]+?) than you loses (\d+) coins?/i))) {
+    const mine = v2Count(m[1]);
+    for (const o of victims()) if (countFor(o, m[1]) > mine) o.coins = Math.max(0, o.coins - Number(m[2]));
+    rest = rest.replace(m[0], "");
+  }
+  if ((m = text.match(/steal (\d+) VP from each opponent with more ([^.]+?) than you/i))) {
+    const mine = v2Count(m[2]);
+    for (const o of victims()) {
+      if (countFor(o, m[2]) <= mine) continue;
+      const k = Math.min(Number(m[1]), o.vp);
+      o.vp -= k;
+      gain("vp", k);
+    }
+    rest = rest.replace(m[0], "");
+  }
+  if ((m = text.match(/each opponent with (\d+) coins or more gives you (\d+) coins?/i))) {
+    for (const o of victims()) {
+      if (o.coins < Number(m[1])) continue;
+      const k = Math.min(Number(m[2]), o.coins);
+      o.coins -= k;
+      gain("coins", k);
+    }
+    rest = rest.replace(m[0], "");
+  }
+  return rest;
+}
+
+function v2AfterGroup(cards) {
+  const prince = hasCard("Prince Charming");
+  if (prince) {
+    const goodLeg = cards.filter((c) => c.deck === "legendary" && c.name !== "Prince Charming" && v2Align(c) === "Good").length;
+    if (goodLeg) { vpSource = "Prince Charming"; gain("vp", 2 * goodLeg); }
+  }
+  if (hasCard("Wendy") && !state.writerRound.wendyRewarded && cards.some((c) => c.deck === "common")) {
+    vpSource = "Wendy";
+    gain("coins", 1);
+    state.writerRound.wendyRewarded = true;
+  }
+}
+
+// The Hunter: the Bad character whose loss costs the fewest points is discarded.
+function v2Hunter() {
+  const bad = state.tableau.filter((c) => c.name !== "The Hunter" && v2Align(c) === "Bad");
+  if (!bad.length) return;
+  const before = computeFinalScore().total;
+  let best = null;
+  for (const c of bad) {
+    state.tableau = state.tableau.filter((x) => x !== c);
+    const loss = before - computeFinalScore().total + (c.deck === "legendary" ? 3 : 0);
+    state.tableau.push(c);
+    if (!best || loss < best.loss) best = { c, loss };
+  }
+  state.tableau = state.tableau.filter((x) => x !== best.c);
+  toDiscard(best.c);
+  log("l_discards", { p: state.name, c: C(best.c.name) });
+  vpSource = "The Hunter";
+  gain("vp", 6);
 }
 
 // A family scores once, from the table printed on its cards.
@@ -1978,7 +2096,12 @@ function v2EndValue(text) {
   let total = 0;
   for (const clause of clausesOf(text, "Game End").split(/(?=Game End:)/)) {
     let m;
-    if ((m = clause.match(/(\d+) VP for each ([^.]+)/))) total += Number(m[1]) * v2Count(m[2]);
+    if ((m = clause.match(/(\d+) VP if you have the fewest coins/))) {
+      if (G.players.every((p) => p.coins >= state.coins)) total += Number(m[1]);
+    } else if ((m = clause.match(/(\d+) VP if you have ([^.]+)/))) {
+      if (hasCard(m[2].trim())) total += Number(m[1]);
+    } else if ((m = clause.match(/lose (\d+) VP/))) total -= Number(m[1]);
+    else if ((m = clause.match(/(\d+) VP for each ([^.]+)/))) total += Number(m[1]) * v2Count(m[2]);
     else if (/1 VP for every 2 coins/.test(clause)) total += Math.floor(state.coins / 2);
     else if ((m = clause.match(/Game End: (\d+) VP\./))) total += Number(m[1]);
   }
@@ -1994,6 +2117,15 @@ function v2ScoreCards(only) {
       seen.add(card.family);
       total += familyScore(card);
     } else total += v2EndValue(activeCardText(card));
+  }
+  // Tinker Bell counts as 1 card of the family that gains the most from it.
+  if (!only && state.tableau.some((c) => c.name === "Tinker Bell")) {
+    let bonus = 0;
+    for (const fam of Object.keys(DATA.families || {})) {
+      const sample = state.tableau.find((c) => c.family === fam) || DATA.common.find((c) => c.family === fam);
+      if (sample) bonus = Math.max(bonus, familyScore(sample, 1) - (seen.has(fam) ? familyScore(sample) : 0));
+    }
+    total += bonus;
   }
   return total;
 }
@@ -2112,6 +2244,16 @@ function maxCharmAtTable() {
 
 // Game End: each joker tag is fixed to the single type that scores best (chosen one joker at a time).
 function finalScore() {
+  // V2: the upgraded Cheshire Cat counts as Good or Bad, whichever scores more.
+  const cat = V2 && !cheshireAs ? state.tableau.find((c) => c.name === "Cheshire Cat" && c.upgraded) : null;
+  if (cat) {
+    cheshireAs = "Good";
+    const good = finalScore();
+    cheshireAs = "Bad";
+    const bad = finalScore();
+    cheshireAs = null;
+    return good.total >= bad.total ? good : bad;
+  }
   const w = wildCount();
   if (!w || wildAssign) return computeFinalScore();
   const chosen = [];
@@ -2163,7 +2305,7 @@ function scoreWriter() {
     return Math.floor(state.tableau.filter((card) => card.deck === "common").length / 2) * 3;
   }
   if (name === "L. Frank Baum") return ICONS.filter((icon) => iconCounts()[icon] >= (V2 ? 2 : 3)).length * 3;
-  if (name === "Leprince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * (V2 ? 4 : 3);
+  if (name === "Leprince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * (V2 ? 5 : 3);
   return 0;
 }
 
@@ -2387,6 +2529,7 @@ function renderGuide() {
       let m;
       if ((m = o.match(/gain (\d+) coins?/i))) return `+${m[1]} ${resourceIcon("coins", "coins")}`;
       if ((m = o.match(/gain (\d+) XP/i))) return `+${m[1]} ${resourceIcon("xp", "XP")}`;
+      if ((m = o.match(/gain (\d+) VP/i))) return `+${m[1]} ${resourceIcon("vp", "VP")}`;
       if (/take 1 (?:Quest|Adventure)/i.test(o)) return `${window.QUEST_ICON || ""} ${escapeHtml(t("takeAQuest"))}`;
       if ((m = o.match(/buy 1 Item for (\d+) coins less/i))) return `${escapeHtml(t("wishItem"))} −${m[1]} ${resourceIcon("coins", "coins")}`;
       if (/place XP on a Character so that it levels up/i.test(o)) return `${window.FREEUP_ICON || ""} ${escapeHtml(t("freeUpBtn"))}`;
