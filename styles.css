@@ -3293,3 +3293,13 @@ body.picking-version > section { display: none !important; }
 .vp-card span { font: 500 1em/1.4 "Alegreya Sans", sans-serif; }
 .vp-card i { font: 700 1em/1 "Alegreya Sans", sans-serif; font-style: normal; color: #b0702b; margin-top: auto; }
 .vp-card.vp-2 { border-color: #8a5aa0; }
+
+/* Card effects: type icon on the left, text on the right, one row per effect */
+.fx-row { display: flex; align-items: flex-start; gap: .38em; width: 100%; text-align: left; margin: 0; }
+.fx-row + .fx-row, .fx-plain + .fx-row, .fx-row + .q-tiers { margin-top: .3em; }
+.fx-ico { flex: none; display: inline-flex; padding-top: .05em; }
+.fx-ico .game-icon { width: 1.3em; height: 1.3em; }
+.fx-txt, .fx-plain { margin: 0 !important; flex: 1 1 auto; min-width: 0; }
+.fc-text:has(.fx-row) { flex-direction: column; align-items: stretch; justify-content: center; }
+.fc-side:has(.fx-row) { text-align: left; }
+.fx-txt, .fx-plain { text-align: left; }

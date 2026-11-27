@@ -3280,3 +3280,13 @@ button.needs-click { outline: none; }
 .fc-common .fc-art { position: relative; }
 .fc-family { position: absolute; left: 50%; bottom: 4px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px 2px 5px; border-radius: 999px; background: rgba(255, 250, 235, .94); border: 1px solid #8a6a3a; color: #3a2412; font: 700 .62em/1.15 "Alegreya Sans", sans-serif; white-space: nowrap; box-shadow: 0 1px 3px rgba(0,0,0,.25); }
 .fc-family .mini-card-ico { font-size: .9em; }
+
+/* Card effects: type icon on the left, text on the right, one row per effect */
+.fx-row { display: flex; align-items: flex-start; gap: .38em; width: 100%; text-align: left; margin: 0; }
+.fx-row + .fx-row, .fx-plain + .fx-row, .fx-row + .q-tiers { margin-top: .3em; }
+.fx-ico { flex: none; display: inline-flex; padding-top: .05em; }
+.fx-ico .game-icon { width: 1.3em; height: 1.3em; }
+.fx-txt, .fx-plain { margin: 0 !important; flex: 1 1 auto; min-width: 0; }
+.fc-text:has(.fx-row) { flex-direction: column; align-items: stretch; justify-content: center; }
+.fc-side:has(.fx-row) { text-align: left; }
+.fx-txt, .fx-plain { text-align: left; }

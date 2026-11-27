@@ -161,6 +161,21 @@
       .replace(GLUE_PUNCT, (m, icon, p) => (m.includes('class="nb"') ? m : `<span class="nb">${icon}${p}</span>`));
   }
 
+  // Effects: the icon of each effect type stands at the left, its text at the right (one row per effect).
+  function fxText(text) {
+    const TYPES = { Instant: "instant", Activation: "activation", Ongoing: "ongoing", "Game End": "endgame" };
+    const parts = String(text || "").split(/(?=\b(?:Instant|Activation|Ongoing|Game End)\s*:)/).map((p) => p.trim()).filter(Boolean);
+    return parts
+      .map((part) => {
+        const m = part.match(/^(Instant|Activation|Ongoing|Game End)\s*:\s*/);
+        if (!m) return `<p class="fx-plain">${gtext(part)}</p>`;
+        const body = part.slice(m[0].length);
+        const capital = body.charAt(0).toLocaleUpperCase() + body.slice(1);
+        return `<div class="fx-row"><span class="fx-ico">${resourceIcon(TYPES[m[1]], m[1])}</span><p class="fx-txt">${gtext(capital)}</p></div>`;
+      })
+      .join("");
+  }
+
   // Tiered Adventures ("3 / 4 / 6 Charm icons: 2 / 4 / 6 VP."): thresholds on one line, rewards on the next.
   function questText(scoring, labelOverride = "") {
     const m = String(scoring).match(/^(\d+(?:\s*\/\s*\d+)+)\s*([^:]*?)\s*:\s*(\d+(?:\s*\/\s*\d+)+)\s*(VP|PV)\s*\.\s*(.*)$/);
@@ -182,8 +197,8 @@
     if (!effect) return "";
     const text = tc(effect);
     const m = text.match(/^(.*?)\s*Game End\s*:\s*(\d+(?:\s*\/\s*\d+)+\s[^:]*:\s*\d+(?:\s*\/\s*\d+)+\s*(?:VP|PV)\s*\.)\s*$/);
-    if (!m) return `<p>${gtext(text)}</p>`;
-    return `${m[1] ? `<p>${gtext(m[1])}</p>` : ""}${questText(m[2], `<span class="mini-card-ico">♠</span>`)}`;
+    if (!m) return fxText(text);
+    return `${m[1] ? fxText(m[1]) : ""}${questText(m[2], `<span class="mini-card-ico">♠</span>`)}`;
   }
 
   // V2: the family a Common card belongs to (its set to collect), as a ribbon on the art.
@@ -295,9 +310,9 @@
     return `<article class="fcard fc-legendary fc-${align} ${card.upgraded ? "is-upgraded" : ""} ${opts.cls || ""}">
       ${head(card, 204, 16)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
-      <div class="fc-side fc-base">${gtext(stripIconPrefix(tc(card.base)))}</div>
+      <div class="fc-side fc-base">${fxText(stripIconPrefix(tc(card.base)))}</div>
       ${xpStep(cost, card.upgraded ? cost : card.xpOn || 0)}
-      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${gtext(tc(upgradeText))}</div>
+      <div class="fc-side fc-up ${card.upgraded ? "on" : ""}">${fxText(tc(upgradeText))}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }
@@ -311,7 +326,7 @@
         ${card.stash ? `<span class="fc-stash">${card.stash}${resourceIcon("coins", "coins")}</span>` : ""}
         <span class="fc-price">${opts.original != null && opts.original !== price ? `<s>${opts.original}</s>` : ""}${price}${resourceIcon("coins", "coins")}</span>
       </div>
-      <div class="fc-text">${card.effect ? `<p>${gtext(tc(card.effect))}</p>` : ""}</div>
+      <div class="fc-text">${card.effect ? fxText(tc(card.effect)) : ""}</div>
       ${bad ? alignFoot("Bad") : ""}
     </article>`;
   }
