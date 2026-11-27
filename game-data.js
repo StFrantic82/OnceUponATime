@@ -1600,7 +1600,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Immediately buy an Item for 2 fewer coins.",
       "cost3": 6,
-      "level3": "2 VP for each Item that costs 4 coins or more.",
+      "level3": "2 VP for each Item that costs 5 coins or more.",
       "coins": 2
     },
     {
@@ -1646,11 +1646,11 @@ window.GAME_DATA = {
     {
       "id": "W6",
       "name": "J. M. Barrie",
-      "level1": "When you play a Chapter card valued 1–8, gain 1 XP.",
+      "level1": "When you play a Chapter card valued 1–8, gain 1 XP and 1 coin.",
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 6,
-      "level3": "5 VP for each pair of identical Common cards.",
+      "level3": "3 VP for each pair of Common Characters.",
       "coins": 2
     },
     {
@@ -1670,7 +1670,7 @@ window.GAME_DATA = {
       "cost2": 3,
       "level2": "Upgrade one Legendary card for free.",
       "cost3": 6,
-      "level3": "2 VP for each upgraded Legendary card.",
+      "level3": "3 VP for each upgraded Legendary card.",
       "coins": 2
     }
   ],

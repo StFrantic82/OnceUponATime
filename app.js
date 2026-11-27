@@ -620,7 +620,10 @@ async function activateActionStep() {
     await resolveAction(G.simBonus.effect);
     G.cur = seat;
   }
-  if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 8) gain("xp", 1);
+  if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 8) {
+    gain("xp", 1);
+    gain("coins", 1);
+  }
   state.phase = "roundDone";
 }
 
@@ -1996,7 +1999,7 @@ function computeFinalScore() {
 function scoreWriter() {
   if (!state.writer || state.writerLevel < 3) return 0;
   const name = state.writer.name;
-  if (name === "Charles Perrault") return state.items.filter((item) => item.cost >= 4).length * 2;
+  if (name === "Charles Perrault") return state.items.filter((item) => item.cost >= 5).length * 2;
   if (name === "Brothers Grimm") {
     const pairs = Math.min(countAlignment("Good"), countAlignment("Bad"));
     return pairs >= 6 ? 14 : pairs >= 4 ? 10 : pairs >= 2 ? 6 : 0;
@@ -2010,12 +2013,10 @@ function scoreWriter() {
   }
   if (name === "Lewis Carroll") return Math.floor(countCardsWith("Activation") / 2) * 3;
   if (name === "J. M. Barrie") {
-    const counts = {};
-    for (const card of state.tableau) if (card.deck !== "legendary") counts[card.name] = (counts[card.name] || 0) + 1;
-    return Object.values(counts).reduce((sum, k) => sum + Math.floor(k / 2), 0) * 5;
+    return Math.floor(state.tableau.filter((card) => card.deck === "common").length / 2) * 3;
   }
   if (name === "L. Frank Baum") return ICONS.filter((icon) => iconCounts()[icon] >= 3).length * 3;
-  if (name === "Leprince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 2;
+  if (name === "Leprince de Beaumont") return state.tableau.filter((card) => card.deck === "legendary" && card.upgraded).length * 3;
   return 0;
 }
 
