@@ -17,6 +17,17 @@
 
   // "set of four icons" becomes the four square tags in a row (a placeholder, drawn at the end of formatGameText).
   const SET4 = "\u0001SET4\u0001";
+  // "Good card", "carte Méchante", "carta Buona"…: the icon alone says it, the word "card" goes.
+  function dropCardWord(text) {
+    return String(text || "")
+      .replace(/\b(Good–Bad pairs?) of cards\b/g, "$1")
+      .replace(/\b(Good|Bad)\s+cards?\b/g, "$1")
+      .replace(/\b(paires?) de cartes\s+(?=Gentil|Méchant)/g, "$1 ")
+      .replace(/\b[Cc]artes?\s+(Gentil(?:le)?s?|Méchant(?:e)?s?)\b/g, "$1")
+      .replace(/\b(coppi[ae]) di carte\s+(?=Buon|Cattiv)/g, "$1 ")
+      .replace(/\b[Cc]art[ae]\s+(Buon[oaei]|Cattiv[oaei])\b/g, "$1");
+  }
+
   function alignWordIcon(kind, word, punct = "", glued = false) {
     const inner = kind === "neutral" ? '<span class="fc-neutral-dot">N</span>' : resourceIcon(kind === "good" ? "Good" : "Bad", word);
     const icon = `<span class="al-ico al-${kind}" title="${word}">${inner}</span>`;
@@ -25,7 +36,7 @@
   }
 
   function tagTokens(text) {
-    return String(text || "")
+    return dropCardWord(text)
       // Caps ("max 14 VP") go on their own line, in brackets (drawn at the end of formatGameText).
       .replace(/[,.;]?\s*\b(max(?:imum)?|massimo)\s+(\d+)(\s*(?:VP|PV|XP|coins?))?\s*\.?/gi, (_, word, n, unit) => `.\u0002(${word.toLowerCase()} ${n}${unit || ""})\u0003 `)
       // Good / Bad / Neutral in the text: the round icon of the card corner replaces the word.
@@ -49,7 +60,7 @@
   window.tagTokens = tagTokens;
   // Rules and presentation texts: the same icons replace Good / Bad / Neutral.
   window.alignWords = (text) =>
-    String(text || "")
+    dropCardWord(text)
       .replace(/ ?\b(Good|Gentil(?:le)?s?|Buon[oaei])\b([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("good", w, p, m.startsWith(" ")))
       .replace(/ ?\b(Bad|Méchant(?:e)?s?|Cattiv[oaei])\b(?!\s+(?:Reine|Sorcière))([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("bad", w, p, m.startsWith(" ")))
       .replace(/ ?\b(Neutral|Neutre|Neutrale)\b([.,;:!?)»]?)/g, (m, w, p) => alignWordIcon("neutral", w, p, m.startsWith(" ")));
