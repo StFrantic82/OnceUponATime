@@ -177,7 +177,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP and 1 VP.",
       "copy": 1
     },
     {
@@ -186,7 +186,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP and 1 VP.",
       "copy": 2
     },
     {
@@ -195,7 +195,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP and 1 VP.",
       "copy": 3
     },
     {
@@ -204,7 +204,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP and 1 VP.",
       "copy": 4
     },
     {
@@ -213,7 +213,7 @@ window.GAME_DATA = {
       "name": "The Merry Men",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 coin to gain 1 XP.",
+      "effect": "Activation: spend 1 coin to gain 1 XP and 1 VP.",
       "copy": 5
     },
     {
@@ -330,7 +330,7 @@ window.GAME_DATA = {
       "name": "The Lost Boys",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 XP to gain 2 coins.",
+      "effect": "Activation: spend 1 XP to gain 3 coins.",
       "copy": 1
     },
     {
@@ -339,7 +339,7 @@ window.GAME_DATA = {
       "name": "The Lost Boys",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 XP to gain 2 coins.",
+      "effect": "Activation: spend 1 XP to gain 3 coins.",
       "copy": 2
     },
     {
@@ -348,7 +348,7 @@ window.GAME_DATA = {
       "name": "The Lost Boys",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 XP to gain 2 coins.",
+      "effect": "Activation: spend 1 XP to gain 3 coins.",
       "copy": 3
     },
     {
@@ -357,7 +357,7 @@ window.GAME_DATA = {
       "name": "The Lost Boys",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 1 XP to gain 2 coins.",
+      "effect": "Activation: spend 1 XP to gain 3 coins.",
       "copy": 4
     },
     {
@@ -483,7 +483,7 @@ window.GAME_DATA = {
       "name": "The Forest Animals",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 2 coins to place XP on a Character so that it levels up.",
+      "effect": "Activation: spend 1 coin to place XP on a Character so that it levels up.",
       "copy": 1
     },
     {
@@ -492,7 +492,7 @@ window.GAME_DATA = {
       "name": "The Forest Animals",
       "alignment": "Good",
       "icons": "",
-      "effect": "Activation: spend 2 coins to place XP on a Character so that it levels up.",
+      "effect": "Activation: spend 1 coin to place XP on a Character so that it levels up.",
       "copy": 2
     },
     {
@@ -546,7 +546,7 @@ window.GAME_DATA = {
       "name": "The Talking Cricket",
       "alignment": "Good",
       "icons": "",
-      "effect": "Ongoing: whenever you play a Chapter card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
+      "effect": "Ongoing: whenever you play a Chapter card with value 5 or lower, gain 1 VP (2 VP if you have Pinocchio).",
       "copy": 1
     },
     {
@@ -555,7 +555,7 @@ window.GAME_DATA = {
       "name": "The Talking Cricket",
       "alignment": "Good",
       "icons": "",
-      "effect": "Ongoing: whenever you play a Chapter card with value 4 or lower, gain 1 VP (2 VP if you have Pinocchio).",
+      "effect": "Ongoing: whenever you play a Chapter card with value 5 or lower, gain 1 VP (2 VP if you have Pinocchio).",
       "copy": 2
     }
   ],
@@ -719,7 +719,7 @@ window.GAME_DATA = {
       "name": "Magic Carpet",
       "cost": 2,
       "icons": "Sorcery 1",
-      "effect": "Ongoing: when choosing a group, you may discard a Common card from it to gain 3 coins.",
+      "effect": "Ongoing: when you choose a Common Character, you may discard it instead of taking it to gain 3 coins.",
       "copy": 1
     },
     {
@@ -872,7 +872,7 @@ window.GAME_DATA = {
       "name": "Crocodile's Clock",
       "cost": 2,
       "icons": "none",
-      "effect": "Activation: take back 1 Chapter card with value 7 or higher from your discard.",
+      "effect": "Activation: take back 1 Chapter card with value 9 or higher from your discard.",
       "copy": 1
     },
     {
@@ -1129,7 +1129,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Strength 1. Ongoing: your Chapter cards count as +1 value for turn order. You may play the same Chapter as an opponent, and you win ties.",
-      "upgrade": "Cost 3 XP. Ongoing: your Chapter cards count as +1 value more for turn order. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
+      "upgrade": "Cost 4 XP. Ongoing: your Chapter cards count as +1 value more for turn order. When you choose first, gain 1 VP (2 VP if you have a Playing Card Soldier).",
       "upgraded": false
     },
     {
@@ -1308,8 +1308,8 @@ window.GAME_DATA = {
       "name": "Princess Briar Rose",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Instant: take back 1 Chapter card with value 6 or lower from your discard. Gain 1 XP (2 XP if you have The Fairies).",
-      "upgrade": "Cost 1 XP. Ongoing: whenever you play a Chapter card with value 6 or lower, gain 1 XP and 1 VP.",
+      "base": "Charm 1. Instant: take back 1 Chapter card with value 7 or lower from your discard. Gain 1 XP (2 XP if you have The Fairies).",
+      "upgrade": "Cost 1 XP. Ongoing: whenever you play a Chapter card with value 7 or lower, gain 1 XP and 1 VP.",
       "upgraded": false
     },
     {
@@ -1318,7 +1318,7 @@ window.GAME_DATA = {
       "name": "Pinocchio",
       "rank": null,
       "alignment": "Good",
-      "base": "Ongoing: whenever you play a Chapter card with value 10 or higher, gain 1 Tag token.",
+      "base": "Ongoing: whenever you play a Chapter card with value 13 or higher, gain 1 Tag token.",
       "upgrade": "Cost 5 XP. Game End: 1 VP for each pair of Good cards.",
       "upgraded": false
     },
@@ -1329,7 +1329,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Good",
       "base": "Intelligence 1. Activation: gain 1 coin for each pair of Items.",
-      "upgrade": "Cost 5 XP. Game End: 3 VP for each pair of Items (4 VP more if you have Pinocchio).",
+      "upgrade": "Cost 5 XP. Game End: 2 VP for each pair of Items (4 VP more if you have Pinocchio).",
       "upgraded": false
     },
     {
@@ -1388,18 +1388,30 @@ window.GAME_DATA = {
     },
     {
       "number": 9,
-      "effect": "2 Coins"
+      "effect": "2 Coins + 1 XP"
     },
     {
       "number": 10,
-      "effect": "2 XP"
+      "effect": "2 Coins"
     },
     {
       "number": 11,
-      "effect": "Draw 1 Chapter"
+      "effect": "2 XP"
     },
     {
       "number": 12,
+      "effect": "1 Coin + 1 XP"
+    },
+    {
+      "number": 13,
+      "effect": "1 XP"
+    },
+    {
+      "number": 14,
+      "effect": "Draw 1 Chapter"
+    },
+    {
+      "number": 15,
       "effect": ""
     }
   ],
@@ -1458,7 +1470,7 @@ window.GAME_DATA = {
       "number": 8,
       "name": "The Yellow Brick Road",
       "theme": "The Wizard of Oz",
-      "scoring": "1 / 3 / 5 Characters from Oz: 2 / 4 / 6 VP. Dorothy Gale, Scarecrow, The Tin Woodman, The Cowardly Lion, The Wizard of Oz, the four Witches, The Munchkins."
+      "scoring": "1 / 2 / 4 Characters from Oz: 2 / 4 / 6 VP. Dorothy Gale, Scarecrow, The Tin Woodman, The Cowardly Lion, The Wizard of Oz, the four Witches, The Munchkins."
     },
     {
       "id": "Q9",
@@ -1472,7 +1484,7 @@ window.GAME_DATA = {
       "number": 10,
       "name": "The House of Seven",
       "theme": "Snow White",
-      "scoring": "1 / 2 / 4 Dwarves: 2 / 4 / 6 VP. All 7 Dwarves: you win the game!"
+      "scoring": "1 / 2 / 3 Dwarves: 2 / 4 / 6 VP. All 7 Dwarves: you win the game!"
     },
     {
       "id": "Q11",
@@ -1493,7 +1505,7 @@ window.GAME_DATA = {
       "number": 13,
       "name": "Second Star to the Right",
       "theme": "Peter Pan",
-      "scoring": "6 / 9 / 12 cards with an Activation effect: 2 / 4 / 6 VP."
+      "scoring": "6 / 8 / 10 cards with an Activation effect: 2 / 4 / 6 VP."
     },
     {
       "id": "Q14",
@@ -1549,21 +1561,21 @@ window.GAME_DATA = {
       "number": 21,
       "name": "A Real Boy",
       "theme": "Pinocchio",
-      "scoring": "2 VP for each Chapter card with value 4 or lower in your discard."
+      "scoring": "2 VP for each Chapter card with value 3 or lower in your discard."
     },
     {
       "id": "Q22",
       "number": 22,
       "name": "Grandmother's Path",
       "theme": "Little Red Riding Hood",
-      "scoring": "3 / 5 / 7 Good–Bad pairs of cards: 2 / 4 / 6 VP."
+      "scoring": "2 / 4 / 6 Good–Bad pairs of cards: 2 / 4 / 6 VP."
     },
     {
       "id": "Q23",
       "number": 23,
       "name": "The Hundred-Year Sleep",
       "theme": "Sleeping Beauty",
-      "scoring": "2 VP for each Chapter card with value 9 or higher in your discard."
+      "scoring": "2 VP for each Chapter card with value 13 or higher in your discard."
     },
     {
       "id": "Q24",
@@ -1594,11 +1606,11 @@ window.GAME_DATA = {
     {
       "id": "W2",
       "name": "Brothers Grimm",
-      "level1": "The first time each round you take both a Good and a Bad card, gain 1 coin.",
+      "level1": "Whenever you choose a Bad Character, gain 2 coins.",
       "cost2": 3,
       "level2": "Gain 1 XP for each Good–Bad pair of cards.",
       "cost3": 6,
-      "level3": "3 / 5 / 7 Good–Bad pairs of cards: 6 / 10 / 14 VP.",
+      "level3": "2 / 4 / 6 Good–Bad pairs of cards: 6 / 10 / 14 VP.",
       "coins": 2
     },
     {
@@ -1614,7 +1626,7 @@ window.GAME_DATA = {
     {
       "id": "W4",
       "name": "Carlo Collodi",
-      "level1": "When you are the first to choose a group in a round, gain 1 coin for each player.",
+      "level1": "When you are the first to choose a Character in a round, gain 2 coins.",
       "cost2": 3,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 6,
@@ -1634,7 +1646,7 @@ window.GAME_DATA = {
     {
       "id": "W6",
       "name": "J. M. Barrie",
-      "level1": "When you play a Chapter card valued 1–7, gain 1 XP.",
+      "level1": "When you play a Chapter card valued 1–8, gain 1 XP.",
       "cost2": 3,
       "level2": "Look at the top three Common cards, take one, and discard the others.",
       "cost3": 6,
@@ -1664,16 +1676,16 @@ window.GAME_DATA = {
   ],
   "board2p": [
     {
+      "basic": 0,
+      "advanced": 1
+    },
+    {
       "basic": 1,
       "advanced": 0
     },
     {
       "basic": 1,
-      "advanced": 1
-    },
-    {
-      "basic": 2,
-      "advanced": 1
+      "advanced": 0
     }
   ]
 };

@@ -578,3 +578,5 @@ body.print-body {
 /* Printed cards: same balance — boxes hug their text, the illustration fills the rest */
 .cell .fc-legendary .fc-up { flex: 0 0 auto; }
 .cell .fc-legendary .fc-art, .cell .fc-item .fc-art, .cell .fc-common .fc-art { flex: 1 1 auto; min-height: 70px; }
+
+.bor { font: 700 7pt/1 "Alegreya Sans", sans-serif; color: #7a4a1a; align-self: center; margin: 0 .3mm; }

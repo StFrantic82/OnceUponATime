@@ -6,43 +6,43 @@ const TEXT = {
     page: "Box", cover: "Cover", back: "Box back", dl: "Download the image",
     by: "A game by", tagline: "Gather the heroes, villains and treasures of the classic tales into your own story.",
     players: "2–4 players", age: "Ages 14+", time: "40 min",
-    pitch: "You are storytellers. Round after round, heroes, villains and treasures step out of the classic tales, and each of you weaves them into a story of your own. After 8 rounds, the finest story wins.",
+    pitch: "You are storytellers. Round after round, heroes, villains and treasures step out of the classic tales, and each of you weaves them into a story of your own. After 12 rounds, the finest story wins.",
     keys: [
-      ["Twelve chapters, one dilemma", "A high Chapter card lets you choose first. A low one gives a stronger effect. Each can be played only once."],
+      ["Fifteen chapters, one dilemma", "A high Chapter card lets you choose first. A low one gives a stronger effect. Each can be played only once."],
       ["Tales that work together", "Combine the tags, the Good and the Bad, and the characters of the same tale to trigger combos."],
       ["A story that grows", "Upgrade your Legendary characters and your Writer with XP, buy Items and complete Adventures."],
     ],
     sceneTitle: "A round in progress",
-    c1: "Play a Chapter card", c2: "Take a group of characters", c3: "Grow your story",
-    contents: "Contents", list: ["62 Common characters", "43 Legendary characters", "40 Items", "25 Adventures", "8 Writers", "48 Chapter cards", "1 board", "Coins, XP, VP and Tag tokens"],
+    c1: "Play a Chapter card", c2: "Take one character", c3: "Grow your story",
+    contents: "Contents", list: ["62 Common characters", "43 Legendary characters", "40 Items", "25 Adventures", "8 Writers", "60 Chapter cards", "1 board", "Coins, XP, VP and Tag tokens"],
   },
   fr: {
     page: "Boîte", cover: "Couverture", back: "Dos de boîte", dl: "Télécharger l’image",
     by: "Un jeu de", tagline: "Réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques.",
     players: "2–4 joueurs", age: "14 ans et +", time: "40 min",
-    pitch: "Vous êtes des conteurs. Manche après manche, héros, méchants et trésors sortent des contes classiques, et chacun les tisse dans sa propre histoire. Après 8 manches, la plus belle histoire l’emporte.",
+    pitch: "Vous êtes des conteurs. Manche après manche, héros, méchants et trésors sortent des contes classiques, et chacun les tisse dans sa propre histoire. Après 12 manches, la plus belle histoire l’emporte.",
     keys: [
-      ["Douze chapitres, un dilemme", "Une grande carte Chapitre vous fait choisir en premier. Une petite donne un effet plus fort. Chacune ne se joue qu’une fois."],
+      ["Quinze chapitres, un dilemme", "Une grande carte Chapitre vous fait choisir en premier. Une petite donne un effet plus fort. Chacune ne se joue qu’une fois."],
       ["Des contes qui fonctionnent ensemble", "Combinez les tags, les Gentils et les Méchants, et les personnages d’un même conte pour déclencher des combos."],
       ["Une histoire qui grandit", "Améliorez vos personnages Légendaires et votre Écrivain avec l’XP, achetez des Objets et accomplissez des Aventures."],
     ],
     sceneTitle: "Une manche en cours",
-    c1: "Jouez une carte Chapitre", c2: "Prenez un lot de personnages", c3: "Faites grandir votre histoire",
-    contents: "Contenu", list: ["62 personnages Communs", "43 personnages Légendaires", "40 Objets", "25 Aventures", "8 Écrivains", "48 cartes Chapitre", "1 plateau", "Pièces, XP, PV et jetons Tag"],
+    c1: "Jouez une carte Chapitre", c2: "Prenez un personnage", c3: "Faites grandir votre histoire",
+    contents: "Contenu", list: ["62 personnages Communs", "43 personnages Légendaires", "40 Objets", "25 Aventures", "8 Écrivains", "60 cartes Chapitre", "1 plateau", "Pièces, XP, PV et jetons Tag"],
   },
   it: {
     page: "Scatola", cover: "Copertina", back: "Retro della scatola", dl: "Scarica l’immagine",
     by: "Un gioco di", tagline: "Riunisci nella tua storia gli eroi, i cattivi e i tesori delle fiabe classiche.",
     players: "2–4 giocatori", age: "14+ anni", time: "40 min",
-    pitch: "Siete dei narratori. Round dopo round, eroi, cattivi e tesori escono dalle fiabe classiche, e ognuno li intreccia nella propria storia. Dopo 8 round, vince la storia più bella.",
+    pitch: "Siete dei narratori. Round dopo round, eroi, cattivi e tesori escono dalle fiabe classiche, e ognuno li intreccia nella propria storia. Dopo 12 round, vince la storia più bella.",
     keys: [
-      ["Dodici capitoli, un dilemma", "Una carta Capitolo alta ti fa scegliere per primo. Una bassa dà un effetto più forte. Ognuna si gioca una sola volta."],
+      ["Quindici capitoli, un dilemma", "Una carta Capitolo alta ti fa scegliere per primo. Una bassa dà un effetto più forte. Ognuna si gioca una sola volta."],
       ["Fiabe che funzionano insieme", "Combina i tag, i Buoni e i Cattivi e i personaggi della stessa fiaba per innescare combo."],
       ["Una storia che cresce", "Potenzia i tuoi personaggi Leggendari e il tuo Scrittore con gli XP, compra Oggetti e completa Avventure."],
     ],
     sceneTitle: "Un round in corso",
-    c1: "Gioca una carta Capitolo", c2: "Prendi un gruppo di personaggi", c3: "Fai crescere la tua storia",
-    contents: "Contenuto", list: ["62 personaggi Comuni", "43 personaggi Leggendari", "40 Oggetti", "25 Avventure", "8 Scrittori", "48 carte Capitolo", "1 plancia", "Monete, XP, PV e segnalini Tag"],
+    c1: "Gioca una carta Capitolo", c2: "Prendi un personaggio", c3: "Fai crescere la tua storia",
+    contents: "Contenuto", list: ["62 personaggi Comuni", "43 personaggi Leggendari", "40 Oggetti", "25 Avventure", "8 Scrittori", "60 carte Capitolo", "1 plancia", "Monete, XP, PV e segnalini Tag"],
   },
 };
 const AUTHORS = "Simone Luciani & Matthieu Verdier";
@@ -81,8 +81,9 @@ function back(L) {
       <div class="scene-table">
         <div class="scene-row scene-groups">
           <div class="scene-group">${f("[[legendary:Alice]]")}</div>
-          <div class="scene-group picked">${f("[[common:Pirate]][[common:Mice]][[legendary:Captain Hook]]")}</div>
-          <div class="scene-group">${f("[[common:Dwarf]][[common:The Lost Boys]]")}</div>
+          <div class="scene-group picked">${f("[[legendary:Captain Hook]]")}</div>
+          <div class="scene-group">${f("[[common:Pirate]]")}</div>
+          <div class="scene-group">${f("[[common:Dwarf]]")}</div>
           <div class="scene-shop">${f("[[item:Magic Lamp]][[quest:Neverland]]")}</div>
         </div>
         <div class="scene-row scene-player">

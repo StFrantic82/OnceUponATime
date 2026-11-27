@@ -22,7 +22,7 @@
     },
   };
 
-  const cfg = Object.assign({ players: 4, level: "hard", games: 200 }, store.get("ouat-sim-cfg", {}), { rounds: 8 });
+  const cfg = Object.assign({ players: 4, level: "hard", games: 200 }, store.get("ouat-sim-cfg", {}), { rounds: 12 });
   let running = false;
   let stopAsked = false;
   let view = "legendary";

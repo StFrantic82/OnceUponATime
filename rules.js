@@ -61,7 +61,13 @@ function iconAmount(card, icon) {
 }
 
 const find = (list, name) => list.find((c) => c.name === name) || list[0];
-const BOARDS = { 2: [[0, 1], [2, 1], [2, 0]], 3: [[0, 1], [2, 1], [2, 0], [1, 1]], 4: [[0, 1], [1, 1], [2, 0], [2, 1], [1, 1]] };
+// Characters revealed each round. With 3 players the second Legendary alternates with a Common card.
+const BOARD_ROWS = [
+  [2, "", [[0, 1], [1, 0], [1, 0]]],
+  [3, "odd", [[0, 1], [0, 1], [1, 0], [1, 0]]],
+  [3, "even", [[0, 1], [1, 0], [1, 0], [1, 0]]],
+  [4, "", [[0, 1], [0, 1], [1, 0], [1, 0], [1, 0]]],
+];
 
 // Writer tiles: same face as in the game and the Print & Play.
 function writerCard(writer) {
@@ -87,8 +93,8 @@ function anatomy(kind, labels) {
 
 function boardsTable(L) {
   const chip = (k, n) => Array.from({ length: n }, () => `<i class="chip chip-${k}" title="${esc(k === "c" ? L.normal : L.legendary)}"></i>`).join("");
-  return `<table class="boards"><thead><tr><th>${esc(L.players)}</th><th>${esc(L.groups)}</th></tr></thead><tbody>${Object.entries(BOARDS)
-    .map(([n, groups]) => `<tr><td><b>${n}</b></td><td><div class="board-row">${groups.map(([c, l]) => `<span class="board-group">${chip("c", c)}${chip("l", l)}</span>`).join("")}</div></td></tr>`)
+  return `<table class="boards"><thead><tr><th>${esc(L.players)}</th><th>${esc(L.groups)}</th></tr></thead><tbody>${BOARD_ROWS
+    .map(([n, when, groups]) => `<tr><td><b>${n}</b>${when ? `<br><small>${esc(L[when])}</small>` : ""}</td><td><div class="board-row">${groups.map(([c, l]) => `<span class="board-group">${chip("c", c)}${chip("l", l)}</span>`).join("")}</div></td></tr>`)
     .join("")}</tbody></table><p class="legend-line"><i class="chip chip-c"></i> ${esc(L.normal)} &nbsp; <i class="chip chip-l"></i> ${esc(L.legendary)}</p>`;
 }
 
@@ -120,7 +126,9 @@ const RULES = {
     kicker: "Once Upon a Time · 2 to 4 players · ages 14+ · 40 min",
     toc: "Contents",
     players: "Players",
-    groups: "Groups revealed each round",
+    groups: "Characters revealed each round",
+    odd: "odd rounds",
+    even: "even rounds",
     normal: "Common character",
     legendary: "Legendary character",
     anatomy: {
@@ -129,16 +137,16 @@ const RULES = {
       item: ["Skill tags.", "Name of the Item.", "Price in coins.", "Effect."],
     },
     sections: [
-      ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Adventures. After <b>8 rounds</b>, the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
-      <p>The heart of the game is your hand of <b>Chapter cards</b>, numbered 1 to 12 like the chapters of a book. A high chapter lets you choose first; a low chapter gives a stronger effect. Every chapter you play is gone, so choose wisely when to spend it.</p>`],
+      ["goal", "The story", `<p>You are storytellers. Round after round you gather the heroes, villains and treasures of the classic tales into your own story, and you complete Adventures. After <b>12 rounds</b>, the storyteller with the most <b>Victory Points</b> [[icon:vp]] wins.</p>
+      <p>The heart of the game is your hand of <b>Chapter cards</b>, numbered 1 to 15 like the chapters of a book. A high chapter lets you choose first; a low chapter gives a stronger effect. Every chapter you play is gone, so choose wisely when to spend it.</p>`],
       ["material", "Components", `<ul class="material-list">
         <li><b>62</b> Common character cards</li>
         <li><b>43</b> Legendary character cards</li>
         <li><b>40</b> Item tiles</li>
         <li><b>25</b> Adventure cards</li>
         <li><b>8</b> Writer cards</li>
-        <li><b>48</b> Chapter cards (12 per player, in 4 colours)</li>
-        <li><b>1</b> board (groups for 2, 3 and 4 players, and the icons)</li>
+        <li><b>60</b> Chapter cards (15 per player, in 4 colours)</li>
+        <li><b>1</b> board (offer for 2, 3 and 4 players, and the icons)</li>
         <li><b>1</b> first player token</li>
         <li><b>36</b> coins [[icon:coins]]</li>
         <li><b>90</b> XP tokens [[icon:xp]]</li>
@@ -158,35 +166,35 @@ const RULES = {
       ["setup", "Setup", `<ol>
         <li>Shuffle the Common characters and the Legendary characters into two separate decks.</li>
         <li>Shuffle the Items and reveal <b>1 + the number of players</b>. Shuffle the Adventures and reveal <b>1 + the number of players</b>.</li>
-        <li>Each player takes the 12 Chapter cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>8</b> face down: this is their Chapter deck.</li>
-        <li>Put the board in the middle: it shows the groups for 2, 3 and 4 players, and all the icons. Choose a first player at random: they take the first player token.</li>
+        <li>Each player takes the 15 Chapter cards of one colour, shuffles them, draws <b>4</b> into their hand and places the other <b>11</b> face down: this is their Chapter deck.</li>
+        <li>Put the board in the middle: it shows the offer for 2, 3 and 4 players, and all the icons. Choose a first player at random: they take the first player token.</li>
         <li>Shuffle the Writers. Each player draws <b>2 Writers</b>, keeps <b>1</b> of them, at level 1, and takes the <b>coins</b> [[icon:coins]] shown on it. The other Writer is discarded (put back in the game box), as are the Writers nobody drew.</li>
         <li>Place your Chapter deck to the left of your Writer, against the notch: it is the book you are writing.</li>
       </ol>`],
-      ["round", "A round", `<h3>1. Reveal the groups</h3>
-      <p>Reveal Common and Legendary characters under the spaces of the board to form the groups shown below. There is always <b>one group more than there are players</b>.</p>
+      ["round", "A round", `<h3>1. Reveal the offer</h3>
+      <p>Reveal one Common or Legendary character under each space of the board, as shown below: this is the offer. There is always <b>one character more than there are players</b>, and each player will take <b>only one</b>. With 3 players, the second Legendary character is only revealed in odd rounds (1, 3, 5…); in even rounds a Common character takes its place.</p>
       [[boards]]
       <h3>2. Play a Chapter card</h3>
       <p>Starting with the first player and going clockwise, everyone plays one Chapter card face up. You cannot play a chapter that another player has already played this round (if all your cards are taken, play any of them). The <b>highest chapter plays first</b>, then the next, and so on. If two players play the same chapter, the one closest to the first player (clockwise) goes first. The Queen of Hearts adds to your chapter, lets you play the same chapter as an opponent and always wins ties.</p>
-      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will get the last group, but her chapter 5 gives her a free upgrade and 2 coins.
+      <div class="example"><b>Example.</b> Marc plays chapter 10, Léa chapter 6 and Sofia chapter 5. Marc plays first, then Léa, then Sofia: Sofia will choose her character last, but her chapter 5 gives her a free upgrade and 2 coins.
       <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Your turn</h3>
       <ol>
-        <li><b>Take a group.</b> Put all its cards in front of you (your tableau). Their [[icon:instant]] effects happen now.</li>
+        <li><b>Take one character</b> from the offer. Put it in front of you (your tableau). Its [[icon:instant]] effect happens now.</li>
         <li><b>Resolve your Chapter card.</b> Coins, XP, Adventures, activations or free upgrades.</li>
         <li><b>Buy one Item</b> if you wish (one only), by paying its price in coins.</li>
         <li><b>Place your XP</b> [[icon:xp]]: each XP you gain goes on a free star space, between two levels of your Writer or of a Legendary character not yet upgraded. Placed XP never moves. When all the spaces of a step are filled (the number of spaces is the cost), the card moves up at once. To <b>spend XP</b> (the Lost Boys), take it from your unplaced XP or from a Legendary character that is not upgraded yet, never from an upgraded card. [[icon:freeup]] <b>Free upgrade</b>: one of your Legendary characters is upgraded at once (cover its empty spaces with XP from the supply). It cannot be used on your Writer.</li>
         <li>Your turn ends; the next player in the turn order plays.</li>
       </ol>
-      <div class="example"><b>Example of a turn.</b> Léa played chapter 4 (“Activate all + 2 coins”). She takes the group with the Dwarf and the Mice: the Mice give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf gives her 1 coin — and gains 2 coins. With her 5 coins she could buy an Item, but she keeps them.
+      <div class="example"><b>Example of a turn.</b> Léa played chapter 4 (“Activate all + 2 coins”). She takes the Mice: they give her a Tag token at once. Then she resolves her chapter: she activates all her cards — the Dwarf she took in an earlier round gives her 1 coin — and gains 2 coins. With her 5 coins she could buy an Item, but she keeps them.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. End of the round</h3>
       <ul>
         <li>Straighten all tilted cards. Discard the characters nobody took. The Items and the Adventures stay on display from one round to the next: only refill the empty spots, Items to 1 + players and Adventures to 1 + players.</li>
-        <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when only 1 card is left in it, the last round begins.</li>
+        <li>Each player draws <b>exactly 1 Chapter card</b> from their Chapter deck. The deck therefore shrinks by one card each round: when it is empty, the last round begins.</li>
         <li>The player who played the highest chapter becomes the first player and takes the token.</li>
       </ul>`],
-      ["effects", "Effects in detail", `<h3>The 12 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 12 does nothing but lets you choose a group first.</p><p class="legend-line">[[icon:activation]] activate 1 of your cards · [[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take an Adventure.</p>[[actions]]
+      ["effects", "Effects in detail", `<h3>The 15 Chapter cards</h3><p>The higher the chapter, the weaker the effect: chapter 1 is the strongest, chapter 15 does nothing but lets you choose your character first.</p><p class="legend-line">[[icon:activation]] activate 1 of your cards · [[icon:activation]][[icon:activation]][[icon:activation]] activate all your cards with an Activation effect · [[icon:freeup]] free upgrade · [[questicon]] take an Adventure.</p>[[actions]]
       <p><b>Activate.</b> “Activate all” triggers every [[icon:activation]] effect in your tableau and Items; “Activate 1 card” only one of them, of your choice. An Activation that costs something (spend coins, discard a card…) is optional. When you activate a card, <b>tilt it</b> to show that it has been used this round; all cards are straightened at the end of the round. An effect that activates a card again (the Sand Hourglass) also works on a tilted card.</p>
       <p><b>Take an Adventure.</b> Choose one face-up Adventure and keep it in front of you. It will score at the end of the game.</p>
       <p><b>Free upgrade.</b> Fill at once all the remaining star spaces of a Legendary character: it is upgraded. A free upgrade can <b>never</b> be used on your Writer: its levels are only reached with XP. If you have no Legendary character to upgrade by the end of your turn, the free upgrade is lost.</p>
@@ -198,7 +206,7 @@ const RULES = {
       <h3>Writers</h3>
       <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. You reach each level by filling its star spaces with XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "End of the game and scoring", `<p>The game ends after the 8th round, when only 1 card is left in each Chapter deck. Each player adds up:</p>
+      ["end", "End of the game and scoring", `<p>The game ends after the 12th round: the Chapter decks are empty and 3 Chapter cards are left in each hand. Each player adds up:</p>
       <ul>
         <li>the Victory Points [[icon:vp]] gained during the game;</li>
         <li>their Adventures [[icon:endgame]];</li>
@@ -216,7 +224,9 @@ const RULES = {
     kicker: "Once Upon a Time · 2 à 4 joueurs · 14 ans et + · 40 min",
     toc: "Sommaire",
     players: "Joueurs",
-    groups: "Groupes révélés à chaque manche",
+    groups: "Personnages révélés à chaque manche",
+    odd: "manches impaires",
+    even: "manches paires",
     normal: "Personnage commun",
     legendary: "Personnage légendaire",
     anatomy: {
@@ -225,16 +235,16 @@ const RULES = {
       item: ["Tags de compétence.", "Nom de l’Objet.", "Prix en pièces.", "Effet."],
     },
     sections: [
-      ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Aventures. Après <b>8 manches</b>, le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
-      <p>Le cœur du jeu, c’est votre main de <b>cartes Chapitre</b>, numérotées de 1 à 12 comme les chapitres d’un livre. Un grand chapitre vous fait choisir en premier ; un petit chapitre donne un effet plus fort. Chaque chapitre joué est perdu : choisissez bien quand le dépenser.</p>`],
+      ["goal", "L’histoire", `<p>Vous êtes des conteurs. Manche après manche, vous réunissez dans votre histoire les héros, les méchants et les trésors des contes classiques, et vous accomplissez des Aventures. Après <b>12 manches</b>, le conteur qui a le plus de <b>Points de Victoire</b> [[icon:vp]] l’emporte.</p>
+      <p>Le cœur du jeu, c’est votre main de <b>cartes Chapitre</b>, numérotées de 1 à 15 comme les chapitres d’un livre. Un grand chapitre vous fait choisir en premier ; un petit chapitre donne un effet plus fort. Chaque chapitre joué est perdu : choisissez bien quand le dépenser.</p>`],
       ["material", "Matériel", `<ul class="material-list">
         <li><b>62</b> cartes Personnage commun</li>
         <li><b>43</b> cartes Personnage légendaire</li>
         <li><b>40</b> tuiles Objet</li>
         <li><b>25</b> cartes Aventure</li>
         <li><b>8</b> cartes Écrivain</li>
-        <li><b>48</b> cartes Chapitre (12 par joueur, en 4 couleurs)</li>
-        <li><b>1</b> plateau (groupes pour 2, 3 et 4 joueurs, et iconographie)</li>
+        <li><b>60</b> cartes Chapitre (15 par joueur, en 4 couleurs)</li>
+        <li><b>1</b> plateau (offre pour 2, 3 et 4 joueurs, et iconographie)</li>
         <li><b>1</b> jeton Premier joueur</li>
         <li><b>36</b> pièces [[icon:coins]]</li>
         <li><b>90</b> jetons XP [[icon:xp]]</li>
@@ -254,35 +264,35 @@ const RULES = {
       ["setup", "Mise en place", `<ol>
         <li>Mélangez les personnages Communs et les personnages Légendaires en deux pioches séparées.</li>
         <li>Mélangez les Objets et révélez-en <b>1 + le nombre de joueurs</b>. Mélangez les Aventures et révélez-en <b>1 + le nombre de joueurs</b>.</li>
-        <li>Chaque joueur prend les 12 cartes Chapitre d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>8</b> autres face cachée : c’est sa pioche Chapitre.</li>
-        <li>Placez le plateau au centre : il indique les lots à 2, 3 et 4 joueurs, ainsi que toute l’iconographie. Désignez un premier joueur au hasard : il prend le jeton premier joueur.</li>
+        <li>Chaque joueur prend les 15 cartes Chapitre d’une couleur, les mélange, en pioche <b>4</b> et pose les <b>11</b> autres face cachée : c’est sa pioche Chapitre.</li>
+        <li>Placez le plateau au centre : il indique l’offre à 2, 3 et 4 joueurs, ainsi que toute l’iconographie. Désignez un premier joueur au hasard : il prend le jeton premier joueur.</li>
         <li>Mélangez les Écrivains. Chaque joueur en pioche <b>2</b> et en garde <b>1</b>, au niveau 1, puis prend les <b>pièces</b> [[icon:coins]] indiquées dessus. L’autre Écrivain est défaussé (remis dans la boîte de jeu), tout comme les Écrivains que personne n’a piochés.</li>
         <li>Posez votre pioche Chapitre à gauche de votre Écrivain, contre l’encoche : c’est le livre que vous êtes en train d’écrire.</li>
       </ol>`],
-      ["round", "Une manche", `<h3>1. Révéler les groupes</h3>
-      <p>Révélez des personnages Communs et Légendaires sous les emplacements du plateau pour former les groupes ci-dessous. Il y a toujours <b>un groupe de plus que de joueurs</b>.</p>
+      ["round", "Une manche", `<h3>1. Révéler l’offre</h3>
+      <p>Révélez un personnage Commun ou Légendaire sous chaque emplacement du plateau, comme indiqué ci-dessous : c’est l’offre. Il y a toujours <b>un personnage de plus que de joueurs</b>, et chaque joueur n’en prendra <b>qu’un seul</b>. À 3 joueurs, le second personnage Légendaire n’est révélé que lors des manches impaires (1, 3, 5…) ; lors des manches paires, un personnage Commun prend sa place.</p>
       [[boards]]
       <h3>2. Jouer une carte Chapitre</h3>
       <p>En commençant par le premier joueur, dans le sens horaire, chacun joue une carte Chapitre face visible. On ne peut pas jouer un chapitre qu’un autre joueur a déjà joué cette manche (si toutes vos cartes sont déjà prises, jouez-en une au choix). Le <b>plus grand chapitre joue en premier</b>, puis le suivant, etc. Si deux joueurs jouent le même chapitre, celui qui est le plus proche du premier joueur (sens horaire) passe devant. La Reine de cœur augmente votre chapitre, vous permet de jouer le même chapitre qu’un adversaire et gagne toujours les égalités.</p>
-      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia aura le dernier groupe, mais son chapitre 5 lui donne une amélioration gratuite et 2 pièces.
+      <div class="example"><b>Exemple.</b> Marc joue le chapitre 10, Léa le 6 et Sofia le 5. Marc joue en premier, puis Léa, puis Sofia : Sofia choisira son personnage en dernier, mais son chapitre 5 lui donne une amélioration gratuite et 2 pièces.
       <div class="fig-row">[[action:10:Marc]][[action:6:Léa]][[action:5:Sofia]]</div></div>
       <h3>3. Votre tour</h3>
       <ol>
-        <li><b>Prenez un groupe.</b> Posez toutes ses cartes devant vous (votre tableau). Leurs effets [[icon:instant]] s’appliquent tout de suite.</li>
+        <li><b>Prenez un personnage</b> de l’offre. Posez-le devant vous (votre tableau). Son effet [[icon:instant]] s’applique tout de suite.</li>
         <li><b>Résolvez votre carte Chapitre.</b> Pièces, XP, Aventures, activations ou améliorations gratuites.</li>
         <li><b>Achetez un Objet</b> si vous le souhaitez (un seul), en payant son prix en pièces.</li>
         <li><b>Placez votre XP</b> [[icon:xp]] : chaque XP gagné se pose sur une case étoile libre, entre deux niveaux de votre Écrivain ou d’un personnage Légendaire pas encore amélioré. Un XP posé ne peut plus être déplacé. Quand toutes les cases d’une étape sont remplies (le nombre de cases est le coût), la carte passe aussitôt au niveau suivant. Pour <b>dépenser de l’XP</b> (les Garçons perdus), prenez-le dans votre réserve ou sur un personnage Légendaire pas encore amélioré, jamais sur une carte déjà améliorée. [[icon:freeup]] <b>Amélioration gratuite</b> : un de vos personnages Légendaires est amélioré tout de suite (couvrez ses cases vides avec de l’XP de la réserve). Elle ne peut pas servir sur votre Écrivain.</li>
         <li>Votre tour se termine ; le joueur suivant dans l’ordre du tour joue.</li>
       </ol>
-      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 4 (« Tout activer + 2 pièces »). Elle prend le groupe avec le Nain et les Souris : les Souris lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain lui rapporte 1 pièce — et gagne 2 pièces. Avec ses 5 pièces, elle pourrait acheter un Objet, mais elle les garde.
+      <div class="example"><b>Exemple de tour.</b> Léa a joué le chapitre 4 (« Tout activer + 2 pièces »). Elle prend les Souris : elles lui donnent tout de suite un jeton Tag. Puis elle résout son chapitre : elle active toutes ses cartes — le Nain pris lors d’une manche précédente lui rapporte 1 pièce — et gagne 2 pièces. Avec ses 5 pièces, elle pourrait acheter un Objet, mais elle les garde.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fin de la manche</h3>
       <ul>
         <li>Redressez toutes les cartes inclinées. Défaussez les personnages que personne n’a pris. Les Objets et les Aventures restent visibles d’une manche à l’autre : complétez seulement les emplacements vides, Objets jusqu’à 1 + joueurs et Aventures jusqu’à 1 + joueurs.</li>
-        <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand il n’y reste plus qu’une carte, la dernière manche commence.</li>
+        <li>Chaque joueur pioche <b>exactement 1 carte Chapitre</b> dans sa pioche Chapitre. La pioche diminue donc d’une carte par manche : quand elle est vide, la dernière manche commence.</li>
         <li>Le joueur qui a joué le plus grand chapitre devient premier joueur et prend le jeton.</li>
       </ul>`],
-      ["effects", "Les effets en détail", `<h3>Les 12 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 12 ne fait rien mais permet de choisir son groupe en premier.</p><p class="legend-line">[[icon:activation]] déclencher 1 de vos cartes · [[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Aventure.</p>[[actions]]
+      ["effects", "Les effets en détail", `<h3>Les 15 cartes Chapitre</h3><p>Plus le chapitre est élevé, plus l’effet est faible : le chapitre 1 est le plus fort, le chapitre 15 ne fait rien mais permet de choisir son personnage en premier.</p><p class="legend-line">[[icon:activation]] déclencher 1 de vos cartes · [[icon:activation]][[icon:activation]][[icon:activation]] déclencher toutes vos cartes à effet Activation · [[icon:freeup]] amélioration gratuite · [[questicon]] prendre une Aventure.</p>[[actions]]
       <p><b>Activer.</b> « Tout activer » déclenche tous les effets [[icon:activation]] de votre tableau et de vos Objets ; « Activer 1 carte » un seul d’entre eux, au choix. Une Activation qui coûte quelque chose (dépenser des pièces, défausser une carte…) est facultative. Quand vous activez une carte, <b>inclinez-la</b> pour montrer qu’elle a servi cette manche ; toutes les cartes sont redressées à la fin de la manche. Un effet qui réactive une carte (le Sablier) fonctionne aussi sur une carte inclinée.</p>
       <p><b>Prendre une Aventure.</b> Choisissez une Aventure visible et gardez-la devant vous. Elle rapportera des points en fin de partie.</p>
       <p><b>Amélioration gratuite.</b> Remplissez d’un coup toutes les cases étoile restantes d’un personnage Légendaire : il est amélioré. Une amélioration gratuite ne peut <b>jamais</b> servir sur votre Écrivain : ses niveaux ne s’atteignent qu’avec de l’XP. Si vous n’avez aucun personnage Légendaire à améliorer à la fin de votre tour, l’amélioration gratuite est perdue.</p>
@@ -294,7 +304,7 @@ const RULES = {
       <h3>Écrivains</h3>
       <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. On atteint chaque niveau en remplissant ses cases étoile avec de l’XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "Fin de partie et décompte", `<p>La partie se termine après la 8e manche, quand il ne reste plus qu’une carte dans chaque pioche Chapitre. Chaque joueur additionne :</p>
+      ["end", "Fin de partie et décompte", `<p>La partie se termine après la 12e manche : les pioches Chapitre sont vides et il reste 3 cartes Chapitre dans chaque main. Chaque joueur additionne :</p>
       <ul>
         <li>les Points de Victoire [[icon:vp]] gagnés pendant la partie ;</li>
         <li>ses Aventures [[icon:endgame]] ;</li>
@@ -312,7 +322,9 @@ const RULES = {
     kicker: "Once Upon a Time · da 2 a 4 giocatori · 14+ anni · 40 min",
     toc: "Indice",
     players: "Giocatori",
-    groups: "Gruppi rivelati a ogni round",
+    groups: "Personaggi rivelati a ogni round",
+    odd: "round dispari",
+    even: "round pari",
     normal: "Personaggio comune",
     legendary: "Personaggio leggendario",
     anatomy: {
@@ -321,16 +333,16 @@ const RULES = {
       item: ["Tag di abilità.", "Nome dell’Oggetto.", "Prezzo in monete.", "Effetto."],
     },
     sections: [
-      ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Avventure. Dopo <b>8 round</b>, vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
-      <p>Il cuore del gioco è la tua mano di <b>carte Capitolo</b>, numerate da 1 a 12 come i capitoli di un libro. Un capitolo alto ti fa scegliere per primo; un capitolo basso dà un effetto più forte. Ogni capitolo giocato è perso: scegli bene quando usarlo.</p>`],
+      ["goal", "La storia", `<p>Siete narratori. Round dopo round riunite nella vostra storia gli eroi, i cattivi e i tesori delle fiabe classiche, e completate Avventure. Dopo <b>12 round</b>, vince il narratore con più <b>Punti Vittoria</b> [[icon:vp]].</p>
+      <p>Il cuore del gioco è la tua mano di <b>carte Capitolo</b>, numerate da 1 a 15 come i capitoli di un libro. Un capitolo alto ti fa scegliere per primo; un capitolo basso dà un effetto più forte. Ogni capitolo giocato è perso: scegli bene quando usarlo.</p>`],
       ["material", "Componenti", `<ul class="material-list">
         <li><b>62</b> carte Personaggio comune</li>
         <li><b>43</b> carte Personaggio leggendario</li>
         <li><b>40</b> tessere Oggetto</li>
         <li><b>25</b> carte Avventura</li>
         <li><b>8</b> carte Scrittore</li>
-        <li><b>48</b> carte Capitolo (12 per giocatore, in 4 colori)</li>
-        <li><b>1</b> plancia (gruppi per 2, 3 e 4 giocatori, e iconografia)</li>
+        <li><b>60</b> carte Capitolo (15 per giocatore, in 4 colori)</li>
+        <li><b>1</b> plancia (offerta per 2, 3 e 4 giocatori, e iconografia)</li>
         <li><b>1</b> segnalino Primo giocatore</li>
         <li><b>36</b> monete [[icon:coins]]</li>
         <li><b>90</b> segnalini XP [[icon:xp]]</li>
@@ -350,35 +362,35 @@ const RULES = {
       ["setup", "Preparazione", `<ol>
         <li>Mescola i personaggi Comuni e i personaggi Leggendari in due mazzi separati.</li>
         <li>Mescola gli Oggetti e rivelane <b>1 + il numero di giocatori</b>. Mescola le Avventure e rivelane <b>1 + il numero di giocatori</b>.</li>
-        <li>Ogni giocatore prende le 12 carte Capitolo di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>8</b> coperte: è il suo mazzo Capitolo.</li>
-        <li>Metti la plancia al centro: mostra i gruppi per 2, 3 e 4 giocatori e tutta l’iconografia. Scegliete a caso il primo giocatore: prende il segnalino primo giocatore.</li>
+        <li>Ogni giocatore prende le 15 carte Capitolo di un colore, le mescola, ne pesca <b>4</b> e mette le altre <b>11</b> coperte: è il suo mazzo Capitolo.</li>
+        <li>Metti la plancia al centro: mostra l’offerta per 2, 3 e 4 giocatori e tutta l’iconografia. Scegliete a caso il primo giocatore: prende il segnalino primo giocatore.</li>
         <li>Mescola gli Scrittori. Ogni giocatore ne pesca <b>2</b> e ne tiene <b>1</b>, al livello 1, poi prende le <b>monete</b> [[icon:coins]] indicate sopra. L’altro Scrittore viene scartato (rimesso nella scatola), così come gli Scrittori che nessuno ha pescato.</li>
         <li>Metti il tuo mazzo Capitolo a sinistra del tuo Scrittore, contro la tacca: è il libro che stai scrivendo.</li>
       </ol>`],
-      ["round", "Un round", `<h3>1. Rivelare i gruppi</h3>
-      <p>Rivela personaggi Comuni e Leggendari sotto gli spazi della plancia per formare i gruppi qui sotto. C’è sempre <b>un gruppo in più rispetto ai giocatori</b>.</p>
+      ["round", "Un round", `<h3>1. Rivelare l’offerta</h3>
+      <p>Rivela un personaggio Comune o Leggendario sotto ogni spazio della plancia, come indicato qui sotto: è l’offerta. C’è sempre <b>un personaggio in più rispetto ai giocatori</b>, e ogni giocatore ne prenderà <b>uno solo</b>. In 3 giocatori, il secondo personaggio Leggendario viene rivelato solo nei round dispari (1, 3, 5…); nei round pari un personaggio Comune prende il suo posto.</p>
       [[boards]]
       <h3>2. Giocare una carta Capitolo</h3>
       <p>A partire dal primo giocatore, in senso orario, ognuno gioca una carta Capitolo scoperta. Non puoi giocare un capitolo che un altro giocatore ha già giocato in questo round (se tutte le tue carte sono già prese, giocane una a scelta). Il <b>capitolo più alto gioca per primo</b>, poi il successivo, e così via. Se due giocatori giocano lo stesso capitolo, passa prima quello più vicino al primo giocatore (in senso orario). La Regina di cuori aumenta il tuo capitolo, ti permette di giocare lo stesso capitolo di un avversario e vince sempre i pareggi.</p>
-      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia avrà l’ultimo gruppo, ma il suo capitolo 5 le dà un potenziamento gratis e 2 monete.
+      <div class="example"><b>Esempio.</b> Marco gioca il capitolo 10, Lea il 6 e Sofia il 5. Marco gioca per primo, poi Lea, poi Sofia: Sofia sceglierà il suo personaggio per ultima, ma il suo capitolo 5 le dà un potenziamento gratis e 2 monete.
       <div class="fig-row">[[action:10:Marco]][[action:6:Lea]][[action:5:Sofia]]</div></div>
       <h3>3. Il tuo turno</h3>
       <ol>
-        <li><b>Prendi un gruppo.</b> Metti tutte le sue carte davanti a te (il tuo tableau). I loro effetti [[icon:instant]] si applicano subito.</li>
+        <li><b>Prendi un personaggio</b> dall’offerta. Mettilo davanti a te (il tuo tableau). Il suo effetto [[icon:instant]] si applica subito.</li>
         <li><b>Risolvi la tua carta Capitolo.</b> Monete, XP, Avventure, attivazioni o potenziamenti gratis.</li>
         <li><b>Compra un Oggetto</b> se vuoi (uno solo), pagando il suo prezzo in monete.</li>
         <li><b>Metti i tuoi XP</b> [[icon:xp]]: ogni XP ottenuto va su una casella stella libera, tra due livelli del tuo Scrittore o di un personaggio Leggendario non ancora potenziato. Un XP posato non si sposta più. Quando tutte le caselle di un passaggio sono piene (il numero di caselle è il costo), la carta sale subito di livello. Per <b>spendere XP</b> (i Bimbi Sperduti), prendili dalla tua riserva o da un personaggio Leggendario non ancora potenziato, mai da una carta già potenziata. [[icon:freeup]] <b>Potenziamento gratis</b>: uno dei tuoi personaggi Leggendari è potenziato subito (copri le caselle vuote con XP dalla riserva). Non può essere usato sul tuo Scrittore.</li>
         <li>Il tuo turno finisce; gioca il giocatore successivo nell’ordine di turno.</li>
       </ol>
-      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 4 («Attiva tutto + 2 monete»). Prende il gruppo con il Nano e i Topolini: i Topolini le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano le dà 1 moneta — e ottiene 2 monete. Con le sue 5 monete potrebbe comprare un Oggetto, ma le tiene.
+      <div class="example"><b>Esempio di turno.</b> Lea ha giocato il capitolo 4 («Attiva tutto + 2 monete»). Prende i Topolini: le danno subito un segnalino Tag. Poi risolve il suo capitolo: attiva tutte le sue carte — il Nano preso in un round precedente le dà 1 moneta — e ottiene 2 monete. Con le sue 5 monete potrebbe comprare un Oggetto, ma le tiene.
       <div class="fig-row">[[common:Dwarf]][[common:Mice]][[action:4]]</div></div>
       <h3>4. Fine del round</h3>
       <ul>
         <li>Raddrizza tutte le carte inclinate. Scarta i personaggi che nessuno ha preso. Gli Oggetti e le Avventure restano visibili da un round all’altro: completa solo gli spazi vuoti, Oggetti fino a 1 + giocatori e Avventure fino a 1 + giocatori.</li>
-        <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando ne resta una sola, inizia l’ultimo round.</li>
+        <li>Ogni giocatore pesca <b>esattamente 1 carta Capitolo</b> dal suo mazzo Capitolo. Il mazzo cala quindi di una carta per round: quando è vuoto, inizia l’ultimo round.</li>
         <li>Chi ha giocato il capitolo più alto diventa il primo giocatore e prende il segnalino.</li>
       </ul>`],
-      ["effects", "Gli effetti nel dettaglio", `<h3>Le 12 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 12 non fa nulla ma ti fa scegliere il gruppo per primo.</p><p class="legend-line">[[icon:activation]] attiva 1 delle tue carte · [[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi un’Avventura.</p>[[actions]]
+      ["effects", "Gli effetti nel dettaglio", `<h3>Le 15 carte Capitolo</h3><p>Più il capitolo è alto, più l’effetto è debole: il capitolo 1 è il più forte, il capitolo 15 non fa nulla ma ti fa scegliere il personaggio per primo.</p><p class="legend-line">[[icon:activation]] attiva 1 delle tue carte · [[icon:activation]][[icon:activation]][[icon:activation]] attiva tutte le tue carte con effetto Activation · [[icon:freeup]] potenziamento gratis · [[questicon]] prendi un’Avventura.</p>[[actions]]
       <p><b>Attivare.</b> «Attiva tutto» fa scattare tutti gli effetti [[icon:activation]] del tuo tableau e dei tuoi Oggetti; «Attiva 1 carta» solo uno di essi, a scelta. Un’Attivazione che costa qualcosa (spendere monete, scartare una carta…) è facoltativa. Quando attivi una carta, <b>inclinala</b> per mostrare che è stata usata in questo round; tutte le carte vengono raddrizzate alla fine del round. Un effetto che riattiva una carta (la Clessidra) funziona anche su una carta inclinata.</p>
       <p><b>Prendere un’Avventura.</b> Scegli un’Avventura scoperta e tienila davanti a te. Darà punti a fine partita.</p>
       <p><b>Potenziamento gratis.</b> Riempi in un colpo tutte le caselle stella rimanenti di un personaggio Leggendario: viene potenziato. Un potenziamento gratis non può <b>mai</b> essere usato sul tuo Scrittore: i suoi livelli si raggiungono solo con gli XP. Se alla fine del tuo turno non hai nessun personaggio Leggendario da potenziare, il potenziamento gratis è perso.</p>
@@ -390,7 +402,7 @@ const RULES = {
       <h3>Scrittori</h3>
       <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Si raggiunge ogni livello riempiendo le sue caselle stella con XP.</p>
       <div class="fig-row">[[writer:L. Frank Baum]][[writer:Hans Christian Andersen]]</div>`],
-      ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo l’8° round, quando in ogni mazzo Capitolo resta una sola carta. Ogni giocatore somma:</p>
+      ["end", "Fine della partita e punteggio", `<p>La partita finisce dopo il 12° round: i mazzi Capitolo sono vuoti e in ogni mano restano 3 carte Capitolo. Ogni giocatore somma:</p>
       <ul>
         <li>i Punti Vittoria [[icon:vp]] ottenuti durante la partita;</li>
         <li>le sue Avventure [[icon:endgame]];</li>

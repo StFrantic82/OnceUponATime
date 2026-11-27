@@ -71,7 +71,7 @@ const P = {
     intro: "Print on A4 paper at 100 % scale (“actual size”, no “fit to page”). Cut along the dotted lines. Card sizes are those of standard sleeves.",
     backsHow: "Backs: print each “Backs” page on the reverse of the pages of the same kind (long-edge duplex), or glue it on.",
     contents: "Contents",
-    sizes: { common: "Common characters · 62 cards · 54 × 80 mm", legendary: "Legendary characters · 43 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 40 tiles · 63 × 63 mm", quests: "Adventure cards · 25 cards · 80 × 54 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Chapter cards · 4 sets of 12 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
+    sizes: { common: "Common characters · 62 cards · 54 × 80 mm", legendary: "Legendary characters · 43 cards · 61 × 112 mm (French tarot)", items: "Item tiles · 40 tiles · 63 × 63 mm", quests: "Adventure cards · 25 cards · 80 × 54 mm", writers: "Writer tiles · 8 cards · 100 × 100 mm", actions: "Chapter cards · 4 sets of 15 · 41 × 63 mm", tokens: "Tokens · Tags (square, 20 mm), coins, XP, VP, first player" },
     backs: "Backs",
     tagsTitle: "Tag tokens", resTitle: "Coins and VP", xpTitle: "XP tokens (1 XP each, one per star space)", firstPlayer: "First player",
     page: "Page",
@@ -79,8 +79,8 @@ const P = {
     board: "Board · A5, single-sided · 2 copies",
     boardSide: "Board",
     boardPlayers: "{n} players",
-    boardHow: "Each round, deal the revealed characters below their space: one group per space, on the row for your number of players.",
-    normal: "common", normals: "common", legendary: "Legendary", legendaries: "Legendary",
+    boardHow: "Each round, reveal one character below each space of the row for your number of players. Each player takes only one.",
+    normal: "Common", normals: "Common", legendary: "Legendary", legendaries: "Legendary", oddRounds: "odd rounds: Legendary", evenRounds: "even rounds: Common",
     itemsShown: "Items revealed", questsShown: "Adventures revealed",
     yourBook: "Your book",
     yourBookHint: "Chapter deck",
@@ -95,7 +95,7 @@ const P = {
     intro: "Imprimez sur du papier A4 à l’échelle 100 % (« taille réelle », sans « ajuster à la page »). Découpez le long des pointillés. Les formats correspondent aux protège-cartes du commerce.",
     backsHow: "Dos : imprimez chaque page « Dos » au verso des pages du même type (recto verso, bord long), ou collez-la.",
     contents: "Contenu",
-    sizes: { common: "Personnages communs · 62 cartes · 54 × 80 mm", legendary: "Personnages légendaires · 43 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 40 tuiles · 63 × 63 mm", quests: "Cartes Aventure · 25 cartes · 80 × 54 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Chapitre · 4 jeux de 12 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
+    sizes: { common: "Personnages communs · 62 cartes · 54 × 80 mm", legendary: "Personnages légendaires · 43 cartes · 61 × 112 mm (tarot français)", items: "Tuiles Objet · 40 tuiles · 63 × 63 mm", quests: "Cartes Aventure · 25 cartes · 80 × 54 mm", writers: "Tuiles Écrivain · 8 tuiles · 100 × 100 mm", actions: "Cartes Chapitre · 4 jeux de 15 · 41 × 63 mm", tokens: "Jetons · Tags (carrés, 20 mm), pièces, XP, PV, premier joueur" },
     backs: "Dos",
     tagsTitle: "Jetons Tag", resTitle: "Pièces et PV", xpTitle: "Jetons XP (1 XP chacun, un par case étoile)", firstPlayer: "Premier joueur",
     page: "Page",
@@ -103,8 +103,8 @@ const P = {
     board: "Plateau · format A5, recto seul · 2 exemplaires",
     boardSide: "Plateau",
     boardPlayers: "{n} joueurs",
-    boardHow: "À chaque manche, posez les personnages révélés sous leur emplacement : un lot par emplacement, sur la ligne de votre nombre de joueurs.",
-    normal: "commune", normals: "communes", legendary: "Légendaire", legendaries: "Légendaires",
+    boardHow: "À chaque manche, révélez un personnage sous chaque emplacement de la ligne de votre nombre de joueurs. Chaque joueur n’en prend qu’un.",
+    normal: "Commun", normals: "Communs", legendary: "Légendaire", legendaries: "Légendaires", oddRounds: "manches impaires : Légendaire", evenRounds: "manches paires : Commun",
     itemsShown: "Objets révélés", questsShown: "Aventures révélées",
     yourBook: "Votre livre",
     yourBookHint: "Pioche Chapitre",
@@ -119,7 +119,7 @@ const P = {
     intro: "Stampa su carta A4 in scala 100 % («dimensioni reali», senza «adatta alla pagina»). Ritaglia lungo le linee tratteggiate. I formati corrispondono alle bustine protettive in commercio.",
     backsHow: "Retri: stampa ogni pagina «Retri» sul retro delle pagine dello stesso tipo (fronte-retro, lato lungo), oppure incollala.",
     contents: "Contenuto",
-    sizes: { common: "Personaggi comuni · 62 carte · 54 × 80 mm", legendary: "Personaggi leggendari · 43 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 40 tessere · 63 × 63 mm", quests: "Carte Avventura · 25 carte · 80 × 54 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Capitolo · 4 mazzi da 12 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
+    sizes: { common: "Personaggi comuni · 62 carte · 54 × 80 mm", legendary: "Personaggi leggendari · 43 carte · 61 × 112 mm (tarocco francese)", items: "Tessere Oggetto · 40 tessere · 63 × 63 mm", quests: "Carte Avventura · 25 carte · 80 × 54 mm", writers: "Tessere Scrittore · 8 tessere · 100 × 100 mm", actions: "Carte Capitolo · 4 mazzi da 15 · 41 × 63 mm", tokens: "Segnalini · Tag (quadrati, 20 mm), monete, XP, PV, primo giocatore" },
     backs: "Retri",
     tagsTitle: "Segnalini Tag", resTitle: "Monete e PV", xpTitle: "Segnalini XP (1 XP ciascuno, uno per casella stella)", firstPlayer: "Primo giocatore",
     page: "Pagina",
@@ -127,8 +127,8 @@ const P = {
     board: "Plancia · formato A5, solo fronte · 2 copie",
     boardSide: "Plancia",
     boardPlayers: "{n} giocatori",
-    boardHow: "A ogni round, metti i personaggi rivelati sotto il loro spazio: un gruppo per spazio, sulla riga del vostro numero di giocatori.",
-    normal: "comune", normals: "comuni", legendary: "Leggendaria", legendaries: "Leggendarie",
+    boardHow: "A ogni round, rivela un personaggio sotto ogni spazio della riga del vostro numero di giocatori. Ogni giocatore ne prende uno solo.",
+    normal: "Comune", normals: "Comuni", legendary: "Leggendario", legendaries: "Leggendari", oddRounds: "round dispari: Leggendario", evenRounds: "round pari: Comune",
     itemsShown: "Oggetti rivelati", questsShown: "Avventure rivelate",
     yourBook: "Il tuo libro",
     yourBookHint: "Mazzo Capitolo",
@@ -237,12 +237,14 @@ function fitFace(face) {
 }
 
 // Board: single-sided. One row per player count (one space per group of characters), then the icon guide.
-const BOARDS = { 2: [[0, 1], [2, 1], [2, 0]], 3: [[0, 1], [2, 1], [2, 0], [1, 1]], 4: [[0, 1], [1, 1], [2, 0], [2, 1], [1, 1]] };
+// "alt": Legendary in odd rounds, Common in even rounds (3 players).
+const BOARDS = { 2: ["l", "c", "c"], 3: ["l", "alt", "c", "c"], 4: ["l", "l", "c", "c", "c"] };
 
 function boardSection(n) {
-  const groups = BOARDS[n].map(([c, l], i) => {
-    const minis = `${'<i class="mini mini-c"></i>'.repeat(c)}${'<i class="mini mini-l"></i>'.repeat(l)}`;
-    const text = [c ? `${c} ${c > 1 ? L.normals : L.normal}` : "", l ? `${l} ${l > 1 ? L.legendaries : L.legendary}` : ""].filter(Boolean).map(esc).join("<br>+ ");
+  const groups = BOARDS[n].map((kind, i) => {
+    const mini = (k) => `<i class="mini mini-${k}"></i>`;
+    const minis = kind === "alt" ? `${mini("l")}<span class="bor">/</span>${mini("c")}` : mini(kind);
+    const text = kind === "alt" ? `${esc(L.oddRounds)}<br>${esc(L.evenRounds)}` : esc(kind === "l" ? L.legendary : L.normal);
     return `<div class="bslot"><span class="bnum">${i + 1}</span><div class="bminis">${minis}</div><div class="btext">${text}</div></div>`;
   }).join("");
   return `<div class="bsection">
@@ -319,7 +321,7 @@ function build() {
   add(`${L.backs} · ${L.sizes.quests.split(" · ")[0]}`, backsSheet("quests"));
   add(L.sizes.writers, sheetsFor("writers", DATA.writers, L.sizes.writers));
   add(`${L.backs} · ${L.sizes.writers.split(" · ")[0]}`, backsSheet("writers"));
-  // One page per Action set (12 cards), each followed by its own coloured backs: ready for duplex.
+  // One page per Action set (15 cards), each followed by its own coloured backs: ready for duplex.
   add(L.sizes.actions, [0, 1, 2, 3].flatMap((set) => [
     ...sheetsFor("actions", DATA.actions.map((a) => ({ ...a, set })), `${L.sizes.actions} · ${L.set} ${set + 1}`),
     ...backsSheet("actions", set, DATA.actions.length),

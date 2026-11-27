@@ -14,7 +14,7 @@
   const TUNE = { coinBuy: 0.2, coinGain: 0.5, coinInstant: 0.5 };
   const ALT = { coinBuy: 0.2, coinGain: 0.5, coinInstant: 0.5 };
   const tune = (key) => (state.ai === "alt" ? ALT : TUNE)[key];
-  const roundsLeft = () => Math.max(0, (G.settings.rounds || 8) - G.round);
+  const roundsLeft = () => Math.max(0, (G.settings.rounds || 12) - G.round);
 
   // The Writer's level 3, counted in advance (the closer the level, the more it weighs).
   function writerPotential() {
@@ -234,7 +234,7 @@
   }
 
   // Typical value of each chapter: a card is kept for later when it would bring less than that now.
-  const CHAPTER_BASE = { 1: 9.5, 2: 9, 3: 8, 4: 6.5, 5: 6.5, 6: 5.5, 7: 3.8, 8: 3.4, 9: 2.6, 10: 2.4, 11: 1, 12: 0 };
+  const CHAPTER_BASE = { 1: 9.5, 2: 9, 3: 8, 4: 6.5, 5: 6.5, 6: 5.5, 7: 3.8, 8: 3.4, 9: 3.2, 10: 2.6, 11: 2.4, 12: 1.8, 13: 1.2, 14: 1, 15: 0 };
 
   function smartChooseAction(p, pool) {
     const left = roundsLeft();
@@ -249,7 +249,7 @@
     let best = null;
     for (const card of pool) {
       const mine = card.number + actionBonus(p, card.number);
-      const ahead = others.reduce((sum, o) => sum + (o.currentAction ? (o.actionValue > mine ? 1 : 0) : Math.min(1, Math.max(0, (12 - mine) / 11))), 0);
+      const ahead = others.reduce((sum, o) => sum + (o.currentAction ? (o.actionValue > mine ? 1 : 0) : Math.min(1, Math.max(0, (15 - mine) / 14))), 0);
       const score = effectNow(card.effect) - keep * (CHAPTER_BASE[card.number] || 0) + groupAt(ahead);
       if (!best || score > best.score) best = { card, score };
     }

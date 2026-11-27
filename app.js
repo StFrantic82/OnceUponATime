@@ -237,10 +237,17 @@ function withSeat(seat, fn) {
 // ---------------------------------------------------------------------------
 // Board layout per player count (groups of Normal + Legendary cards), from the Board sheet.
 const BOARDS = {
-  2: [[0, 1], [2, 1], [2, 0]],
-  3: [[0, 1], [2, 1], [2, 0], [1, 1]],
-  4: [[0, 1], [1, 1], [2, 0], [2, 1], [1, 1]],
+  2: [[0, 1], [1, 0], [1, 0]],
+  3: [[0, 1], [0, 1], [1, 0], [1, 0]],
+  4: [[0, 1], [0, 1], [1, 0], [1, 0], [1, 0]],
 };
+// With 3 players the second Legendary is only revealed in odd rounds (a Common takes its place in even rounds),
+// so that every player count offers one Legendary for two players on average.
+const BOARD_3_EVEN = [[0, 1], [1, 0], [1, 0], [1, 0]];
+function boardFor(players, round) {
+  if (players === 3 && round % 2 === 0) return BOARD_3_EVEN;
+  return BOARDS[players] || BOARDS[2];
+}
 
 const settings = { players: 2, level: "normal", name: "You", writerMode: "random", tutorial: false };
 
@@ -291,7 +298,7 @@ function newGame(options = {}, seats = null) {
   Object.assign(settings, options);
   const players = Math.min(4, Math.max(2, Number(settings.players) || 2));
   settings.players = players;
-  settings.rounds = 8; // the story always lasts 8 rounds
+  settings.rounds = 12; // the story always lasts 12 rounds
   if (!seats) {
     const names = t("botNames");
     seats = [{ name: settings.name || t("you"), kind: "human", uid: "local" }];
@@ -337,7 +344,7 @@ function startRound() {
   G.order = [];
   G.active = null;
   for (const group of G.groups || []) if (!group.taken) group.cards.forEach(toDiscard);
-  G.groups = ((simMode && G.simBoards) || BOARDS[G.players.length] || BOARDS[2])
+  G.groups = ((simMode && G.simBoards) || boardFor(G.players.length, G.round))
     .map(([basic, advanced], index) => ({
       id: `G${index + 1}`,
       taken: false,
@@ -537,7 +544,7 @@ function takeGroup(choice) {
   const [groupId, discardId] = String(choice).split("|");
   const group = G.groups.find((entry) => entry.id === groupId);
   if (!group || group.taken) return;
-  if (state.writer?.name === "Carlo Collodi" && !G.groups.some((g) => g.taken)) gain("coins", G.players.length);
+  if (state.writer?.name === "Carlo Collodi" && !G.groups.some((g) => g.taken)) gain("coins", 2);
   if (simMode) {
     // Simulations: which kind of group was taken, and in which order.
     const comp = `${group.cards.filter((c) => c.deck === "common").length}c${group.cards.filter((c) => c.deck === "legendary").length}l`;
@@ -613,7 +620,7 @@ async function activateActionStep() {
     await resolveAction(G.simBonus.effect);
     G.cur = seat;
   }
-  if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 7) gain("xp", 1);
+  if (state.writer?.name === "J. M. Barrie" && state.currentAction.number <= 8) gain("xp", 1);
   state.phase = "roundDone";
 }
 
@@ -998,8 +1005,8 @@ function applyWriterAfterGroup(cards) {
     state.writerRound.gameEndRewarded = true;
   }
   if (state.writer?.name !== "Brothers Grimm" || state.writerRound.alignmentRewarded) return;
-  if (cards.some((card) => card.alignment === "Good") && cards.some((card) => card.alignment === "Bad")) {
-    gain("coins", 1);
+  if (cards.some((card) => card.alignment === "Bad")) {
+    gain("coins", 2);
     state.writerRound.alignmentRewarded = true;
   }
 }
@@ -1384,7 +1391,7 @@ function instantLinks(card) {
   if (n === "Snow White") gain("xp", countByName("Dwarf") + countIcon("Charm"));
   if (n === "The White Rabbit") commonPick(3, n, "bottom");
   if (n === "Cheshire Cat") commonPick(3, n, "discard", 2);
-  if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 6);
+  if (n === "Princess Briar Rose") takeBackChapter((v) => v <= 7);
   if (n === "Aladin") gain("coins", liveDifferent());
   if (n === "Robin Hood") state.writerItemDiscount = 3;
   if (n === "Cinderella") gain("xp", Math.floor(countAlignment("Good") / 2));
@@ -1477,17 +1484,17 @@ function onPlayChapter(number) {
   vpSource = "ON-CHAPTER (Barrie/Briar Rose/Clock)";
   vpSource = "The Talking Cricket";
   const pino = state.tableau.find((card) => card.name === "Pinocchio");
-  if (pino && number >= 10) {
+  if (pino && number >= 13) {
     gainTagToken(1, "Pinocchio");
     log("l_nose", { p: state.name });
   }
   const briar = state.tableau.find((card) => card.name === "Princess Briar Rose" && card.upgraded);
-  if (briar && number <= 6) {
+  if (briar && number <= 7) {
     gain("xp", 1);
     gain("vp", 1);
   }
   const crickets = state.tableau.filter((card) => card.name === "The Talking Cricket").length;
-  if (crickets && number <= 4) gain("vp", crickets * (pino ? 2 : 1));
+  if (crickets && number <= 5) gain("vp", crickets * (pino ? 2 : 1));
 }
 
 function triggerOnTakeItem() {
@@ -1543,8 +1550,8 @@ async function activateCardInner(card) {
   const ownChoice = ["Hot Air Balloon", "Whispering Mirror", "The Crown of England", "The Ogre"].includes(card.name);
   const hasActivationCost = !ownChoice && /Activation:[\s\S]*?\b(?:spend|discard|tuck)\b/i.test(text);
   if (/spend 1 coin to gain 1 XP/i.test(text) && state.coins < 1) return;
-  if (/spend 1 XP to gain 2 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
-  if (/spend 2 coins to (?:level up|place XP)/i.test(text) && state.coins < 2) return;
+  if (/spend 1 XP to gain 3 coins/i.test(text) && state.xp < 1 && !spendableXpCard()) return;
+  if (/spend 1 coin to (?:level up|place XP)/i.test(text) && state.coins < 1) return;
   if (hasActivationCost) {
     const ok = await confirmCost(card);
     G.cur = seat;
@@ -1586,7 +1593,7 @@ async function activateCardInner(card) {
   } else if (card.name === "Magic Wand") {
     placeFreeXp(countIcon("Sorcery") >= 3 ? 2 : 1, false);
   } else if (card.name === "Crocodile's Clock") {
-    takeBackChapter((v) => v >= 7);
+    takeBackChapter((v) => v >= 9);
   } else if (card.name === "The Fairies") {
     placeXpOnGood(2);
   } else if (card.name === "Hot Air Balloon") {
@@ -1612,15 +1619,16 @@ async function activateCardInner(card) {
   } else if (card.name === "The Merry Men" && /spend 1 coin to gain 1 XP/i.test(text)) {
     state.coins -= 1;
     gain("xp", 1);
-  } else if (/spend 1 XP to gain 2 coins/i.test(text)) {
+    gain("vp", 1);
+  } else if (/spend 1 XP to gain 3 coins/i.test(text)) {
     // From the unplaced XP, or else from a Legendary that is not upgraded yet (never from an upgraded card).
     const from = state.xp > 0 ? null : spendableXpCard();
     if (state.xp > 0) state.xp -= 1;
     else if (from) from.xpOn -= 1;
     else return;
-    gain("coins", 2);
-  } else if (/spend 2 coins to (?:level up|place XP)/i.test(text)) {
-    state.coins -= 2;
+    gain("coins", 3);
+  } else if (/spend 1 coin to (?:level up|place XP)/i.test(text)) {
+    state.coins -= 1;
     state.freeUpgrades += 1;
   } else {
     if (/gain 2 XP/i.test(text)) gain("xp", 2);
@@ -1873,22 +1881,22 @@ function scoreQuest(quest) {
   if (/Glass Slipper/.test(name)) return state.items.filter((item) => item.cost >= 5).length * 2;
   if (/Neverland/.test(name)) return completeSets >= 3 ? 6 : completeSets >= 2 ? 3 : 0;
   if (/Apple's Bite/.test(name)) return countAlignment("Bad");
-  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 1, 3, 5);
-  if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 3, 5, 7);
-  if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 9).length * 2;
+  if (/Yellow Brick Road/.test(name)) return tiers(state.tableau.filter((card) => /Dorothy|Scarecrow|Tin Woodman|Cowardly Lion|Wizard of Oz|Witch|Munchkins/.test(card.name)).length, 1, 2, 4);
+  if (/Grandmother's Path/.test(name)) return tiers(Math.min(countAlignment("Good"), countAlignment("Bad")), 2, 4, 6);
+  if (/Hundred-Year Sleep/.test(name)) return state.actionDiscard.filter((c) => c.number >= 13).length * 2;
   if (/Marquis of Carabas/.test(name)) return tiers(state.coins, 3, 5, 7);
   if (/Queen's Command/.test(name)) return countTagless();
-  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 1, 2, 4);
+  if (/House of Seven/.test(name)) return tiers(countByName("Dwarf"), 1, 2, 3);
   if (/King's Trident/.test(name)) return new Set(state.items.map((item) => item.cost)).size;
   if (/Hatter's Tea Party/.test(name)) return countCardsWith("Ongoing");
-  if (/Second Star/.test(name)) return tiers(countCardsWith("Activation"), 6, 9, 12);
+  if (/Second Star/.test(name)) return tiers(countCardsWith("Activation"), 6, 8, 10);
   if (/Pact with the Beast/.test(name)) return upgraded;
   if (/Enchanted Rose/.test(name)) return countCardsWith("less XP|free|place (?:\\d+ )?XP on") * 2;
   if (/Rob the Rich/.test(name)) return Math.floor((state.vp || 0) / 3);
   if (/Rubbed Lamp/.test(name)) return Math.floor((state.xpGained || 0) / 4);
   if (/Arrow on Target/.test(name)) return tiers(countVpBadges(), 3, 5, 7);
   if (/Final Wish/.test(name)) return state.quests.length * 2;
-  if (/A Real Boy/.test(name)) return state.actionDiscard.filter((c) => c.number <= 4).length * 2;
+  if (/A Real Boy/.test(name)) return state.actionDiscard.filter((c) => c.number <= 3).length * 2;
   if (/Once Upon a Time/.test(name)) {
     const categories = [countAlignment("Good"), countAlignment("Bad"), state.tableau.length, state.items.length, countCardsWith("Activation")].filter((value) => value >= 7).length;
     return categories * 2;
@@ -1936,7 +1944,7 @@ function scoreCards(only = null) {
     else if (n === "Rumpelstiltskin") total += Math.floor(countAlignment("Bad") / 2) * (up ? 2 : 1);
     else if (n === "Belle") total += up ? icons.Intelligence * 1 + (hasCard("Beast") ? 2 : 0) : 0;
     else if (n === "Pinocchio") total += Math.floor(countAlignment("Good") / 2);
-    else if (n === "Geppetto") total += Math.floor(state.items.length / 2) * 3 + (hasCard("Pinocchio") ? 4 : 0);
+    else if (n === "Geppetto") total += Math.floor(state.items.length / 2) * 2 + (hasCard("Pinocchio") ? 4 : 0);
     else if (n === "The Whale") total += countTagless();
     else if (n === "Beast") total += up ? icons.Strength * 2 + (hasCard("Belle") ? 2 : 0) : icons.Strength;
   }
@@ -1985,7 +1993,7 @@ function scoreWriter() {
   if (name === "Charles Perrault") return state.items.filter((item) => item.cost >= 4).length * 2;
   if (name === "Brothers Grimm") {
     const pairs = Math.min(countAlignment("Good"), countAlignment("Bad"));
-    return pairs >= 7 ? 14 : pairs >= 5 ? 10 : pairs >= 3 ? 6 : 0;
+    return pairs >= 6 ? 14 : pairs >= 4 ? 10 : pairs >= 2 ? 6 : 0;
   }
   if (name === "Hans Christian Andersen") return countCardsWith("Game End") * 2;
   if (name === "Carlo Collodi") {
@@ -2006,7 +2014,7 @@ function scoreWriter() {
 }
 
 function roundsTotal() {
-  return G.settings.rounds || 8;
+  return G.settings.rounds || 12;
 }
 
 function liveScore(seat) {
@@ -2867,7 +2875,7 @@ async function simulateGame(opts) {
   simMode = true;
   const n = Math.min(4, Math.max(2, Number(opts.players) || 4));
   try {
-    newGame({ players: n, level: opts.level || "hard", rounds: 8, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
+    newGame({ players: n, level: opts.level || "hard", rounds: 12, writerMode: "random", tutorial: false }, Array.from({ length: n }, (_, i) => ({ name: `AI ${i + 1}`, kind: "bot" })));
     if (opts.boards) G.simBoards = opts.boards;
     if (opts.bonus) G.simBonus = { seat: 0, round: 1 + Math.floor(Math.random() * 8), effect: opts.bonus };
     (opts.legacySeats || []).forEach((seat) => {
