@@ -3262,3 +3262,11 @@ button.needs-click { outline: none; }
 .vp-note { margin-top: 6px !important; padding: 6px 10px; border-radius: 10px; background: #3a2412; color: #ffe9b8; font: 700 13px/1.25 "Alegreya Sans", sans-serif; text-align: center; white-space: nowrap; width: max-content; max-width: 320px; white-space: normal; }
 [data-vp-note] { cursor: help; }
 .slot-quest .fcard[data-vp-note], .slot-item .fcard[data-vp-note], .group-cards .fcard[data-vp-note] { cursor: zoom-in; }
+
+/* Common card with a tiered Game End (Playing Card Soldiers): text above, small table below */
+.fc-common .fc-text:has(.q-tiers) { flex-direction: column; align-items: stretch; justify-content: center; gap: 4px; }
+.fc-common .fc-text:has(.q-tiers) p { margin: 0; }
+.fc-common .q-tiers { width: 100%; }
+.fc-common .q-grid { flex: 1 1 auto; grid-template-columns: 1.7em repeat(var(--n, 3), minmax(0, 1fr)); }
+.fc-common .q-grid > * { padding: 2px 0; min-width: 0; }
+.mini-card-ico { display: inline-grid !important; place-items: center; width: .95em; height: 1.3em; border: 1.2px solid #4a2c1a; border-radius: 2px; background: #fffaf0; font-size: .95em; line-height: 1; color: #2a1a10; }

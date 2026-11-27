@@ -162,7 +162,7 @@
   }
 
   // Tiered Adventures ("3 / 4 / 6 Charm icons: 2 / 4 / 6 VP."): thresholds on one line, rewards on the next.
-  function questText(scoring) {
+  function questText(scoring, labelOverride = "") {
     const m = String(scoring).match(/^(\d+(?:\s*\/\s*\d+)+)\s*([^:]*?)\s*:\s*(\d+(?:\s*\/\s*\d+)+)\s*(VP|PV)\s*\.\s*(.*)$/);
     const hourglass = resourceIcon("endgame", "Game End");
     if (!m) return `<p>${hourglass} ${gtext(scoring)}</p>`;
@@ -172,9 +172,18 @@
     const label = String(what).replace(/^(?:icônes?|icone|icons?)\s+(?=(?:Charm|Strength|Dexterity|Intelligence|Sorcery)\b)/i, "").replace(/\b(Charm|Strength|Dexterity|Intelligence|Sorcery)\s+icons?$/i, "$1");
     // An effect type or the VP badge is shown by its icon alone.
     const effectWord = (label.match(/\b(Activation|Ongoing|Instant|Game End)\b/) || [])[1];
-    const labelHtml = effectWord ? gtext(effectWord) : /\bbadge\b|distintivo/i.test(label) ? `<span class="fc-vpmark guide-vpmark">${resourceIcon("vp", "VP")}</span>` : gtext(label);
+    const labelHtml = labelOverride ? labelOverride : effectWord ? gtext(effectWord) : /\bbadge\b|distintivo/i.test(label) ? `<span class="fc-vpmark guide-vpmark">${resourceIcon("vp", "VP")}</span>` : gtext(label);
     return `<div class="q-tiers"><span class="q-hg">${hourglass}</span>
       <div class="q-grid" style="--n:${tiers.split("/").length}"><span class="q-label q-what">${labelHtml}</span><span class="q-spacer"></span>${cells(tiers)}<span class="q-label q-gain">${resourceIcon("vp", "VP")}</span>${cells(gains).replace(/<b>/g, '<b class="q-gain">')}</div></div>${rest ? `<p class="q-rest">${gtext(rest)}</p>` : ""}`;
+  }
+
+  // A Common card may end with a tiered Game End clause: it is shown as the small table of the Adventures.
+  function commonText(effect, name) {
+    if (!effect) return "";
+    const text = tc(effect);
+    const m = text.match(/^(.*?)\s*Game End\s*:\s*(\d+(?:\s*\/\s*\d+)+\s[^:]*:\s*\d+(?:\s*\/\s*\d+)+\s*(?:VP|PV)\s*\.)\s*$/);
+    if (!m) return `<p>${gtext(text)}</p>`;
+    return `${m[1] ? `<p>${gtext(m[1])}</p>` : ""}${questText(m[2], `<span class="mini-card-ico" title="${esc(tc(name))}">♠</span>`)}`;
   }
 
   function common(card, opts = {}) {
@@ -182,7 +191,7 @@
     return `<article class="fcard fc-common fc-${align} ${opts.cls || ""}">
       ${head(card, 160, 15)}
       <div class="fc-art">${CardArt.art(card.name)}${vpMark(card)}</div>
-      <div class="fc-text">${card.effect ? `<p>${gtext(tc(card.effect))}</p>` : ""}</div>
+      <div class="fc-text">${commonText(card.effect, card.name)}</div>
       ${alignFoot(card.alignment)}
     </article>`;
   }

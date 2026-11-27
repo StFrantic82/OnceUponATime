@@ -1918,7 +1918,11 @@ function scoreCards(only = null) {
     if (!/Game End/i.test(text || "")) continue;
     const n = card.name;
     const up = Boolean(card.upgraded);
-    if (n === "The Dwarves House") total += countByName("Dwarf");
+    // Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP for 1 to 5 of them, i.e. the k-th Soldier adds k VP (up to the 5th).
+    if (n === "Playing Card Soldier") {
+      const rank = state.tableau.filter((c) => c.name === n).indexOf(card) + 1;
+      total += rank >= 1 && rank <= 5 ? rank : 0;
+    } else if (n === "The Dwarves House") total += countByName("Dwarf");
     else if (n === "Hot Air Balloon") total += (card.tucked || 0) * 2;
     else if (n === "The Crown of England") total += card.stash || 0;
     else if (n === "Glass Slipper") total += quests + (hasCard("Cinderella") ? 3 : 0);

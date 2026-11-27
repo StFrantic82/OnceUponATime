@@ -69,7 +69,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "",
-      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck. Game End: 1 / 2 / 3 / 4 / 5 Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP.",
       "copy": 1
     },
     {
@@ -78,7 +78,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "",
-      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck. Game End: 1 / 2 / 3 / 4 / 5 Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP.",
       "copy": 2
     },
     {
@@ -87,7 +87,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "",
-      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck. Game End: 1 / 2 / 3 / 4 / 5 Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP.",
       "copy": 3
     },
     {
@@ -96,7 +96,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "",
-      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck. Game End: 1 / 2 / 3 / 4 / 5 Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP.",
       "copy": 4
     },
     {
@@ -105,7 +105,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "",
-      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck. Game End: 1 / 2 / 3 / 4 / 5 Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP.",
       "copy": 5
     },
     {
@@ -114,7 +114,7 @@ window.GAME_DATA = {
       "name": "Playing Card Soldier",
       "alignment": "Bad",
       "icons": "",
-      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
+      "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck. Game End: 1 / 2 / 3 / 4 / 5 Playing Card Soldiers: 1 / 3 / 6 / 10 / 15 VP.",
       "copy": 6
     },
     {
