@@ -1025,7 +1025,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant: each opponent loses 1 coin.",
-      "upgrade": "Cost 5 XP. Game End: 4 VP for each set of 5 different icons.",
+      "upgrade": "Cost 4 XP. Game End: 3 VP for each set of 5 different icons.",
       "upgraded": false
     },
     {

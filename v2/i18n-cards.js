@@ -572,7 +572,7 @@ window.CARD_I18N = [
   ["Sorcery 1. Instant: make 3 wishes: choose three times among 1 coin, 1 XP and 1 VP.", "Sorcery 1. Instant : faites 3 vœux : choisissez trois fois parmi 1 coin, 1 XP et 1 VP.", "Sorcery 1. Instant: esprimi 3 desideri: scegli tre volte tra 1 coin, 1 XP e 1 VP."],
   ["Cost 3 XP. Activation: gain 2 XP.", "Cost 3 XP. Activation : gagnez 2 XP.", "Cost 3 XP. Activation: ottieni 2 XP."],
   ["Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant: each opponent loses 1 coin.", "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant : chaque adversaire perd 1 coin.", "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant: ogni avversario perde 1 coin."],
-  ["Cost 5 XP. Game End: 4 VP for each set of 5 different icons.", "Cost 5 XP. Game End : 4 VP par série de 5 icônes différentes.", "Cost 5 XP. Game End: 4 VP per ogni set di 5 icone diverse."],
+  ["Cost 4 XP. Game End: 3 VP for each set of 5 different icons.", "Cost 4 XP. Game End : 3 VP par série de 5 icônes différentes.", "Cost 4 XP. Game End: 3 VP per ogni set di 5 icone diverse."],
   ["Intelligence 1. Ongoing: your Items cost 1 coin less.", "Intelligence 1. Ongoing : vos Objets coûtent 1 coin de moins.", "Intelligence 1. Ongoing: i tuoi Oggetti costano 1 coin in meno."],
   ["Game End: 1 VP for each Friend of Oz.", "Game End : 1 VP par Ami d’Oz.", "Game End: 1 VP per ogni Amico di Oz."],
   ["Instant: gain 1 coin for each different family.", "Instant : gagnez 1 coin par famille différente.", "Instant: ottieni 1 coin per ogni famiglia diversa."],
