@@ -818,10 +818,10 @@ window.GAME_DATA = {
       "name": "Alice",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Ongoing: you may play the same Chapter as an opponent.",
-      "upgrade": "Cost 2 XP. Game End: 2 VP for each Adventure.",
+      "base": "Intelligence 1. Activation: gain 1 coin for each Adventure.",
+      "upgrade": "Cost 3 XP. Game End: 2 VP for each Adventure.",
       "upgraded": false,
-      "upgradeAlt": "Cost 2 XP. Instant: take 1 Adventure."
+      "upgradeAlt": "Cost 3 XP. Instant: take 1 Adventure."
     },
     {
       "id": "L8",
@@ -860,7 +860,7 @@ window.GAME_DATA = {
       "name": "Peter Pan",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: your Chapter cards count as +2 for turn order.",
+      "base": "Dexterity 1. Ongoing: whenever you take a Lost Boy, gain 1 XP.",
       "upgrade": "Cost 3 XP. Game End: 2 VP for each Lost Boy.",
       "upgraded": false
     },

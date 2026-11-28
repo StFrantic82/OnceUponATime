@@ -391,7 +391,7 @@ function actionBonus(p, number) {
   const writerBonus = 0;
   const queen = p.tableau.find((card) => card.name === "§Queen of Hearts");
   const queenBonus = queen ? (queen.upgraded ? 2 : 1) : 0;
-  if (V2) return (p.tableau.some((c) => c.name === "Queen of Hearts") ? 1 : 0) + (p.tableau.some((c) => c.name === "Peter Pan") ? 2 : 0);
+  if (V2) return (p.tableau.some((c) => c.name === "Queen of Hearts") ? 1 : 0);
   return writerBonus + queenBonus;
 }
 
@@ -422,8 +422,7 @@ function turnPosition(seat) {
 function canPlayChapter(p, number) {
   // The Queen of Hearts may play the same chapter as an opponent (and wins the tie).
   if (p.tableau.some((card) => card.name === "§Queen of Hearts")) return true;
-  // V2: Alice may play the same chapter as an opponent.
-  if (V2 && p.tableau.some((card) => card.name === "Alice")) return true;
+  // V2: (no card changes which chapters may be played).
   const taken = chaptersTaken(p.seat);
   if (!taken.has(number)) return true;
   return p.hand.every((card) => taken.has(card.number));
@@ -2153,6 +2152,10 @@ function v2AfterGroup(cards) {
   if (prince) {
     const goodLeg = cards.filter((c) => c.deck === "legendary" && c.name !== "Prince Charming" && v2Align(c) === "Good").length;
     if (goodLeg) { vpSource = "Prince Charming"; gain("vp", 2 * goodLeg); }
+  }
+  if (hasCard("Peter Pan")) {
+    const boys = cards.filter((c) => c.family === "lostboys").length;
+    if (boys) gain("xp", boys);
   }
   if (hasCard("Wendy") && !state.writerRound.wendyRewarded && cards.some((c) => c.deck === "common")) {
     vpSource = "Wendy";
