@@ -344,6 +344,9 @@
     questPick: { target: "#questDisplay" },
     tuck: { target: "#actionHand" },
     placeXp: { target: "#writerPanel" },
+    freeUp: { target: "#tableau" },
+    branch: { target: "#tableau" },
+    choice: { target: "#tableau" },
     buyAfter: { target: "#itemDisplay" },
     roundDone: { target: "#endRoundBtn" },
     newRound: { target: "#playersPanel" },
@@ -359,6 +362,10 @@
     if (state.activatePending > 0) keys.push("activatePick");
     if (state.questChoices > 0) keys.push("questPick");
     if (state.tuckPending > 0) keys.push("tuck");
+    const choices = state.choices || [];
+    if (choices.some((c) => (c.options || []).some((o) => /^branch /.test(o)))) keys.push("branch");
+    else if (choices.length) keys.push("choice");
+    if (state.freeUpgrades > 0 && document.querySelector("[data-upgrade]")) keys.push("freeUp");
     if (state.phase === "chooseAction") {
       if (G.round >= 2) keys.push("newRound");
       keys.push(Game.currentChooser() === me ? "chooseAction" : "waitChoose");

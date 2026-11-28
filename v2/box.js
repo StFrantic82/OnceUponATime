@@ -112,7 +112,7 @@ function build() {
     document.querySelector(".rules-home").textContent = `← ${t("home")}`;
   }
   const lang = TEXT[I18N.lang] ? I18N.lang : "en";
-  const dl = (kind) => `<a class="box-dl" href="../box/once-upon-a-time-${kind}-${lang}.png" download>⬇ ${esc(L.dl)}</a>`;
+  const dl = (kind) => `<a class="box-dl" href="box/once-upon-a-time-${kind}-${lang}.png" download>⬇ ${esc(L.dl)}</a>`;
   mounted.innerHTML = `<figure class="box-wrap"><figcaption>${esc(L.cover)} ${dl("cover")}</figcaption>${cover(L)}</figure><figure class="box-wrap"><figcaption>${esc(L.back)} ${dl("back")}</figcaption>${back(L)}</figure>`;
 }
 

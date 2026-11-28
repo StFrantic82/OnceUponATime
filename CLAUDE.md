@@ -21,7 +21,7 @@ The owner (Matthieu) writes in French: **always answer in French**.
 ## Standing instructions (always apply)
 
 - After any change: **commit + push to GitHub AND publish the artifact**.
-- On card changes regenerate everything: Print & Play FR/EN/IT, box PNGs (V1), and the Google Sheet.
+- On card changes regenerate everything: Print & Play FR/EN/IT, box PNGs (V1 and V2), and the Google Sheet.
 - Change things everywhere in FR/EN/IT: cards, rules, tutorial, presentation.
 - Legendaries must have an upgrade; an upgraded effect is **added** to the base effect.
 - Only Bad cards have mean effects. Villains are weird/mean but give fewer VP.
@@ -53,22 +53,23 @@ cd v2 && cp ../i18n-cards.js i18n-cards.js && python3 ../tools/v2/gen.py && cd .
 
 # V2 balance: simulations then report (bal.py reads /tmp/v*_a.json)
 for n in 2 3 4; do python3 tools/v2/sim.py $n 400 /tmp/v${n}_a.json & done; wait
-python3 tools/v2/bal.py > /tmp/v2bal.txt     # "edge" = win-rate edge in points; aim within about ±6
+(cd /home/claude && python3 OnceUponATime/tools/v2/bal.py > /tmp/v2bal.txt)     # bal.py must run from /home/claude; "edge" = win-rate edge in points; aim within about ±6
 
 # Checks
 python3 tools/checks/fxcheck.py               # card text overflow, V1 + V2 app
 python3 tools/checks/fx2.py fr                # screenshots of upgrade2/branch Legendaries
 python3 tools/checks/pchk.py                  # overflow on V2 print page FR/EN/IT
 python3 tools/v2/test4.py; python3 tools/v2/test6.py   # full UI games (expect "errors []")
+python3 tools/v2/test_tuto.py fr              # tutorial game: lists the coach steps shown
 
 # Print & Play (then compress)
 python3 tools/v2/make_pdf.py fr en it         # V2 -> v2/pnp/
 python3 tools/v1/make_pdf.py fr en it         # V1 -> pnp/
 for f in v2/pnp/*.pdf pnp/*.pdf; do qpdf --compress-streams=y --object-streams=generate --recompress-flate "$f" /tmp/q.pdf && mv /tmp/q.pdf "$f"; done
-# V1 box PNGs: tools/checks/bx.py LANG
+# Box PNGs: V1 tools/checks/bx.py LANG (-> /tmp, copy to box/), V2 tools/checks/bx2.py LANG (-> v2/box/)
 
-# Cache busting: bump ?v=N in html (root currently v=217, v2 currently v=323)
-sed -i 's/?v=323/?v=324/g' v2/*.html
+# Cache busting: bump ?v=N in html (root currently v=217, v2 currently v=324)
+sed -i 's/?v=324/?v=325/g' v2/*.html
 
 # Git
 git add -A && git -c user.name="Claude" -c user.email="noreply@anthropic.com" commit -q -m "..." && git -c push.negotiate=true push -q origin main
@@ -97,4 +98,6 @@ Scripts in `tools/` have absolute paths `/home/claude/OnceUponATime/...` — clo
 - Strong outliers to watch: Undersea Throne item (+14.5, now Intelligence), Geppetto (+9), Pumpkin Carriage, Mad Hatter's Hat (+9), Rumpelstiltskin (+8.7), Poisoned Apple (+8.7), Grandmother (+7.6), Evil Sorcerer (+6.6, upgrade 3 VP per set of 5 icons, cost 4).
 - Weak: Peter Pan (−5.8, upgrade lowered to 2 XP, not re-simulated), Rabbit's Clock, The Hunter, Stepmother, Carlo Collodi writer (−7.6 after "1 coin per player").
 - Remaining tag-style exceptions kept on purpose: Queen of Hearts (turn order), Briar Rose (Charm, gives XP), Belle (Intelligence, gives XP), Snow White (Charm, XP per pair of Dwarves).
-- Not done yet: V2 box PNGs (still V1 images), V2 tutorial review, some app UI labels still show Good/Bad words, `test_rules_app` blocked by the version chooser.
+- Done 2026-11-28: V2 box PNGs (`v2/box/`, linked from v2/box.js); V2 tutorial reviewed FR/EN/IT (families, Good/Bad, second star row, unplaced XP order, end of round) with new coach steps `freeUp`, `branch`, `choice` (home.js + i18n.js).
+- Balance 2026-11-28 (1 200 sims): Peter Pan −0.3 and Geppetto −0.8 now fine. Outliers: Rumpelstiltskin +10.6, Grandmother +10.2, Undersea Throne +9.3, Poisoned Apple +9.1, Genie/Pinocchio/Evil Fairy ≈ +8.3; weak: Stepmother −7.9, Snow White/Sheriff −5.3, Briar Rose −5.0. Adventures: The Final Wish +12.6, The Apple's Bite +9.1, The House of Seven +8.2, The Marquis of Carabas −6.9. Writers: Andersen −4.5.
+- Not done yet: rebalancing the outliers above, some app UI labels still show Good/Bad words, `test_rules_app` blocked by the version chooser.
