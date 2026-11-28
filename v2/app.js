@@ -838,6 +838,14 @@ function chooseBranch(card) {
       if (m[5]) per *= v2Count(m[5]);
     }
     if (/take 1 Adventure/i.test(t)) per += 3;
+    if (/take 1 Dwarf/i.test(t)) {
+      card.branch = "b";
+      const fake = { ...(G.decks.common.find((c) => c.family === "dwarves") || {}), id: "tmp-dwarf" };
+      if (fake.family) {
+        state.tableau.push(fake);
+        per += scoreCards(state.tableau) - (state.tableau.pop(), scoreCards(state.tableau)) + 1;
+      }
+    }
     if (/^Activation:/i.test(t)) return per * left * 0.7;
     if (/^Ongoing:/i.test(t)) return left * 0.6;
     return per;
@@ -2047,6 +2055,19 @@ function v2Do(text, card) {
   if (/discard 1 Bad character from your tableau to gain 6 VP/i.test(text)) return v2Hunter();
   applyMean(text, card.name);
   if (/take 1 Adventure/i.test(text)) grantQuestChoice(card.name);
+  if (/take 1 Dwarf from the Common deck/i.test(text)) {
+    // Snow White calls a Dwarf: search the Common deck, take it, shuffle the deck.
+    const at = G.decks.common.findIndex((c) => c.family === "dwarves");
+    if (at >= 0) {
+      const [dwarf] = G.decks.common.splice(at, 1);
+      G.decks.common = shuffle(G.decks.common);
+      const taken = { ...dwarf, source: "Normal" };
+      state.tableau.push(taken);
+      log("l_takes", { p: state.name, cards: { cs: [taken.name] } });
+      applyInstant(taken);
+      onTakeTagless([taken]);
+    }
+  }
   if (/place XP on a Character so that it levels up/i.test(text)) state.freeUpgrades += 1;
   if (/draw 1 Chapter card, then put/i.test(text)) drawAndTuck();
   if (/place 2 XP on your Writer/i.test(text)) placeWriterXp(2);

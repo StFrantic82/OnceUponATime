@@ -760,7 +760,7 @@ window.GAME_DATA = {
       "base": "Charm 1. Ongoing: your Dwarves count double for their family.",
       "upgrade": "Cost 5 XP. Game End: 1 VP for each pair of Good cards.",
       "upgraded": false,
-      "upgradeAlt": "Cost 5 XP. Instant: gain 2 coins and 2 XP."
+      "upgradeAlt": "Cost 5 XP. Instant: take 1 Dwarf from the Common deck, then shuffle it."
     },
     {
       "id": "L2",
