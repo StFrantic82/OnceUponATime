@@ -826,13 +826,40 @@ function chooseBranch(card) {
     state.choices = [...(state.choices || []), { source: card.name, options: [`branch ${card.id} a`, `branch ${card.id} b`], cost: null }];
     return;
   }
+  // A branch opposes a scoring to an Instant, an Activation or an Ongoing effect: rough worth of each.
+  const left = Math.max(0, (G.settings?.rounds || 8) - (G.round || 0));
+  const worth = (text) => {
+    const t = String(text || "");
+    let m;
+    let per = 0;
+    if ((m = t.match(/gain (\d+) (coins?|XP|VP)(?: and (\d+) (coins?|XP|VP))?(?: for each (.+?))?\./i))) {
+      const unit = (k) => (/VP/i.test(k) ? 1 : /XP/i.test(k) ? 0.7 : 0.5);
+      per = Number(m[1]) * unit(m[2]) + (m[3] ? Number(m[3]) * unit(m[4]) : 0);
+      if (m[5]) per *= v2Count(m[5]);
+    }
+    if (/take 1 Adventure/i.test(t)) per += 3;
+    if (/^Activation:/i.test(t)) return per * left * 0.7;
+    if (/^Ongoing:/i.test(t)) return left * 0.6;
+    return per;
+  };
   const score = (b) => {
     card.branch = b;
-    return scoreCards([card]);
+    const text = String((b === "b" ? card.upgradeAlt : card.upgrade) || "").replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
+    return /^Game End:/i.test(text) ? scoreCards([card]) - base : worth(text);
   };
+  card.branch = null;
+  const base = scoreCards([card]);
   const a = score("a");
   const b = score("b");
   card.branch = b > a ? "b" : "a";
+}
+
+// V2: an Instant printed on an upgrade happens once, when that upgrade (or branch) is chosen.
+function upgradeInstant(card) {
+  if (!V2) return;
+  const text = chosenUpgrade(card).replace(/^Cost\s+\d+\s+XP\.\s*/i, "");
+  const instant = clausesOf(text, "Instant");
+  if (instant) v2Do(instant, card);
 }
 
 function completeUpgrade(card) {
@@ -848,8 +875,9 @@ function completeUpgrade(card) {
   card.upgraded = true;
   if (card.upgradeAlt) chooseBranch(card);
   applyUpgradeGain(card);
-  if (/take 1 (?:Quest|Adventure)/i.test(chosenUpgrade(card))) grantQuestChoice(card.name);
-  if (/take 1 (?:Quest|Adventure) and gain 1 XP/i.test(chosenUpgrade(card))) gain("xp", 1);
+  upgradeInstant(card);
+  if (!V2 && /take 1 (?:Quest|Adventure)/i.test(chosenUpgrade(card))) grantQuestChoice(card.name);
+  if (!V2 && /take 1 (?:Quest|Adventure) and gain 1 XP/i.test(chosenUpgrade(card))) gain("xp", 1);
   const servants = state.tableau.filter((entry) => entry.name === "§The Invisible Servants").length;
   if (servants) gain("coins", servants);
   checkBaumSets();
@@ -1149,6 +1177,7 @@ function applyOption(option, source) {
   if ((m = option.match(/^branch (\S+) (a|b)/))) {
     const card = state.tableau.find((c) => c.id === m[1]);
     if (card) card.branch = m[2];
+    if (card) upgradeInstant(card);
     if (card) log("l_upgrades", { p: state.name, c: C(card.name) });
     return;
   }

@@ -197,7 +197,7 @@ const RULES = {
       <p>A Legendary character starts on its base side. When its star spaces are full, it is upgraded: from then on, the upgraded effect is <b>added</b> to the base effect, which stays active (the full star spaces show it).</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <p><b>Two upgrades.</b> Some simple Legendary characters have a second row of star spaces and a third effect. Once the first upgrade is done, your XP can go on the second row; when it is full, the third effect is added too (the card then has three active effects).</p>
-      <p><b>Branch.</b> Other Legendary characters show two upgraded effects side by side. When the star spaces are full, choose <b>one</b> of the two: it is added to the base effect for the rest of the game, the other one is ignored.</p>
+      <p><b>Branch.</b> Other Legendary characters show two upgraded effects of different kinds side by side (for example a Game End scoring or an Instant effect). When the star spaces are full, choose <b>one</b> of the two: it is added to the base effect for the rest of the game, the other one is ignored.</p>
       <div class="fig-row">[[legendary:Puss in Boots]][[legendary:Snow White]]</div>
       <h3>Writers</h3>
       <p>Level 1 [[icon:ongoing]] is active from the start. Level 2 [[icon:instant]] is a one-time effect when you reach it. Level 3 [[icon:endgame]] scores at the end of the game. You reach each level by filling its star spaces with XP.</p>
@@ -297,7 +297,7 @@ const RULES = {
       <p>Un personnage Légendaire commence sur sa face de base. Quand ses cases étoile sont pleines, il est amélioré : dès lors, l’effet amélioré <b>s’ajoute</b> à l’effet de base, qui reste actif (les cases étoile pleines le montrent).</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <p><b>Deux améliorations.</b> Certains personnages Légendaires aux effets simples ont une deuxième rangée de cases étoile et un troisième effet. Une fois la première amélioration faite, votre XP peut aller sur la deuxième rangée ; quand elle est pleine, le troisième effet s’ajoute aussi (la carte a alors trois effets actifs).</p>
-      <p><b>Embranchement.</b> D’autres personnages Légendaires montrent deux effets améliorés côte à côte. Quand les cases étoile sont pleines, choisissez <b>l’un</b> des deux : il s’ajoute à l’effet de base pour le reste de la partie, l’autre est ignoré.</p>
+      <p><b>Embranchement.</b> D’autres personnages Légendaires montrent deux effets améliorés de nature différente côte à côte (par exemple un décompte de Fin de partie ou un effet Instantané). Quand les cases étoile sont pleines, choisissez <b>l’un</b> des deux : il s’ajoute à l’effet de base pour le reste de la partie, l’autre est ignoré.</p>
       <div class="fig-row">[[legendary:Puss in Boots]][[legendary:Snow White]]</div>
       <h3>Écrivains</h3>
       <p>Le niveau 1 [[icon:ongoing]] est actif dès le début. Le niveau 2 [[icon:instant]] donne un effet unique au moment où vous l’atteignez. Le niveau 3 [[icon:endgame]] rapporte des points en fin de partie. On atteint chaque niveau en remplissant ses cases étoile avec de l’XP.</p>
@@ -397,7 +397,7 @@ const RULES = {
       <p>Un personaggio Leggendario inizia sul lato base. Quando le sue caselle stella sono piene, è potenziato: da quel momento l’effetto potenziato <b>si aggiunge</b> all’effetto base, che resta attivo (le caselle stella piene lo mostrano).</p>
       <div class="fig-row">[[legendary:Little Red Riding Hood]][[legendaryUp:Little Red Riding Hood]]</div>
       <p><b>Due potenziamenti.</b> Alcuni personaggi Leggendari dagli effetti semplici hanno una seconda fila di caselle stella e un terzo effetto. Fatto il primo potenziamento, i tuoi XP possono andare sulla seconda fila; quando è piena, si aggiunge anche il terzo effetto (la carta ha allora tre effetti attivi).</p>
-      <p><b>Bivio.</b> Altri personaggi Leggendari mostrano due effetti potenziati affiancati. Quando le caselle stella sono piene, scegline <b>uno</b>: si aggiunge all’effetto base per il resto della partita, l’altro è ignorato.</p>
+      <p><b>Bivio.</b> Altri personaggi Leggendari mostrano due effetti potenziati di tipo diverso affiancati (per esempio un punteggio di Fine partita o un effetto Istantaneo). Quando le caselle stella sono piene, scegline <b>uno</b>: si aggiunge all’effetto base per il resto della partita, l’altro è ignorato.</p>
       <div class="fig-row">[[legendary:Puss in Boots]][[legendary:Snow White]]</div>
       <h3>Scrittori</h3>
       <p>Il livello 1 [[icon:ongoing]] è attivo fin dall’inizio. Il livello 2 [[icon:instant]] dà un effetto unico quando lo raggiungi. Il livello 3 [[icon:endgame]] dà punti a fine partita. Si raggiunge ogni livello riempiendo le sue caselle stella con XP.</p>
