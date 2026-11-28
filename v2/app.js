@@ -1582,6 +1582,8 @@ function onPlayChapter(number) {
   if (V2) {
     if (hasCard("Princess Briar Rose") && number <= 4) { vpSource = "Princess Briar Rose"; gain("xp", 2); }
     if (hasCard("Pinocchio") && number >= 10) { vpSource = "Pinocchio"; gain("vp", 1); }
+    if (hasCard("Cheshire Cat") && number % 2 === 0) gain("xp", 1);
+    if (hasCard("The Wizard of Oz") && number >= 5 && number <= 8) gain("coins", 2);
     return;
   }
   vpSource = "ON-CHAPTER (Barrie/Briar Rose/Clock)";

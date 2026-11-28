@@ -839,7 +839,7 @@ window.GAME_DATA = {
       "name": "Cheshire Cat",
       "rank": null,
       "alignment": "Bad",
-      "base": "Dexterity 1, Sorcery 1. Instant: take 1 Adventure.",
+      "base": "Dexterity 1, Sorcery 1. Ongoing: whenever you play an even Chapter card, gain 1 XP.",
       "upgrade": "Cost 2 XP. Game End: counts as Good or Bad, as you prefer.",
       "upgraded": false
     },
@@ -1025,7 +1025,7 @@ window.GAME_DATA = {
       "rank": null,
       "alignment": "Bad",
       "base": "Charm 1, Strength 1, Dexterity 1, Intelligence 1, Sorcery 1. Instant: each opponent loses 1 coin.",
-      "upgrade": "Cost 4 XP. Game End: 1 VP for each different icon.",
+      "upgrade": "Cost 5 XP. Game End: 4 VP for each set of 5 different icons.",
       "upgraded": false
     },
     {
@@ -1055,7 +1055,7 @@ window.GAME_DATA = {
       "name": "The Wizard of Oz",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Activation: spend 1 coin to gain 2 XP.",
+      "base": "Intelligence 1. Ongoing: whenever you play a Chapter card from 5 to 8, gain 2 coins.",
       "upgrade": "Cost 2 XP. Game End: 2 VP for each Friend of Oz.",
       "upgraded": false
     },
