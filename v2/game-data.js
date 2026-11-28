@@ -574,7 +574,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "The Dwarves House",
       "cost": 3,
-      "icons": "",
+      "icons": "Charm 1",
       "effect": "Game End: 1 VP for each Dwarf.",
       "copy": 1
     },
@@ -592,7 +592,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Poisoned Apple",
       "cost": 2,
-      "icons": "Bad 1",
+      "icons": "Bad 1, Strength 1",
       "effect": "Instant: gain 2 VP.",
       "copy": 1
     },
@@ -619,7 +619,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Rabbit's Clock",
       "cost": 2,
-      "icons": "Dexterity 1",
+      "icons": "Intelligence 1",
       "effect": "Instant: draw 1 Chapter card, then put 1 Chapter card from your hand under your deck.",
       "copy": 1
     },
@@ -627,9 +627,9 @@ window.GAME_DATA = {
       "id": "I11",
       "deck": "item",
       "name": "Long Bow",
-      "cost": 4,
-      "icons": "Strength 1",
-      "effect": "Activation: gain 1 VP.",
+      "cost": 5,
+      "icons": "Dexterity 1",
+      "effect": "Activation: gain 2 coins.",
       "copy": 1
     },
     {
@@ -673,7 +673,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Seashell",
       "cost": 2,
-      "icons": "Charm 1",
+      "icons": "Dexterity 1",
       "effect": "Instant: gain 3 coins.",
       "copy": 1
     },
@@ -700,7 +700,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Pirate Ship",
       "cost": 3,
-      "icons": "Strength 1",
+      "icons": "Charm 1",
       "effect": "Game End: 1 VP for each Pirate.",
       "copy": 1
     },
@@ -735,9 +735,9 @@ window.GAME_DATA = {
       "id": "I23",
       "deck": "item",
       "name": "Trident",
-      "cost": 5,
+      "cost": 4,
       "icons": "Strength 1",
-      "effect": "Activation: gain 2 coins.",
+      "effect": "Activation: gain 1 VP.",
       "copy": 1
     },
     {
@@ -745,7 +745,7 @@ window.GAME_DATA = {
       "deck": "item",
       "name": "Undersea Throne",
       "cost": 7,
-      "icons": "Strength 1",
+      "icons": "Intelligence 1",
       "effect": "Game End: 1 VP for each Item.",
       "copy": 1
     }
@@ -768,7 +768,7 @@ window.GAME_DATA = {
       "name": "The Evil Queen",
       "rank": null,
       "alignment": "Bad",
-      "base": "Charm 1, Sorcery 1. Instant: each opponent with more Charm icons than you loses 2 coins.",
+      "base": "Charm 1. Instant: each opponent with more Charm icons than you loses 2 coins.",
       "upgrade": "Cost 3 XP. Game End: 1 VP for each Charm icon.",
       "upgraded": false
     },
@@ -860,8 +860,8 @@ window.GAME_DATA = {
       "name": "Peter Pan",
       "rank": null,
       "alignment": "Good",
-      "base": "Dexterity 1. Ongoing: whenever you take a Lost Boy, gain 1 XP.",
-      "upgrade": "Cost 3 XP. Game End: 2 VP for each Lost Boy.",
+      "base": "Dexterity 1. Ongoing: whenever you take a Lost Boy, gain 2 coins.",
+      "upgrade": "Cost 2 XP. Game End: 2 VP for each Lost Boy.",
       "upgraded": false
     },
     {
@@ -913,7 +913,7 @@ window.GAME_DATA = {
       "name": "Sheriff of Nottingham",
       "rank": null,
       "alignment": "Bad",
-      "base": "Strength 1. Instant: steal 1 coin from each opponent.",
+      "base": "Dexterity 1. Instant: steal 1 coin from each opponent.",
       "upgrade": "Cost 2 XP. Activation: each opponent with 4 coins or more gives you 1 coin.",
       "upgraded": false
     },
@@ -943,7 +943,7 @@ window.GAME_DATA = {
       "name": "Grandmother",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Instant: gain 1 coin for each Bad card.",
+      "base": "Charm 1. Instant: gain 1 coin for each Bad card.",
       "upgrade": "Cost 2 XP. Game End: 1 VP for each Bad card.",
       "upgraded": false
     },
@@ -953,7 +953,7 @@ window.GAME_DATA = {
       "name": "Little Mermaid",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Activation: spend 1 XP to gain 2 VP.",
+      "base": "Intelligence 1. Activation: spend 1 XP to gain 2 VP.",
       "upgrade": "Cost 3 XP. Ongoing: whenever you buy an Item, gain 1 VP.",
       "upgraded": false
     },
@@ -963,7 +963,7 @@ window.GAME_DATA = {
       "name": "King Triton",
       "rank": null,
       "alignment": "Good",
-      "base": "Strength 1, Sorcery 1. Activation: gain 1 coin for each Strength icon.",
+      "base": "Strength 1, Sorcery 1. Activation: gain 1 VP for each pair of Strength icons.",
       "upgrade": "Cost 4 XP. Game End: 1 VP for each Item.",
       "upgraded": false
     },
@@ -973,7 +973,7 @@ window.GAME_DATA = {
       "name": "The Sea Witch",
       "rank": null,
       "alignment": "Bad",
-      "base": "Sorcery 1. Instant: gain 4 coins. Game End: lose 3 VP.",
+      "base": "Sorcery 1. Instant: gain 4 XP. Game End: lose 3 VP.",
       "upgrade": "Cost 4 XP. Game End: 1 VP for each Sorcery icon.",
       "upgraded": false
     },

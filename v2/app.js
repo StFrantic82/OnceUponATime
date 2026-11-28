@@ -2157,7 +2157,7 @@ function v2AfterGroup(cards) {
   }
   if (hasCard("Peter Pan")) {
     const boys = cards.filter((c) => c.family === "lostboys").length;
-    if (boys) gain("xp", boys);
+    if (boys) gain("coins", 2 * boys);
   }
   if (hasCard("Wendy") && !state.writerRound.wendyRewarded && cards.some((c) => c.deck === "common")) {
     vpSource = "Wendy";
