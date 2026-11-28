@@ -5,7 +5,7 @@ The owner (Matthieu) writes in French: **always answer in French**.
 
 - Repo: `StFrantic82/OnceUponATime`, cloned at `/home/claude/OnceUponATime`
 - Live site: https://stfrantic82.github.io/OnceUponATime/
-- Claude artifact: slug `4f6794dc-7dd7-45c5-bee3-28b919e22270` (latest version `1795851865-bbc0`; re-read it with get_artifact before publishing)
+- Claude artifact: slug `4f6794dc-7dd7-45c5-bee3-28b919e22270` (latest version `1795853136-277e`; re-read it with get_artifact before publishing)
 - Google Sheets (must stay **entirely in English**):
   - V1: `1-T5ociuEKVqO3t9nZMQV-LYTBJ7Qmrsi1pC6fGH-Mxs`
   - V2: "Once Upon a Time V2 - Game content", `1I0M8sJbO7hwBeb40rQc9wplDB-KVwD55MgUSQRxak4s` (Drive folder `1B9dbphjQRivOuOpu5R_Fvwc5KFg3XXjL`)
