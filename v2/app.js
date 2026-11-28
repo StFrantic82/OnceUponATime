@@ -482,7 +482,7 @@ function beginTurns() {
   for (const p of played) {
     if (p.currentAction.number !== lowest) continue;
     // V2: the Mad Hatter rewards the lowest Chapter of the round.
-    if (V2 && p.tableau.some((card) => card.name === "Mad Hatter")) withSeat(p.seat, () => { vpSource = "Mad Hatter"; gain("vp", 1); });
+    if (V2 && p.tableau.some((card) => card.name === "Mad Hatter")) withSeat(p.seat, () => { vpSource = "Mad Hatter"; gain("vp", G.players.length - 1); });
     const clocks = p.items.filter((item) => item.name === "§Rabbit's Clock").length;
     if (clocks) withSeat(p.seat, () => {
       gain("coins", 2 * clocks);
@@ -548,7 +548,7 @@ function takeGroup(choice) {
   const [groupId, discardId] = String(choice).split("|");
   const group = G.groups.find((entry) => entry.id === groupId);
   if (!group || group.taken) return;
-  if (state.writer?.name === "Carlo Collodi" && !G.groups.some((g) => g.taken)) gain("coins", V2 ? 3 : 2);
+  if (state.writer?.name === "Carlo Collodi" && !G.groups.some((g) => g.taken)) gain("coins", G.players.length);
   if (simMode) {
     // Simulations: which kind of group was taken, and in which order.
     const comp = `${group.cards.filter((c) => c.deck === "common").length}c${group.cards.filter((c) => c.deck === "legendary").length}l`;
@@ -2003,7 +2003,7 @@ for (const [key, f] of Object.entries(DATA.families || {})) {
 
 function familyCount(family) {
   const n = (state.tableau || []).filter((card) => card.family === family).length;
-  return family === "dwarves" && (state.tableau || []).some((c) => c.name === "Snow White") ? n * 2 : n;
+  return family === "dwarves" && (state.tableau || []).some((c) => /your Dwarves count double/i.test(activeCardText(c))) ? n * 2 : n;
 }
 
 // Clauses of one type ("Instant", "Activation", "Game End"…) of a text, joined.

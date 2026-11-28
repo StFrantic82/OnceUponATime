@@ -757,10 +757,10 @@ window.GAME_DATA = {
       "name": "Snow White",
       "rank": null,
       "alignment": "Good",
-      "base": "Charm 1. Ongoing: your Dwarves count double for their family.",
-      "upgrade": "Cost 5 XP. Game End: 1 VP for each pair of Good cards.",
+      "base": "Charm 1. Activation: gain 1 XP for each pair of Dwarves.",
+      "upgrade": "Cost 4 XP. Game End: 1 VP for each pair of Good cards.",
       "upgraded": false,
-      "upgradeAlt": "Cost 5 XP. Instant: take 1 Dwarf from the Common deck, then shuffle it."
+      "upgradeAlt": "Cost 4 XP. Instant: take 1 Dwarf from the Common deck, then shuffle it."
     },
     {
       "id": "L2",
@@ -849,7 +849,7 @@ window.GAME_DATA = {
       "name": "Mad Hatter",
       "rank": null,
       "alignment": "Good",
-      "base": "Intelligence 1. Ongoing: whenever you play the lowest Chapter of the round, gain 1 VP.",
+      "base": "Intelligence 1. Ongoing: whenever you play the lowest Chapter of the round, gain 1 VP per opponent.",
       "upgrade": "Cost 3 XP. Game End: 4 VP.",
       "upgraded": false,
       "upgrade2": "Cost 3 XP. Activation: gain 1 XP."
@@ -1331,7 +1331,7 @@ window.GAME_DATA = {
     {
       "id": "W4",
       "name": "Carlo Collodi",
-      "level1": "When you are the first to choose a group in a round, gain 3 coins.",
+      "level1": "When you are the first to choose a group in a round, gain 1 coin per player.",
       "cost2": 3,
       "level2": "Return a played Chapter card to your hand, then discard one card from your hand.",
       "cost3": 6,
